@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<stories>
+	<!-- 1 team scenes: CM_PreMatch_WarmUp, CM_PreMatch_WarmUp_19, CM_PreMatch_Juggle_19 -->
+	<!-- 2 teams scenes: CM_PreMatch_WarmUp2Teams, CM_PreMatch_PiggyInMiddle_19 -->
+	
+	<!-- Dual team triggers: both 'id' and 'id2' must be set. Dual team triggers have priority over Single team triggers. -->
+	<!-- Single team triggers: only 'id' field must be set in XML -->
+	
+	<!-- common triggers (CM & UEFA & Kickoff) -->
+	
+	<!-- Attention for Production: every time you edit this XML, enter a match in Career, and make sure there are no asserts related to parsing it -->
+	
+	<story id="TeamFinal" id2="TeamFinal" prio="1" type="career|uefa|kickoff">
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+	</story>
+	<story id="TeamSemiFinal" id2="TeamSemiFinal" prio="1" type="career|uefa|kickoff">
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+	</story>
+	<story id="TeamBigMatch" id2="TeamBigMatch" prio="3" type="career|uefa|kickoff">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<story id="TeamBigMatch" prio="3" type="career|uefa|kickoff">
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+	</story>
+	<story id="TeamRivalDerby" id2="TeamRivalDerby" prio="3" type="career|kickoff">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<story id="TeamRivalDerby" prio="3" type="career|kickoff">
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+	</story>
+	<story id="TeamRegionDerby" id2="TeamRegionDerby" prio="3" type="career|kickoff">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<story id="TeamRegionDerby" prio="3" type="career|kickoff">
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+	</story>
+	<story id="TeamCityDerby" id2="TeamCityDerby" prio="3" type="career|kickoff">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<story id="TeamCityDerby" prio="3" type="career|kickoff">
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+	</story>
+	<story id="PlayerFieldHate1" prio="4" type="career|uefa|kickoff">
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarH"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarB"/>		
+	</story>	
+	<story id="PlayerFieldHate2" prio="4" type="career|uefa|kickoff">
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarH"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarB"/>		
+	</story>	
+	<story id="PlayerFieldHate3" prio="4" type="career|uefa|kickoff">
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarH"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarB"/>		
+	</story>	
+	<story id="PlayerFieldHate4" prio="4" type="career|uefa|kickoff">
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarH"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarB"/>		
+	</story>	
+	<story id="PlayerFieldLove1" prio="4" type="career|uefa|kickoff">
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarH"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarB"/>		
+	</story>	
+	<story id="PlayerFieldLove2" prio="4" type="career|uefa|kickoff">
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarH"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarB"/>		
+	</story>		
+	<story id="PlayerGKHate1" prio="4" type="career|uefa|kickoff">	
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarB"/>			
+	</story>	
+	<story id="PlayerGKHate2" prio="4" type="career|uefa|kickoff">	
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarB"/>			
+	</story>	
+	<story id="PlayerGKHate3" prio="4" type="career|uefa|kickoff">	
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarB"/>			
+	</story>	
+	<story id="PlayerGKHate4" prio="4" type="career|uefa|kickoff">	
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarB"/>			
+	</story>	
+	<story id="PlayerGKLove1" prio="4" type="career|uefa|kickoff">	
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarB"/>			
+	</story>	
+	<story id="PlayerGKLove2" prio="4" type="career|uefa|kickoff">	
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_GoalKeeper_VarB"/>			
+	</story>	
+	
+	<!-- CM & UEFA Triggers -->
+	<story id="PlayerDebut" prio="4" type="career|uefa">
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarH"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarB"/>		
+	</story>
+	<story id="PlayerDebut" id2="PlayerDebut" prio="4" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+	</story>
+	<story id="PlayerTopScorer" prio="4" type="career|uefa">
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_VarH"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_VarB"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarA"/>
+		<scene name="20_CM_BMA_PreMatch_AttackingPlayer_VarB"/>
+	</story>
+	<story id="TeamSixPointer" id2="TeamSixPointer" prio="2" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<story id="TeamSixPointerCouldLeapfrogHome" id2="TeamSixPointerCouldLeapfrogHome" prio="2" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<story id="TeamSixPointerCouldLeapfrogAway" id2="TeamSixPointerCouldLeapfrogAway" prio="2" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<story id="TeamTopScoringTeam" id2="TeamTopDefensiveTeam" prio="3" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<!-- CM & UEFA Triggers -->
+		
+	<story id="TeamMarqueeMatch" id2="TeamMarqueeMatch" prio="2" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>	
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>
+	<story id="TeamToppingTheGroupToday" prio="1" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+	</story>	
+	<story id="TeamFirstMatch" id2="TeamFirstMatch" prio="3" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+	</story>
+	<story id="TeamQualificationPossibleTodayWin" prio="2" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+	</story>
+	<story id="TeamQualificationPossibleTodayDraw" prio="2" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+	</story>
+	<story id="TeamQualificationPossibleTodayHelp" prio="2" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+	</story>
+	<story id="TeamPotentialEliminationToday" prio="2" type="career|uefa">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+	</story>
+	
+	<!-- CM Triggers -->
+	
+	<story id="TeamClinchWithWin" prio="1" type="career">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+	</story>
+	<story id="TeamClinchWithDraw" prio="1" type="career">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+	</story>
+	<story id="TeamClinchWithHelp" prio="1" type="career">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_VarA"/>
+	</story>
+	<story id="TeamTopTwoEarlySeason" id2="TeamTopTwoEarlySeason" prio="4" type="career">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>	
+	<story id="TeamTopTwoLateSeason" id2="TeamTopTwoLateSeason" prio="2" type="career">
+		<scene name="19_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_PiggyInMiddle_2Teams_VarA"/>
+		<scene name="19_CM_BMA_PreMatch_Juggle_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarA"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarB"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarC"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarD"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarE"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarF"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarG"/>
+		<scene name="18_CM_BMA_PreMatch_WarmUp_2Teams_VarH"/>
+	</story>	
+</stories>

@@ -1,0 +1,10 @@
+PlayerCounterOfferValue,,,,
+% of difference offer,100%,75%,50%,25%
+80,40,30,20,10
+60,45,30,15,10
+40,50,35,10,5
+20,55,40,5,0
+,,,,
+PlayerCounterOfferValueForLowOffer,,,,
+% of difference offer,same chances as above,,,
+low offer,60,25,10,5

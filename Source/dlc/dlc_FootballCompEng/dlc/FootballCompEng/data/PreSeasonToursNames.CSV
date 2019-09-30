@@ -1,0 +1,29 @@
+Asset ID,Tour Name,Continent,Tour Type
+,,,
+860,cm_pst_eu_intl_cup,Europe,World Tour
+861,cm_pst_challenge_cup,North America,World Tour
+862,cm_pst_sa_cup,South America,World Tour
+863,cm_pst_asian_elite_cup,Asia,World Tour
+864,cm_pst_eu_shield,Europe,World Tour
+865,cm_pst_na_trophy,North America,World Tour
+866,cm_pst_sa_invitational,South America,World Tour
+867,cm_pst_invitational_cup,Asia,World Tour
+868,cm_pst_champions_trophy,Europe,World Tour
+869,cm_pst_champions_trophy,North America,World Tour
+870,cm_pst_champions_trophy,South America,World Tour
+871,cm_pst_champions_trophy,Asia,World Tour
+840,cm_pst_eu_intl_cup,Europe,Continental Tour
+841,cm_pst_na_trophy,North America,Continental Tour
+842,cm_pst_sa_invitational,South America,Continental Tour
+843,cm_pst_asian_elite_cup,Asia,Continental Tour
+844,cm_pst_eu_shield,Europe,Continental Tour
+845,cm_pst_challenge_cup,North America,Continental Tour
+846,cm_pst_sa_cup,South America,Continental Tour
+847,cm_pst_champions_trophy,Asia,Continental Tour
+848,cm_pst_champions_trophy,Europe,Continental Tour
+849,cm_pst_champions_trophy,North America,Continental Tour
+850,cm_pst_champions_trophy,South America,Continental Tour
+851,cm_pst_invitational_cup,Asia,Continental Tour
+820,cm_pst_invitational_cup,Any,National Tour
+821,cm_pst_champions_trophy,Any,National Tour
+822,cm_pst_invitational_cup,Any,National Tour
