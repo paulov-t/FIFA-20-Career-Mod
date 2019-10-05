@@ -20,13 +20,26 @@
 [x] Teams will only search for players within a small range of themselves (no more wolfsburg buying Neymar)
 [x] English players very rarely leave England
 [x] Player movement between countries is based upon real-world data of player nationalities in each league
+[x] Free Agents wont just play for any team, no more picking up gems from the Free Agent market
+
+## Player Search - GTN
+[x] Searching for players now reveals attributes much faster
 
 ## Player Values
 [x] High Potential players are now much higher in value
 
+## Player Wages
+[x] Lower league players ask for less in wages
+
 ## Youth
 [x] Players wont "retire" from your youth system until they are 21
+[x] Generated players will now be between 16-21
 [x] All youth players should have at least 1 trait
+[x] Generated centre forward players are much more likely to be larger slower players
+[x] Generated wingers are much more likely to be faster rather than mentally skillful
+[x] Scouts are much more likely to find players of the type you searched for
+[x] It is much more difficult to find gem (high potential) players
+[x] Attributes will unlock much faster
 
 ## Player Growth
 [x] Match Rating contributes to growth much more
@@ -44,4 +57,5 @@
 [x] Enabled full customization of players in Career Mode
 [x] Enabled full edit of created players in main menu
 
-
+## Teams
+[x] Piemonte Calcio kits are now correct - Thanks to @Muzzley#6327

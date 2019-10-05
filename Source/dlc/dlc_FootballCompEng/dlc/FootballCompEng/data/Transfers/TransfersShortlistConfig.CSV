@@ -34,7 +34,7 @@ Random Activity Chance Inside Deadline Day,30,,// Change to generate transfer ac
 Random Activity Chance Inside Transfer Window,15,,,,,,,,
 Random Activity Chance Outside Transfer Window,0,,,,,,,,
 ,,,,,,,,,
-Listed Activity Chance,35,,// Chance to generate transfer activity for players that are transfer / loan listed,,,,,,
+Listed Activity Chance,100,,// Chance to generate transfer activity for players that are transfer / loan listed,,,,,,
 Listed Activity Chance - PAP ,50,,,,,,,,
 Transfer Listed VS Loan Listed Chance,50,,,,,,,,
 ,,,,,,,,,
