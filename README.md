@@ -39,6 +39,7 @@
 		- Players with over 5+ above their OVR potential have 25% higher value
 		- Players with over 10+ above their OVR potential have 300% higher value
 		- Players with over 15+ above their OVR potential have 400% higher value
+- Redesign of the existing system to ensure realistic values throughout the game
 
 ## Player Wages
 - Lower league players ask for 20% less in wages
@@ -89,9 +90,31 @@
 - Form is much more balanced for AI teams and simmed matches
 - Form now affects gameplay in a much more subtle way
 
+## Training
+- Add composure, acceleration, jumping & GK attributes to player individual training
+
+## Injuries
+- Severe injuries now take twice as long to get to "Match Fit"
+
+## Match Attendance 
+- Ensured that teams in the English Championship teams only sellout "critical" matches
+
+## Board and Objectives
+- Provide fix for "profitability" clubs that require you to not give out large wages, resulting in a sacking
+
+## Job Offers
+- Made it so a job offer can happen to anyone at any team at any time
+
 ## Player Customization
 - Enabled full customization of players in Career Mode
 - Enabled full edit of created players in main menu
 
 ## Teams / Clubs
-- Juventus are now fully licensed - Thanks to @Muzzley#6327 for the Kits
+- Juventus are now fully licensed - Thanks to @Muzzley#6327 for the Logo and Kits
+
+## UI
+- Added Edit Kit Numbers to Squad Screen
+- Added Injury List to Squad Screen
+
+## Commentary
+- Made it so commentators take about your players more often before a game

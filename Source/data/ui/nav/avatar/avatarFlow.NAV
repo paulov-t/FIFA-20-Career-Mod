@@ -1,0 +1,560 @@
+{
+	"initial":
+	{
+		"targets":["avatarFlow"]
+	}
+
+	,"states":
+	[
+		{
+			"name":"avatarFlow"
+			,"initial":
+			{
+				"targets":["in_initializeSessionAttemptState"]
+			}
+			,"onEnter":
+			[
+				["loadViewModel", ["AvatarFlowViewModel"]]
+				,["loadViewModel", [".AvatarFlowConfigViewModelName", ".AvatarFlowConfigViewModelParam"]]
+				,["sendAction", ["suppressPOWWidget"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel", [".AvatarFlowConfigViewModelName"]]
+				,["unloadViewModel", ["AvatarFlowViewModel"]]
+				,["sendAction", ["unsuppressPOWWidget"]]
+			]
+			,"transitions":
+			[
+				{ "event":"profileSignOut", "targets":["revertAvatarChanges"]}
+				,{ "event":"evt_fe_disconnect_occured", "targets":["revertAvatarChanges2"] }
+				,{ "event":"goToInviteFlow", "targets":["revertAvatarChanges3"] }
+				,{ "event":"quit", "targets":["revertAvatarChanges4"] }
+			]
+			,"states":
+			[
+				{
+					"name":"in_initializeSessionAttemptState"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "initializeSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["shouldShowGenderSelectCheck"]}
+						,{"event":"fail", "targets":["out_back"]}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldShowGenderSelect"}
+					,"name":"shouldShowGenderSelectCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"genderSelectScreen"
+								,"out_false":"shouldShowAvatarListSelectCheck"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldShowGenderSelectOnBackOut"}
+					,"name":"shouldShowGenderSelectOnBackOutCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"genderSelectScreen"
+								,"out_false":"shutdownSessionAttemptStateOnBack"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"FluxScreenStateViewModelName":"AvatarGenderSelectViewModel", "FluxScreenStateViewModelParam":""}
+					,"name":"genderSelectScreen"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/fluxScreenState.nav"
+							,"outputs":
+							{
+								"out_advance":"shouldShowAvatarListSelectCheck"
+								,"out_back":"in_shutdownSessionAttemptState"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldShowAvatarListSelect"}
+					,"name":"shouldShowAvatarListSelectCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"avatarListSelectScreen"
+								,"out_false":"shouldShowAvatarLineupSelectCheck"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"FluxScreenStateViewModelName":"AvatarListSelectViewModel", "FluxScreenStateViewModelParam":".EditPlayerOrAvatarParam"}
+					,"name":"avatarListSelectScreen"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/fluxScreenState.nav"
+							,"outputs":
+							{
+								"out_advance":"shouldShowAvatarCustomizationCheck"
+								,"out_back":"shouldShowGenderSelectOnBackOutCheck"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldShowAvatarLineupSelect"}
+					,"name":"shouldShowAvatarLineupSelectCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"avatarLineupSelect"
+								,"out_false":"shouldShowAvatarCustomizationCheck"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldShowAvatarCustomization"}
+					,"name":"shouldShowAvatarCustomizationCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"in_avatarCustomizationScreen"
+								,"out_false":"in_shutdownSessionAttemptState"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"FluxScreenStateViewModelName":"AvatarLineupSelectViewModel", "FluxScreenStateViewModelParam":""}
+					,"name":"avatarLineupSelect"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/fluxScreenState.nav"
+							,"outputs":
+							{
+								"out_advance":"shouldShowAvatarDecisionPointCheck"
+								,"out_back":"shouldShowGenderSelectOnBackOutCheck"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldShowAvatarDecisionPoint"}
+					,"name":"shouldShowAvatarDecisionPointCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"avatarDecisionPointScreen"
+								,"out_false":"in_avatarCustomizationScreen"
+							}
+						}
+					]
+				}
+				,{
+			
+					"let":{"FluxScreenStateViewModelName":"AvatarDecisionPointViewModel", "FluxScreenStateViewModelParam":""}
+					,"name":"avatarDecisionPointScreen"
+					,"transitions":
+					[
+						{ "event":"avatarCustomization", "targets":["in_avatarCustomizationScreen"]}
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/fluxScreenState.nav"
+							,"outputs":
+							{
+								"out_advance":"saveSessionAttemptState"
+								,"out_back":"avatarLineupSelect"
+							}
+						}
+					]
+				}
+				,{
+					"name":"in_avatarCustomizationScreen"
+					,"onEnter":
+					[
+						["loadViewModel", ["AvatarCustomizationViewModel"]]
+						,["loadViewModel", ["FluxViewModel"]]
+						,["loadView", ["screen", "game/screens/fluxHub/FluxHub"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel", ["FluxViewModel"]]
+						,["unloadViewModel", ["AvatarCustomizationViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"avatarCustomizationScreenIdle"
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["saveSessionAttemptState"]}
+								,{ "event":"back", "targets":["shouldShowAvatarDecisionPointOnBackOutCheck"]}
+								,{ "event":"avatarMorph", "targets":["avatarMorphingScreen"]}
+								,{ "event":"custom", "targets":["saveSessionAttemptStateCustom"]}
+								,{ "event":"custom2", "targets":["saveSessionAttemptStateCustom2"]}
+								,{ "event":"previewCinematic", "targets":["showCinematic"]}
+								,{ "event":"fadeInAvatar", "actions":[ ["sendAction", ["attempt","fadeInAvatar"]] ], "targets":[]}
+							]
+						},
+						{
+							"let":{"ConditionStateParam":"shouldShowAvatarDecisionPointOnBackOut"}
+							,"name":"shouldShowAvatarDecisionPointOnBackOutCheck"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"avatarDecisionPointScreen"
+										,"out_false":"saveCheckPopupTypeOnBackOut"
+									}
+								}
+							]
+						},
+						{
+							"let":{"ConditionStateParam":"shouldShowTwoOptionsPopup"}
+							,"name":"saveCheckPopupTypeOnBackOut"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"savePopupOnBackOut2Options"
+										,"out_false":"savePopupOnBackOut3Options"
+									}
+								}
+							]
+						},
+						{
+							"name":"savePopupOnBackOut3Options"
+							,"onEnter":
+							[
+								["loadView", ["popup","AVATAR_SAVE_CHECK_POPUP", "AVATAR_SAVE_CHECK|TXT_YES|advance|TXT_NO|back|TXT_Option_Continue_Editing|cancel"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "AVATAR_SAVE_CHECK_POPUP"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["saveSessionAttemptState"] }
+								,{ "event":"back", "targets":["shouldShowAvatarLineupSelectOnBackOutCheck"] }
+								,{ "event":"cancel", "targets":["avatarCustomizationScreenIdle"] }
+							]
+						},
+						{
+							"name":"savePopupOnBackOut2Options"
+							,"onEnter":
+							[
+								["loadView", ["popup","AVATAR_SAVE_CHECK_POPUP", "AVATAR_BACKOUT_CHECK|TXT_YES|back|TXT_Option_Continue_Editing|cancel", "-1|1"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "AVATAR_SAVE_CHECK_POPUP"]]
+							]
+							,"transitions":
+							[
+								{ "event":"back", "targets":["shouldShowAvatarLineupSelectOnBackOutCheck"] }
+								,{ "event":"cancel", "targets":["avatarCustomizationScreenIdle"] }
+							]
+						},
+						{
+							"let":{"ConditionStateParam":"shouldShowAvatarLineupSelectOnBackOut"}
+							,"name":"shouldShowAvatarLineupSelectOnBackOutCheck"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"avatarLineupSelect"
+										,"out_false":"shouldShowAvatarListSelectOnBackOutCheck"
+									}
+								}
+							]
+						},
+						{
+							"let":{"ConditionStateParam":"shouldShowAvatarListSelectOnBackOut"}
+							,"name":"shouldShowAvatarListSelectOnBackOutCheck"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"avatarListSelectScreen"
+										,"out_false":"shouldShowGenderSelectOnBackOutCheck"
+									}
+								}
+							]
+						}
+						
+					]
+				}
+				,{
+				  "let": {
+					"FluxScreenStateViewModelName": "AvatarMorphingViewModel",
+					"FluxScreenStateViewModelParam": ""
+				  },
+				  "name": "avatarMorphingScreen",
+				  "states": [
+					{
+					  "type": "external",
+					  "file": "/utility/fluxScreenState.nav",
+					  "outputs": {
+						"out_advance": "avatarCustomizationScreenIdle",
+						"out_back": "avatarCustomizationScreenIdle"
+					  }
+					}
+				  ]
+				}
+				,{
+				  "name":"showCinematic"
+				  ,"onEnter":
+				  [
+					 ["sendAction", ["cutScenePlay", "inAvatarCustomiazation"]]
+				  ]
+				  ,"onExit":
+				  [
+					 ["sendAction", ["notify", "fadeIn"]]
+				  ]
+				  ,"transitions":
+				  [
+					 {"event":"advance", "targets":["FadeInAvatar"]}
+				  ]
+				  ,"states":
+				  [
+					 {
+						 "type":"external"
+						 ,"file":"/cinematicState.nav"
+						,"outputs":
+						{
+							"out_advance":"FadeInAvatar"
+							,"out_back":"FadeInAvatar"
+						}
+					 }
+				  ]
+				}
+				,{
+					"let":{"WaitStateParam":"fadeIn"}
+					,"name":"FadeInAvatar"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"avatarCustomizationScreenIdle"
+							}
+						}
+					]
+				}
+				,{
+					"name":"saveSessionAttemptStateCustom"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "saveSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["shutdownSessionAttemptStateCustom"]}
+						,{"event":"fail", "targets":["out_savefail"]}
+					]
+				}
+				,{
+					"name":"saveSessionAttemptStateCustom2"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "saveSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["shutdownSessionAttemptStateCustom2"]}
+						,{"event":"fail", "targets":["out_savefail"]}
+					]
+				}
+				,{
+					"name":"saveSessionAttemptState"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "saveSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["in_shutdownSessionAttemptState"]}
+						,{"event":"fail", "targets":["out_savefail"]}
+					]
+				}
+				,{
+					"name":"shutdownSessionAttemptStateOnBack"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "shutdownSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["out_back"]}
+						,{"event":"fail", "targets":["out_back"]}
+					]
+				}
+				,{
+					"name":"shutdownSessionAttemptStateCustom"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "shutdownSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["out_custom"]}
+						,{"event":"fail", "targets":["out_back"]}
+					]
+				}
+				,{
+					"name":"shutdownSessionAttemptStateCustom2"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "shutdownSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["out_custom2"]}
+						,{"event":"fail", "targets":["out_back"]}
+					]
+				}
+				,{
+					"name":"in_shutdownSessionAttemptState"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "shutdownSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["out_advance"]}
+						,{"event":"fail", "targets":["out_back"]}
+					]
+				}
+				,{
+					"name":"revertAvatarChanges"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "shutdownSessionCall"]]
+					]
+					,"transitions":
+					[
+						{"event":"success", "targets":["out_profilesignedout"]}
+						,{"event":"fail", "targets":["out_profilesignedout"]}
+					]
+				}
+				,{
+					"name":"revertAvatarChanges2"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "shutdownSessionCall"]]
+					]
+					
+					,"transitions":
+					[
+						{"event":"success", "targets":["relayDisconnect"]}
+						,{"event":"fail", "targets":["relayDisconnect"]}
+					]
+				}
+				,{
+					"name":"revertAvatarChanges3"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "shutdownSessionCall"]]
+					]
+					
+					,"transitions":
+					[
+						{"event":"success", "targets":["relaygoToInviteFlow"]}
+						,{"event":"fail", "targets":["relaygoToInviteFlow"]}
+					]
+				}
+				,{
+					"name":"revertAvatarChanges4"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "shutdownSessionCall"]]
+					]
+					
+					,"transitions":
+					[
+						{"event":"success", "targets":["relayQuit"]}
+						,{"event":"fail", "targets":["relayQuit"]}
+					]
+				}
+			]
+		}
+		,{
+			"name":"relayDisconnect"
+			,"onEnter":
+			[
+				["invoke", ["evt_fe_disconnect_occured"]]
+			]
+		}
+		,{
+			"name":"relayQuit"
+			,"onEnter":
+			[
+				["invoke", ["quit"]]
+			]
+		}
+		,{
+			"name":"relaygoToInviteFlow"
+			,"onEnter":
+			[
+				["invoke", ["goToInviteFlow"]]
+			]
+		}
+	]
+}
