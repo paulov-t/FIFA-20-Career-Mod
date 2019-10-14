@@ -1,0 +1,1334 @@
+<!-- values for checkpoint attribute in entry node in expected_progress -1=Start of 1st transfer, -2=End of 1st transfer, -3=Start of 2nd transfer, -4=End of 2nd transfer, -5=objective start, -6=objective end, 0..100 percentage through the season -->
+<objectives>
+<!-- 4 to 8 -->
+	<objective type="building_fandom" score="75">
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="season_ticket_holders" mandatory="true" arguments="1">
+				<argument name="amount" value="10"/> 	<!-- percentage of initial ticket holders to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="0"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="16" year="1" value="0"/>
+				<entry checkpoint="17" year="1" value="50"/>
+				<entry checkpoint="16" year="2" value="50"/>
+				<entry checkpoint="17" year="2" value="100"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="media_mogul" score="70"> <!-- EPL Mogul 380m -->
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="media_earnings" mandatory="true" arguments="1">
+				<argument name="amount" value="380000000"/> 	<!-- amount of media earnings to get -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="9"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="league_check" arguments="1">
+				<argument name="league" value="13"/>	<!-- EPL -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="94" year="0" value="0"/>
+				<entry checkpoint="95" year="0" value="33"/>
+				<entry checkpoint="94" year="1" value="33"/>
+				<entry checkpoint="95" year="1" value="66"/>
+				<entry checkpoint="94" year="2" value="66"/>
+				<entry checkpoint="95" year="2" value="100"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="media_mogul" score="70"> <!-- LaLiga Mogul 360m -->
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="media_earnings" mandatory="true" arguments="1">
+				<argument name="amount" value="360000000"/> 	<!-- amount of media earnings to get -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="9"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="league_check" arguments="2">
+				<argument name="league" value="53"/>	<!-- LaLiga -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="94" year="0" value="0"/>
+				<entry checkpoint="95" year="0" value="33"/>
+				<entry checkpoint="94" year="1" value="33"/>
+				<entry checkpoint="95" year="1" value="66"/>
+				<entry checkpoint="94" year="2" value="66"/>
+				<entry checkpoint="95" year="2" value="100"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="media_mogul" score="70"> <!-- Bundesliga Mogul 170m -->
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="media_earnings" mandatory="true" arguments="1">
+				<argument name="amount" value="170000000"/> 	<!-- amount of media earnings to get -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="9"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="league_check" arguments="2">
+				<argument name="league" value="19"/>	<!-- 1.Bundesliga -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="94" year="0" value="0"/>
+				<entry checkpoint="95" year="0" value="33"/>
+				<entry checkpoint="94" year="1" value="33"/>
+				<entry checkpoint="95" year="1" value="66"/>
+				<entry checkpoint="94" year="2" value="66"/>
+				<entry checkpoint="95" year="2" value="100"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="media_mogul" score="70"> <!-- Ligue 1 Mogul 180m -->
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="media_earnings" mandatory="true" arguments="1">
+				<argument name="amount" value="180000000"/> 	<!-- amount of media earnings to get -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="9"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="league_check" arguments="2">
+				<argument name="league" value="16"/>	<!-- Ligue 1 -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="94" year="0" value="0"/>
+				<entry checkpoint="95" year="0" value="33"/>
+				<entry checkpoint="94" year="1" value="33"/>
+				<entry checkpoint="95" year="1" value="66"/>
+				<entry checkpoint="94" year="2" value="66"/>
+				<entry checkpoint="95" year="2" value="100"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="media_mogul" score="70"> <!-- Serie A Mogul 200m -->
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="media_earnings" mandatory="true" arguments="1">
+				<argument name="amount" value="20000000"/> 	<!-- amount of media earnings to get -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="9"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="league_check" arguments="2">
+				<argument name="league" value="31"/>	<!-- Serie A -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="94" year="0" value="0"/>
+				<entry checkpoint="95" year="0" value="33"/>
+				<entry checkpoint="94" year="1" value="33"/>
+				<entry checkpoint="95" year="1" value="66"/>
+				<entry checkpoint="94" year="2" value="66"/>
+				<entry checkpoint="95" year="2" value="100"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+<!-- 1 to 6 -->
+	<objective type="sell_out" score="90"> <!-- ST <40%, 85% attendance / 50% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="fan_favorite"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="crowd_attendance" mandatory="true" arguments="3">
+				<argument name="attendance" value="85"/> <!-- attendance to have for each game -->
+				<argument name="matches" value="50"/>	<!-- minimum percentage of the matches to have the required attendance -->
+				<argument name="location" value="1"/>		<!-- match location 0=ANY, 1=HOME, 2=AWAY -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="6"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="season_tickets_holders" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="tickets" value="40"/>             <!-- percentage of ticket holders -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="sell_out" score="90"> <!-- ST >40%, 90% attendance / 50% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="fan_favorite"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="crowd_attendance" mandatory="true" arguments="3">
+				<argument name="attendance" value="90"/> <!-- attendance to have for each game -->
+				<argument name="matches" value="50"/>	<!-- minimum percentage of the matches to have the required attendance -->
+				<argument name="location" value="1"/>		<!-- match location 0=ANY, 1=HOME, 2=AWAY -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="6"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="season_tickets_holders" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="tickets" value="40"/>             <!-- percentage of ticket holders -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="sell_out" score="90"> <!-- ST >40%, 85% attendance / 70% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="fan_favorite"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="crowd_attendance" mandatory="true" arguments="3">
+				<argument name="attendance" value="85"/> <!-- attendance to have for each game -->
+				<argument name="matches" value="70"/>	<!-- minimum percentage of the matches to have the required attendance -->
+				<argument name="location" value="1"/>		<!-- match location 0=ANY, 1=HOME, 2=AWAY -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="6"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="season_tickets_holders" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="tickets" value="40"/>             <!-- percentage of ticket holders -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="fan_favorite" score="90">
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="sell_out"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="crowd_attendance_streak" mandatory="true" arguments="4">
+				<argument name="attendance" value="85"/> <!-- attendance to have for each game -->
+				<argument name="streak" value="5"/>	<!-- minimum percentage of the matches to have the required attendance -->
+				<argument name="location" value="1"/>		<!-- match location 0=ANY, 1=HOME, 2=AWAY -->
+				<argument name="match_type" value="1"/>		<!-- match type 0=ANY, 1=LEAGUE, 2=CUP -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="6"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="season_tickets_holders" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="tickets" value="40"/>             <!-- percentage of ticket holders -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="fan_favorite" score="90">
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="sell_out"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="crowd_attendance_streak" mandatory="true" arguments="4">
+				<argument name="attendance" value="90"/> <!-- attendance to have for each game -->
+				<argument name="streak" value="5"/>	<!-- minimum percentage of the matches to have the required attendance -->
+				<argument name="location" value="1"/>		<!-- match location 0=ANY, 1=HOME, 2=AWAY -->
+				<argument name="match_type" value="1"/>		<!-- match type 0=ANY, 1=LEAGUE, 2=CUP -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="6"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="season_tickets_holders" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="tickets" value="40"/>             <!-- percentage of ticket holders -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+<!-- 5 to 10 -->
+	<objective type="shirt_sales" score="120"> <!-- Make 200m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="200000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="2500000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 150m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="150000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="2500000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="2000000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 120m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="120000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="2000000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="1500000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 100m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="100000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="1500000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="1300000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 90m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="90000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="1300000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="1170000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 80m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="80000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="1170000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="1050000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 70m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="70000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="1050000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="950000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 60m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="60000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="950000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="870000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 50m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="50000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="870000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="750000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 45m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="45000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="750000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="700000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 40m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="40000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="700000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="650000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 35m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="35000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="650000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="550000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 30m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="30000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="550000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="450000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 25m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="25000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="450000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="350000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 20m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="20000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="350000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="300000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 17m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="17000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="300000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="250000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 15m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="15000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="250000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="200000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 12m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="12000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="200000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="150000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 10m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="10000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="150000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="120000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 8m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="8000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="120000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="80000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="shirt_sales" score="120"> <!-- Make 6m from shirt sales -->
+		<duration min="1" max="1"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="shirt_sales" mandatory="true" arguments="1">
+				<argument name="amount" value="6000000"/> 	<!-- amount of profit from shirt sales -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="80000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>
+            <precondition type="estimated_shirt_sales" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="threshold" value="50000"/>  <!-- amount of shirt sales to compare to -->
+            </precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="sign_a_star_1" score="90"> <!-- Sign 1 crucial 1st team player with MID or ATT position -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="sign_a_star_2"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="1">
+			<condition type="buy_players" mandatory="false" arguments="6">
+				<argument name="num_players" value="1"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="0"/>	<!-- minimum overall -->
+				<argument name="area" value="3"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="1"/>		<!-- played area 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="0"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+			<condition type="buy_players" mandatory="false" arguments="6">
+				<argument name="num_players" value="1"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="0"/>	<!-- minimum overall -->
+				<argument name="area" value="4"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="1"/>		<!-- played area 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="0"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_overall" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="overall" value="79"/>	<!-- overall -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>	<!-- start of objective -->
+				<entry checkpoint="-1" value="0"/>	<!-- start of 1st transfer window -->
+				<entry checkpoint="-2" value="70"/> <!-- end of 1st transfer window, we don't expect much in the first transfer window -->
+				<entry checkpoint="-3" value="70"/> <!-- start of 2st transfer window, we don't expect anything between transfer windows -->
+				<entry checkpoint="-4" value="100"/> <!-- end of 2st transfer window, we expect almost complete here, leave a chance for free agents transfer -->
+				<entry checkpoint="-6" value="100"/> <!-- end of objective, we expect full completion -->
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="sign_a_star_1" score="90"> <!-- Sign 1 crucial 1st team player with ATT position -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="sign_a_star_2"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="buy_players" mandatory="true" arguments="6">
+				<argument name="num_players" value="1"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="0"/>	<!-- minimum overall -->
+				<argument name="area" value="4"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="1"/>		<!-- played area 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="0"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_overall" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="overall" value="79"/>	<!-- overall -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>	<!-- start of objective -->
+				<entry checkpoint="-1" value="0"/>	<!-- start of 1st transfer window -->
+				<entry checkpoint="-2" value="70"/> <!-- end of 1st transfer window, we don't expect much in the first transfer window -->
+				<entry checkpoint="-3" value="70"/> <!-- start of 2st transfer window, we don't expect anything between transfer windows -->
+				<entry checkpoint="-4" value="100"/> <!-- end of 2st transfer window, we expect full completion -->
+				<entry checkpoint="-6" value="100"/> <!-- end of objective, we expect full completion -->
+			</progress>
+		</expected_progress>
+	</objective>
+<!-- 7 to 10 -->
+	<objective type="sell_out" score="120"> <!-- 7 to 8 -- ST >65%, 95% attendance / 50% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="fan_favorite"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="crowd_attendance" mandatory="true" arguments="3">
+				<argument name="attendance" value="95"/> <!-- attendance to have for each game -->
+				<argument name="matches" value="50"/>	<!-- minimum percentage of the matches to have the required attendance -->
+				<argument name="location" value="1"/>		<!-- match location 0=ANY, 1=HOME, 2=AWAY -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="8"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="season_tickets_holders" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="tickets" value="54"/>             <!-- percentage of ticket holders -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="fan_favorite" score="90"> <!-- 7 to 8 -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="sell_out"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="crowd_attendance_streak" mandatory="true" arguments="4">
+				<argument name="attendance" value="90"/> <!-- attendance to have for each game -->
+				<argument name="streak" value="5"/>	<!-- minimum percentage of the matches to have the required attendance -->
+				<argument name="location" value="1"/>		<!-- match location 0=ANY, 1=HOME, 2=AWAY -->
+				<argument name="match_type" value="1"/>		<!-- match type 0=ANY, 1=LEAGUE, 2=CUP -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="8"/>		<!-- minimum rating -->
+				<argument name="op" value="1"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+            <precondition type="season_tickets_holders" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="tickets" value="54"/>             <!-- percentage of ticket holders -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="promote_club" score="85"> <!-- Promote the club in Asia -->
+		<duration min="2" max="2"/>
+		<conditions non_mandatory_max_fail="2">
+			<condition type="buy_players" mandatory="false" arguments="6">
+				<argument name="num_players" value="1"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="0"/>	<!-- minimum overall -->
+				<argument name="area" value="0"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="1"/>		<!-- player tier 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="4"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+			<condition type="buy_players" mandatory="false" arguments="6">
+				<argument name="num_players" value="1"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="0"/>	<!-- minimum overall -->
+				<argument name="area" value="0"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="2"/>		<!-- player tier 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="4"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+			<condition type="preseason_target" mandatory="false" arguments="2">
+				<argument name="target" value="5"/> 	<!-- competiton target 1=GROUP, 2=KNOCKOUT, 3=ROUND_32, 4=ROUND_16, 5=QUARTER_FINALS, 6=SEMI_FINALS, 7=FINALS, 8=WIN_CUP -->
+				<argument name="region" value="4"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_overall" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="overall" value="83"/>	<!-- overall -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="2">
+				<entry checkpoint="-5" value="0"/>	<!-- start of objective -->
+				<entry checkpoint="-1" year="0" value="0"/>	<!-- start of 1st transfer window, first year -->
+				<entry checkpoint="-2" year="0" value="15"/> <!-- end of 1st transfer window, first year -->
+				<entry checkpoint="-3" year="0" value="15"/> <!-- start of 2st transfer window, first year -->
+				<entry checkpoint="-4" year="0" value="25"/> <!-- end of 2st transfer window, first year -->
+				<entry checkpoint="-1" year="1" value="25"/> <!-- start of 1st transfer window, second year -->
+				<entry checkpoint="-2" year="1" value="85"/> <!-- end of 1st transfer window, second year -->
+				<entry checkpoint="-3" year="1" value="85"/> <!-- start of 2st transfer window, second year -->
+				<entry checkpoint="-4" year="1" value="100"/> <!-- end of 2st transfer window, second year -->
+				<entry checkpoint="-6" value="100"/> <!-- end of objective, we expect full completion -->
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="promote_club" score="85"> <!-- Promote the club in North America -->
+		<duration min="2" max="2"/>
+		<conditions non_mandatory_max_fail="2">
+			<condition type="buy_players" mandatory="false" arguments="6">
+				<argument name="num_players" value="1"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="0"/>	<!-- minimum overall -->
+				<argument name="area" value="0"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="1"/>		<!-- player tier 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="3"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+			<condition type="buy_players" mandatory="false" arguments="6">
+				<argument name="num_players" value="1"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="0"/>	<!-- minimum overall -->
+				<argument name="area" value="0"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="2"/>		<!-- player tier 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="3"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+			<condition type="preseason_target" mandatory="false" arguments="2">
+				<argument name="target" value="5"/> 	<!-- competiton target 1=GROUP, 2=KNOCKOUT, 3=ROUND_32, 4=ROUND_16, 5=QUARTER_FINALS, 6=SEMI_FINALS, 7=FINALS, 8=WIN_CUP -->
+				<argument name="region" value="3"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>		<!-- minimum rating -->
+				<argument name="op" value="0"/>			<!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_overall" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="overall" value="83"/>	<!-- overall -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="2">
+				<entry checkpoint="-5" value="0"/>	<!-- start of objective -->
+				<entry checkpoint="-1" year="0" value="0"/>	<!-- start of 1st transfer window, first year -->
+				<entry checkpoint="-2" year="0" value="15"/> <!-- end of 1st transfer window, first year -->
+				<entry checkpoint="-3" year="0" value="15"/> <!-- start of 2st transfer window, first year -->
+				<entry checkpoint="-4" year="0" value="25"/> <!-- end of 2st transfer window, first year -->
+				<entry checkpoint="-1" year="1" value="25"/> <!-- start of 1st transfer window, second year -->
+				<entry checkpoint="-2" year="1" value="85"/> <!-- end of 1st transfer window, second year -->
+				<entry checkpoint="-3" year="1" value="85"/> <!-- start of 2st transfer window, second year -->
+				<entry checkpoint="-4" year="1" value="100"/> <!-- end of 2st transfer window, second year -->
+				<entry checkpoint="-6" value="100"/> <!-- end of objective, we expect full completion -->
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="sign_a_star_2" score="125"> <!-- Sign 1 star player -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="sign_a_star_1"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="buy_players" mandatory="true" arguments="6">
+				<argument name="num_players" value="1"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="85"/>	<!-- minimum overall -->
+				<argument name="area" value="0"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="0"/>		<!-- player tier 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="0"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_overall" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="overall" value="79"/>	<!-- overall -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>	<!-- start of objective -->
+				<entry checkpoint="-1" value="0"/>	<!-- start of 1st transfer window -->
+				<entry checkpoint="-2" value="70"/> <!-- end of 1st transfer window -->
+				<entry checkpoint="-3" value="70"/> <!-- start of 2st transfer window, we don't expect anything between transfer windows -->
+				<entry checkpoint="-4" value="100"/> <!-- end of 2st transfer window -->
+				<entry checkpoint="-6" value="100"/> <!-- end of objective, we expect full completion -->
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="sign_a_star_2" score="125">  <!-- Sign 3 star players in 2 seasons -->
+		<duration min="2" max="2"/>
+		<similarities>
+			<similarity objective="sign_a_star_1"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="buy_players" mandatory="true" arguments="6">
+				<argument name="num_players" value="3"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="85"/>	<!-- minimum overall -->
+				<argument name="area" value="0"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="0"/>		<!-- player tier 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="0"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_overall" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="overall" value="79"/>	<!-- overall -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="2">
+				<entry checkpoint="-5" value="0"/>	<!-- start of objective -->
+				<entry checkpoint="-1" year="0" value="0"/>	<!-- start of 1st transfer window, first year -->
+				<entry checkpoint="-2" year="0" value="35"/> <!-- end of 1st transfer window, first year -->
+				<entry checkpoint="-3" year="0" value="35"/> <!-- start of 2st transfer window, first year -->
+				<entry checkpoint="-4" year="0" value="50"/> <!-- end of 2st transfer window, first year, we expect half -->
+				<entry checkpoint="-1" year="1" value="50"/> <!-- start of 1st transfer window, second year -->
+				<entry checkpoint="-2" year="1" value="85"/> <!-- end of 1st transfer window, second year -->
+				<entry checkpoint="-3" year="1" value="85"/> <!-- start of 2st transfer window, second year -->
+				<entry checkpoint="-4" year="1" value="100"/> <!-- end of 2st transfer window, second year -->
+				<entry checkpoint="-6" value="100"/> <!-- end of objective, we expect full completion -->
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="sign_a_star_2" score="120">  <!-- Sign 5 star players in 3 seasons -->
+		<duration min="3" max="3"/>
+		<similarities>
+			<similarity objective="sign_a_star_1"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="buy_players" mandatory="true" arguments="6">
+				<argument name="num_players" value="5"/> 	<!-- num players to transfer -->
+				<argument name="overall" value="85"/>	<!-- minimum overall -->
+				<argument name="area" value="0"/>		<!-- played area 0=ANY, 1=GK, 2=DEF, 3=MID, 4=FW -->
+				<argument name="tier" value="0"/>		<!-- player tier 0=ANY, 1..5=tier -->
+				<argument name="nationality" value="0"/>		<!-- played nationality 0=ANY -->
+				<argument name="region" value="0"/>		<!-- region 0=ANY 1=Euro 2=South America 3=USA 4=Asia -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="2"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_overall" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="overall" value="79"/>	<!-- overall -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>	<!-- start of objective -->
+				<entry checkpoint="-1" year="0" value="0"/>	<!-- start of 1st transfer window, first year -->
+				<entry checkpoint="-2" year="0" value="22"/> <!-- end of 1st transfer window, first year -->
+				<entry checkpoint="-3" year="0" value="22"/> <!-- start of 2st transfer window, first year -->
+				<entry checkpoint="-4" year="0" value="33"/> <!-- end of 2st transfer window, first year -->
+				<entry checkpoint="-1" year="1" value="33"/> <!-- start of 1st transfer window, second year -->
+				<entry checkpoint="-2" year="1" value="55"/> <!-- end of 1st transfer window, second year -->
+				<entry checkpoint="-3" year="1" value="55"/> <!-- start of 2st transfer window, second year -->
+				<entry checkpoint="-4" year="1" value="66"/> <!-- end of 2st transfer window, second year -->
+				<entry checkpoint="-1" year="2" value="66"/> <!-- start of 1st transfer window, last year -->
+				<entry checkpoint="-2" year="2" value="88"/> <!-- end of 1st transfer window, last year -->
+				<entry checkpoint="-3" year="2" value="88"/> <!-- start of 2st transfer window, last year -->
+				<entry checkpoint="-4" year="2" value="100"/> <!-- end of 2st transfer window, last year -->
+				<entry checkpoint="-6" value="100"/> <!-- end of objective, we expect full completion -->
+			</progress>
+		</expected_progress>
+	</objective>
+	</objectives>

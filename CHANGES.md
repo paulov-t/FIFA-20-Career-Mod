@@ -1,3 +1,36 @@
+# Version 1.4
+
+## Transfer Budgets
+- Fix where some transfer budgets for some European teams were too low - NOT DONE
+
+## Transfers
+- Slightly increased the OVR search range for all clubs
+- Increased amount of loans being accepted (eg. Liverpool can now loan out all their youngsters)
+- AI now offers the correct values for players
+
+## Finances
+- Increased the amount of remaining budget you carry over for low teams slightly
+
+## Player Fitness
+- Fix a bug where players would not recover properly after playing 20 minutes - NOT DONE
+
+## Player Values
+- Fixed a bug where a Release Clause could be less than the player value
+
+## Training
+- Fix a bug where new training attributes are appearing but not working
+
+## Player Form
+- Re-Apply a more balanced form file
+
+## Team Selection
+- AI will now rotate more for Friendly matches
+
+## Board and Objectives
+- More fixes to stop finance related objectives causing a sacking
+- Reduce the amount "profit" required for certain objectives
+- Increase the points earned for winning matches
+
 # Version 1.3
 
 ## Player Values

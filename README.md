@@ -5,6 +5,9 @@
 - Top teams will win the league with realistic points & goals scored
 - Top scorers and assisters are more realistic
 
+# Team Selection
+- The AI will always pick their best 11 players, rotating only for Friendlies
+
 ## Finances
 
  - Financial Accuracy

@@ -1199,7 +1199,7 @@
     </tile>
     <tile NAME="PAM_BROWSE_JOBS_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="204" X="1393" Y="706" />
-      <subtile NAME="PAM_BROWSE_JOBS_SUBTILE" BG_ICON="BrowseJobs_Small" SUBTILE_TYPE="TILE" DESTINATION="EnterBrowseJobs">
+	  <subtile NAME="PAM_BROWSE_JOBS_SUBTILE" BG_ICON="BrowseJobs_Small" SUBTILE_TYPE="TILE" DESTINATION="EnterBrowseJobs">
         <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="txt_cmhub_title_browse_jobs" FORMAT="HS" />
       </subtile>
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_BROWSE_JOBS_INTERNATIONAL" DESTINATION="ShowResignInternationalJobPopUp" BG_ICON="ResignNatlTeam_Small" PARAM="" DATAPROVIDERID="CM_HUB_BROWSE_JOBS_DP">
