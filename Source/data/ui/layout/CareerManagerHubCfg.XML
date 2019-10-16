@@ -16,7 +16,7 @@
   <buttons>
     <button ID="BACK" HINT="Back" ACTION="ACTION_NAV" DESTINATION="back" />
     <button ID="OPTION_LEFT" HINT="CM_Settings_Save" ACTION="ACTION_BUTTON_X" DESTINATION="SAVE" />
-    <button ID="OPTION_TOP" HINT="CM_Callout_AttendPressConference" ACTION="ACTION_NAV" DESTINATION="EnterPreMatchPressConf" />
+    <button ID="OPTION_TOP" HINT="CM_Hub_Callout_Inbox" ACTION="ACTION_NAV" DESTINATION="EnterInbox" />
   </buttons>
   <panel_set>
     <panel NAME="PAM_HUB_CENTRAL_PANEL" LABEL="txt_cmhub_central" IS_TAB="TRUE" />
@@ -657,8 +657,7 @@
       <data ID="TITLE" TYPE="title" PARAM="txt_cmhub_title_intl_squad_select" FORMAT="HS" />
       <data ID="DESC" TYPE="text" PARAM="txt_cmhub_desc_intl_squad_select" FORMAT="I" WIDTH="250" HEIGHT="75" X="18" REL_TARGET="TITLE" REL_Y="10" />
     </tile>
-    
-	<tile NAME="PAM_KITS_NESTED" TYPE="TILE_NESTED">
+    <tile NAME="PAM_KITS_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="204" X="1393" Y="706" />
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_KITS_NUMBER" DESTINATION="EnterEditKitNumber" BG_ICON="KitNumbers_Small">
         <data ID="TITLE" TYPE="title" PARAM="CM_Squad_Edit_Kit_Numbers_PAM" FORMAT="HS" />
@@ -1199,7 +1198,7 @@
     </tile>
     <tile NAME="PAM_BROWSE_JOBS_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="204" X="1393" Y="706" />
-	  <subtile NAME="PAM_BROWSE_JOBS_SUBTILE" BG_ICON="BrowseJobs_Small" SUBTILE_TYPE="TILE" DESTINATION="EnterBrowseJobs">
+      <subtile NAME="PAM_BROWSE_JOBS_SUBTILE" BG_ICON="BrowseJobs_Small" SUBTILE_TYPE="TILE" DESTINATION="EnterBrowseJobs">
         <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="txt_cmhub_title_browse_jobs" FORMAT="HS" />
       </subtile>
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_BROWSE_JOBS_INTERNATIONAL" DESTINATION="ShowResignInternationalJobPopUp" BG_ICON="ResignNatlTeam_Small" PARAM="" DATAPROVIDERID="CM_HUB_BROWSE_JOBS_DP">

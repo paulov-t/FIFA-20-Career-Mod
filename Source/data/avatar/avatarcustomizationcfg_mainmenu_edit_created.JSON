@@ -1,7 +1,5 @@
 {
-  "presetType": "CP_PRESET_WORLD_TOUR",
-  "malePresetLayout": "CharacterLayoutId_World_Tour",
-  "femalePresetLayout": "CharacterLayoutId_World_Tour",
+  "presetType": "CP_PRESET_11_V_11",
   "attributeCategories": [
     {
       "name": "HEAD_AND_FACE",
@@ -650,9 +648,6 @@
       }
     },
     {
-      "name": "TATTOOS"
-    },
-    {
       "name": "BRAND_ANIMATIONS",
       "filters": {
         "areFiltersAttributes": false,
@@ -663,7 +658,8 @@
               "areFiltersAttributes": true,
               "data": [
                 {
-                  "name": "GOALCELEBRATION"
+                  "name": "GOALCELEBRATION",
+                  "disabledOptions": [ 3610, 3612, 3616, 3617, 3620, 3623, 3624, 3628, 3609, 3611, 3615, 3618, 3619, 3621, 3622, 3625, 3626, 3627 ]
                 },
                 {
                   "name": "RUNNINGCELEBRATION"

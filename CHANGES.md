@@ -1,18 +1,27 @@
+# Version 1.5
+
+## Job Offers / Searching
+- Made it so you can search for offers at any time of the season - NOT DONE
+
 # Version 1.4
 
+## Match simulation, League table and Goal Scorers
+- Made it so not all teams win by over 100 points in leagues
+- Change injuries during sim matches (and fix EA mistake by using the same settings as Cards)
+
 ## Transfer Budgets
-- Fix where some transfer budgets for some European teams were too low - NOT DONE
+- Fix where some transfer budgets for some European teams were too low
 
 ## Transfers
 - Slightly increased the OVR search range for all clubs
 - Increased amount of loans being accepted (eg. Liverpool can now loan out all their youngsters)
-- AI now offers the correct values for players
+- AI now offers the better values for players
 
 ## Finances
 - Increased the amount of remaining budget you carry over for low teams slightly
 
 ## Player Fitness
-- Fix a bug where players would not recover properly after playing 20 minutes - NOT DONE
+- Fix a bug where players would not recover properly after playing 20 minutes
 
 ## Player Values
 - Fixed a bug where a Release Clause could be less than the player value
@@ -30,6 +39,18 @@
 - More fixes to stop finance related objectives causing a sacking
 - Reduce the amount "profit" required for certain objectives
 - Increase the points earned for winning matches
+
+## Teams
+- Change Domestic Prestige for all English teams for a better balance across the game (EA has Charlton as 1!)
+
+
+# Version 1.3.5
+
+## UI
+- Fix an issue that displayed the Press Conference button instead of the Inbox button
+
+## Player Customization
+- Fix an issue with Player Editor that was causing a crash
 
 # Version 1.3
 
