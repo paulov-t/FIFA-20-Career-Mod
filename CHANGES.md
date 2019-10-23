@@ -1,7 +1,85 @@
 # Version 1.5
 
+## Dynamic Player Hair Growth/Style changes
+- Players will now grow or change their hair style - NOT DONE
+- Players will now grow or shave their beard - NOT DONE
+- Players can now be edited through the filesystem - NOT DONE
+
+## Match simulation
+- Increase amount of subs per game
+- Increase amount of injuries per game
+
+## Gameplay
+- Fix an issue that was causing Cup matches to play differently to League matches
+
+## Referees
+- Set all referees to "linient" card strictness
+- Set all referees to "strict" foul strictness
+
+## Transfers
+- Increase AI transfer activity substantially allowing for 1-2 per AI team
+
+## Player Values
+- Substantially increased prices of players with an OVR 78 or above
+
+## Finances
+- Improved financial accuracy in lower leagues - NOT DONE
+
+## Fitness Recovery
+- Fitness recovery is now slightly less than default
+
+## Player Training
+- You can now train "Aggression" in defending - NOT DONE
+
 ## Job Offers / Searching
 - Made it so you can search for offers at any time of the season - NOT DONE
+
+## UI
+- Change the Player Editor so it doesn't fully exit to Career Hub after each change - NOT DONE
+
+## Text
+- Fix broken text caused by the update (refresh the loc files) - NOT DONE
+
+# Version 1.5 alpha 1
+
+## Match simulation
+- Increase amount of subs per game
+- Increase amount of small injuries per game
+
+## Gameplay
+- Fix an issue that was causing Cup matches to play differently to League matches
+
+## Referees
+- Set all referees to "linient" card strictness
+- Set all referees to "strict" foul strictness
+
+## Transfers
+- Increase AI transfer activity substantially allowing for 1-2 per AI team
+- Allow for more loan offers for your young players
+
+## Player Values
+- Substantially increased prices of players with an OVR 78 or above
+
+## Fitness Recovery
+- Fitness recovery is now slightly less than default
+
+# Version 1.4.1
+
+## Player Contracts
+- Make it so all First 11 Players almost always renew their contract (1% chance they wont)
+
+## Transfers
+- Fix transfer values for demands and offers for players
+- Revert Transfer Listing and Loan listing file back to vanilla
+
+## Player Values
+- Increased player values of some lower PL players (i.e. Zaha)
+
+## Referees
+- Set all referees to "normal" card strictness
+
+## Gameplay
+- Set all modifiers to 0 in the database
 
 # Version 1.4
 

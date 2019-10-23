@@ -201,7 +201,19 @@
                   "minValue": 1,
                   "maxValue": 99,
                   "componentType": "BAR"
-                }
+                },
+                {
+									"name": "MARKING",
+									"minValue": 1,
+									"maxValue": 99,
+									"isVisible": false
+                },
+                {
+									"name": "COMPOSURE",
+									"minValue": 1,
+									"maxValue": 99,
+									"isVisible": false
+								}
               ]
             }
           },
@@ -632,8 +644,7 @@
                   "name": "GLOVES"
                 },
                 {
-                  "name": "GK_GLOVES",
-                  "disabledOptions": [ 103, 104, 95, 96, 117, 118 ]
+                  "name": "GK_GLOVES"
                 },
                 {
                   "name": "LEFT_WRIST"
@@ -659,7 +670,6 @@
               "data": [
                 {
                   "name": "GOALCELEBRATION",
-                  "disabledOptions": [ 3610, 3612, 3616, 3617, 3620, 3623, 3624, 3628, 3609, 3611, 3615, 3618, 3619, 3621, 3622, 3625, 3626, 3627 ]
                 },
                 {
                   "name": "RUNNINGCELEBRATION"
@@ -694,44 +704,6 @@
           }
         ]
       }
-    }
-  ],
-  "attributeDependencyTree": [
-    {
-      "parents": [
-        "POSITION"
-      ],
-      "children": [
-        "GK_GLOVES",
-        "GK_PANTS",
-        "GLOVES",
-        "ROLE"
-      ]
-    },
-    {
-      "parents": [
-        "GK_PANTS"
-      ],
-      "children": [
-        "ANKLE_TAPE"
-      ]
-    },
-    {
-      "parents": [
-        "BIRTH_MONTH",
-        "BIRTH_YEAR"
-      ],
-      "children": [
-        "BIRTH_DAY"
-      ]
-    },
-    {
-      "parents": [
-        "ROLE"
-      ],
-      "children": [
-        "PREFERRED_POSITION"
-      ]
     }
   ]
 }

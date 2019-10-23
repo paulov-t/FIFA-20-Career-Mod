@@ -1027,8 +1027,8 @@
 			</progress>
 		</expected_progress>
 	</objective>
-<!-- 7 to 10 -->
-	<objective type="sell_out" score="120"> <!-- 7 to 8 -- ST >65%, 95% attendance / 50% -->
+
+	<objective type="sell_out" score="120"> <!-- 7 to 8 --><!-- 65%, 95% attendance / 50% -->
 		<duration min="1" max="1"/>
 		<similarities>
 			<similarity objective="fan_favorite"/>

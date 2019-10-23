@@ -12,7 +12,7 @@
 			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
 				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
 				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
-				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="offset" value="-7"/>
 				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
 			</condition>
 		</conditions>
