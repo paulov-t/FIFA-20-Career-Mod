@@ -1,0 +1,1319 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+	<hub_settings NAME="AvatarCustomizationHub" HUB_VERSION="3">
+		<helper_class_name CLASSNAME="game.fluxHelpers.AvatarFluxHelper" />
+		<tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+		<tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+		<tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+		<panel_edge_switch ENABLED="FALSE"/>
+	</hub_settings>
+	<variable_set>
+		<variable id="mainToggleParams" type="string"/>
+		<variable id="mainToggleIndex" type="int"/>
+		<variable id="toggleParamList" type="string"/>
+		<variable id="secondarytoggleParam" type="string"/>
+		<variable id="componentVisibilityList" type="string"/>
+		<variable id="iconSelected" type="bool"/>
+		<variable id="iconList" type="string"/>
+		<variable id="descriptionParamList" type="string"/>
+		<variable id="presetValues" type="int"/>
+		<variable id="checkbox" type="bool"/>
+		<variable id="isLocked" type="bool"/>
+		<variable id="identityBackgrounds" type="string"/>
+		<variable id="identitySilhouettes" type="string"/>
+		<variable id="inputTextString" type="string"/>
+		<variable id="localizationStrings" type="string"/>		
+		<variable id="athleticSliderLabels" type="string"/>
+		<variable id="athleticSliderConfigs" type="string"/>
+		<variable id="athleticSliderValues" type="int"/>
+		<variable id="morphEditMode" type="bool"/>
+		<variable id="athleticMorphData" type="string"/>
+		<variable id="athleticMorphCurrentX" type="string"/>
+		<variable id="athleticMorphMinX" type="string"/>
+		<variable id="athleticMorphMaxX" type="string"/>
+		<variable id="attributeBarsHeightWeightVisibility" type="bool"/>
+		<variable id="athleticMorphCurrentY" type="string"/>
+		<variable id="athleticMorphMinY" type="string"/>
+		<variable id="athleticMorphMaxY" type="string"/>
+		<variable id="numItems" type="int"/>
+		<variable id="newItem" type="bool"/>
+		<variable id="firstCustomButtonParam" type="string"/>
+		<variable id="secondCustomButtonParam" type="string"/>
+		<variable id="morphColorList" type="int"/>
+		<variable id="morphColorCheckerVisible" type="bool"/>
+		<variable id="morphColorFirstSelected" type="bool"/>
+		<variable id="morphColorLastSelected" type="bool"/>
+		<variable id="faceNameList" type="string"/>
+		<variable id="faceModeList" type="string"/>
+		<variable id="faceDateList" type="string"/>
+		<variable id="listOptionStrings" type="string"/>
+		<variable id="listOptionToggleStrings" type="string"/>	
+		<variable id="listOptionAssetsPath" type="string"/>
+		<variable id="listOptionAssets" type="int"/>
+		<variable id="listOptionAssetsVisible" type="string"/>
+		<variable id="attributeTitle" type="string"/>
+		<variable id="assetType" type="string"/>
+		<variable id="assetFileNames" type="string"/>
+		<variable id="buttonCallouts" type="string"/>
+		<variable id="leftArrowVisibility" type="bool"/>	
+		<variable id="rightArrowVisibility" type="bool"/>	
+		<variable id="itemName" type="string"/>
+		<variable id="assetFilePath" type="string"/>
+		<variable id="recolorableAssetStrings" type="string"/>
+	</variable_set>
+	<components>
+		<component PATH="game/fluxHelpers/AvatarHubLibrary.swf" X="0" Y="0"/>
+		<component PATH="game/components/BackgroundImage.swf" X="0" Y="0" DATAPROVIDERID="BACKGROUND_IMAGE_DP"/>
+	</components>
+	<panel_set>
+	<panel NAME="AVATAR_INFO_PANEL" IS_TAB="TRUE" LABEL="AVATAR_INFO">
+			<buttons>
+				<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+				<button ID="START" HINT="Advance" ACTION="ACTION_BUTTON_START"/>
+			</buttons>
+			<layout NAME="AVATAR_INFO_PANEL_LAYOUT" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_INFO_PANEL_LIST" X="20" Y="20"/>
+				<tile NAME="AVATAR_INFO_ADVANCE_MIN"  X="20" Y="270"/>	
+				<tile NAME="AVATAR_INFO_ADVANCE_MAX"  X="20" Y="690"/>
+			</layout>
+			<layout NAME="AVATAR_INFO_PANEL_LAYOUT_WARNING" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_INFO_PANEL_LIST" X="20" Y="120"/>
+				<tile NAME="AVATAR_INFO_WARNING"  X="20" Y="0"/>
+				<tile NAME="AVATAR_INFO_ADVANCE_MIN"  X="20" Y="370"/>	
+				<tile NAME="AVATAR_INFO_ADVANCE_MAX"  X="20" Y="790"/>
+			</layout>
+			<layout NAME="AVATAR_INFO_PANEL_OPTIONS_LAYOUT" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_INFO_OPTIONS_LIST_TOGGLE" X="20" Y="0" />	
+				<tile NAME="AVATAR_INFO_OPTIONS_LIST" X="20" Y="60" />	
+			</layout>
+		</panel>
+		<panel NAME="AVATAR_ATHLETIC_PANEL" IS_TAB="TRUE" LABEL="AVATAR_ATHLETIC">
+			<buttons>
+				<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+				<button ID="START" HINT="Advance" ACTION="ACTION_BUTTON_START"/>
+				<button ID="OPTION_LEFT" HINT="" ACTION="ACTION_BUTTON_X" />
+			</buttons>
+			<layout NAME="AVATAR_ATHLETIC_ATTRIBUTES_LAYOUT_BASE" X="120" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_ATHLETIC_ICON_LIST" X="20" Y="0"/>
+				<tile NAME="AVATAR_ATHLETIC_TOGGLE" X="20" Y="50"/>
+				<tile NAME="AVATAR_ATHLETIC_ATTRIBUTE_BARS_TITLE" X="550" Y="100" />
+				<tile NAME="AVATAR_ATHLETIC_ATTRIBUTE_BARS" X="550" Y="103" />
+			</layout>
+			<layout NAME="AVATAR_ATHLETIC_BODY_LAYOUT" X="100" Y="117" EXTEND="AVATAR_ATHLETIC_ATTRIBUTES_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_ATHLETIC_BODY_MORPHER" X="30" Y="107" />
+				<tile NAME="AVATAR_ATHLETIC_RESET_BUTTON" X="30" Y="733" />
+			</layout>
+			<layout NAME="AVATAR_ATHLETIC_GAMEPLAY_LAYOUT" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980" EXTEND="AVATAR_ATHLETIC_ATTRIBUTES_LAYOUT_BASE">
+				<tile NAME="AVATAR_ATHLETIC_GAMEPLAY_LIST" X="30" Y="107" />
+				<tile NAME="AVATAR_ATHLETIC_ATTRIBUTE_BARS_TITLE" X="745" Y="100" />
+				<tile NAME="AVATAR_ATHLETIC_ATTRIBUTE_BARS" X="745" Y="183" />
+			</layout>
+			<layout NAME="AVATAR_ATHLETIC_IDENTITY_LAYOUT" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_ATHLETIC_ICON_LIST" X="20" Y="0"/>
+				<tile NAME="AVATAR_ATHLETIC_TOGGLE" X="0" Y="80" />
+				<tile NAME="AVATAR_ATHLETIC_IDENTITY_LIST" X="30" Y="107" />
+			</layout>
+			<layout NAME="AVATAR_ATHLETIC_TRAITS_LAYOUT" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+			  <tile NAME="AVATAR_ATHLETIC_ICON_LIST" X="20" Y="0"/>
+			  <tile NAME="AVATAR_ATHLETIC_TOGGLE" X="20" Y="80" />
+			  <tile NAME="AVATAR_ATHLETIC_TRAITS_LIST" X="30" Y="110" />
+		    </layout>
+			<layout NAME="AVATAR_ATHLETIC_ATTRIBUTES_LAYOUT" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+			  <tile NAME="AVATAR_ATHLETIC_ICON_LIST" X="20" Y="0"/>
+			  <tile NAME="AVATAR_ATHLETIC_TOGGLE" X="20" Y="80" />
+			  <tile NAME="AVATAR_ATHLETIC_ATTRIBUTES_TOGGLE" X="20" Y="110" />
+			  <tile NAME="AVATAR_ATHLETIC_ATTRIBUTES_LIST" X="30" Y="160" />
+		    </layout>
+		</panel>
+		<panel NAME="AVATAR_HEAD_AND_FACE_PANEL" IS_TAB="TRUE" LABEL="AVATAR_FACE" DEFAULT_LAYOUT="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE">
+			<buttons>
+				<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+				<button ID="START" HINT="Advance" ACTION="ACTION_BUTTON_START"/>
+			</buttons>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_AVATAR_HEAD_AND_FACE_ICON_LIST" X="20" Y="0" />
+				<tile NAME="AVATAR_AVATAR_HEAD_AND_FACE_TOGGLE" X="20" Y="50" />
+				<tile NAME="AVATAR_HEAD_AND_FACE_LEFT_ARROW" X="-190" Y="315"/>
+				<tile NAME="AVATAR_HEAD_AND_FACE_RIGHT_ARROW" X="1090" Y="315"/>
+				<tile NAME="AVATAR_HEAD_AND_FACE_LIST" X="35" Y="100" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_IMPORT" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_IMPORT_HEAD_PRESET_POPUP" X="20" Y="763" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_MORPH" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_HEAD_AND_FACE_MORPH" X="20" Y="763" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_COLOR" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_HEAD_AND_FACE_COLOR" X="20" Y="763" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_FIVE_COLOR_ACTIVE" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_HEAD_AND_FACE_FIVE_COLOR_PICKER" X="20" Y="730" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_SIX_COLOR_ACTIVE" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_HEAD_AND_FACE_SIX_COLOR_PICKER" X="20" Y="730" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_MORPH_COLOR" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_HEAD_AND_FACE_COLOR" X="20" Y="763" />
+				<tile NAME="AVATAR_HEAD_AND_FACE_MORPH" X="305" Y="763" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_MORPH_FIVE_COLOR_ACTIVE" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_HEAD_AND_FACE_MORPH_DISABLE" X="305" Y="763" />
+				<tile NAME="AVATAR_HEAD_AND_FACE_FIVE_COLOR_PICKER" X="20" Y="730" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_MORPH_SIX_COLOR_ACTIVE" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_HEAD_AND_FACE_MORPH_DISABLE" X="305" Y="763" />
+				<tile NAME="AVATAR_HEAD_AND_FACE_SIX_COLOR_PICKER" X="20" Y="730" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_TWO_TOGGLES" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_BASE"  HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_AVATAR_HEAD_AND_FACE_TOGGLE_TWO" X="20" Y="105" />
+				<tile NAME="AVATAR_HEAD_AND_FACE_LIST" X="20" Y="155" />
+				<tile NAME="AVATAR_HEAD_AND_FACE_LEFT_ARROW" X="-190" Y="350"/>
+				<tile NAME="AVATAR_HEAD_AND_FACE_RIGHT_ARROW" X="1090" Y="350"/>
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_TWO_TOGGLES_COLOR" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_TWO_TOGGLES" HELP_BAR_X="120" HELP_BAR_Y="1000">
+				<tile NAME="AVATAR_HEAD_AND_FACE_COLOR" X="20" Y="810" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_TWO_TOGGLES_FIVE_COLOR_ACTIVE" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_TWO_TOGGLES" HELP_BAR_X="120" HELP_BAR_Y="1000">
+				<tile NAME="AVATAR_HEAD_AND_FACE_FIVE_COLOR_PICKER" X="20" Y="780" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_TWO_TOGGLES_SIX_COLOR_ACTIVE" X="100" Y="117" EXTEND="AVATAR_HEAD_AND_FACE_PANEL_LAYOUT_TWO_TOGGLES" HELP_BAR_X="120" HELP_BAR_Y="1000">
+				<tile NAME="AVATAR_HEAD_AND_FACE_SIX_COLOR_PICKER" X="20" Y="780" />
+			</layout>
+			<layout NAME="AVATAR_HEAD_AND_FACE_PRESET_PANEL_LAYOUT" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_HEAD_AND_FACE_PRESET_TITLE" X="20" Y="0" />
+				<tile NAME="AVATAR_HEAD_AND_FACE_PRESET_LIST" X="20" Y="200" />
+			</layout>
+		</panel>
+		<panel NAME="AVATAR_KIT_PANEL" IS_TAB="TRUE" LABEL="AVATAR_KIT">
+			<buttons>
+				<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+				<button ID="START" HINT="Advance" ACTION="ACTION_BUTTON_START"/>
+			</buttons>
+			<layout NAME="AVATAR_KIT_PANEL_LAYOUT" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_KIT_ICON_LIST" X="20" Y="0" />
+				<tile NAME="AVATAR_KIT_TOGGLE_ONE" X="20" Y="35" />
+				<tile NAME="AVATAR_KIT_TOGGLE_TWO" X="20" Y="105" />
+				<tile NAME="AVATAR_KIT_LEFT_ARROW" X="-190" Y="350"/>
+				<tile NAME="AVATAR_KIT_RIGHT_ARROW" X="1090" Y="350"/>	
+				<tile NAME="AVATAR_KIT_LIST" X="20" Y="155"/>
+			</layout>
+		</panel>
+		<panel NAME="AVATAR_OUTFITS_PANEL" IS_TAB="TRUE" LABEL="AVATAR_OUTFITS" DEFAULT_LAYOUT="AVATAR_OUTFITS_PANEL_LAYOUT_BASE">
+			<buttons>
+				<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+				<button ID="START" HINT="Advance" ACTION="ACTION_BUTTON_START"/>
+			</buttons>
+			<layout NAME="AVATAR_OUTFITS_PANEL_LAYOUT_BASE" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_OUTFITS_ICON_LIST" X="20" Y="0" />
+				<tile NAME="AVATAR_OUTFITS_TOGGLE_ONE" X="20" Y="30" />
+				<tile NAME="AVATAR_OUTFITS_TOGGLE_TWO" X="20" Y="95" />
+				<tile NAME="AVATAR_OUTFITS_LIST" X="20" Y="145"/>
+			</layout>
+			<layout NAME="AVATAR_OUTFITS_PANEL_LAYOUT_CUSTOM" X="100" Y="117" EXTEND="AVATAR_OUTFITS_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_OUTFITS_FIRST_CUSTOM_BTN" X="20" Y="810"/>
+				<tile NAME="AVATAR_OUTFITS_SECOND_CUSTOM_BTN" X="305" Y="810"/>
+			</layout>
+			<layout NAME="AVATAR_OUTFITS_PANEL_LAYOUT_CUSTOM_COLOR_INACTIVE" X="100" Y="117" EXTEND="AVATAR_OUTFITS_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_OUTFITS_COLOR" X="20" Y="810" />
+				<tile NAME="AVATAR_OUTFITS_FIRST_CUSTOM_BTN" X="305" Y="810"/>
+				<tile NAME="AVATAR_OUTFITS_SECOND_CUSTOM_BTN" X="590" Y="810"/>
+			</layout>
+			<layout NAME="AVATAR_OUTFITS_PANEL_LAYOUT_CUSTOM_FIVE_COLOR_ACTIVE" X="100" Y="117" EXTEND="AVATAR_OUTFITS_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_OUTFITS_FIVE_COLOR_PICKER" X="20" Y="750" />
+			</layout>
+			<layout NAME="AVATAR_OUTFITS_PANEL_LAYOUT_CUSTOM_SIX_COLOR_ACTIVE" X="100" Y="117" EXTEND="AVATAR_OUTFITS_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_OUTFITS_SIX_COLOR_PICKER" X="20" Y="750" />
+			</layout>
+		</panel>
+		<panel NAME="AVATAR_TATTOOS_PANEL" IS_TAB="TRUE" LABEL="AVATAR_TATTOO" DEFAULT_LAYOUT="AVATAR_TATTOOS_PANEL_LAYOUT_BASE">
+			<buttons>
+				<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+				<button ID="START" HINT="Advance" ACTION="ACTION_BUTTON_START"/>
+			</buttons>
+			<layout NAME="AVATAR_TATTOOS_PANEL_LAYOUT_BASE" X="100" Y="117" HELP_BAR_X="230" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_TATTOOS_ICON_LIST" X="20" Y="0" />
+				<tile NAME="AVATAR_TATTOOS_TOGGLE_ONE" X="20" Y="30" />
+				<tile NAME="AVATAR_TATTOOS_LEFT_ARROW" X="-190" Y="325"/>
+				<tile NAME="AVATAR_TATTOOS_RIGHT_ARROW" X="1090" Y="325"/>	
+				<tile NAME="AVATAR_TATTOOS_LIST" X="30" Y="100"/>
+			</layout>
+			<layout NAME="AVATAR_TATTOOS_PANEL_LAYOUT_CUSTOM" X="100" Y="117" EXTEND="AVATAR_TATTOOS_PANEL_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_TATTOOS_FIRST_CUSTOM_BTN" X="20" Y="810"/>
+				<tile NAME="AVATAR_TATTOOS_SECOND_CUSTOM_BTN" X="305" Y="810"/>
+			</layout>
+		</panel>
+		<panel NAME="AVATAR_PERSONAL_BRAND_PANEL" IS_TAB="TRUE" LABEL="AVATAR_BRAND_ANIMATIONS" DEFAULT_LAYOUT="AVATAR_PERSONAL_BRAND_LAYOUT_BASE">
+			<buttons>
+				<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+				<button ID="START" HINT="Advance" ACTION="ACTION_BUTTON_START"/>
+			</buttons>
+			<layout NAME="AVATAR_PERSONAL_BRAND_LAYOUT_BASE" X="100" Y="117" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_PERSONAL_BRAND_ICON_LIST" X="20" Y="0" />
+				<tile NAME="AVATAR_PERSONAL_BRAND_TOGGLE_ONE" X="20" Y="35"/>
+				<tile NAME="AVATAR_PERSONAL_BRAND_TOGGLE_TWO" X="20" Y="105" />
+				<tile NAME="AVATAR_PERSONAL_BRAND_LEFT_ARROW" X="-190" Y="325"/>
+				<tile NAME="AVATAR_PERSONAL_BRAND_RIGHT_ARROW" X="1090" Y="325"/>
+				<tile NAME="AVATAR_PERSONAL_BRAND_LIST" X="20" Y="155" />
+			</layout>
+			<layout NAME="AVATAR_PERSONAL_BRAND_PANEL_LAYOUT_CUSTOM" X="100" Y="117" EXTEND="AVATAR_PERSONAL_BRAND_LAYOUT_BASE" HELP_BAR_X="120" HELP_BAR_Y="980">
+				<tile NAME="AVATAR_PERSONAL_BRAND_FIRST_CUSTOM_BTN" X="20" Y="810"/>
+			</layout>
+		</panel>
+	</panel_set>
+	<panel NAME="AVATAR_HEAD_AND_FACE_PANEL">
+		<tile NAME="AVATAR_AVATAR_HEAD_AND_FACE_ICON_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="825" HEIGHT="45"/>
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="75" ITEM_HEIGHT="45" ROWS="1" COLUMNS="11"/>
+			<data ID="icons" TYPE="asset" PATH="avatar/icons" WIDTH="65" HEIGHT="38" PARAM="@iconList[i]" COLOR="@#IfElse(@iconSelected[i],COLOR_FILL_PANEL_HIGHLIGHT_FLUX:COLOR_FILL_ICON_HIGHLIGHT)" ALPHA="@#IfElse(@iconSelected[i],100:80)" KEEP_SCALE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_AVATAR_HEAD_AND_FACE_TOGGLE" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">
+			<!-- To prevent highlight drop into AVATAR_HEAD_AND_FACE_LIST while user scrolls through Toggle -->
+			<!-- Keep the Toggle properties WIDTH the same as the WIDTH in AVATAR_HEAD_AND_FACE_LIST -->	
+			<properties WIDTH="1050" HEIGHT="40"/>
+			<!-- nullSizer is the real size of this Toggle -->
+			<data ID="nullSizer" TYPE="null" WIDTH="415" HEIGHT="40"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="mainToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@mainToggleParams,*|@mainToggleIndex|false|false|true)" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-2"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_AVATAR_HEAD_AND_FACE_TOGGLE_TWO" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="1050" HEIGHT="40"/>
+			<data ID="nullSizer" TYPE="null" WIDTH="415" HEIGHT="40"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="secondaryToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@secondarytoggleParam" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="1"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_LIST" TYPE="TILE_LIST" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="1050" HEIGHT="655"/>
+			<listProperties LIST_TYPE="TILE" ITEM_WIDTH="200" ITEM_HEIGHT="200" ROWS="3" COLUMNS="15" LIST_WIDTH="1050" LIST_HEIGHT="650"  FADE_ITEMS="TRUE" SHOW_HORIZONTAL_SCROLLBAR="TRUE"/>
+			<data ID="bgRectangle" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="200" WIDTH="200">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="faceShape" TYPE="asset" PATH="faceshape" WIDTH="200" HEIGHT="200" PARAM="@assetFileNames[i]" VISIBLE="@#DoesNotEqual(@assetType[i],TONE_AND_COMPLEXION)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="skinTone" TYPE="asset" PATH="skinTone" WIDTH="200" HEIGHT="200" PARAM="@assetFileNames[i]" VISIBLE="@#Equal(@assetType[i],TONE_AND_COMPLEXION)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="facialHair" TYPE="asset" PATH="facialhairstyle" WIDTH="200" HEIGHT="200" PARAM="@assetFileNames[i]" VISIBLE="@#Equal(@assetType[i],FACIAL_HAIR)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="hair" TYPE="asset" PATH="hairstyle" WIDTH="200" HEIGHT="200" PARAM="@assetFileNames[i]" VISIBLE="@#Equal(@assetType[i],HAIR)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="outfitHeadwear" TYPE="component" PATH="game/components/worldtour/StoreItem.swf" PARAM="@assetFileNames[i]" TRANSLATE="FALSE" VISIBLE="@#Equal(@assetType[i],OUTFITHEADWEAR)" HEIGHT="200" WIDTH="200" >
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="dimmer" TYPE="rectangle" FORMAT="||COLOR_FILL_PANEL_HIGHLIGHT_ROWBAND||COLOR_FILL_PANEL_UNHIGHLIGHT_ROWBAND" ALPHA="75" VISIBLE="@isLocked[i]">
+				<align TARGET="bgRectangle" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH"/>
+				<align TARGET="bgRectangle" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+				<align TARGET="bgRectangle" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="bgRectangle" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="allEquipped" TYPE="text" PARAM="AVATAR_ALL_EQUIPPED" FORMAT="TSM|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" VISIBLE="@isLocked[i]" WIDTH="140" HEIGHT="100">
+				<align TARGET="bgRectangle" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="bgRectangle" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="highlight" TYPE="asset" PATH="avatar" PARAM="highlight" HEIGHT="200" WIDTH="200" UHLALPHA="0" HLALPHA="100">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="faceWhiteBG" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="200" WIDTH="200" VISIBLE="@#Equal(@assetType[i],FACE)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="faceDesc" TYPE="text" WIDTH="190" HEIGHT="190" TRANSLATE="FALSE" PARAM="@itemName[i]" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB|center|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB|||middle" VISIBLE="@#Equal(@assetType[i],FACE)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="checkbox" TYPE="checkBox" PARAM="@#IfElse(@checkbox[i],checked:unchecked)" VISIBLE="@#Equal(@checkbox[i],true)" WIDTH="36" HEIGHT="36">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-10"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_LEFT_ARROW" TYPE="EXPANDABLE_TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="leftArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowLeft" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@leftArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_RIGHT_ARROW" TYPE="EXPANDABLE_TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="rightArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowRight" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@rightArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_IMPORT_HEAD_PRESET_POPUP" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="TRUE">
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="importFaceButtonLabel" TYPE="text" PARAM="AVATAR_IMPORT_FACE" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="TRUE" />
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_COLOR" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="TRUE" VISIBLE="FALSE" >
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="colorButtonLabel" TYPE="text" PARAM="COLOR" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="TRUE" WIDTH="270" HEIGHT="50"/>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_MORPH" TYPE="EXPANDABLE_TILE" DESTINATION="avatarMorph" HIGHLIGHTABLE="TRUE" VISIBLE="FALSE" >
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="morphButtonLabel" TYPE="text" PARAM="MORPH" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="TRUE" WIDTH="270" HEIGHT="50"/>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_MORPH_DISABLE" TYPE="TILE" DESTINATION="avatarMorph" HIGHLIGHTABLE="FALSE" TILE_STATE="DISABLED">
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="morphButtonLabel" TYPE="text" PARAM="MORPH" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="TRUE" WIDTH="270" HEIGHT="50"/>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_FIVE_COLOR_PICKER" TYPE="TILE_LIST">
+			<properties WIDTH="300" HEIGHT="98" />
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="38" ITEM_HEIGHT="66" LIST_X="32" LIST_Y="17" LIST_WIDTH="300" LIST_HEIGHT="66" SHOW_HORIZONTAL_SCROLLBAR="FALSE"/>
+			<backgroundData>
+				<data ID="colorPickerBackground1" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" WIDTH="258" HEIGHT="98" />
+				<data ID="colorPickerBackground2" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" X="5" Y="7" WIDTH="245" HEIGHT="85" />
+				<data ID="highlightFirst" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="26" Y="17" WIDTH="6" HEIGHT="66" VISIBLE="@morphColorFirstSelected" />
+				<data ID="highlightLast" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="222" Y="17" WIDTH="6" HEIGHT="66" VISIBLE="@morphColorLastSelected" />
+			</backgroundData>
+			<data ID="highlightRectangle" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" WIDTH="50" HEIGHT="66" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="colorRectangle" TYPE="rectangle" PARAM="@morphColorList[i]" WIDTH="38" HEIGHT="54">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="checkmark" TYPE="asset" PATH="CheckBox" PARAM="check" WIDTH="30" HEIGHT="30" VISIBLE="@morphColorCheckerVisible[i]">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_SIX_COLOR_PICKER" TYPE="TILE_LIST">
+			<properties WIDTH="300" HEIGHT="110" />
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="38" ITEM_HEIGHT="66" LIST_X="31" LIST_Y="17" LIST_WIDTH="228" LIST_HEIGHT="110" SHOW_HORIZONTAL_SCROLLBAR="FALSE"/>
+			<backgroundData>
+				<data ID="colorPickerBackground1" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" WIDTH="295" HEIGHT="98" />
+				<data ID="colorPickerBackground2" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" X="5" Y="7" WIDTH="282" HEIGHT="85" />
+				<data ID="highlightFirst" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="25" Y="17" WIDTH="7" HEIGHT="66" VISIBLE="@morphColorFirstSelected" />
+				<data ID="highlightLast" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="259" Y="17" WIDTH="6" HEIGHT="66" VISIBLE="@morphColorLastSelected" />
+				<data ID="arrowLeft" TYPE="asset" PATH="avatar" WIDTH="10" PARAM="leftArrow"  X="12" VISIBLE="TRUE" KEEP_SCALE="TRUE">
+					<align TARGET="colorPickerBackground2" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				</data>
+				<data ID="arrowRight" TYPE="asset" PATH="avatar" WIDTH="10" PARAM="rightArrow"  X="268" VISIBLE="TRUE" KEEP_SCALE="TRUE">
+					<align TARGET="colorPickerBackground2" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				</data>
+			</backgroundData>
+			<data ID="highlightRectangle" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" WIDTH="50" HEIGHT="66" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="colorRectangle" TYPE="rectangle" PARAM="@morphColorList[i]" WIDTH="38" HEIGHT="54">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="checkmark" TYPE="asset" PATH="CheckBox" PARAM="check" WIDTH="30" HEIGHT="30" VISIBLE="@morphColorCheckerVisible[i]">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_PRESET_TITLE" TYPE="TILE" SELECTABLE="FALSE">
+			<properties WIDTH="800" HEIGHT="200"/>
+			<data ID="titleBackground" TYPE="rectangle" FORMAT="|COLOR_FILL_PANEL_TITLEBAR||COLOR_FILL_PANEL_TITLEBAR|||" WIDTH="800" HEIGHT="120" />
+			<data ID="title" TYPE="text" ALIGN="leading" PARAM="AVATAR_IMPORT_FACE" FORMAT="FONT_TILE_HS|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|||left" TRANSLATE="TRUE" X="20" WIDTH="750" EIHGHT="40">
+				<align TARGET="titleBackground" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10"/>
+			</data>
+			<data ID="desc" TYPE="text" ALIGN="leading" PARAM="AVATAR_IMPORT_FACE_DESC" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|||left" TRANSLATE="TRUE" X="20" WIDTH="750" EIHGHT="40">
+				<align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="5"/>
+			</data>
+			
+			<data ID="background" TYPE="rectangle" FORMAT="|COLOR_FILL_UNHIGHLIGHT_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST|||" WIDTH="800" HEIGHT="80" >
+				<align TARGET="titleBackground" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM"/>
+			</data>
+			<data ID="name" TYPE="text" PARAM="NAME" TRANSLATE="TRUE" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_HIGHLIGHT_FLUX|||middle" WIDTH="200" HEIGHT="80">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="30"/>
+			</data>
+			<data ID="gamemode" TYPE="text" PARAM="AVATAR_GAME_MODE_UPPER" TRANSLATE="TRUE" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_HIGHLIGHT_FLUX|||middle" WIDTH="400" HEIGHT="80">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="300"/>
+			</data>
+			<data ID="date" TYPE="text" PARAM="AVATAR_DATE_UPPER" TRANSLATE="TRUE" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_HIGHLIGHT_FLUX|||middle" WIDTH="200" HEIGHT="80">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="600"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_HEAD_AND_FACE_PRESET_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">	
+			<properties WIDTH="800" HEIGHT="480"/>
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="800" ITEM_HEIGHT="80" ROWS="7" COLUMNS="1"/>
+			
+			<data ID="colored_box" TYPE="asset" PATH="tiles/story" WIDTH="800" HEIGHT="80" PARAM="ToneSeparator" VISIBLE="@#IsEven(@g_index[i])" UHLALPHA="30" HLALPHA="0" />
+			<data ID="faceName" TYPE="text" PARAM="@faceNameList[i]" TRANSLATE="FALSE" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB|left|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB|||middle" WIDTH="600" HEIGHT="80">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="30"/>
+			</data>
+			<data ID="faceMode" TYPE="text" PARAM="@faceModeList[i]" TRANSLATE="FALSE" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB|left|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB|||middle" WIDTH="500" HEIGHT="80">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="300"/>
+			</data>
+			<data ID="faceDate" TYPE="text" PARAM="@faceDateList[i]" TRANSLATE="FALSE" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB|left|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB|||middle" WIDTH="500" HEIGHT="80">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="600"/>
+			</data>
+		</tile>
+	</panel>
+	<panel NAME="AVATAR_OUTFITS_PANEL">
+		<tile NAME="AVATAR_OUTFITS_ICON_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="900" HEIGHT="45"/>
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="75" ITEM_HEIGHT="45" ROWS="1" COLUMNS="12"/>
+			<data ID="icons" TYPE="asset" PATH="avatar/icons" WIDTH="65" HEIGHT="38" PARAM="@iconList[i]" COLOR="@#IfElse(@iconSelected[i],COLOR_FILL_PANEL_HIGHLIGHT_FLUX:COLOR_FILL_ICON_HIGHLIGHT)" ALPHA="@#IfElse(@iconSelected[i],100:80)" KEEP_SCALE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_TOGGLE_ONE" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="704" HEIGHT="60"/>
+			<data ID="nullSizer" TYPE="null" WIDTH="425" HEIGHT="60"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="mainToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@mainToggleParams,*|false|false|false|true)" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="rectangleHighlight" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="rectangleHighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_TOGGLE_TWO" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="704" HEIGHT="55"/>
+			<data ID="nullSizer" TYPE="null" WIDTH="425" HEIGHT="55"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="secondaryToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@secondarytoggleParam" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="rectangleHighlight" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="rectangleHighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="1050" HEIGHT="655"/>			
+			<listProperties LIST_TYPE="TILE" ITEM_WIDTH="200" ITEM_HEIGHT="200" ROWS="3" COLUMNS="5" LIST_WIDTH="1050" LIST_HEIGHT="655"  FADE_ITEMS="TRUE" SHOW_HORIZONTAL_SCROLLBAR="TRUE"/>
+			<data ID="background" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" WIDTH="200" HEIGHT="200">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="storeItem" TYPE="component" PATH="game/components/worldtour/StoreItem.swf" PARAM="@assetFileNames[i]" TRANSLATE="FALSE" VISIBLE="@#DoesNotEqual(@assetType[i],none)" HEIGHT="200" WIDTH="200" >
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			  </data>
+			<data ID="dimmer" TYPE="rectangle" FORMAT="||COLOR_FILL_PANEL_HIGHLIGHT_ROWBAND||COLOR_FILL_PANEL_UNHIGHLIGHT_ROWBAND" ALPHA="75" VISIBLE="@isLocked[i]">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="allEquipped" TYPE="text" PARAM="AVATAR_ALL_EQUIPPED" FORMAT="TSM|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" VISIBLE="@isLocked[i]" WIDTH="140" HEIGHT="100">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="highlight" TYPE="asset" PATH="avatar" PARAM="highlight" HEIGHT="206" WIDTH="206" UHLALPHA="0" HLALPHA="100">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="newItemIcon" TYPE="asset" PATH="avatar" PARAM="corner" WIDTH="32" HEIGHT="32" VISIBLE="@newItem[i]">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+			</data>
+			<data ID="none" TYPE="asset" PATH="avatar" PARAM="none_0" WIDTH="100" HEIGHT="100" VISIBLE="@#Equal(@assetType[i],none)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+			<data ID="noneDesc" TYPE="text" PARAM="AVATAR_NONE" WIDTH="200" HEIGHT="50" FORMAT="|COLOR_TEXT_BRIGHT_GREY_NAVY|center|COLOR_TEXT_BRIGHT_GREY_NAVY|FONT_REGULAR_FHD|FONT_REGULAR_FHD|top" UHLALPHA="100" HLALPHA="100" VISIBLE="@#Equal(@assetType[i],none)">
+				<align TARGET="none" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+			<data ID="checkbox" TYPE="checkBox" PARAM="@#IfElse(@checkbox[i],checked:unchecked)" VISIBLE="@#Equal(@checkbox[i],true)" WIDTH="36" HEIGHT="36">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-10"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_COLOR" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="TRUE" VISIBLE="FALSE" >
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="colorButtonLabel" TYPE="text" PARAM="COLOR" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="250" HEIGHT="50">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_FIRST_CUSTOM_BTN" TYPE="EXPANDABLE_TILE" DESTINATION="custom" >
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="title" TYPE="text" PARAM="@firstCustomButtonParam" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="250" HEIGHT="50" TRANSLATE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_SECOND_CUSTOM_BTN" TYPE="EXPANDABLE_TILE" DESTINATION="custom2" >
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="title" TYPE="text" PARAM="@secondCustomButtonParam" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="250" HEIGHT="50" TRANSLATE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_FIVE_COLOR_PICKER" TYPE="TILE_LIST">
+			<properties WIDTH="300" HEIGHT="98" />
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="38" ITEM_HEIGHT="66" LIST_X="32" LIST_Y="17" LIST_WIDTH="300" LIST_HEIGHT="66" SHOW_HORIZONTAL_SCROLLBAR="FALSE"/>
+			<backgroundData>
+				<data ID="colorPickerBackground1" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" WIDTH="258" HEIGHT="98" />
+				<data ID="colorPickerBackground2" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" X="5" Y="7" WIDTH="245" HEIGHT="85" />
+				<data ID="highlightFirst" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="26" Y="17" WIDTH="6" HEIGHT="66" VISIBLE="@morphColorFirstSelected" />
+				<data ID="highlightLast" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="222" Y="17" WIDTH="6" HEIGHT="66" VISIBLE="@morphColorLastSelected" />
+			</backgroundData>
+			<data ID="highlightRectangle" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" WIDTH="50" HEIGHT="66" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="colorRectangle" TYPE="rectangle" PARAM="@morphColorList[i]" WIDTH="38" HEIGHT="54">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="checkmark" TYPE="asset" PATH="CheckBox" PARAM="check" WIDTH="30" HEIGHT="30" VISIBLE="@morphColorCheckerVisible[i]">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_SIX_COLOR_PICKER" TYPE="TILE_LIST">
+			<properties WIDTH="300" HEIGHT="110" />
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="38" ITEM_HEIGHT="66" LIST_X="31" LIST_Y="17" LIST_WIDTH="228" LIST_HEIGHT="110" SHOW_HORIZONTAL_SCROLLBAR="FALSE"/>
+			<backgroundData>
+				<data ID="colorPickerBackground1" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" WIDTH="295" HEIGHT="98" />
+				<data ID="colorPickerBackground2" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" X="5" Y="7" WIDTH="282" HEIGHT="85" />
+				<data ID="highlightFirst" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="25" Y="17" WIDTH="7" HEIGHT="66" VISIBLE="@morphColorFirstSelected" />
+				<data ID="highlightLast" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="259" Y="17" WIDTH="6" HEIGHT="66" VISIBLE="@morphColorLastSelected" />
+				<data ID="arrowLeft" TYPE="asset" PATH="avatar" WIDTH="10" PARAM="leftArrow"  X="12" VISIBLE="TRUE" KEEP_SCALE="TRUE">
+					<align TARGET="colorPickerBackground2" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				</data>
+				<data ID="arrowRight" TYPE="asset" PATH="avatar" WIDTH="10" PARAM="rightArrow"  X="268" VISIBLE="TRUE" KEEP_SCALE="TRUE">
+					<align TARGET="colorPickerBackground2" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				</data>
+			</backgroundData>
+			<data ID="highlightRectangle" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" WIDTH="50" HEIGHT="66" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="colorRectangle" TYPE="rectangle" PARAM="@morphColorList[i]" WIDTH="38" HEIGHT="54">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="checkmark" TYPE="asset" PATH="CheckBox" PARAM="check" WIDTH="30" HEIGHT="30" VISIBLE="@morphColorCheckerVisible[i]">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_BRAND_LEFT_ARROW" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="leftArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowLeft" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@leftArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_OUTFITS_BRAND_RIGHT_ARROW" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="rightArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowRight" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@rightArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+	</panel>
+	<panel NAME="AVATAR_TATTOOS_PANEL">
+		<tile NAME="AVATAR_TATTOOS_ICON_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="565" HEIGHT="45"/>
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="75" ITEM_HEIGHT="45" ROWS="1" COLUMNS="7"/>
+			<data ID="icons" TYPE="asset" PATH="avatar/icons" WIDTH="65" HEIGHT="38" PARAM="@iconList[i]" COLOR="@#IfElse(@iconSelected[i],COLOR_FILL_PANEL_HIGHLIGHT_FLUX:COLOR_FILL_ICON_HIGHLIGHT)" ALPHA="@#IfElse(@iconSelected[i],100:80)" KEEP_SCALE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_TATTOOS_TOGGLE_ONE" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="425" HEIGHT="60"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="mainToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@mainToggleParams,*|@mainToggleIndex|false|false|true)" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-2"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_TATTOOS_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">
+			<properties WIDTH="1050" HEIGHT="655"/>
+			<listProperties LIST_TYPE="TILE" ITEM_WIDTH="200" ITEM_HEIGHT="200" ROWS="3" COLUMNS="5" LIST_WIDTH="1050" LIST_HEIGHT="655"  FADE_ITEMS="TRUE" SHOW_HORIZONTAL_SCROLLBAR="TRUE"/>
+				<data ID="background" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" WIDTH="200" HEIGHT="200">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="storeItem" TYPE="component" PATH="game/components/worldtour/StoreItem.swf" PARAM="@assetFileNames[i]" TRANSLATE="FALSE" VISIBLE="@#DoesNotEqual(@assetType[i],none)" HEIGHT="200" WIDTH="200" >
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			  </data>
+			<data ID="dimmer" TYPE="rectangle" FORMAT="||COLOR_FILL_PANEL_HIGHLIGHT_ROWBAND||COLOR_FILL_PANEL_UNHIGHLIGHT_ROWBAND" ALPHA="75" VISIBLE="@isLocked[i]">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="allEquipped" TYPE="text" PARAM="AVATAR_ALL_EQUIPPED" FORMAT="TSM|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" VISIBLE="@isLocked[i]" WIDTH="140" HEIGHT="100">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="highlight" TYPE="asset" PATH="avatar" PARAM="highlight" HEIGHT="200" WIDTH="200" UHLALPHA="0" HLALPHA="100">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="newItemIcon" TYPE="asset" PATH="avatar" PARAM="corner" WIDTH="32" HEIGHT="32" VISIBLE="@newItem[i]">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+			</data>
+			<data ID="none" TYPE="asset" PATH="avatar" PARAM="none_0" WIDTH="100" HEIGHT="100" VISIBLE="@#Equal(@assetType[i],none)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+			<data ID="noneDesc" TYPE="text" PARAM="AVATAR_NONE" WIDTH="200" HEIGHT="50" FORMAT="|COLOR_TEXT_BRIGHT_GREY_NAVY|center|COLOR_TEXT_BRIGHT_GREY_NAVY|FONT_REGULAR_FHD|FONT_REGULAR_FHD|top" UHLALPHA="100" HLALPHA="100" VISIBLE="@#Equal(@assetType[i],none)">
+				<align TARGET="none" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+			<data ID="checkbox" TYPE="checkBox" PARAM="@#IfElse(@checkbox[i],checked:unchecked)" VISIBLE="@#Equal(@checkbox[i],true)" WIDTH="36" HEIGHT="36">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-10"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_TATTOOS_FIRST_CUSTOM_BTN" TYPE="EXPANDABLE_TILE" DESTINATION="custom" >
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="title" TYPE="text" PARAM="@firstCustomButtonParam" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="250" HEIGHT="50" TRANSLATE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_TATTOOS_SECOND_CUSTOM_BTN" TYPE="EXPANDABLE_TILE" DESTINATION="custom2" >
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="title" TYPE="text" PARAM="@secondCustomButtonParam" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="250" HEIGHT="50" TRANSLATE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_TATTOOS_LEFT_ARROW" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="leftArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowLeft" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@leftArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_TATTOOS_RIGHT_ARROW" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="rightArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowRight" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@rightArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+	</panel>
+	<panel NAME="AVATAR_KIT_PANEL">
+		<tile NAME="AVATAR_KIT_ICON_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="450" HEIGHT="45"/>
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="75" ITEM_HEIGHT="45" ROWS="1" COLUMNS="5"/>
+			<data ID="icons" TYPE="asset" PATH="avatar/icons" WIDTH="45" HEIGHT="45" PARAM="@iconList[i]" COLOR="@#IfElse(@iconSelected[i],COLOR_FILL_PANEL_HIGHLIGHT_FLUX:COLOR_FILL_ICON_HIGHLIGHT)" ALPHA="@#IfElse(@iconSelected[i],100:80)" KEEP_SCALE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_KIT_TOGGLE_ONE" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="420" HEIGHT="60"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="mainToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@mainToggleParams,*|@mainToggleIndex|false|false|true)" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-2"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_KIT_TOGGLE_TWO" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="420" HEIGHT="55"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="secondaryToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@secondarytoggleParam" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="-2"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_KIT_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="1050" HEIGHT="655"/>
+			<listProperties LIST_TYPE="TILE" ITEM_WIDTH="200" ITEM_HEIGHT="200" ROWS="3" COLUMNS="5" LIST_WIDTH="1050" LIST_HEIGHT="650"  FADE_ITEMS="TRUE" SHOW_HORIZONTAL_SCROLLBAR="TRUE"/>
+			<data ID="bgRectangle" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="200" WIDTH="200">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="image" TYPE="component" PARAM="@#Pattern(@recolorableAssetStrings[i],*|0x000000FF)" PATH="game/components/FluxComponents/FluxRecolorableAsset.swf" WIDTH="200" HEIGHT="200" KEEP_SCALE="TRUE" VISIBLE="@#DoesNotEqual(@assetType[i],none)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>				
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+			</data>
+			<data ID="rectangle" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="50" WIDTH="200" UHLALPHA="70" HLALPHA="70">
+				<align ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			<data ID="description" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" PARAM="@itemName[i]" WIDTH="180" HEIGHT="60" FORMAT="|COLOR_TEXT_SELECTED|center|COLOR_TEXT_SELECTED|FONT_REGULAR_FHD|FONT_REGULAR_FHD|middle" TRANSLATE="TRUE" VISIBLE="@#DoesNotEqual(@assetFileNames[i],)">
+				<align TARGET="rectangle" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			<data ID="highlight" TYPE="asset" PATH="avatar" PARAM="highlight" HEIGHT="200" WIDTH="200" UHLALPHA="0" HLALPHA="100">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="checkbox" TYPE="checkBox" PARAM="@#IfElse(@checkbox[i],checked:unchecked)" VISIBLE="@#Equal(@checkbox[i],true)" WIDTH="36" HEIGHT="36">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-10"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10"/>
+			</data>
+			<data ID="none" TYPE="asset" PATH="avatar" PARAM="none_0" WIDTH="100" HEIGHT="100" VISIBLE="@#Equal(@assetFileNames[i],)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+			<data ID="noneDesc" TYPE="text" PARAM="AVATAR_NONE" WIDTH="200" HEIGHT="50" FORMAT="|COLOR_TEXT_BRIGHT_GREY_NAVY|center|COLOR_TEXT_BRIGHT_GREY_NAVY|FONT_REGULAR_FHD|FONT_REGULAR_FHD|top" UHLALPHA="100" HLALPHA="100" VISIBLE="@#Equal(@assetFileNames[i],)">
+				<align TARGET="none" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_KIT_LEFT_ARROW" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="leftArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowLeft" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@leftArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_KIT_RIGHT_ARROW" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="rightArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowRight" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@rightArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+      </data>
+		</tile>
+	</panel>
+	<panel NAME="AVATAR_INFO_PANEL">
+		<tile NAME="AVATAR_INFO_PANEL_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">	
+			<properties WIDTH="704" HEIGHT="240"/>
+			<listProperties LIST_TYPE="GRID" ITEM_HEIGHT="60" ITEM_WIDTH="704" ROWS="8" COLUMNS="1" SHOW_HORIZONTAL_SCROLLBAR="TRUE"/>
+			<data ID="colored_box" TYPE="asset" PATH="tiles/story" WIDTH="704" HEIGHT="60" PARAM="ToneSeparator" VISIBLE="@#IsEven(@g_index[i])" UHLALPHA="30" HLALPHA="0" />
+			<data ID="listToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@toggleParamList[i],*|false|false|false|true)" WIDTH="380" HEIGHT="50" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" VISIBLE="@#Equal(@componentVisibilityList[i],TOGGLE)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="7" />
+			</data>
+			<data ID="inputText" TYPE="component" PATH="game/components/FluxComponents/FluxInputText.swf" PARAM="@inputTextString[i]" WIDTH="370" HEIGHT="60" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" VISIBLE="@#Equal(@componentVisibilityList[i],INPUT_TEXT)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="16" />
+			</data>
+			<data ID="valueText" TYPE="text" PARAM="@inputTextString[i]" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="FALSE" WIDTH="380" HEIGHT="50" VISIBLE="@#Equal(@componentVisibilityList[i],TEXT)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-30" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="listSelection" TYPE="text" PARAM="@inputTextString[i]" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="FALSE" WIDTH="380" HEIGHT="50" VISIBLE="@#Equal(@componentVisibilityList[i],LIST)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="desc" TYPE="text" PARAM="@descriptionParamList[i]" ALIGN="leading" FORMAT="FONT_BOLD_ACTIVE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="FALSE" WIDTH="380" HEIGHT="240" >
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="30" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_INFO_OPTIONS_LIST_TOGGLE" TYPE="TILE">	
+			<properties WIDTH="704" HEIGHT="50"/>
+			<data ID="attribute" TYPE="text" PARAM="@attributeTitle"  ALIGN="leading" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="FALSE" WIDTH="250" HEIGHT="50">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="listOptionsToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@listOptionToggleStrings,*|false|false)" WIDTH="400" HEIGHT="40">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="3" />
+			</data>
+		</tile>		
+		<tile NAME="AVATAR_INFO_OPTIONS_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">	
+			<properties WIDTH="704" HEIGHT="720"/>
+			<listProperties LIST_TYPE="GRID" ITEM_HEIGHT="60" ITEM_WIDTH="704" ROWS="8" COLUMNS="1" SHOW_HORIZONTAL_SCROLLBAR="TRUE"/>
+			<data ID="refRectangleOption" X="20" TYPE="null" WIDTH="644"/>
+			<data ID="refRectangleFlags" X="0" TYPE="null" WIDTH="694"/>
+			<data ID="option" TYPE="text" PARAM="@listOptionStrings[i]" ALIGN="leading" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="FALSE" WIDTH="550" HEIGHT="50">
+				<align TARGET="refRectangleOption" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="flags" TYPE="asset" PATH="@listOptionAssetsPath[i]" WIDTH="100" HEIGHT="60" PARAM="@listOptionAssets[i]" VISIBLE="@listOptionAssetsVisible" KEEP_SCALE="TRUE">
+				<align TARGET="refRectangleFlags" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_INFO_WARNING" TYPE="TILE" HIGHLIGHTABLE="FALSE" DESTINATION="NONE">	
+			<properties WIDTH="704" HEIGHT="120"/>
+			<data ID="warningTitle" TYPE="text" PARAM="AVATAR_INFO_WARNING_TITLE" ALIGN="leading" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="TRUE" WIDTH="580" HEIGHT="50">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="5" />
+			</data>
+			<data ID="warningMessage" TYPE="text" PARAM="AVATAR_INFO_WARNING_DESC" ALIGN="leading" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="TRUE" WIDTH="580" HEIGHT="50">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="30"/>
+				<align TARGET="warningTitle" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10"/>
+			</data>
+		  <data ID="icon_alert" TYPE="asset" PATH="tiles/avatar" WIDTH="30" HEIGHT="30" PARAM="icon_alert" KEEP_SCALE="TRUE">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-20"/>
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="15"/>
+		  </data>
+		</tile>
+		<tile NAME="AVATAR_INFO_ADVANCE_MIN" TYPE="EXPANDABLE_TILE" SELECTABLE="TRUE" DESTINATION="advance" HIGLIGHTABLE="TRUE">	
+			<properties WIDTH="352" HEIGHT="60"/>
+			<data ID="Advance" TYPE="text" PARAM="ADVANCE" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="TRUE" WIDTH="500" HEIGHT="50">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_INFO_ADVANCE_MAX" TYPE="EXPANDABLE_TILE" SELECTABLE="TRUE" DESTINATION="advance" HIGLIGHTABLE="TRUE">	
+			<properties WIDTH="352" HEIGHT="60"/>
+			<data ID="warningTitle" TYPE="text" PARAM="ADVANCE" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="TRUE" WIDTH="500" HEIGHT="50">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+		</tile>
+	</panel>
+	<panel NAME="AVATAR_PERSONAL_BRAND_PANEL">
+		<tile NAME="AVATAR_PERSONAL_BRAND_ICON_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="450" HEIGHT="45"/>
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="75" ITEM_HEIGHT="45" ROWS="1" COLUMNS="5"/>
+			<data ID="icons" TYPE="asset" PATH="avatar/icons" WIDTH="50" HEIGHT="38" PARAM="@iconList[i]" COLOR="@#IfElse(@iconSelected[i],COLOR_FILL_PANEL_HIGHLIGHT_FLUX:COLOR_FILL_ICON_HIGHLIGHT)" ALPHA="@#IfElse(@iconSelected[i],100:80)" KEEP_SCALE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_PERSONAL_BRAND_TOGGLE_ONE" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="420" HEIGHT="60"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM"/>
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM"/>
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="mainToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@mainToggleParams,*|@mainToggleIndex|false|false|true)" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-2"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_PERSONAL_BRAND_TOGGLE_TWO" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="420" HEIGHT="55"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="secondaryToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@secondarytoggleParam" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="-2"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_PERSONAL_BRAND_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">	
+			<properties WIDTH="1050" HEIGHT="655"/>
+			<listProperties LIST_TYPE="TILE" ITEM_WIDTH="200" ITEM_HEIGHT="200" ROWS="3" COLUMNS="5" FADE_ITEMS="TRUE" LIST_WIDTH="1050" LIST_HEIGHT="650" SHOW_HORIZONTAL_SCROLLBAR="TRUE"/>
+			<data ID="highlight" TYPE="asset" PATH="avatar" PARAM="highlight" HEIGHT="200" WIDTH="200" UHLALPHA="0" HLALPHA="100">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="checkbox" TYPE="checkBox" PARAM="@#IfElse(@checkbox[i],checked:unchecked)" WIDTH="36" HEIGHT="36">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-15"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="15"/>
+			</data>
+			<data ID="ItemName" TYPE="text" PARAM="@itemName[i]" WIDTH="200" HEIGHT="50" FORMAT="|COLOR_TEXT_SELECTED|center|COLOR_TEXT_SELECTED|FONT_BOLD_INACTIVE_LABEL|FONT_LARGE_LABEL|middle" VISIBLE="@#DoesNotEqual(@assetType[i],PLAYOFTHEMATCH)" TRANSLATE="FALSE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="none" TYPE="asset" PATH="avatar" PARAM="none_0" WIDTH="100" HEIGHT="100" VISIBLE="@#Equal(@assetType[i],none)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+			<data ID="noneDesc" TYPE="text" PARAM="AVATAR_NONE" WIDTH="200" HEIGHT="50" FORMAT="|COLOR_TEXT_BRIGHT_GREY_NAVY|center|COLOR_TEXT_BRIGHT_GREY_NAVY|FONT_REGULAR_FHD|FONT_REGULAR_FHD|top" UHLALPHA="100" HLALPHA="100" VISIBLE="@#Equal(@assetType[i],none)">
+				<align TARGET="none" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_PERSONAL_BRAND_FIRST_CUSTOM_BTN" TYPE="EXPANDABLE_TILE" DESTINATION="custom" >
+			<properties WIDTH="270" HEIGHT="50"/>
+			<data ID="title" TYPE="text" PARAM="@firstCustomButtonParam" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="250" HEIGHT="50" TRANSLATE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_PERSONAL_BRAND_LEFT_ARROW" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="leftArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowLeft" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@leftArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+		<tile NAME="AVATAR_PERSONAL_BRAND_RIGHT_ARROW" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="195" HEIGHT="195"/>
+			<data ID="rightArrow" TYPE="asset" PATH="avatar" PARAM="iconArrowRight" HEIGHT="47" WIDTH="27" KEEP_SCALE="TRUE" FORMAT="|COLOR_FILL_PANEL_OVERLAY|center|COLOR_FILL_PANEL_OVERLAY|||middle" VISIBLE="@rightArrowVisibility">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+		</tile>
+	</panel>
+	<panel NAME="AVATAR_ATHLETIC_PANEL">
+		<tile NAME="AVATAR_ATHLETIC_ICON_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="450" HEIGHT="45"/>
+			<listProperties LIST_TYPE="GRID" ITEM_WIDTH="75" ITEM_HEIGHT="45" ROWS="1" COLUMNS="3"/>
+			<data ID="icons" TYPE="asset" PATH="avatar/icons" WIDTH="45" HEIGHT="45" PARAM="@iconList[i]" COLOR="@#IfElse(@iconSelected[i],COLOR_FILL_PANEL_HIGHLIGHT_FLUX:COLOR_FILL_ICON_HIGHLIGHT)" ALPHA="@#IfElse(@iconSelected[i],100:80)" KEEP_SCALE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_TOGGLE" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="704" HEIGHT="55"/>
+			<data ID="nullSizer" TYPE="null" WIDTH="420" HEIGHT="55"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="mainToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@mainToggleParams,*|@mainToggleIndex|false|false|true)" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="395" HEIGHT="40">
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="nullSizer" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-2"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_BODY_MORPHER" TYPE="TILE">	
+			<properties WIDTH="510" HEIGHT="616" />
+			<data ID="titleLabel" TYPE="text" PARAM="Avatar_Height_Weight" FORMAT="FONT_TILE_TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|||middle" WIDTH="494" HEIGHT="44" TRANSLATE="TRUE"/>
+			<data ID="background" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" WIDTH="494" HEIGHT="462" HLALPHA="@#IfElse(@morphEditMode,ALPHA_FULL:ALPHA_NONE)" >
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="44" />
+			</data>
+			<data ID="bodyImage" TYPE="asset" PATH="tiles/avatar" PARAM="morph_body" WIDTH="330" HEIGHT="456">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+
+			<data ID="verticalGuide" TYPE="rectangle" WIDTH="2" HEIGHT="388" FORMAT="@#IfElse(@morphEditMode,|COLOR_FILL_UNHIGHLIGHT_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST:|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST)" UHLALPHA="40" HLALPHA="40" >
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="horizontalGuide" TYPE="rectangle" WIDTH="388" HEIGHT="2" FORMAT="@#IfElse(@morphEditMode,|COLOR_FILL_UNHIGHLIGHT_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST:|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST)" UHLALPHA="40" HLALPHA="40">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="morphControl" TYPE="component" PATH="game/components/FluxComponents/MorphControl.swf" PARAM="@athleticMorphData" WIDTH="388" HEIGHT="388">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+
+			<data ID="athleticMorphMinX" TYPE="verticaltext" PARAM="@athleticMorphMinX" FORMAT="@#IfElse(@morphEditMode,FONT_TILE_TSMM|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX|||middle:FONT_TILE_TSMM|COLOR_TEXT_HIGHLIGHT_FLUX|||||middle)" WIDTH="22" HEIGHT="231" TRANSLATE="FALSE">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="athleticMorphMaxX" TYPE="verticaltext" PARAM="@athleticMorphMaxX" FORMAT="@#IfElse(@morphEditMode,FONT_TILE_TSMM|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX|||middle:FONT_TILE_TSMM|COLOR_TEXT_HIGHLIGHT_FLUX|||||middle)" WIDTH="22" HEIGHT="231" TRANSLATE="FALSE">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="athleticMorphMinY" TYPE="text" PARAM="@athleticMorphMinY" FORMAT="@#IfElse(@morphEditMode,FONT_TILE_TSMM|COLOR_TEXT_UNHIGHLIGHT_FLUX|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|||bottom:FONT_TILE_TSMM|COLOR_TEXT_HIGHLIGHT_FLUX|center||||bottom)" WIDTH="231" HEIGHT="22" TRANSLATE="FALSE">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="4"/>
+			</data>
+			<data ID="athleticMorphMaxY" TYPE="text" PARAM="@athleticMorphMaxY" FORMAT="@#IfElse(@morphEditMode,FONT_TILE_TSMM|COLOR_TEXT_UNHIGHLIGHT_FLUX|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|||top:FONT_TILE_TSMM|COLOR_TEXT_HIGHLIGHT_FLUX|center||||top)" WIDTH="231" HEIGHT="22" TRANSLATE="FALSE">
+				<align TARGET="background" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align TARGET="background" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="4"/>
+			</data>
+
+			<data ID="verticalSeparator" TYPE="rectangle" WIDTH="1" HEIGHT="82" FORMAT="@#IfElse(@morphEditMode,|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST||COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST:|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST||COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST)" HLALPHA="100">
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+				<align ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-14"/>
+			</data>
+
+			<data ID="rawYValue" TYPE="text" PARAM="@athleticMorphCurrentY" TRANSLATE="FALSE" FORMAT="FONT_TILE_HMU|COLOR_TEXT_SELECTED||COLOR_FILL_HIGHLIGHT|||bottom" WIDTH="190" HEIGHT="70">
+				<align ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-7"/>
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="58"/>
+			</data>
+			<data ID="rawXValue" TYPE="text" PARAM="@athleticMorphCurrentX" TRANSLATE="FALSE" FORMAT="FONT_TILE_HMU|COLOR_TEXT_SELECTED||COLOR_FILL_HIGHLIGHT|||bottom" WIDTH="190" HEIGHT="70">
+				<align ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-7"/>
+				<align TARGET="verticalSeparator" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="58"/>
+			</data>
+
+			<data ID="rawYLabel" TYPE="text" PARAM="Avatar_HEIGHT" ALIGN="leading" FORMAT="FONT_TILE_TSMM||||||" TRANSLATE="TRUE" WIDTH="140" HEIGHT="22">
+				<align TARGET="rawXValue" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="TOP" OFFSET="7"/>
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="58"/>
+			</data>
+			<data ID="rawXLabel" TYPE="text" PARAM="Avatar_WEIGHT" FORMAT="FONT_TILE_TSMM||||||" TRANSLATE="TRUE" WIDTH="190" HEIGHT="22">
+				<align TARGET="rawYValue" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="TOP" OFFSET="7"/>
+				<align TARGET="verticalSeparator" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="58"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_RESET_BUTTON" TYPE="EXPANDABLE_TILE">
+			<properties WIDTH="300" HEIGHT="50"/>
+			<data ID="message" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" TRANSLATE="FALSE" PARAM="@#Pattern(@buttonCallouts[0],*|1|TRUE)" 
+				FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="230" HEIGHT="50" >
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="70"/>
+			</data>
+			<data ID="callout" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^X^|||TRUE" TRANSLATE="FALSE" WIDTH="50" HEIGHT="50" 
+				FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_FILL_HIGHLIGHT|||middle">
+				<align TARGET="message" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_GAMEPLAY_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">	
+			<properties WIDTH="704" HEIGHT="240"/>
+			<listProperties LIST_TYPE="GRID" ITEM_HEIGHT="60" ITEM_WIDTH="704" ROWS="3" COLUMNS="1" />
+			<data ID="colored_box" TYPE="asset" PATH="tiles/story" WIDTH="704" HEIGHT="60" PARAM="ToneSeparator" VISIBLE="@#IsEven(@g_index[i])" UHLALPHA="30" HLALPHA="0" />
+			<data ID="listToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@toggleParamList[i],*|false|false|false|true)" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="350" HEIGHT="50" VISIBLE="@#Equal(@componentVisibilityList[i],TOGGLE)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="inputText" TYPE="component" PATH="game/components/FluxComponents/FluxInputText.swf" PARAM="@inputTextString[i]" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" WIDTH="250" HEIGHT="50" VISIBLE="@#Equal(@componentVisibilityList[i],INPUT_TEXT)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-30"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="valueText" TYPE="text" PARAM="@inputTextString[i]" FORMAT="FONT_KEYBOARD_HIGHLIGHT|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_KEYBOARD_HIGHLIGHT|FONT_KEYBOARD_UNHIGHLIGHT|middle" TRANSLATE="FALSE" WIDTH="250" HEIGHT="50" VISIBLE="@#Equal(@componentVisibilityList[i],TEXT)">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-80"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="desc" TYPE="text" PARAM="@descriptionParamList[i]" ALIGN="leading" FORMAT="FONT_BOLD_ACTIVE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="FALSE" WIDTH="380" HEIGHT="240" >
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="30" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_IDENTITY_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">	
+			<properties WIDTH="900" HEIGHT="700"/>
+			<listProperties LIST_TYPE="TILE" ITEM_WIDTH="410" ITEM_HEIGHT="662" ROWS="1" COLUMNS="2"/>
+			<data ID="avatar" TYPE="asset" PATH="tiles/avatar" WIDTH="410" HEIGHT="700" PARAM="@identitySilhouettes[i]" UHLALPHA="100" HLALPHA="100" KEEP_SCALE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="avatarActive" TYPE="asset" PATH="tiles/avatar" WIDTH="410" HEIGHT="700" PARAM="@#Pattern(@identitySilhouettes[i],*_active)" UHLALPHA="0" HLALPHA="100" KEEP_SCALE="TRUE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+			</data>
+			<data ID="checkbox" TYPE="checkBox" PARAM="@#IfElse(@checkbox[i],checked:unchecked)" WIDTH="36" HEIGHT="36">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-10"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_TRAITS_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">
+		  <properties WIDTH="1050" HEIGHT="640"/>
+		  <listProperties LIST_TYPE="TILE" ITEM_WIDTH="200" ITEM_HEIGHT="200" ROWS="3" />
+		  <data ID="asset" TYPE="asset" PATH="worldtour/playerGrowth/tiles" WIDTH="100" HEIGHT="100" KEEP_SCALE="TRUE" PARAM="@assetFileNames[i]" >
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+		  </data>
+		  <data ID="desc" TYPE="text" PARAM="@itemName[i]" WIDTH="200" HEIGHT="50" FORMAT="|COLOR_TEXT_SELECTED|center|COLOR_TEXT_SELECTED|FONT_REGULAR_FHD|FONT_REGULAR_FHD|middle">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM"/>
+		  </data>
+		  <data ID="checkbox" TYPE="checkBox" PARAM="@#IfElse(@checkbox[i],checked:unchecked)" VISIBLE="@#Not(@isLocked[i])" WIDTH="20" HEIGHT="20" >
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-20"/>
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10"/>
+		  </data>
+		  <data ID="lock" TYPE="icon" PARAM="STATUS_LOCKED" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" VISIBLE="@isLocked[i]" WIDTH="28" HEIGHT="28">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-20" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10" />      
+		  </data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_ATTRIBUTE_BARS_TITLE" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" DESTINATION="NONE">	
+			<properties WIDTH="385" HEIGHT="200"/>
+			<data ID="attributesTitle" TYPE="text" ALIGN="leading" PARAM="AVATAR_ATHLETIC_YOUR_ATTRIBUTES" FORMAT="FONT_TILE_HS|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|||" WIDTH="385" HEIGHT="40">
+					<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="-9"/>
+			</data>
+			<data ID="heightLabel" TYPE="text" PARAM="Avatar_HEIGHT" ALIGN="leading" FORMAT="FONT_TILE_TSMM|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="TRUE" WIDTH="190" HEIGHT="22" VISIBLE="@attributeBarsHeightWeightVisibility">
+				<align TARGET="attributesTitle" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="8"/>
+				<align TARGET="attributesTitle" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="2"/>
+			</data>
+			<data ID="weightLabel" TYPE="text" PARAM="Avatar_WEIGHT" ALIGN="leading" FORMAT="FONT_TILE_TSMM|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="TRUE" WIDTH="190" HEIGHT="22" VISIBLE="@attributeBarsHeightWeightVisibility">
+				<align TARGET="attributesTitle" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="8"/>
+				<align TARGET="attributesTitle" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="190"/>
+			</data>
+			<data ID="weightValue" TYPE="text" PARAM="@athleticMorphCurrentX" TRANSLATE="FALSE" ALIGN="leading" FORMAT="FONT_TILE_HSU|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|||" WIDTH="190" HEIGHT="80" VISIBLE="@attributeBarsHeightWeightVisibility">
+				<align TARGET="weightLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-12"/>
+				<align TARGET="weightLabel" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="0"/>
+			</data>
+			<data ID="heightValue" TYPE="text" PARAM="@athleticMorphCurrentY" TRANSLATE="FALSE" ALIGN="leading" FORMAT="FONT_TILE_HSU|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|||" WIDTH="190" HEIGHT="80" VISIBLE="@attributeBarsHeightWeightVisibility">
+				<align TARGET="heightLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-12"/>
+				<align TARGET="heightLabel" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="0"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_ATTRIBUTE_BARS" TYPE="TILE_LIST" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<listProperties LIST_TYPE="GRID" ROWS="10" COLUMNS="1" ITEM_HEIGHT="60" ITEM_WIDTH="390" LIST_Y="55"/>
+			<properties WIDTH="420" HEIGHT="600"/>
+			<data ID="attributeText" TYPE="text" PARAM="@athleticSliderLabels[i]" ALIGN="leading" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX" WIDTH="380" HEIGHT="20" TRANSLATE="FALSE">
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+			</data>
+			<data ID="attributeValue" TYPE="text" PARAM="@athleticSliderValues[i]" ALIGN="trailing" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX" WIDTH="385" HEIGHT="20" TRANSLATE="FALSE">
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="3"/>
+			</data>
+			<data ID="slider" TYPE="component" PATH="game/components/FluxComponents/FluxAnimatedSlider.swf" WIDTH="472" HEIGHT="22" PARAM="@athleticSliderConfigs[i]" FORMAT="|COLOR_SLIDER_PRIMARY||COLOR_SLIDER_PRIMARY">
+				<align TARGET="attributeText" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="19" />
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="-3"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_ATTRIBUTES_TOGGLE" TYPE="TILE" DECORATORS_RANGE="NO_BACKGROUND">	
+			<properties WIDTH="420" HEIGHT="55"/>
+			<data ID="rectangleUnhighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="100" HLALPHA="0">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+			</data>
+			<data ID="rectangleHighlight" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="350" UHLALPHA="0" HLALPHA="100">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+			</data>
+			<data ID="right_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|left|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="left_edge" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" HEIGHT="40" WIDTH="40" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX|right|COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX|||middle" KEEP_SCALE="TRUE">
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="rectangleUnhighlight" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="secondaryToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@secondarytoggleParam" FORMAT="FONT_LARGE_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_CATEGORY_TITLE_FHD||middle" WIDTH="405" HEIGHT="40">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="-2"/>
+			</data>
+		</tile>
+		<tile NAME="AVATAR_ATHLETIC_ATTRIBUTES_LIST" TYPE="TILE_LIST" HIGHLIGHTABLE="TRUE" SELECTABLE="TRUE" >
+			<listProperties LIST_TYPE="GRID" ROWS="8" COLUMNS="1" ITEM_HEIGHT="60" ITEM_WIDTH="704" />
+			<properties WIDTH="704" HEIGHT="480"/>
+			<data ID="colored_box" TYPE="asset" PATH="tiles/story" PARAM="ToneSeparator" VISIBLE="@#IsEven(@g_index[i])" UHLALPHA="30" HLALPHA="0">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			</data>
+			<data ID="attributeText" TYPE="text" PARAM="@athleticSliderLabels[i]" ALIGN="leading" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|||middle" WIDTH="350" HEIGHT="20" TRANSLATE="FALSE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+			</data>
+			<data ID="refRectangleSlider" X="55" WIDTH="629" />
+			<data ID="attributeSlider" TYPE="component" PATH="game/components/FluxComponents/FluxSlider.swf" WIDTH="365" HEIGHT="20" PARAM="@athleticSliderConfigs[i]" FORMAT="|COLOR_SLIDER_PRIMARY||COLOR_SLIDER_PRIMARY">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-8" />
+				<align TARGET="refRectangleSlider" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" />
+			</data>			
+			<data ID="attributeValue" TYPE="text" PARAM="@athleticSliderValues[i]" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|right|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|||middle" WIDTH="80" HEIGHT="20" TRANSLATE="FALSE">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				<align TARGET="attributeSlider" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" OFFSET="-5"/>
+			</data>
+		</tile>
+	</panel>
+</root>

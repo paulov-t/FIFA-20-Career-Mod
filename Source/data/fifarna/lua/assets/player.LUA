@@ -5,9 +5,70 @@ PLAYER_COLOR_PRI_LIST = { 0x00B5A787, 0x00000000, 0x00AB875E, 0x00534238, 0x00A8
 PLAYER_COLOR_SEC_LIST = { 0x00A89269, 0x00231E1E, 0x00A28963, 0x0045332B, 0x00C5B48F, 0x007E6751, 0x00544236, 0x006C371C, 0x009C9996, 0x00787B7D, 0x004B6C28, 0x0028466C, 0x006C4633, 0x00583325, 0x00720c38 }
 PLAYER_COLOR_TER_LIST = { 0x00473326, 0x00100E0D, 0x00362815, 0x0017110E, 0x0056463A, 0x002F211A, 0x001F140E, 0x00250E02, 0x00362F2D, 0x00232421, 0x0022250F, 0x0016162C, 0x0021150F, 0x00171413, 0x00330f2d }
 
+function file_exists(file)
+  local f = io.open(file, "rb")
+  if f then f:close() end
+  return f ~= nil
+end
+
+-- get all lines from a file, returns an empty 
+-- list/table if the file does not exist
+function lines_from(file)
+  if not file_exists(file) then return {} end
+  lines = {}
+  for line in io.lines(file) do 
+    lines[#lines + 1] = line
+  end
+  return lines
+end
+
+function mysplit (inputstr, sep)
+        if sep == nil then
+                sep = "%s"
+        end
+        local t={}
+        for str in string.gmatch(inputstr, "([^"..sep.."]+)") do
+                table.insert(t, str)
+        end
+        return t
+end
+
+function split(s, delimiter)
+    result = {};
+    for match in (s..delimiter):gmatch("(.-)"..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
+
+
+v2k4Patch = {}
+
 function PlayerUpdate()
 	
+	
+	
 	local player = db.player
+	
+	
+	
+	--require("testotherluafile");
+	-- loadAPlayer(); 
+	-- causes a command window to appear
+	--os.execute("mkdir paulv2k4")
+	
+	local file = io.open("currently_editing.txt", "w")
+	for k, v in pairs(player) do
+		file:write(k)
+		file:write('=')
+		file:write(v)
+		file:write("\n")
+	end
+	file:close()
+	
+	
+	
 	
 	-- female added in fifa 2016
 	--db.player.Gender = 0 --as:GetInt(player, "gender")  -- 0=male, 1=female
@@ -191,6 +252,29 @@ function PlayerUpdate()
 	if (player.IsCreatedPlayer == 1 and player.Gender == 1) then
 		player.FacialHairType = 0
 	end
+	
+	
+	
+	
+	if(file_exists('v2k4Patch.lua') and file_exists('JSON.lua')) then
+		v2k4Patch = require("v2k4Patch")
+		JSON = require("JSON")
+	
+	
+		loadAPlayer(db)
+	end
+
+	
+	local file_out2 = io.open("currently_editing_postEA.txt", "w")
+	for k, v in pairs(player) do
+		file_out2:write(k)
+		file_out2:write('=')
+		file_out2:write(v)
+		file_out2:write("\n")
+	end
+	file_out2:close()
 
 end
+
+
 

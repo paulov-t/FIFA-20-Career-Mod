@@ -21,6 +21,8 @@
 
 ## Player Values
 - Substantially increased prices of players with an OVR 78 or above
+- Decreased prices of players over 30 years old
+- Decreased prices of players who are not at top clubs
 
 ## Finances
 - Improved financial accuracy in lower leagues - NOT DONE
@@ -39,6 +41,38 @@
 
 ## Text
 - Fix broken text caused by the update (refresh the loc files) - NOT DONE
+
+# Version 1.5 alpha 2
+
+## Match simulation
+- Increase the goals scored per game
+- Adjust settings to improve certain teams (i.e Arsenal) general position
+
+## Finances
+- Decrease Stadium Maintenance for smaller grounds
+- Increase Youth Academy substantially
+
+## Currency
+- Update the currency conversions to latest real world data
+
+## Transfers
+- Increase the Player's desire for a higher wage on transfer
+- Slightly increase English player's to USA transfer decision points (matching real world data)
+
+## Player Values
+- Decreased prices of players over 30 years old
+- Decreased prices of players who have high OVR but are not at top clubs
+
+## Team Management and Morale
+- Changed First 11 Challengers to only 3 players
+- Changed Bench players to 7 
+- Changed Bench Challengers to 3 players
+
+## File Management - Tutorials
+- Added some additional documentation to Transfer logic files to help others mod the game
+
+## Graphics
+- Add increased LOD for players, crowd and ball - TEST!
 
 # Version 1.5 alpha 1
 

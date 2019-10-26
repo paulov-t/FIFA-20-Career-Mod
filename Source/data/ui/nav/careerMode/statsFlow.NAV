@@ -1,0 +1,224 @@
+{
+	"name":"StatsFlow"
+	,"states":
+	[
+		{
+			"name":"StandingsHub"
+			,"onEnter":
+			[
+				["loadViewModel", ["StandingsHubViewModel", ".SquadHubAction"]]
+				,["loadView", ["screen", "game/screens/career/Stats/StandingsHub"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/Stats/StandingsHub"]]
+				,["unloadViewModel", ["StandingsHubViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"StandingsIdle"
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["Back"]
+						}
+						,{
+							"event":"ShowCompetitionSelectPopup"
+							,"targets":["StandingsCompetitionSelectPopup"]
+						}
+					]
+				}
+				,{
+					"name":"StandingsCompetitionSelectPopup"
+					,"onEnter":
+					[
+						["loadView", ["overlay", "game/screens/career/CompetitionSelectPopup"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["overlay", "game/screens/career/CompetitionSelectPopup"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupOk"
+							,"targets":["StandingsIdle"]
+						}
+						,{
+							"event":"popupCancel"
+							,"targets":["StandingsIdle"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"UnbrandedScreens"
+			,"onEnter":
+			[
+				["executeCMAction", ["ClearTheme"]]
+			]
+			,"states":
+			[
+				{
+					"name":"FixturesByDay"
+					,"onEnter":
+					[
+						["loadScreenController", ["Fixtures"]]
+						,["loadView", ["screen", "game/screens/career/Stats/Fixtures"]]
+						,["executeCMAction",["ViewFixturesByDay"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/career/Stats/Fixtures"]]
+						,["unloadScreenController", ["Fixtures"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Back"
+							,"targets":["Back"] 
+							,"actions":[ ["executeCMAction",["ClearFixtures"]] ]
+						}
+						,{
+							"event":"EnterFixtures"
+							,"actions":[ ["executeCMAction",["ViewFixturesByDay"]] ]
+						}
+					]
+				}	
+				,{
+					"name":"Fixtures"
+					,"onEnter":
+					[
+						["loadScreenController", ["Fixtures"]]
+						,["executeCMAction",["ViewFixtures"]]
+						,["loadView", ["screen", "game/screens/career/Stats/Fixtures"]]
+					]
+					,"onExit": 
+					[
+						["unloadView", ["screen", "game/screens/career/Stats/Fixtures"]]
+						,["unloadScreenController", ["Fixtures"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Back"
+							,"targets":["Back"] 
+							,"actions":[ ["executeCMAction",["ClearFixtures"]] ]
+						}
+						,{
+							"event":"EnterFixtures"
+							,"actions":[ ["executeCMAction",["ViewFixtures"]] ]
+						}
+					]
+				}
+				,{
+					"name":"Statistics"
+					,"onEnter":
+					[
+						["executeCMAction",["ViewStatistics"]]
+						,["loadScreenController", ["Statistics"]]
+						,["loadView", ["screen", "game/screens/career/stats/LeagueStats"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/career/stats/LeagueStats"]]
+						,["unloadScreenController", ["Statistics"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Back"
+							,"targets":["Back"] 
+							,"actions":[ ["executeCMAction",["ClearTeamStatistics"]] ]
+						}
+						,{
+							"event":"SelectStat"
+							,"actions":[ ["executeCMAction",["ViewStatistics"]] ]
+						}
+					]
+				}
+				,{
+					"name":"ViewOtherComps"
+					,"onEnter":
+					[
+						["loadViewModel", ["StandingsHubViewModel", "OtherCompetitions"]]	
+						,["loadView", ["screen", "game/screens/career/Stats/StandingsHub"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/career/Stats/StandingsHub"]]
+						,["unloadViewModel", ["StandingsHubViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"OtherCompsIdle"
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["Back"]
+								}
+								,{
+									"event":"ShowCompetitionSelectPopup"
+									,"targets":["OtherCompsCompetitionSelectPopup"]
+								}
+							]
+						}
+						,{
+							"name":"OtherCompsCompetitionSelectPopup"
+							,"onEnter":
+							[
+								["loadView", ["overlay", "game/screens/career/CompetitionSelectPopup"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["overlay", "game/screens/career/CompetitionSelectPopup"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"popupOk"
+									,"targets":["OtherCompsIdle"]
+								}
+								,{
+									"event":"popupCancel"
+									,"targets":["OtherCompsIdle"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"StandingsOld"
+					,"onEnter":
+					[
+						["loadScreenController", ["ViewOtherComps"]]
+						,["loadView", ["screen", "game/screens/career/stats/LeagueTables"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/career/stats/LeagueTables"]]
+						,["unloadScreenController", ["ViewOtherComps"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Back"
+							,"targets":["Back"] 
+							,"actions":[ ["executeCMAction",["ClearCountryCompList"]] ]
+						}
+						,{
+							"event":"SelectCompetition"
+							,"targets":["Back"] 
+							,"actions":[ ["executeCMAction",["ClearCountryCompList"]] ]
+						}
+					]
+				}
+			]
+		}
+	]
+}

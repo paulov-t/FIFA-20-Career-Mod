@@ -1,0 +1,331 @@
+{
+	"name":"NegotiationSceneFlow"
+	,"initial": { "targets":["checkNewsScenesUnloaded"] }
+	,"states":
+	[
+		{
+			"onEnter":
+			[
+				["invoke", ["evt_sign_out_flow_not_ready"]]
+				,["invoke", ["evt_invite_flow_not_ready"]]
+			]
+			,"onExit":
+			[
+				["invoke", ["evt_sign_out_flow_ready"]]
+				,["invoke", ["evt_invite_flow_ready"]]
+			]
+			,"states":
+			[
+				{
+					"name":"checkNewsScenesUnloaded"
+					,"onEnter": 
+					[
+						["sendAction",["condition", "areScenesUnloaded"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"scenesUnloaded",
+							"targets":["loadTransferCinematicsSublevel"]
+						}
+						,{
+							"event":"scenesNotUnloaded",
+							"targets":["waitForNewsScenesUnload"]
+						}			
+					]
+				}
+				,{
+					"name":"waitForNewsScenesUnload"
+					,"transitions":
+					[
+						{
+							"event":"scenesUnloaded",
+							"targets":["loadTransferCinematicsSublevel"]
+						}			
+					]
+				}
+				,{
+					"name":"loadTransferCinematicsSublevel"
+					,"onEnter": 
+					[
+						["sendAction", ["fbStartFlowEvent", "LoadTransferCinematicsSublevel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"TransferCinematicsSublevelLoaded"
+							,"targets":["unloadNewsCinematicsSublevel"]
+						}
+					]
+				}
+				,{
+					"name":"unloadNewsCinematicsSublevel"
+					,"onEnter": 
+					[
+						["sendAction", ["fbStartFlowEvent", "UnloadNewsCinematicsSublevel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"NewsCinematicsSublevelUnloaded",
+							"targets":["NegotiationScene"]
+						}
+					]
+				}
+				,{
+					"name":"NegotiationScene"
+					,"onEnter":
+					[
+						["executeCMAction", ["PrepareNegotiation"]]
+						,["loadViewModel", ["NegotiationSceneViewModel", ".sceneType"]]
+						,["loadView",["screen", "game/screens/career/transfers/SceneNegotiation"]]
+						
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/career/transfers/SceneNegotiation"]]
+						,["unloadViewModel", ["NegotiationSceneViewModel", ""]]
+						,["executeCMAction", ["CompleteNegotiation"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"SceneFinished"
+							,"targets":["checkTransferScenesUnloadedSceneFinished"]
+						}
+						,{
+							"event":"AcceptedInvite"
+							,"targets":["checkTransferScenesUnloadedAcceptedInvite"]
+						}
+					]
+				}
+				,{
+					"name":"checkTransferScenesUnloadedSceneFinished"
+					,"onEnter": 
+					[
+						["sendAction",["condition", "areScenesUnloaded"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"scenesUnloaded",
+							"targets":["unloadTransferCinematicsSublevelSceneFinished"]
+						}
+						,{
+							"event":"scenesNotUnloaded",
+							"targets":["waitForTransferScenesUnloadSceneFinished"]
+						}			
+					]
+				}
+				,{
+					"name":"waitForTransferScenesUnloadSceneFinished"
+					,"transitions":
+					[
+						{
+							"event":"scenesUnloaded",
+							"targets":["unloadTransferCinematicsSublevelSceneFinished"]
+						}			
+					]
+				}
+				,{
+					"name":"unloadTransferCinematicsSublevelSceneFinished"
+					,"onEnter": 
+					[
+						["sendAction", ["fbStartFlowEvent", "UnloadTransferCinematicsSublevel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"TransferCinematicsSublevelUnloaded",
+							"targets":["loadNewsCinematicsSublevelSceneFinished"]
+						}			
+					]
+				}
+				,{
+					"name":"loadNewsCinematicsSublevelSceneFinished"
+					,"onEnter": 
+					[
+						["sendAction", ["fbStartFlowEvent", "LoadNewsCinematicsSublevel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"NewsCinematicsSublevelLoaded"
+							,"targets":["back"] 
+						}
+					]
+				}
+				,{
+					"name":"checkTransferScenesUnloadedAcceptedInvite"
+					,"onEnter": 
+					[
+						["sendAction",["condition", "areScenesUnloaded"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"scenesUnloaded",
+							"targets":["unloadTransferCinematicsSublevelAcceptedInvite"]
+						}
+						,{
+							"event":"scenesNotUnloaded",
+							"targets":["waitForTransferScenesUnloadAcceptedInvite"]
+						}			
+					]
+				}
+				,{
+					"name":"waitForTransferScenesUnloadAcceptedInvite"
+					,"transitions":
+					[
+						{
+							"event":"scenesUnloaded",
+							"targets":["unloadTransferCinematicsSublevelAcceptedInvite"]
+						}			
+					]
+				}
+				,{
+					"name":"unloadTransferCinematicsSublevelAcceptedInvite"
+					,"onEnter": 
+					[
+						["sendAction", ["fbStartFlowEvent", "UnloadTransferCinematicsSublevel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"TransferCinematicsSublevelUnloaded",
+							"targets":["loadNewsCinematicsSublevelAcceptedInvite"]
+						}			
+					]
+				}
+				,{
+					"name":"loadNewsCinematicsSublevelAcceptedInvite"
+					,"onEnter": 
+					[
+						["sendAction", ["fbStartFlowEvent", "LoadNewsCinematicsSublevel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"NewsCinematicsSublevelLoaded"
+							,"targets":["WaitForInvite"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"WaitForInvite"
+		}
+		/*this state is for debugging only*/
+		,{
+			"name":"NegotiationSceneTest"
+			,"states":
+			[
+				{
+					"name":"TestLoadTransferCinematicsSublevel"
+					,"onEnter": 
+					[
+						["sendAction", ["fbStartFlowEvent", "LoadTransferCinematicsSublevel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"TransferCinematicsSublevelLoaded"
+							,"targets":["TestScreen"]
+						}
+					]
+				}
+				,{
+					"name":"TestScreen"
+					,"onEnter":
+					[
+						["loadViewModel", ["NegotiationSceneViewModel", "flaptest"]]
+						,["loadView",["screen", "game/screens/career/transfers/SceneNegotiation"]]
+						
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/career/transfers/SceneNegotiation"]]
+						,["unloadViewModel", ["NegotiationSceneViewModel", ""]]
+					]
+					,"states":
+					[
+						{
+							"name":"Idle"
+							,"transitions":
+							[
+								{
+									"event":"StartTest"
+									,"targets":["Testing"]
+								}
+							]
+						}
+						,{
+							"name":"Testing"
+							,"onEnter":
+							[
+								["executeCMAction", ["PrepareNegotiation"]]
+								,["sendAction",["notify", "NegotiationPrepared"]]
+								
+							]
+							,"onExit":
+							[
+								["executeCMAction", ["CompleteNegotiation"]]
+								,["sendAction",["notify", "NegotiationCompleted"]]
+							]
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"SceneFinished"
+							,"targets":["TestCheckTransferScenesUnloadedSceneFinished"]
+						}
+					]
+				}
+				,{
+					"name":"TestCheckTransferScenesUnloadedSceneFinished"
+					,"onEnter": 
+					[
+						["sendAction",["condition", "areScenesUnloaded"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"scenesUnloaded",
+							"targets":["TestUnloadTransferCinematicsSublevelSceneFinished"]
+						}
+						,{
+							"event":"scenesNotUnloaded",
+							"targets":["TestWaitForTransferScenesUnloadSceneFinished"]
+						}			
+					]
+				}
+				,{
+					"name":"TestWaitForTransferScenesUnloadSceneFinished"
+					,"transitions":
+					[
+						{
+							"event":"scenesUnloaded",
+							"targets":["TestUnloadTransferCinematicsSublevelSceneFinished"]
+						}			
+					]
+				}
+				,{
+					"name":"TestUnloadTransferCinematicsSublevelSceneFinished"
+					,"onEnter": 
+					[
+						["sendAction", ["fbStartFlowEvent", "UnloadTransferCinematicsSublevel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"TransferCinematicsSublevelUnloaded",
+							"targets":["back"]
+						}			
+					]
+				}
+			]
+		}
+	]
+}
