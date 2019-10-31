@@ -25,7 +25,7 @@
 - Decreased prices of players who are not at top clubs
 
 ## Finances
-- Improved financial accuracy in lower leagues - NOT DONE
+- Improved financial accuracy in lower leagues
 
 ## Fitness Recovery
 - Fitness recovery is now slightly less than default
@@ -40,7 +40,53 @@
 - Change the Player Editor so it doesn't fully exit to Career Hub after each change - NOT DONE
 
 ## Text
-- Fix broken text caused by the update (refresh the loc files) - NOT DONE
+- Fix broken text caused by the update (refresh the loc files)
+
+# Version 1.5 beta 1
+
+## Transfers
+- Increase AI transfer activity slightly
+- Reconfigure "Next Big Thing" modifiers so they are much wider (should try for more players)
+
+## Player Values
+- Decreased Values of over 35 year old players
+
+## Player Editor
+- Added Composure, Interceptions and Defensive Awareness to all editors
+
+## Player Training
+- You can now train "Aggression" in defending
+
+## Teams
+- Redesigned the Club Prestige for Italian teams (affects values and league position)
+
+## Objectives
+- Objectives should be fairer and easier to achieve now
+
+## UI
+- Change the Player Editor so it doesn't to Career Hub after each change, instead it goes back to player select
+
+## Text
+- Fix broken text caused by the update (refresh the English Localization File)
+
+# Version 1.5 alpha 3
+
+## Morale
+- Made it so high tempered or difficult people are harder to keep happy
+
+## Form
+- Fix broken form file - CPU form should now work correctly
+
+## Youth System and Scouting
+- You can now have 20 players in your Youth team
+- You now must wait at least 6 months before a promotion to senior team can happen
+- AI teams now do not pull so many high calibre youth stars in to the team
+
+## Objectives
+- Lowered the amount of chance to have a "profit" related objective
+
+## Graphics
+- Changed LOD of players to match that of "Cinematic" quality (it should still use LOD over a long distance)
 
 # Version 1.5 alpha 2
 

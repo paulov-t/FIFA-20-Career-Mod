@@ -5,7 +5,7 @@ Demand %,Seller Accept,Seller Counter Offer,Seller Reject
 40,40,60,0
 20,20,80,0
 0,5,95,0
--10,0,100,0
+-10,0,95,5
 -20,0,90,10
 -30,0,50,50
 -40,0,40,60

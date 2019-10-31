@@ -1,6 +1,6 @@
 <objectives>
 <!-- 7 to 10 Profit (High/Critical) -->
-	<objective type="keep_wages_in_check" score="155"> <!-- Wages under 100k, 20% -->
+	<objective type="keep_wages_in_check" score="1"> <!-- Wages under 100k, 20% -->
 		<duration min="1" max="1"/>
 		<similarities>
 			<similarity objective="wage_structure"/>
@@ -42,7 +42,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="keep_wages_in_check" score="155"> <!-- Wages under 300k, 15% -->
+	<objective type="keep_wages_in_check" score="1"> <!-- Wages under 300k, 15% -->
 		<duration min="1" max="1"/>
 		<similarities>
 			<similarity objective="wage_structure"/>
@@ -88,7 +88,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="keep_wages_in_check" score="155"> <!-- Wages over 300k and up to 5m, 10% -->
+	<objective type="keep_wages_in_check" score="1"> <!-- Wages over 300k and up to 5m, 10% -->
 		<duration min="1" max="1"/>
 		<similarities>
 			<similarity objective="wage_structure"/>

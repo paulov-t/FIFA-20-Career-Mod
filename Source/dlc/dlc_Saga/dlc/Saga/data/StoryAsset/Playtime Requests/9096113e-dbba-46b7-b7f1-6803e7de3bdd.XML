@@ -15,34 +15,34 @@
     <join-node id="3ecbb1eb-2acc-4b89-a09b-0bd24a175315" X="-7320" Y="-12880" NodeType="Join" NodeName="Set Name for New Node" />
     <modify-morale-node id="61588c6f-754c-4dab-8e32-a432ede50cf1" X="-7400" Y="-12600" NodeType="ModifyMorale" NodeName="Set Name for New Node" PlayerId="SaveData:Player ID" DecayPeriod="10" MoraleImpactType="Overall" MoraleTemplateType="MotivateMedium">
       <emotion-impact id="fe7da37a-f5ce-4e27-a2b6-d70a5ad23419">
-        <keyValuePair id="4688ccfe-dfdb-4820-a120-1fca913e6c21" Key="VeryCalm" Value="0" />
+        <keyValuePair id="4688ccfe-dfdb-4820-a120-1fca913e6c21" Key="VeryCalm" Value="-1" />
         <keyValuePair id="9d9c7a8d-63e6-4181-a336-b963bffcc362" Key="Calm" Value="0" />
-        <keyValuePair id="46a58869-0ccc-4460-b5ad-dd19ebd897e0" Key="Normal" Value="3" />
-        <keyValuePair id="a9f172ae-4189-4c21-899b-1b81fffb9be4" Key="HotTemper" Value="3" />
+        <keyValuePair id="46a58869-0ccc-4460-b5ad-dd19ebd897e0" Key="Normal" Value="1" />
+        <keyValuePair id="a9f172ae-4189-4c21-899b-1b81fffb9be4" Key="HotTemper" Value="2" />
         <keyValuePair id="cc0c65e2-2379-4c41-a82f-0ee64dae99bf" Key="Volcano" Value="3" />
       </emotion-impact>
       <personality-impact id="7ef3eadc-bae2-4ef2-a9f1-bff587a1587f">
         <keyValuePair id="44a3450f-7a6a-432e-93b8-33d07ae24c99" Key="Selfish" Value="0" />
-        <keyValuePair id="9f89a80a-485a-48aa-9dee-f8c662da98f6" Key="Individual" Value="2" />
-        <keyValuePair id="d8ea19b9-42cd-4d94-8f6a-0f8248a3e39c" Key="Normal" Value="4" />
-        <keyValuePair id="820c9c3a-4f47-4b4c-b6f5-a09767edad5d" Key="TeamPlayer" Value="7" />
-        <keyValuePair id="6d7fc18c-4594-4a5b-b2a5-b125c2e1b4da" Key="UltimateProfessional" Value="7" />
+        <keyValuePair id="9f89a80a-485a-48aa-9dee-f8c662da98f6" Key="Individual" Value="1" />
+        <keyValuePair id="d8ea19b9-42cd-4d94-8f6a-0f8248a3e39c" Key="Normal" Value="2" />
+        <keyValuePair id="820c9c3a-4f47-4b4c-b6f5-a09767edad5d" Key="TeamPlayer" Value="3" />
+        <keyValuePair id="6d7fc18c-4594-4a5b-b2a5-b125c2e1b4da" Key="UltimateProfessional" Value="4" />
       </personality-impact>
     </modify-morale-node>
     <modify-morale-node id="a8dca385-c4ca-4635-9d8e-b5fcd24d81e7" X="-7400" Y="-12520" NodeType="ModifyMorale" NodeName="Set Name for New Node" PlayerId="SaveData:Player ID" DecayPeriod="10" MoraleImpactType="Overall" MoraleTemplateType="PraiseMedium">
       <emotion-impact id="3e912fa4-00df-40df-915e-735950b07d9a">
-        <keyValuePair id="cbb261f1-05c7-4ba2-9043-7ec03a2bd659" Key="VeryCalm" Value="2" />
-        <keyValuePair id="365827dc-7092-4b2b-a980-42724515854c" Key="Calm" Value="2" />
-        <keyValuePair id="b5503cb7-ab0b-48d9-a51c-b7277b69b584" Key="Normal" Value="4" />
-        <keyValuePair id="0007dc74-93da-45df-bbd3-79708b1c049b" Key="HotTemper" Value="5" />
-        <keyValuePair id="e0c97641-3308-475a-bb8d-d3d63a4fca6d" Key="Volcano" Value="5" />
+        <keyValuePair id="cbb261f1-05c7-4ba2-9043-7ec03a2bd659" Key="VeryCalm" Value="1" />
+        <keyValuePair id="365827dc-7092-4b2b-a980-42724515854c" Key="Calm" Value="1" />
+        <keyValuePair id="b5503cb7-ab0b-48d9-a51c-b7277b69b584" Key="Normal" Value="1" />
+        <keyValuePair id="0007dc74-93da-45df-bbd3-79708b1c049b" Key="HotTemper" Value="2" />
+        <keyValuePair id="e0c97641-3308-475a-bb8d-d3d63a4fca6d" Key="Volcano" Value="3" />
       </emotion-impact>
       <personality-impact id="8f05c67d-e842-4831-b416-2bffbec123a2">
-        <keyValuePair id="e3f6f783-6299-4e13-b9a1-b9c0d98914ea" Key="Selfish" Value="6" />
-        <keyValuePair id="be031718-e95b-4764-be2b-c433e4342fb1" Key="Individual" Value="6" />
-        <keyValuePair id="66d3c626-95bc-461c-9fcd-00c3699b62b6" Key="Normal" Value="4" />
+        <keyValuePair id="e3f6f783-6299-4e13-b9a1-b9c0d98914ea" Key="Selfish" Value="4" />
+        <keyValuePair id="be031718-e95b-4764-be2b-c433e4342fb1" Key="Individual" Value="3" />
+        <keyValuePair id="66d3c626-95bc-461c-9fcd-00c3699b62b6" Key="Normal" Value="3" />
         <keyValuePair id="9a414dcc-42b6-49d9-a8c6-2da66de3759e" Key="TeamPlayer" Value="2" />
-        <keyValuePair id="b7b98c12-1fa5-472d-b109-87719c6d47b9" Key="UltimateProfessional" Value="2" />
+        <keyValuePair id="b7b98c12-1fa5-472d-b109-87719c6d47b9" Key="UltimateProfessional" Value="1" />
       </personality-impact>
     </modify-morale-node>
     <condition-node id="09829e50-9453-4773-bd1a-79b4d2ba9543" X="-7400" Y="-12320" NodeType="Condition" NodeName="Set Name for New Node">
@@ -70,30 +70,30 @@
       <emotion-impact id="7071eb7e-8e65-49e6-92b8-a56affc05687">
         <keyValuePair id="53e12f5b-f3e9-47df-b0c1-5104b492a97e" Key="VeryCalm" Value="0" />
         <keyValuePair id="fca2645c-a3dd-4bd9-bc6d-0113a7d38fa1" Key="Calm" Value="0" />
-        <keyValuePair id="5b43cb5c-2b5e-4e2b-b5ec-d6ff9470b391" Key="Normal" Value="3" />
-        <keyValuePair id="05b9c1fa-715b-452c-81ab-d1e627d5f496" Key="HotTemper" Value="3" />
+        <keyValuePair id="5b43cb5c-2b5e-4e2b-b5ec-d6ff9470b391" Key="Normal" Value="1" />
+        <keyValuePair id="05b9c1fa-715b-452c-81ab-d1e627d5f496" Key="HotTemper" Value="2" />
         <keyValuePair id="3f793b90-35e8-4355-8255-acaa6169f55c" Key="Volcano" Value="3" />
       </emotion-impact>
       <personality-impact id="cf882067-457b-4368-9a92-fdffccfae97e">
         <keyValuePair id="b76d6229-fc67-48a8-bc04-bf66b107afd6" Key="Selfish" Value="0" />
-        <keyValuePair id="276be453-5941-46f4-a5e5-1a0fe8fd668e" Key="Individual" Value="2" />
-        <keyValuePair id="ea5c59d3-ff67-4453-a2bf-74e56bf78d88" Key="Normal" Value="4" />
-        <keyValuePair id="1637092c-9029-4752-93c3-c84c6d5ce47d" Key="TeamPlayer" Value="7" />
-        <keyValuePair id="801e9a0f-325a-4637-a0ad-9ae628104910" Key="UltimateProfessional" Value="7" />
+        <keyValuePair id="276be453-5941-46f4-a5e5-1a0fe8fd668e" Key="Individual" Value="1" />
+        <keyValuePair id="ea5c59d3-ff67-4453-a2bf-74e56bf78d88" Key="Normal" Value="2" />
+        <keyValuePair id="1637092c-9029-4752-93c3-c84c6d5ce47d" Key="TeamPlayer" Value="4" />
+        <keyValuePair id="801e9a0f-325a-4637-a0ad-9ae628104910" Key="UltimateProfessional" Value="5" />
       </personality-impact>
     </modify-morale-node>
     <modify-morale-node id="45ae13ed-11d8-4a2a-8b9c-935424607183" X="-7560" Y="-12920" NodeType="ModifyMorale" NodeName="Set Name for New Node" PlayerId="SaveData:Player ID" DecayPeriod="10" MoraleImpactType="Overall" MoraleTemplateType="PraiseMedium">
       <emotion-impact id="890b470e-c3ff-4bcc-b78a-729f6f99a39c">
         <keyValuePair id="914baadd-7842-4ca8-bb62-dd820b32cfd3" Key="VeryCalm" Value="2" />
         <keyValuePair id="1837aa4f-1de4-4219-bbfa-1731ebc388c7" Key="Calm" Value="2" />
-        <keyValuePair id="36a6fb93-08b4-40e5-a7ae-428b41ae3dff" Key="Normal" Value="4" />
+        <keyValuePair id="36a6fb93-08b4-40e5-a7ae-428b41ae3dff" Key="Normal" Value="3" />
         <keyValuePair id="cc264c08-4628-4dfa-a561-ca87c1e8da9d" Key="HotTemper" Value="5" />
         <keyValuePair id="75fea839-62d9-4193-91e9-fef9b9acd026" Key="Volcano" Value="5" />
       </emotion-impact>
       <personality-impact id="eea75e12-b207-4816-b511-2dc36ca53b88">
         <keyValuePair id="8fd612bf-f839-4bd1-b0a6-be6cc5b8a5dc" Key="Selfish" Value="6" />
         <keyValuePair id="b4379ccd-fe1d-4ba5-8311-9e1afecce599" Key="Individual" Value="6" />
-        <keyValuePair id="a67e7530-f710-4e1d-bb04-06717669fda3" Key="Normal" Value="4" />
+        <keyValuePair id="a67e7530-f710-4e1d-bb04-06717669fda3" Key="Normal" Value="3" />
         <keyValuePair id="2566a6fe-cb5d-4795-bbe4-2b255686328f" Key="TeamPlayer" Value="2" />
         <keyValuePair id="4ddfa93b-d3e6-4389-bab3-abafd391dcad" Key="UltimateProfessional" Value="2" />
       </personality-impact>
@@ -163,18 +163,18 @@
     </condition-node>
     <modify-morale-node id="ecccda86-75c4-4c35-b9e3-57b7e0453bc6" X="-7800" Y="-13280" NodeType="ModifyMorale" NodeName="Set Name for New Node" PlayerId="SaveData:Player ID" DecayPeriod="10" MoraleImpactType="Overall" MoraleTemplateType="PraiseMedium">
       <emotion-impact id="79b905d1-9f61-466d-8a60-09e162144de7">
-        <keyValuePair id="80dae546-6810-4b18-95b6-80916a92f199" Key="VeryCalm" Value="2" />
-        <keyValuePair id="6a0a6a99-b1e3-418c-96bf-e546d3a4e1b6" Key="Calm" Value="2" />
-        <keyValuePair id="eda8912c-8b1b-40b7-906b-cdeb5735c579" Key="Normal" Value="4" />
-        <keyValuePair id="15fb4eae-d086-43b2-ad8f-bae3d4a3b532" Key="HotTemper" Value="5" />
-        <keyValuePair id="7d5b85b5-ff8a-4dde-9f3a-f34e69b09227" Key="Volcano" Value="5" />
+        <keyValuePair id="80dae546-6810-4b18-95b6-80916a92f199" Key="VeryCalm" Value="1" />
+        <keyValuePair id="6a0a6a99-b1e3-418c-96bf-e546d3a4e1b6" Key="Calm" Value="1" />
+        <keyValuePair id="eda8912c-8b1b-40b7-906b-cdeb5735c579" Key="Normal" Value="1" />
+        <keyValuePair id="15fb4eae-d086-43b2-ad8f-bae3d4a3b532" Key="HotTemper" Value="0" />
+        <keyValuePair id="7d5b85b5-ff8a-4dde-9f3a-f34e69b09227" Key="Volcano" Value="-1" />
       </emotion-impact>
       <personality-impact id="87aea376-2088-4fe7-b0fb-d7523e958132">
-        <keyValuePair id="1ec31ce0-94e5-46f2-973a-d6e8ef6f8f8b" Key="Selfish" Value="6" />
-        <keyValuePair id="02843ea5-fc9b-4b2a-ae7a-563fd070424b" Key="Individual" Value="6" />
-        <keyValuePair id="a5ef2399-e731-44fa-a097-cb3ab90840a5" Key="Normal" Value="4" />
-        <keyValuePair id="9ebddd38-9cf7-4bc8-97b9-52a8cb36ca78" Key="TeamPlayer" Value="2" />
-        <keyValuePair id="a529c487-f9e5-46c7-b4e6-52bc97d753f6" Key="UltimateProfessional" Value="2" />
+        <keyValuePair id="1ec31ce0-94e5-46f2-973a-d6e8ef6f8f8b" Key="Selfish" Value="5" />
+        <keyValuePair id="02843ea5-fc9b-4b2a-ae7a-563fd070424b" Key="Individual" Value="4" />
+        <keyValuePair id="a5ef2399-e731-44fa-a097-cb3ab90840a5" Key="Normal" Value="2" />
+        <keyValuePair id="9ebddd38-9cf7-4bc8-97b9-52a8cb36ca78" Key="TeamPlayer" Value="1" />
+        <keyValuePair id="a529c487-f9e5-46c7-b4e6-52bc97d753f6" Key="UltimateProfessional" Value="1" />
       </personality-impact>
     </modify-morale-node>
     <modify-morale-node id="1ec589ac-0b5d-4ed8-876c-532ee59cc57e" X="-7800" Y="-13360" NodeType="ModifyMorale" NodeName="Set Name for New Node" PlayerId="SaveData:Player ID" DecayPeriod="10" MoraleImpactType="Overall" MoraleTemplateType="MotivateMedium">
@@ -188,9 +188,9 @@
       <personality-impact id="f35e9d5d-d5c9-4b6b-a929-1d666660e46c">
         <keyValuePair id="a2e895bb-1ca0-4213-a8ae-5e531635fc9b" Key="Selfish" Value="0" />
         <keyValuePair id="a321d034-5f4f-4dde-8981-95e64a77a570" Key="Individual" Value="2" />
-        <keyValuePair id="aca0cd69-86f2-4ea0-a99e-8d488ef9a6b0" Key="Normal" Value="4" />
-        <keyValuePair id="57323d0f-3f35-4f9d-81da-61ec3c8df152" Key="TeamPlayer" Value="7" />
-        <keyValuePair id="34f419db-fe3c-48e0-bdd5-77533ca1038c" Key="UltimateProfessional" Value="7" />
+        <keyValuePair id="aca0cd69-86f2-4ea0-a99e-8d488ef9a6b0" Key="Normal" Value="3" />
+        <keyValuePair id="57323d0f-3f35-4f9d-81da-61ec3c8df152" Key="TeamPlayer" Value="4" />
+        <keyValuePair id="34f419db-fe3c-48e0-bdd5-77533ca1038c" Key="UltimateProfessional" Value="5" />
       </personality-impact>
     </modify-morale-node>
     <state-node id="a470f67d-c6d9-4de5-a7c8-32b941560095" X="-6160" Y="-13360" NodeType="State" NodeName="Set Name for New Node">
@@ -326,10 +326,10 @@
         <keyValuePair id="60a9e562-dc33-41cc-9d92-d384c632fd0f" Key="Volcano" Value="3" />
       </emotion-impact>
       <personality-impact id="ac98a43b-fe99-4f7a-818c-731e5871f667">
-        <keyValuePair id="b91ae4cd-d257-4d18-a103-056292e9cf46" Key="Selfish" Value="0" />
-        <keyValuePair id="0c33b0bd-5428-43da-bffd-00bc28c3224e" Key="Individual" Value="2" />
-        <keyValuePair id="29368a55-2f7c-4bb8-a868-5e0475f65a09" Key="Normal" Value="4" />
-        <keyValuePair id="148ad805-51a8-4dda-a679-5a7d62cf2fc6" Key="TeamPlayer" Value="7" />
+        <keyValuePair id="b91ae4cd-d257-4d18-a103-056292e9cf46" Key="Selfish" Value="-2" />
+        <keyValuePair id="0c33b0bd-5428-43da-bffd-00bc28c3224e" Key="Individual" Value="-1" />
+        <keyValuePair id="29368a55-2f7c-4bb8-a868-5e0475f65a09" Key="Normal" Value="1" />
+        <keyValuePair id="148ad805-51a8-4dda-a679-5a7d62cf2fc6" Key="TeamPlayer" Value="3" />
         <keyValuePair id="94d1693a-a2de-48c2-8959-7d8e6a804451" Key="UltimateProfessional" Value="7" />
       </personality-impact>
     </modify-morale-node>

@@ -213,17 +213,17 @@
                   "componentType": "BAR"
                 },
                 {
-									"name": "MARKING",
-									"minValue": 1,
-									"maxValue": 99,
-									"isVisible": false
+                  "name": "MARKING",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
                 },
                 {
-									"name": "COMPOSURE",
-									"minValue": 1,
-									"maxValue": 99,
-									"isVisible": false
-								}
+                  "name": "COMPOSURE",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                }
               ]
             }
           },

@@ -1,0 +1,1786 @@
+{
+	"name":"MainMenuHubFlow"
+	,"initial": { "targets":["PreSeasonTourFlow"] }
+	,"onEnter":
+	[
+		["sendAction", ["notify", "telemetryEnterGameModeHub", ".GameMode"] ]
+		,["executeCMAction",["UpdateManagerGender"]]
+		,["loadViewModel",["CMThemeManagerViewModel"]]
+	]	
+	,"onExit":
+	[
+		["unloadViewModel",["CMThemeManagerViewModel"]]
+	]
+	,"states":
+	[
+		{
+		"transitions":
+		[
+			{
+				"event":"GotoPreSeasonTourFlow"
+				,"targets":["PreSeasonTourFlow"]
+			}
+			,{
+				"event":"GotoMainMenuHub"
+				,"targets":["MainMenuHub"]
+			}
+			,{
+				"event":"GotoPapMoveToNewClub"
+				,"targets":["InitNewSeason"]
+			}
+			,{
+				"event":"GotoPapRetire"
+				,"targets":["RetirePap"]
+			}
+			,{
+				"event":"SetHubBackground"
+				,"actions":[ ["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MAIN_HUB_BACKGROUND"]] ]
+			}
+			,{
+				"event":"RefreshUIBackground"
+				,"actions":[ ["sendAction",["notify", "UpdateUIBackground"]] ]
+			}
+		]	
+		,"states":
+		[
+
+			{
+				"onEnter":
+				[
+					["unloadView",["screen"]]
+					,["loadViewModel",["KitSelectViewModel"]]
+				]
+				,"onExit":
+				[
+					["unloadViewModel",["KitSelectViewModel"]]
+				]
+				,"states":
+				[
+					{
+						"name":"PreSeasonTourFlow"
+						,"onEnter":
+						[
+							["executeCMAction",["EnterPreSeasonTourFlow"]]
+						]						
+						,"transitions":
+						[
+							{
+								"event":"EnterPreSeasonTourInvite"
+								,"targets":["PreSeasonTourInvite"]
+							}
+							,{
+								"event":"Advance"
+								,"targets":["MainMenuHub"]
+							}
+						]
+					}
+					,{
+						"name":"MainMenuHub"
+						,"initial": 
+						{ 
+							"targets":["MainMenuHubCheckScenesUnloaded"] 
+						}
+						,"states":
+						[
+							{
+								"name":"MainMenuHubCheckScenesUnloaded"
+								,"onEnter":
+								[
+									["sendAction",["condition", "areScenesUnloadedExtraCheck"]]
+								]
+								,"transitions":
+								[
+									{
+										"event":"scenesUnloaded",
+										"targets":["MainMenuHubCheckVideo"]
+									}
+									,{
+										"event":"scenesNotUnloaded",
+										"targets":["waitForScenesUnload"]
+									}		
+									,{
+										"event":"skipScenesCheck",
+										"targets":["MainMenuHubCheckVideo"]
+									}
+								]
+							}
+							,{
+								"name":"waitForScenesUnload"
+								,"transitions":
+								[
+									{
+										"event":"scenesUnloaded",
+										"targets":["MainMenuHubCheckVideo"]
+									}			
+								]
+							}
+							,{
+								"name":"MainMenuHubCheckVideo"
+								,"onEnter":
+								[
+									["executeCMAction",["PlayUEFAVideoCheck"]]
+								]
+								,"transitions":
+								[
+									{"event":"SkipUEFAVideo","targets":["MainMenuHubIdle"]}
+									,{"event":"PlayUEFAVideo","targets":["MainMenuHubPlayVideo"]}
+								]
+							}
+							,{
+								"name":"MainMenuHubPlayVideo"
+								,"onEnter":
+								[
+									["sendAction", ["StopMenuMusic"]]
+									,["sendAction", ["fbStartFlowEvent", "gmIntroTournamentVideo"]]
+								]
+								,"onExit":
+								[
+									["sendAction", ["StartMenuMusic"]]
+								]
+								,"transitions":
+								[
+									{"event":"videoStopped","targets":["MainMenuHubIdle"], "let":{ "CareerHubAction":"ResetPanelIndex" }}
+								]
+							}
+							,{
+								"name":"MainMenuHubIdle"
+								,"initial": { "targets":["WaitForKitsBeforeCareerHub"] }
+								,"onEnter":
+								[
+									["executeCMAction",["SetupTheme"]]
+									,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.CENTRAL"]]
+									,["loadScreenController", ["MainMenuHub"]] 
+									,["loadViewModel",["FluxViewModel"]]
+									,["loadViewModel",["StartingXIViewModel"]]
+									,["loadViewModel",["CareerHubViewModel", ".CareerHubAction"]]
+									,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+									,["sendAction",["updateLocGender", "checkGender"]]
+									,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+									,["sendAction",["notify", "UpdateUIBackground"]]
+								]
+								,"onExit":
+								[
+									["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+									,["unloadViewModel",["CareerHubViewModel"]]
+									,["unloadViewModel",["StartingXIViewModel"]]
+									,["unloadViewModel",["FluxViewModel"]]
+									,["unloadScreenController",["MainMenuHub"]]
+								]
+								,"states":
+								[
+									{
+										"name":"ActionPopup"
+										,"type":"external"
+										,"file":"/careerMode/actionPopupFlow.nav"
+										,"outputs": 
+										{ 
+											"BackFromPopup":"CareerHub"
+											,"BackFromScreen":"MainMenuHubWithPopup"
+											,"BackFromScreenWithoutPopup":"MainMenuHubWithPopup"
+										}	
+									}
+									,{
+										"name":"MainMenuHubWithPopup"
+										,"onEnter": 
+										[ 
+											["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+										]
+										,"transitions":
+										[
+											{
+												"event":"Ready"
+												,"targets":["ActionPopup"] 
+											}
+										]
+									}
+									,{
+										"name":"MainMenuHubWithTutorial"
+										,"onEnter": 
+										[ 
+											["loadView", ["overlay", "game/screens/career/tutorials/PressConferenceTutorial"]]
+											,["sendAction",["notify", "PressTutorialShown"]]
+										]
+										,"onExit":
+										[
+											["unloadView", ["overlay", "game/screens/career/tutorials/PressConferenceTutorial"]]
+										]
+										,"transitions":
+										[
+											{
+												"event":"advance"
+												,"actions":[ ["invoke", ["EnterPreMatchPressConf"]] ]
+											}
+											,{
+												"event":"back"
+												,"targets":["CareerHubIdle"]
+											}
+										]
+									}
+									,{
+										"name":"CareerHub"
+										,"onEnter":
+										[
+											["sendAction",["updateScreen", "RefreshCareerHub"]]
+											,["executeCMAction",["CacheTeamSheet"]]
+										]
+										,"transitions":
+										[
+											{	"event":"EnterTeamManagement","let":{"tmMode":"offlineCareer"},"targets":["TeamManagementFlow"]}
+											,{	"event":"EnterTeamSheetSelect","targets":["TeamSheetSelect"]}
+											,{	"event":"EnterTeamManagementFromHubManualFix","let":{"tmMode":"offlineCareer"},"targets":["TeamManagementFlow"],"actions":[ ["executeCMAction",["EnterTeamManagementFromHubManualFix"]] ]}
+											,{	"event":"EnterPlayerAction","targets":["ActionPopup"]}
+											,{	"event":"EnterPressTutorial","targets":["MainMenuHubWithTutorial"]}
+											,{	"event":"Advance", "targets":["CareerHubNoScreenSaver"], "actions":[ ["executeCMAction",["StartHubSim"]] ]}
+											,{ "event":"EnterPreSeasonTourInvite", "targets":["PreSeasonTourInvite"] }
+										]
+										,"states":
+										[
+											{
+												"name":"CareerHubIdle"
+												,"onEnter":
+												[
+													["executeCMAction",["SetupTheme"]]
+													,["executeCMAction",["PlayUEFAVideoCheck"]]
+												]
+												,"transitions":
+												[
+													{"event":"evt_popup_enter", "targets":["CareerHubNoScreenSaverWaitPopup"]}
+													,{"event":"evt_pow_open_widget", "targets":["CareerHubEASFCWidgetOpened"]}
+													,{"event":"PlayUEFAVideo","targets":["MainMenuHubPlayVideo"]}
+												]
+											}
+											,{
+												"name":"CareerHubEASFCWidgetOpened"
+												,"onEnter":
+												[
+													["executeCMAction",["ClearTheme"]]
+												]
+												,"onExit":
+												[
+													["executeCMAction",["SetupTheme"]]
+												]
+												,"transitions":
+												[
+													{"event":"evt_pow_close_widget", "targets":["CareerHubIdle"]}
+												]
+											}
+											,{
+												"states":
+												[
+													{
+														"name":"CareerHubNoScreenSaverSimulation"
+														,"onExit":
+														[
+															["executeCMAction",["UserInterruptSim"]]
+														]
+														,"transitions":
+														[
+															{"event":"Advance", "actions":[ ["executeCMAction",["IgnoreHubSimSpam"]] ]}
+														]
+														,"states":
+														[
+															{
+																"name":"CareerHubNoScreenSaver"
+																,"transitions":
+																[
+																	{"event":"evt_popup_enter" ,"targets":["CareerHubNoScreenSaverWithPopup"] }
+																	,{"event":"CalendarInterruptSim","targets":["CareerHubIdle"]}
+																	,{"event":"Back","targets":["CareerHubIdle"]}
+																]
+															}
+															,{
+																"name":"CareerHubNoScreenSaverWithPopup"
+																,"transitions":
+																[
+																	{"event":"evt_popup_exit", "targets":["CareerHubNoScreenSaver"]}
+																	,{"event":"CalendarInterruptSim","targets":["CareerHubNoScreenSaverWaitPopup"]}
+																	,{"event":"Back","targets":["CareerHubNoScreenSaverWaitPopup"]}
+																]
+															}
+														]
+													}
+													,{
+														"name":"CareerHubNoScreenSaverWaitPopup"
+														,"transitions":
+														[
+															{
+																"event":"evt_popup_exit"
+																,"targets":["CareerHubIdle"] 
+															}
+														]
+														
+													}
+												]
+											}
+										]
+									}
+									,{
+										"name":"WaitForKitsBeforeCareerHub"
+										,"onEnter":
+										[
+											["sendAction",["condition", "WaitForKitsLoad"]]
+										]
+										,"onExit":[]
+										,"transitions":
+										[
+											{ "event":"KitsLoadComplete", "targets":["CareerHub"] }
+										]
+									}
+								]
+							}
+						]
+					}
+					,{
+						"name":"Autosave"
+						,"onEnter":
+						[
+							["loadViewModel",["CareerAutosaveViewModel"]]
+							,["executeCMAction",["DoAutoSave"]]
+						]
+						,"onExit":
+						[
+							["unloadViewModel",["CareerAutosaveViewModel"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Advance"
+								,"targets":["MainMenuHub"] 
+							}
+						]	
+					}
+					,{
+						"name":"RetirePap"
+						,"onEnter":
+						[
+							["executeCMAction",["EnterPlayerRetireStateFromActionPopup"]]
+						]
+					}
+				]
+				,"transitions":
+				[
+					{
+						"event":"back"
+						,"actions":[ ["executeCMAction",["MainMenuBack"]] ]
+					}
+					,{
+						"event":"DeadlineDayAdvance"
+						,"actions":[ ["executeCMAction",["AdvanceDeadlineDay"]] ]
+					}
+					,{
+						"event":"EnterSackedEmail"
+						,"targets":["InboxHub"] 
+						,"actions":[ ["executeCMAction",["GenerateSackedMail"]] ]
+					}
+					,{
+						"event":"Forfeit"
+						,"actions":[ ["executeCMAction",["HubForfeit"]] ]
+					}
+					,{
+						"event":"OpponentForfeit"
+						,"actions":[ ["executeCMAction",["HubOpponentForfeit"]] ]
+					}
+					,{
+						"event":"SaveAndQuitMode"
+						,"targets":["SaveInQuitFlow"] 
+						,"actions":[ ["executeCMAction",["EnterSaveFromQuitFlow"]] ]
+					}
+					,{
+						"event":"EnterCalendar"
+						,"targets":["Calendar"] 
+						,"actions":[ ["executeCMAction",["EnterCalendar"]] ]
+					}
+					,{
+						"event":"EnterInternationalOffers"
+						,"targets":["InternationalOffers"] 
+					}
+					,{
+						"event":"EnterMessages"
+						,"targets":["InboxHub"] 
+						,"actions":[ ["executeCMAction",["UserInterruptSim"]], ["executeCMAction",["EnterMessages"]] ]
+					}
+					,{
+						"event":"EnterOldInbox"
+						,"targets":["Inbox"] 
+						,"actions":[ ["executeCMAction",["UserInterruptSim"]], ["executeCMAction",["EnterMessages"]] ]
+					}
+					,{
+						"event":"EnterPlayerConversation"
+						,"targets":["PlayerConversationHub"] 
+					}
+					,{
+						"event":"EnterInbox"
+						,"targets":["InboxHub"] 
+					}
+					,{
+						"event":"EnterPreMatchPressConf"
+						,"targets":["PreMatchPressConf"] 
+					}
+					,{
+						"event":"MainMenuBack"
+						,"actions":[ ["executeCMAction",["MainMenuBack"]] ]
+					}
+					,{
+						"event":"EnterJobOfferSign"
+						,"targets":["JobOfferSign"] 
+						,"actions":[ ["executeCMAction",["JobOfferSignFromHub"]] ]
+					}
+					,{
+						"event":"EnterEndOfSeason"
+						,"targets":["InboxHub"] 
+						,"actions":[ ["executeCMAction",["EndSeasonHubAdvance"]] ]
+					}
+					,{
+						"event":"MoveToNewClub"
+						,"targets":["InitNewSeason"] 
+					}
+					,{
+						"event":"SwitchJob"
+						,"targets":["InboxHub"] 
+						,"actions":[ ["executeCMAction",["StartSwitchJob"]] ]
+					}
+					,{
+						"event":"EnterBrowseJobs"
+						,"targets":["JobOffers"] 
+						,"actions":[ ["executeCMAction",["BrowseJobs"]] ]
+					}
+					,{
+						"event":"EnterBrowseJobsAlreadyApplied"
+						,"actions":[ ["executeCMAction",["EnterBrowseJobsPopup"]] ]
+					}
+					,{
+						"event":"Retire"
+						,"targets":["JobOffers"] 
+						,"actions":[ ["executeCMAction",["Retire"]] ]
+					}
+					,{
+						"event":"EnterSquadHub"
+						,"targets":["SquadHub"]
+					}
+					,{
+						"event":"EnterSquadHubAutoExpand"
+						,"let":{"screenMode":"AutoExpandOnEntry"}
+						,"targets":["SquadHub"]
+					}
+					,{
+						"event":"EnterSceneTest"
+						,"targets":["FlapSceneTest"]
+					}
+					,{
+						"event":"EnterPostMatchPressConfTest"
+						,"targets":["PostMatchPressConfDebug"]
+					}
+					,{
+						"event":"EnterPreMatchPressConfTest"
+						,"targets":["PreMatchPressConfDebug"]
+					}
+					,{
+						"event":"EnterTransferHub"
+						,"targets":["TransferHub"] 
+					}
+					,{
+						"event":"EnterEditKitNumber"
+						,"targets":["EditKitNumber"] 
+					}
+					,{
+						"event":"EnterInjuryList"
+						,"targets":["InjuryList"] 
+					}
+					,{
+						"event":"EnterTcmFinanceHub"
+						,"targets":["TcmFinanceHub"] 
+					}
+					,{
+						"event":"EnterEditManager"
+						,"targets":["EditManagerFlow"] 
+					}
+					,{
+						"event":"EnterTransferHistoryDateSort"
+						,"targets":["TransferHistory"] 
+						,"actions":[ ["executeCMAction",["EnterTransferHistoryDateSort"]] ]
+					}
+					,{
+						"event":"EnterTransferHistoryFeeSort"
+						,"targets":["TransferHistory"] 
+						,"actions":[ ["executeCMAction",["EnterTransferHistoryFeeSort"]] ]
+					}
+					,{
+						"event":"EnterStandingsHub"
+						,"targets":["StandingsHub"]
+					}
+					,{
+						"event":"ViewOtherCompetitions"
+						,"targets":["ViewOtherComps"] 
+					}
+					,{
+						"event":"EnterStandingsOld"
+						,"targets":["StandingsOld"]
+						,"actions":[ ["executeCMAction",["ViewComps"]] ]
+
+					}
+					,{
+						"event":"EnterOtherCompsOld"
+						,"targets":["StandingsOld"]
+						,"actions":[ ["executeCMAction",["ViewOtherComps"]] ]
+					}
+					,{
+						"event":"SelectStat"
+						,"targets":["Statistics"] 
+					}
+					,{
+						"event":"EnterTeamStats"
+						,"targets":["TeamStatistics"] 
+						,"actions":[ ["executeCMAction",["ViewTeamStatistics"]] ]
+					}
+					,{
+						"event":"EnterFixtures"
+						,"targets":["Fixtures"] 
+					}
+					,{
+						"event":"SelectCompetition"
+						,"actions":[ ["executeCMAction",["ViewCompStats"]] ]
+					}
+					,{
+						"event":"EnterYouthScout"
+						,"actions":[ ["executeCMAction",["EnterYouthScout"]] ]
+					}
+					,{
+						"event":"EnterScoutNetwork"
+						,"targets":["ScoutNetwork"] 
+					}
+					,{
+						"event":"EnterYouthSquad"
+						,"targets":["YouthSquad"] 
+						,"actions":[ ["executeCMAction",["EnterYouthSquad"]] ]
+					}
+					,{
+						"event":"ViewYouthSquadPopup"
+						,"actions":[ ["executeCMAction",["YouthSquadShowPopup"]] ]
+					}
+					,{
+						"event":"EnterEditAvatarPlayer"
+						,"targets":["SelectEditAvatarPlayer"] 
+					}
+					,{
+						"event":"EnterEditAvatarManager"
+						,"targets":["SelectEditAvatarManager"] 
+					}
+					,{
+						"event":"EnterEditAvatarTournament"
+						,"targets":["SelectEditAvatarTournament"] 
+					}
+					,{
+						"event":"EnterSave"
+						,"targets":["SaveInMainMenuHub"] 
+						,"actions":[ ["executeCMAction",["EnterSaveFromMainHub"]] ]
+					}
+					,{
+						"event":"EnterGameSettings"
+						,"targets":["GameSettings"] 
+					}
+					,{
+						"event":"EnterEATrax"
+						,"targets":["EATrax"] 
+					}
+					,{
+						"event":"EnterMatchSubMenu"
+						,"actions":[ ["executeCMAction",["EnterMatchSubMenu"]] ]
+					}
+					,{
+						"event":"AutoAdvanceFromPlay"
+						,"actions":
+						[							
+							["executeCMAction",["AutoAdvanceFromPlay"]]
+						]
+					}
+					,{
+						"event":"AutoAdvanceFromSim"
+						,"actions":
+						[						
+							["executeCMAction",["AutoAdvanceFromSim"]]
+						]
+					}
+					,{
+						"event":"EnterMatchSubMenuFromPlay"
+						,"actions":
+						[
+							["sendScreenEvent",["ResetCMControllers"]]
+							,["executeCMAction",["EnterMatchSubMenuFromPlay"]]
+						]
+					}
+					,{
+						"event":"EnterMatchSubMenuFromSim"
+						,"actions":[ ["executeCMAction",["EnterMatchSubMenuFromSim"]] ]
+					}
+					,{
+						"event":"SimMatch"
+						,"targets":["SimMatchFlow"] 
+						,"actions":[ ["executeCMAction",["EnterPreMatchReportForSim"]] ]
+					}
+					,{
+						"event":"PlayMatch"
+						,"targets":["PlayMatchFlow"] 
+						,"actions":
+						[
+							["executeCMAction",["EnterPreMatchFlowFromHub"]] 
+						]
+					}
+					,{
+						"event":"ToggleSimPlayerGame"
+						,"actions":[ ["executeCMAction",["ToggleUserSim"]] ]
+					}
+					,{
+						"event":"EnterAdditionalFunds"
+						,"targets":["AdditionalFunds"] 
+					}
+					,{
+						"event":"ShowResignInternationalJobPopUp"
+						,"actions":[ ["executeCMAction",["ShowResignInternationalJobPopUp"]] ]
+					}
+					,{
+						"event":"ResignInternationalJob"
+						,"actions":[ ["executeCMAction",["ResignInternationalJob"]] ]
+					}
+					,{
+						"event":"EnterCareerSummary"
+						,"targets":["CareerSummary"] 
+					}
+					,{
+						"event":"EnterSquadCallup"
+						,"targets":["SquadCallup"] 
+					}
+					,{
+						"event":"EnterSquadCallupFromPopup"
+						,"targets":["SquadCallup"] 
+						,"actions":[ ["executeCMAction",["EnterSquadCallUpFromPopup"]] ]
+					}
+					,{
+						"event":"EnterSquadCallupFromPopupInjuryFix"
+						,"targets":["SquadCallup"] 
+						,"actions":[ ["executeCMAction",["EnterSquadCallUpFromPopupInjuryFix"]] ]
+					}
+					,{
+						"event":"EnterPAPMatchObjectives"
+						,"targets":["PAPMatchObjectives"] 
+						,"actions":[ ["executeCMAction",["EnterPAPMatchObjectives"]] ]
+					}
+					,{
+						"event":"EnterPAPSeasonObjectives"
+						,"targets":["PAPSeasonObjectives"] 
+						,"actions":[ ["executeCMAction",["EnterPAPSeasonObjectives"]] ]
+					}
+					,{
+						"event":"EnterPAPMatchObjectives"
+						,"targets":["PAPMatchObjectives"] 
+						,"actions":[ ["executeCMAction",["EnterPAPMatchObjectives"]] ]
+					}
+					,{
+						"event":"EnterManagerModeObjectivesDomestic"
+						,"let":{"targetPanel":"domestic"}
+						,"targets":["ManagerModeSeasonObjectives"] 
+					}
+					,{
+						"event":"EnterManagerModeObjectivesRegional"
+						,"let":{"targetPanel":"regional"}
+						,"targets":["ManagerModeSeasonObjectives"] 
+					}
+					,{
+						"event":"EnterManagerModeObjectivesPopularity"
+						,"let":{"targetPanel":"popularity"}
+						,"targets":["ManagerModeSeasonObjectives"] 
+					}
+					,{
+						"event":"EnterManagerModeObjectivesProfitability"
+						,"let":{"targetPanel":"profitability"}
+						,"targets":["ManagerModeSeasonObjectives"] 
+					}
+					,{
+						"event":"EnterManagerModeObjectivesYouth"
+						,"let":{"targetPanel":"youth"}
+						,"targets":["ManagerModeSeasonObjectives"] 
+					}
+					,{
+						"event":"EnterManagerModeObjectivesOverview"
+						,"let":{"targetPanel":"overview"}
+						,"targets":["ManagerModeSeasonObjectives"] 
+					}
+					,{
+						"event":"EnterVirtualProAccomplishments"
+						,"targets":["VirtualPro"] 
+					}
+					,{
+						"event":"EnterAvatarVirtualProEdit"
+						,"targets":["EditAvatarVirtualProPlayerFlow"] 
+					}
+					,{
+						"event":"EnterAvatarRealPlayerEdit"
+						,"targets":["EditAvatarRealPlayerFlow"] 
+					}
+					,{
+						"event":"EnterShoppingList"
+						,"targets":["ShoppingList"] 
+					}
+					,{
+						"event":"EnterGTNHub"
+						,"targets":["GTNHub"] 
+					}
+					,{
+						"event":"EnterPlayerSearch"
+						,"targets":["PlayerSearch"] 
+					}
+					,{
+						"event":"EnterNewsAggregatorFromNews"
+						,"targets":["NewsAggregator"] 
+						,"actions":[ ["executeCMAction",["EnterNewsAggregatorFromNews"]] ]
+					}
+					,{
+						"event":"EnterNewsAggregatorFromRSS"
+						,"targets":["NewsAggregator"] 
+						,"actions":[ ["executeCMAction",["EnterNewsAggregatorFromRSS"]] ]
+					}
+					,{
+						"event":"EnterGTNScoutReportFromReportTile"
+						,"targets":["GTNScoutReportFromReportTile"]
+						,"actions":[ ["executeCMAction",["EnterGTNScoutReportFromReportTile"]] ]					
+					}
+					,{
+						"event":"EnterHireScoutSkip"
+						,"targets":["HireScoutSkip"] 
+						,"actions":[ ["executeCMAction",["EnterHireScoutFromTransfers"]] ]
+					}
+					,{
+						"event":"EnterManagerTraining"
+						,"targets":["ManagerTrainig"] 
+					}
+					,{
+						"event":"EnterPlayerTraining"
+						,"targets":["PlayerTrainig"] 
+					}					
+					,{
+						"event":"EnterPressConfTimelineTest"
+						,"targets":["PressConferenceTimelineTester"]
+					}
+				]
+			}
+			,{
+				"name":"PreSeasonTourInvite"
+				,"onEnter":
+				[
+					["loadScreenController", ["PreSeasonTourInvite"]]
+					,["loadView", ["screen", "game/screens/career/preSeasonTour/PreSeasonTourInvite"]]
+				]
+				,"onExit":
+				[
+					["unloadView", ["screen", "game/screens/career/preSeasonTour/PreSeasonTourInvite"]]
+					,["unloadScreenController", ["PreSeasonTourInvite"]]
+				]
+				,"transitions":
+				[
+					{
+						"event":"EnterPreSeasonTourSelection"
+						,"targets":["PreSeasonTourSelection"]
+					}
+					,{
+						"event":"SaveAfterPreseasonTourDecline"
+						,"targets":["Autosave"]	
+					}
+				]
+			}
+			,{
+				"name":"PreSeasonTourSelection"
+				,"onEnter":
+				[
+					["loadScreenController", ["PreSeasonTourSelection"]]
+					,["loadView", ["screen", "game/screens/career/preSeasonTour/PreSeasonTourSelection"]]
+				]
+				,"onExit":
+				[
+					["unloadView", ["screen", "game/screens/career/preSeasonTour/PreSeasonTourSelection"]]
+					,["unloadScreenController", ["PreSeasonTourSelection"]]
+				]
+				,"transitions":
+				[
+					{
+						"event":"Advance"
+						,"targets":["Autosave"]
+					}
+				]
+			}
+			,{
+				"type":"external"
+				,"file":"/careerMode/statsFlow.nav"
+				,"inputs":
+				{
+					"StandingsHub":"StandingsHub"
+					,"ViewOtherComps":"ViewOtherComps"
+					,"StandingsOld":"StandingsOld"
+					,"Fixtures":"Fixtures"
+					,"Statistics":"Statistics"
+				}
+				,"outputs": 
+				{ 
+					"Back":"MainMenuHub"
+				}	
+			}
+			,{
+				"name":"PlayMatchFlow"
+				,"type":"external"
+				,"file":"/careerMode/playMatchFlow.nav"
+				,"outputs": 
+				{ 
+					"Back":"MainMenuHub"
+					,"profileSignOut":"profileSignOut"
+				}	
+			}
+			,{
+				"name":"UnbrandedScreens"
+				,"onEnter":
+				[
+					["executeCMAction", ["ClearTheme"]]
+				]
+				,"states":
+				[
+					{	
+						"name":"TeamManagementFlow"
+						,"type":"external"
+						,"file":"/editTeamSheetFlow.nav"
+						,"outputs":
+						{
+							"back":"CareerHub"
+						}
+					}
+					,{	
+						"let":{"tmMode":"offlineCareer"}
+						,"states":
+						[
+							{
+								"name":"TeamSheetSelectExternal"
+								,"type":"external"
+								,"file":"/editTeamManagementFlow.nav"
+								,"inputs":
+								{
+									"TeamSheetSelect":"teamSheetSelection"
+								}
+								,"outputs":
+								{
+									"back":"CareerHub"
+								}
+							}
+						]
+					}
+					,{
+						"name":"GTNScoutReportFromReportTile"
+						,"type":"external"
+						,"file":"/careerMode/gtnScoutReportFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}	
+					}		
+					,{
+						"name":"Inbox"
+						,"type":"external"
+						,"file":"/careerMode/inboxFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}
+					}
+					,{
+						"name":"PlayerConversationHub"
+						,"let":{"context":"playerconversation"}
+						,"states":
+						[
+							{
+								"type":"external"
+								,"file":"/careerMode/messagingHubFlow.nav"
+								,"outputs": 
+								{ 
+									"Back":"MainMenuHub"
+								}
+							}
+						]
+					}
+					,{
+						"name":"InboxHub"
+						,"let":{"context":"inboxhub"}
+						,"states":
+						[
+							{
+								"type":"external"
+								,"file":"/careerMode/messagingHubFlow.nav"
+								,"outputs": 
+								{ 
+									"Back":"MainMenuHub"
+								}
+							}
+						]
+					}
+					,{
+						"onEnter": 
+						[ 
+							["loadScreenController", ["Save"]]
+						]
+						,"onExit": 
+						[	
+							["unloadScreenController", ["Save"]]
+						]
+						,"states":
+						[
+							{
+								"type":"external"
+								,"file":"/saveload/save.nav"
+								,"inputs":
+								{
+									"SaveInQuitFlow":"in_SaveDefault"
+								}
+								,"outputs":
+								{
+									"out_Back":"PostSave"		/* Unexpected case */
+									,"out_Success":"PostSave"
+									,"out_Failure":"PostSave"
+								}
+							}
+							,{
+								"type":"external"
+								,"file":"/saveload/save.nav"
+								,"inputs":
+								{
+									"SaveInMainMenuHub":"in_SaveDefault"
+								}
+								,"outputs":
+								{
+									"out_Back":"MainMenuHub"		/* Unexpected case */
+									,"out_Success":"MainMenuHub"
+									,"out_Failure":"MainMenuHub"
+								}
+							}
+							,{
+								"name":"PostSave"
+								,"onEnter":
+								[
+									["invoke", ["QuitMode"]]
+								]
+							}
+						]
+					}
+					,{
+						"name":"Calendar"
+						,"type":"external"
+						,"file":"/careerMode/CalendarFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+							,"PreSeasonTourInvite":"PreSeasonTourInvite"
+							,"PapMoveToNewClub":"InitNewSeason"
+						}	
+					}
+					,{
+						"name":"TransferHistory"
+						,"type":"external"
+						,"file":"/careerMode/TransferHistoryFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}	
+					}
+					,{
+						"name":"JobOffers"
+						,"type":"external"
+						,"file":"/careerMode/jobOffersFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}	
+					}
+					,{
+						"name":"InternationalOffers"
+						,"type":"external"
+						,"file":"/careerMode/internationalOffersFlow.nav"
+						,"outputs": 
+						{ 
+							"out_Back":"MainMenuHub"
+							,"out_Inbox":"InboxHub"
+						}	
+					}
+					,{
+						"name":"JobOfferSign"
+						,"type":"external"
+						,"file":"/careerMode/jobOfferSignFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+							,"PAPMoveToNewClub": "InitNewSeason"
+						}	
+					}
+					,{
+						"onEnter":
+						[
+							["executeCMAction",["MoveToNewClub"]]
+						]
+						,"states":
+						[
+							{
+								"name":"InitNewSeason"
+								,"type":"external"
+								,"file":"/careerMode/initNewSeasonFlow.nav"
+							}
+						]
+					}
+					,{
+						"let":{"ENTRY_POINT":"preMatch"}
+						,"states":
+						[
+							{
+								"name":"PreMatchPressConf"
+								,"type":"external"
+								,"file":"/careerMode/pressConferenceFlow.nav"
+								,"outputs": 
+								{ 
+									"Back":"MainMenuHub"
+								}
+							}
+						]
+					}
+					,{
+						"name":"SquadHub"
+						,"type":"external"
+						,"file":"/careerMode/squadHubFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+							,"PapRetire":"RetirePap"
+							,"PapMove":"InitNewSeason"
+						}
+					}
+					,{
+						"name":"NegotiationSceneTestExternal"
+						,"type":"external"
+						,"file":"/careerMode/negotiationSceneFlow.nav"
+						,"inputs": 
+						{ 
+							"FlapSceneTest":"NegotiationSceneTest"
+						}
+						,"outputs": 
+						{ 
+							"back":"MainMenuHub"
+						}
+					}
+					,{
+						"let":{"ENTRY_POINT":"postMatchDebug"}
+						,"states":
+						[
+							{
+								"name":"PostMatchPressConfDebug"
+								,"type":"external"
+								,"file":"/careerMode/pressConferenceFlow.nav"
+								,"outputs": 
+								{ 
+									"Back":"MainMenuHub"
+								}
+							}
+						]
+					}
+					,{
+						"let":{"ENTRY_POINT":"preMatchDebug"}
+						,"states":
+						[
+							{
+								"name":"PreMatchPressConfDebug"
+								,"type":"external"
+								,"file":"/careerMode/pressConferenceFlow.nav"
+								,"outputs": 
+								{ 
+									"Back":"MainMenuHub"
+								}
+							}
+						]
+					}
+					,{
+						"name":"PressConferenceTimelineTester"
+						,"states":
+						[
+							{
+								"name":"PCTTEdit"
+								,"onEnter":
+								[
+									["loadViewModel", ["PressConferenceTimelineTesterViewModel"]]
+									,["loadViewModel", ["FluxViewModel"]]
+									,["loadView", ["screen", "game/screens/fluxHub/FluxHub"]]		
+									,["sendAction", ["suppressPOWWidget"]]
+								]
+								,"onExit":
+								[
+									["sendAction", ["unsuppressPOWWidget"]]
+									,["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+									,["unloadViewModel",["FluxViewModel"]]
+									,["unloadViewModel", ["PressConferenceTimelineTesterViewModel"]]
+								]
+								,"states":
+								[
+									{
+										"name":"Idle"
+										,"transitions":
+										[
+											{
+												"event":"back"
+												,"targets":["MainMenuHub"]
+											}
+											,{
+												"event":"advance"
+												,"targets":["PCTTPlay"]
+											}
+											,{
+												"event":"showConfirmPopup"
+												,"targets":["confirmationPopup"]
+											}
+										]
+									}
+									,{
+										"name":"confirmationPopup"
+										,"onEnter":
+										[
+											["loadView", ["popup", "confirmationPopup", "CustomConfigurationOverwriteConf|Yes|popupYes|No|popupNo"]]
+										]
+										,"onExit":
+										[
+											["unloadView", ["popup", "confirmationPopup"]]
+										]
+										,"transitions":
+										[
+											{
+												"event":"popupYes"
+												,"targets":["Idle"]
+											}
+											,{
+												"event":"popupNo"
+												,"targets":["Idle"]
+											}
+										]
+									}
+								]
+							}
+							,{
+								"let":{"ENTRY_POINT":"timelineTester"}
+								,"states":
+								[
+									{
+										"name":"PCTTPlay"
+										,"type":"external"
+										,"file":"/careerMode/pressConferenceFlow.nav"
+										,"outputs":
+										{
+											"Back":"PCTTEdit"
+										}
+									}
+								]
+							}
+						]
+					}
+					,{
+						"name":"TransferHub"
+						,"type":"external"
+						,"file":"/careerMode/transferhubflow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}
+					}
+					,{
+						"name":"EditKitNumber"
+						,"onEnter": 
+						[ 
+							["loadScreenController", ["EditKitNumber"]] 
+							, ["loadView",["screen", "game/screens/career/squad/editKitNumber"]]
+						]
+						,"onExit": 
+						[	
+							["unloadView",["screen", "game/screens/career/squad/editKitNumber"]]
+							,["unloadScreenController", ["EditKitNumber"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"name":"InjuryList"
+						,"onEnter": 
+						[ 
+							["loadScreenController", ["InjuryList"]] 
+							, ["loadView",["screen", "game/screens/career/squad/InjuryList"]]
+						]
+						,"onExit": 
+						[	
+							["unloadView",["screen", "game/screens/career/squad/InjuryList"]]
+							,["unloadScreenController", ["InjuryList"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"name":"GTNHub"
+						,"type":"external"
+						,"file":"/careerMode/gtnHubFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}	
+					}
+					,{
+						"name":"PlayerSearch"
+						,"type":"external"
+						,"file":"/careerMode/playerSearchFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}	
+					}
+					,{
+						"name":"TcmFinanceHub"
+						,"onEnter":
+						[
+							["loadViewModel", ["TcmFinanceViewModel"]]
+							,["loadView", ["screen", "game/screens/career/tcmFinance/TcmFinanceHub"]]
+						]
+						,"onExit":
+						[
+							["unloadView", ["screen", "game/screens/career/tcmFinance/TcmFinanceHub"]]
+							,["unloadViewModel", ["TcmFinanceViewModel"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"back"
+								,"targets":["MainMenuHub"] 
+							}
+							,{
+								"event":"advance"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"let":{"AvatarFlowConfigViewModelName":"ManagerCareerAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"edit"}
+						,"onExit":
+						[
+							["executeCMAction",["UpdateManagerGender"]]
+						]
+						,"states":
+						[
+							{
+								"type":"external"
+								,"file":"/avatar/avatarFlow.nav"
+								,"inputs":
+								{
+									"EditManagerFlow":"in_initializeSessionAttemptState"
+									,"ShutdownSessionForEditManager":"in_shutdownSessionAttemptState"
+								}
+								,"outputs":
+								{
+									"out_advance":"MainMenuHub"
+									,"out_back":"MainMenuHub"
+									,"out_custom":"MainMenuHub"
+									,"out_custom2":"MainMenuHub"
+									,"out_savefail":"ShutdownSessionForEditManager"
+									,"out_profilesignedout":"profileSignOut"
+								}
+							}
+						]
+					}
+					,{
+						"name":"TeamStatistics"
+						,"onEnter":
+						[
+							["loadScreenController", ["TeamStatistics"]]
+							,["loadView",["screen", "game/screens/career/stats/TeamStats"]]
+						]
+						,"onExit":
+						[
+							["unloadView", ["screen", "game/screens/career/stats/TeamStats"]]
+							,["unloadScreenController", ["TeamStatistics"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+								,"actions":[ ["executeCMAction",["ClearTeamStatistics"]] ]
+							}
+						]
+					}
+					,{
+						"name":"ScoutNetwork"
+						,"type":"external"
+						,"file":"/careerMode/scoutNetworkFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}	
+					}
+					,{
+						"name":"YouthSquad"
+						,"type":"external"
+						,"file":"/careerMode/youthSquadFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}	
+					}
+					,{
+						"let":{"AvatarFlowConfigViewModelName":"PlayerCareerAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"editplayers", "EditPlayerOrAvatarParam":"editRealPlayer", "createPlayerMode":"edit"}
+						,"states":
+						[
+							{
+								"type":"external"
+								,"file":"/avatar/avatarFlow.nav"
+								,"inputs":
+								{
+									"SelectEditAvatarPlayer":"in_avatarListSelectScreen"
+									,"ShutdownSessionForEditPlayersInPlayerCareer":"in_shutdownSessionAttemptState"
+								}
+								,"outputs":
+								{
+									"out_advance":"SelectEditAvatarPlayer"
+									,"out_back":"MainMenuHub"
+									,"out_custom":"SelectEditAvatarPlayer"
+									,"out_custom2":"SelectEditAvatarPlayer"
+									,"out_savefail":"ShutdownSessionForEditPlayersInPlayerCareer"
+									,"out_profilesignedout":"profileSignOut"
+								}
+							}
+						]
+					}
+					,{
+						"let":{"AvatarFlowConfigViewModelName":"ManagerCareerAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"editplayers", "EditPlayerOrAvatarParam":"editRealPlayer", "createPlayerMode":"edit"}
+						,"states":
+						[
+							{
+								"type":"external"
+								,"file":"/avatar/avatarFlow.nav"
+								,"inputs":
+								{
+									"SelectEditAvatarManager":"in_avatarListSelectScreen"
+									,"ShutdownSessionForEditPlayersInManagerCareer":"in_shutdownSessionAttemptState"
+								}
+								,"outputs":
+								{
+									"out_advance":"SelectEditAvatarPlayer"
+									,"out_back":"MainMenuHub"
+									,"out_custom":"SelectEditAvatarPlayer"
+									,"out_custom2":"SelectEditAvatarPlayer"
+									,"out_savefail":"ShutdownSessionForEditPlayersInManagerCareer"
+									,"out_profilesignedout":"profileSignOut"
+								}
+							}
+						]
+					}
+					,{
+						"let":{"AvatarFlowConfigViewModelName":"TournamentAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"editplayers", "EditPlayerOrAvatarParam":"editRealPlayer", "createPlayerMode":"edit"}
+						,"states":
+						[
+							{
+								"type":"external"
+								,"file":"/avatar/avatarFlow.nav"
+								,"inputs":
+								{
+									"SelectEditAvatarTournament":"in_avatarListSelectScreen"
+									,"ShutdownSessionForEditPlayersInTournament":"in_shutdownSessionAttemptState"
+								}
+								,"outputs":
+								{
+									"out_advance":"MainMenuHub"
+									,"out_back":"MainMenuHub"
+									,"out_custom":"MainMenuHub"
+									,"out_custom2":"MainMenuHub"
+									,"out_savefail":"ShutdownSessionForEditPlayersInTournament"
+									,"out_profilesignedout":"profileSignOut"
+								}
+							}
+						]
+					}
+					,{
+						"name":"GameSettings"
+						,"onEnter": 
+						[ 
+							["loadScreenController", ["GameSettings"]] 
+							, ["loadView",["screen", "game/screens/settings/GameSettings"]]
+						]
+						,"onExit": 
+						[	
+							["unloadView",["screen", "game/screens/settings/GameSettings"]]
+							,["unloadScreenController", ["GameSettings"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"name":"EATrax"
+						,"onEnter": 
+						[ 
+							["loadScreenController", ["EATrax"]] 
+							, ["loadView",["screen", "external/ion_sports07/screens/misc/01_trax"]]
+						]
+						,"onExit": 
+						[	
+							["unloadView",["screen", "external/ion_sports07/screens/misc/01_trax"]]
+							,["unloadScreenController", ["EATrax"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"name":"SimMatchFlow"
+						,"type":"external"
+						,"file":"/careerMode/simMatchFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}	
+					}
+					,{
+						"name":"AdditionalFunds"
+						,"onEnter": 
+						[ 
+							["loadScreenController", ["AdditionalFunds"]] 
+							, ["loadView",["screen", "game/screens/career/transfers/AdditionalFunds"]]
+						]
+						,"onExit": 
+						[	
+							["unloadView",["screen", "game/screens/career/transfers/AdditionalFunds"]]
+							,["unloadScreenController", ["AdditionalFunds"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+							,{
+								"event":"SendAdditionalFundsRequest"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"name":"CareerSummary"
+						,"onEnter":
+						[
+							["loadScreenController", ["CareerSummary"]]
+							,["loadView", ["screen", "game/screens/career/CareerHubSummary"]]
+						]
+						,"onExit":
+						[
+							["unloadView", ["screen", "game/screens/career/CareerHubSummary"]]
+							,["unloadScreenController", ["CareerSummary"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"name":"SquadCallup"
+						,"onEnter": 
+						[ 
+							["loadScreenController", ["SquadCallup"]] 
+							, ["loadView",["screen", "game/screens/teamManagement/46_internationalSelections"]]
+						]
+						,"onExit": 
+						[	
+							["unloadView",["screen", "game/screens/teamManagement/46_internationalSelections"]]
+							,["unloadScreenController", ["SquadCallup"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+								,"actions":[ ["executeCMAction",["LeaveSquadCallUp"]] ]
+							}
+						]
+					}
+					,{
+						"name":"PAPMatchObjectives"
+						,"onEnter":
+						[
+							["loadScreenController", ["PAPMatchObjectives"]]
+							,["loadView", ["screen", "game/screens/career/playasplayer/PAPMatchObjectives"]]
+						]
+						,"onExit":
+						[
+							["unloadView", ["screen", "game/screens/career/playasplayer/PAPMatchObjectives"]]
+							,["unloadScreenController", ["PAPMatchObjectives"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"name":"PAPSeasonObjectives"
+						,"onEnter":
+						[
+							["loadScreenController", ["PAPSeasonObjectives"]]
+							,["loadView", ["screen", "game/screens/career/playasplayer/PAPSeasonObjectives"]]
+						]
+						,"onExit":
+						[
+							["unloadView", ["screen", "game/screens/career/playasplayer/PAPSeasonObjectives"]]
+							,["unloadScreenController", ["PAPSeasonObjectives"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"name":"ManagerModeSeasonObjectives"
+						,"type":"external"
+						,"file":"/careerMode/objectivesFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"MainMenuHub"
+						}
+					}
+					,{
+						"name":"VirtualPro"
+						,"onEnter": 
+						[ 
+							["loadScreenController", ["VirtualPro"]] 
+							, ["loadView",["screen", "game/screens/virtualPro/VPro_Accomplishments"]]
+						]
+						,"onExit": 
+						[	
+							["unloadView",["screen", "game/screens/virtualPro/VPro_Accomplishments"]]
+							,["unloadScreenController", ["VirtualPro"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"onEnter":
+						[
+							["loadViewModel",["VirtualProViewModel"]]
+						]
+						,"onExit":
+						[
+							["unloadViewModel",["VirtualProViewModel"]]
+						]
+						,"states":
+						[
+							{
+								"name":"VirtualProProfileSignOutWait"
+								,"transitions":
+								[
+									{
+										"event":"profileSignOutComplete"
+										,"actions":[ ["invoke", ["GoToQuitAfterSignOut"]] ]
+									}
+								]
+							}
+							,{
+								"let":{"AvatarFlowConfigViewModelName":"PlayerCareerAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"editvpro"}
+								,"onEnter":
+								[
+									["sendAction", ["suppressPOWWidget"]]
+								]
+								,"onExit":
+								[
+									["sendAction", ["unsuppressPOWWidget"]]
+								]
+								,"states":
+								[
+									{
+										"type":"external"
+										,"file":"/avatar/avatarFlow.nav"
+										,"inputs":
+										{
+											"EditAvatarVirtualProPlayerFlow":"in_initializeSessionAttemptState"
+											,"ShutdownSessionForEditAvatarVirtualProPlayer":"in_shutdownSessionAttemptState"
+										}
+										,"outputs":
+										{
+											"out_advance":"MainMenuHub"
+											,"out_back":"MainMenuHub"
+											,"out_custom":"MainMenuHub"
+											,"out_custom2":"MainMenuHub"
+											,"out_savefail":"ShutdownSessionForEditAvatarVirtualProPlayer"
+											,"out_profilesignedout":"profileSignOut"
+										}
+									}
+								]
+							}
+							,{
+								"let":{"AvatarFlowConfigViewModelName":"PlayerCareerAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"editrealplayer"}
+								,"onEnter":
+								[
+									["sendAction", ["suppressPOWWidget"]]
+								]
+								,"onExit":
+								[
+									["sendAction", ["unsuppressPOWWidget"]]
+								]
+								,"states":
+								[
+									{
+										"type":"external"
+										,"file":"/avatar/avatarFlow.nav"
+										,"inputs":
+										{
+											"EditAvatarRealPlayerFlow":"in_initializeSessionAttemptState"
+											,"ShutdownSessionForEditAvatarRealPlayer":"in_shutdownSessionAttemptState"
+										}
+										,"outputs":
+										{
+											"out_advance":"MainMenuHub"
+											,"out_back":"MainMenuHub"
+											,"out_custom":"MainMenuHub"
+											,"out_custom2":"MainMenuHub"
+											,"out_savefail":"ShutdownSessionForEditAvatarRealPlayer"
+											,"out_profilesignedout":"profileSignOut"
+										}
+									}
+								]
+							}
+						]
+					}
+					,{
+						"name":"ShoppingList"
+						,"onEnter":
+						[
+							["loadScreenController", ["ShoppingList"]]
+							,["loadView", ["screen", "game/screens/career/gtn/ScoutInstructions"]]
+						]
+						,"onExit":
+						[
+							["unloadView", ["screen", "game/screens/career/gtn/ScoutInstructions"]]
+							,["unloadScreenController", ["ShoppingList"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 					
+							}
+							,{
+								"event":"EnterGTNHub"
+								,"targets":["GTNHub"] 
+							}
+							,{
+								"event":"EnterGTNScoutReportFromShoppingList"
+								,"targets":["GTNScoutReportFromShoppingList"]
+								,"actions":[ ["executeCMAction",["EnterGTNScoutReportFromShoppingList"]] ]					
+							}
+						]
+					}
+					,{
+						"name":"GTNScoutReportFromShoppingList"
+						,"type":"external"
+						,"file":"/careerMode/gtnScoutReportFlow.nav"
+						,"outputs": 
+						{ 
+							"Back":"ShoppingList"
+						}	
+					}
+					,{
+						"name":"NewsAggregator"
+						,"type":"external"
+						,"file":"/careerMode/newsAggregatorFlow.nav"
+						,"outputs": 
+						{ 				
+							"Back":"MainMenuHub"
+						}
+					}
+					,{
+						"name":"HireScoutSkip"
+						,"onEnter":
+						[
+							["loadScreenController", ["HireScout"]]
+							,["loadView", ["screen", "game/screens/career/YouthScout/HireScout"]]
+						]
+						,"onExit":
+						[
+							["unloadView", ["screen", "game/screens/career/YouthScout/HireScout"]]
+							,["unloadScreenController", ["HireScout"]]
+						]
+						,"transitions":
+						[
+							{
+								"event":"Back"
+								,"targets":["MainMenuHub"] 
+							}
+						]
+					}
+					,{
+						"let":{"trainingMode":"manager"}
+						,"states":
+						[
+							{
+								"name":"ManagerTrainig"
+								,"type":"external"
+								,"file":"/careerMode/trainingFlow.nav"
+								,"outputs": 
+								{ 				
+									"back":"MainMenuHub"
+									,"profileSignOut":"profileSignOut"
+									,"out_CareerInviteAccepted":"out_CareerInviteAccepted"
+								}
+							}
+						]
+					}
+					,{
+                        "let":{"trainingMode":"player"}
+						,"states":
+						[
+							{
+								"name":"PlayerTrainig"
+								,"type":"external"
+								,"file":"/careerMode/trainingFlow.nav"
+								,"outputs": 
+								{ 				
+									"back":"MainMenuHub"
+									,"profileSignOut":"profileSignOut"
+									,"out_CareerInviteAccepted":"out_CareerInviteAccepted"
+								}
+							}
+						]
+					}
+				]
+			}
+		]
+	}
+	]
+}

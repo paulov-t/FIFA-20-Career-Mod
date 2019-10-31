@@ -413,7 +413,7 @@
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="1"/> <!-- num players to grow and play -->
-				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="3"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="5"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -587,7 +587,7 @@
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="1"/> <!-- num players to grow and play -->
-				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="3"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="5"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -761,7 +761,7 @@
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="1"/> <!-- num players to grow and play -->
-				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="3"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="5"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -781,7 +781,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="78">
+	<objective type="building_a_foundation" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -820,12 +820,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="78">
+	<objective type="give_youth_a_chance" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="2"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="10"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -845,7 +845,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="diamond_in_the_rough" score="78">
+	<objective type="diamond_in_the_rough" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_grow" mandatory="true" arguments="3">
@@ -873,7 +873,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="home_grown_1" score="101">
+	<objective type="home_grown_1" score="1">
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_play_next_season" mandatory="true" arguments="2">
@@ -899,7 +899,7 @@
 		</expected_progress>
 	</objective>
 	<!-- Rating 6 -->
-	<objective type="acquire_young_talent" score="55">
+	<objective type="acquire_young_talent" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="buy_players_age_pot_spec" mandatory="true" arguments="2">
@@ -932,7 +932,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="cameo_appearance" score="55">
+	<objective type="cameo_appearance" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_play" mandatory="true" arguments="2">
@@ -955,7 +955,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="55">
+	<objective type="building_a_foundation" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -983,7 +983,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="55">
+	<objective type="building_a_foundation" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1015,7 +1015,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="55">
+	<objective type="building_a_foundation" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1047,7 +1047,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="92">
+	<objective type="building_a_foundation" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1086,12 +1086,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="55">
+	<objective type="give_youth_a_chance" score="700">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="1"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="5"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1111,12 +1111,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="92">
+	<objective type="give_youth_a_chance" score="700">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="2"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="5"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1136,12 +1136,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="92">
+	<objective type="give_youth_a_chance" score="700">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="1"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="10"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1189,7 +1189,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="home_grown_1" score="130">
+	<objective type="home_grown_1" score="1">
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_play_next_season" mandatory="true" arguments="2">
@@ -1215,7 +1215,7 @@
 		</expected_progress>
 	</objective>
 
-	<objective type="grow_and_sell" score="90"> <!-- Earn 3m profit from Youth Player sales -->
+	<objective type="grow_and_sell" score="1"> <!-- Earn 3m profit from Youth Player sales -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="profit_from_youth_sales" mandatory="true" arguments="1">
@@ -1253,7 +1253,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="grow_and_sell" score="90"> <!-- Earn 1.5m profit from Youth Player sales -->
+	<objective type="grow_and_sell" score="1"> <!-- Earn 1.5m profit from Youth Player sales -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="profit_from_youth_sales" mandatory="true" arguments="1">
@@ -1294,7 +1294,7 @@
 	
 	<!-- Rating 6 and above -->	
 	
-	<objective type="fresh_team" score="50">
+	<objective type="fresh_team" score="700">
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="avg_squad_age" mandatory="true" arguments="2">
@@ -1333,7 +1333,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="fresh_team" score="85">
+	<objective type="fresh_team" score="700">
 		<duration min="3" max="3"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="avg_squad_age" mandatory="true" arguments="2">
@@ -1377,7 +1377,7 @@
 		</expected_progress>
 	</objective>
 	<!-- Rating 7 and above -->
-	<objective type="building_a_foundation" score="75"> <!-- Acquire 1 Youth Goalkeeper -->
+	<objective type="building_a_foundation" score="1"> <!-- Acquire 1 Youth Goalkeeper -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1408,7 +1408,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="acquire_young_talent" score="75"> <!-- Buy 3 senior players less than 21 year old -->
+	<objective type="acquire_young_talent" score="1"> <!-- Buy 3 senior players less than 21 year old -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="buy_players_age_pot_spec" mandatory="true" arguments="2">
@@ -1441,7 +1441,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="cameo_appearance" score="75"> <!-- Play 2 youth players in at least 10 senior matches -->
+	<objective type="cameo_appearance" score="1"> <!-- Play 2 youth players in at least 10 senior matches -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_play" mandatory="true" arguments="2">
@@ -1464,7 +1464,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="75"> <!-- Acquire 2 Youth Defenders -->
+	<objective type="building_a_foundation" score="1"> <!-- Acquire 2 Youth Defenders -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1492,7 +1492,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="75">
+	<objective type="building_a_foundation" score="1">
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1524,7 +1524,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="75"> <!-- Acquire 2 Youth Forwards -->
+	<objective type="building_a_foundation" score="1"> <!-- Acquire 2 Youth Forwards -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1556,7 +1556,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="diamond_in_the_rough" score="75"> <!-- Grow by 10 OVR points 2 players with potential over 75 -->
+	<objective type="diamond_in_the_rough" score="1"> <!-- Grow by 10 OVR points 2 players with potential over 75 -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_grow" mandatory="true" arguments="3">
@@ -1584,7 +1584,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="diamond_in_the_rough" score="75"> <!-- Grow by 10 OVR points 1 players with potential over 85 -->
+	<objective type="diamond_in_the_rough" score="1"> <!-- Grow by 10 OVR points 1 players with potential over 85 -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_grow" mandatory="true" arguments="3">
@@ -1612,12 +1612,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="75"> <!-- Grow 1 player by 10 OVR points and star him in 10 matches -->
+	<objective type="give_youth_a_chance" score="1000"> <!-- Grow 1 player by 10 OVR points and star him in 10 matches -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="1"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="5"/>	<!-- matches to play in the starting 11 or play as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1637,12 +1637,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="75"> <!-- Grow 2 players by 10 OVR points and star them in 5 matches each-->
+	<objective type="give_youth_a_chance" score="900"> <!-- Grow 2 players by 10 OVR points and star them in 5 matches each-->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="5">
 				<argument name="num_players" value="2"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="5"/>	<!-- matches to play in the starting 11 or play as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1662,12 +1662,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="105"> <!-- Grow 2 players by 10 OVR points and star them in 10 matches each-->
+	<objective type="give_youth_a_chance" score="700"> <!-- Grow 2 players by 10 OVR points and star them in 10 matches each-->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="5">
 				<argument name="num_players" value="2"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="10"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1687,12 +1687,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="105"> <!-- Grow 3 players by 10 OVR points and star them in 5 matches each-->
+	<objective type="give_youth_a_chance" score="600"> <!-- Grow 3 players by 10 OVR points and star them in 5 matches each-->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="5">
 				<argument name="num_players" value="2"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="5"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1712,7 +1712,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="cameo_appearance" score="105"> <!-- Play 4 youth players in at least 10 senior matches -->
+	<objective type="cameo_appearance" score="1"> <!-- Play 4 youth players in at least 10 senior matches -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_play" mandatory="true" arguments="2">
@@ -1735,7 +1735,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="105"> <!-- Acquire 1 on each Youth positions -->
+	<objective type="building_a_foundation" score="1"> <!-- Acquire 1 on each Youth positions -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1774,7 +1774,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="105"> <!-- Acquire 3 Youth Defenders -->
+	<objective type="building_a_foundation" score="1"> <!-- Acquire 3 Youth Defenders -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1802,7 +1802,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="105"> <!-- Acquire 4 Youth Midfielders -->
+	<objective type="building_a_foundation" score="1"> <!-- Acquire 4 Youth Midfielders -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1834,7 +1834,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="building_a_foundation" score="105"> <!-- Acquire 3 Youth Forwards -->
+	<objective type="building_a_foundation" score="1"> <!-- Acquire 3 Youth Forwards -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_players" mandatory="true" arguments="2">
@@ -1866,7 +1866,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="diamond_in_the_rough" score="105"> <!-- Grow by 10 OVR points 2 players with potential over 85 -->
+	<objective type="diamond_in_the_rough" score="1"> <!-- Grow by 10 OVR points 2 players with potential over 85 -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_grow" mandatory="true" arguments="3">
@@ -1894,7 +1894,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="diamond_in_the_rough" score="105"> <!-- Grow by 10 OVR points 3 players with potential over 75 -->
+	<objective type="diamond_in_the_rough" score="1"> <!-- Grow by 10 OVR points 3 players with potential over 75 -->
 		<duration min="1" max="1"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_grow" mandatory="true" arguments="3">
@@ -1927,12 +1927,12 @@
 	<!-- 	2 SEASONS 	-->
 	<!-- 				-->
 	
-	<objective type="give_youth_a_chance" score="75"> <!-- Grow 5 players by 10 OVR points and play them in 10 matches each (2 seasons) -->
+	<objective type="give_youth_a_chance" score="1"> <!-- Grow 5 players by 10 OVR points and play them in 10 matches each (2 seasons) -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="5"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="10"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1952,12 +1952,12 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="give_youth_a_chance" score="75"> <!-- Grow 3 players by 10 OVR points and play them in 20 matches each (2 seasons) -->
+	<objective type="give_youth_a_chance" score="1"> <!-- Grow 3 players by 10 OVR points and play them in 20 matches each (2 seasons) -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="4">
 				<argument name="num_players" value="3"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="20"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -1977,7 +1977,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="diamond_in_the_rough" score="75"> <!-- Grow 5 players which have potential over 75 by 10 OVR points (2 seasons) -->
+	<objective type="diamond_in_the_rough" score="1"> <!-- Grow 5 players which have potential over 75 by 10 OVR points (2 seasons) -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_grow" mandatory="true" arguments="3">
@@ -2005,7 +2005,7 @@
 			</progress>
 		</expected_progress>
 	</objective>	
-	<objective type="diamond_in_the_rough" score="75"> <!-- Grow 6 players which have potential over 75 by 10 OVR points (2 seasons) -->
+	<objective type="diamond_in_the_rough" score="1"> <!-- Grow 6 players which have potential over 75 by 10 OVR points (2 seasons) -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_grow" mandatory="true" arguments="3">
@@ -2033,7 +2033,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="grow_and_sell" score="75"> <!-- Earn 8m profit from Youth Player sales -->
+	<objective type="grow_and_sell" score="1"> <!-- Earn 8m profit from Youth Player sales -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="profit_from_youth_sales" mandatory="true" arguments="1">
@@ -2066,7 +2066,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="grow_and_sell" score="75"> <!-- Earn 2.5m profit from Youth Player sales -->
+	<objective type="grow_and_sell" score="1"> <!-- Earn 2.5m profit from Youth Player sales -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="profit_from_youth_sales" mandatory="true" arguments="1">
@@ -2099,7 +2099,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="home_grown_1" score="75"> <!-- Get 2 Youth Players and play them 50% of the matches next season -->
+	<objective type="home_grown_1" score="1"> <!-- Get 2 Youth Players and play them 50% of the matches next season -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_play_next_season" mandatory="true" arguments="2">
@@ -2124,7 +2124,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="home_grown_1" score="75"> <!-- Get 1 Youth Player and play him 70% of the matches next season -->
+	<objective type="home_grown_1" score="1"> <!-- Get 1 Youth Player and play him 70% of the matches next season -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_play_next_season" mandatory="true" arguments="2">
@@ -2149,7 +2149,7 @@
 			</progress>
 		</expected_progress>
 	</objective>
-	<objective type="home_grown_1" score="75"> <!-- Get 3 Youth Players and play them 30% of the matches next season -->
+	<objective type="home_grown_1" score="1"> <!-- Get 3 Youth Players and play them 30% of the matches next season -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_play_next_season" mandatory="true" arguments="2">
@@ -2315,7 +2315,7 @@
 	<!-- 	2 SEASONS 		-->
 	<!-- 					-->
 	
-	<objective type="diamond_in_the_rough" score="75"> <!-- Grow 3 players which have potential over 85 by 10 OVR points (2 seasons) -->
+	<objective type="diamond_in_the_rough" score="1"> <!-- Grow 3 players which have potential over 85 by 10 OVR points (2 seasons) -->
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="sign_youth_and_grow" mandatory="true" arguments="3">
@@ -2343,7 +2343,7 @@
 			</progress>
 		</expected_progress>
 	</objective>	
-	<objective type="fresh_team" score="75">
+	<objective type="fresh_team" score="1">
 		<duration min="2" max="2"/>
 		<conditions non_mandatory_max_fail="0">
 			<condition type="avg_squad_age" mandatory="true" arguments="2">
@@ -2509,7 +2509,7 @@
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="5">
 				<argument name="num_players" value="5"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="30"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>
@@ -2534,7 +2534,7 @@
 		<conditions non_mandatory_max_fail="0">
 			<condition type="grow_youth_and_play" mandatory="true" arguments="5">
 				<argument name="num_players" value="8"/> <!-- num players to grow and play -->
-				<argument name="overall" value="10"/>	<!-- overall points to grow (relative to the starting overall value) -->
+				<argument name="overall" value="5"/>	<!-- overall points to grow (relative to the starting overall value) -->
 				<argument name="matches" value="20"/>	<!-- matches to play in the starting 11 or as sub -->
 				<argument name="max_minute_for_subs" value="85"/>	<!-- maximum minute to be subbed in the game if played as sub -->
 			</condition>

@@ -211,8 +211,8 @@
                 {
 									"name": "COMPOSURE",
 									"minValue": 1,
-									"maxValue": 99,
-									"isVisible": false
+									"maxValue": 99
+									"componentType": "BAR"
 								}
               ]
             }
@@ -568,24 +568,6 @@
                   "componentType": "LIST",
                   "dataType": "INT",
                   "dataPolicyType": "OPTIONS"
-                },
-                {
-                  "name": "BIRTH_YEAR",
-                  "minValue": 1970,
-                  "maxValue": 2002,
-                  "componentType": "TOGGLE"
-                },
-                {
-                  "name": "BIRTH_MONTH",
-                  "minValue": 1,
-                  "maxValue": 12,
-                  "componentType": "TOGGLE"
-                },
-                {
-                  "name": "BIRTH_DAY",
-                  "minValue": 1,
-                  "maxValue": 31,
-                  "componentType": "TOGGLE"
                 }
               ]
             }
