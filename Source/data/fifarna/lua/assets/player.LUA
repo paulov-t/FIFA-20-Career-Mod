@@ -5,6 +5,17 @@ PLAYER_COLOR_PRI_LIST = { 0x00B5A787, 0x00000000, 0x00AB875E, 0x00534238, 0x00A8
 PLAYER_COLOR_SEC_LIST = { 0x00A89269, 0x00231E1E, 0x00A28963, 0x0045332B, 0x00C5B48F, 0x007E6751, 0x00544236, 0x006C371C, 0x009C9996, 0x00787B7D, 0x004B6C28, 0x0028466C, 0x006C4633, 0x00583325, 0x00720c38 }
 PLAYER_COLOR_TER_LIST = { 0x00473326, 0x00100E0D, 0x00362815, 0x0017110E, 0x0056463A, 0x002F211A, 0x001F140E, 0x00250E02, 0x00362F2D, 0x00232421, 0x0022250F, 0x0016162C, 0x0021150F, 0x00171413, 0x00330f2d }
 
+function dir_exists(directory)
+  local ok, err, code = os.rename(directory, directory)
+   if not ok then
+      if code == 13 then
+         -- Permission denied, but it exists
+         return true
+      end
+   end
+   return ok, err
+end
+
 function file_exists(file)
   local f = io.open(file, "rb")
   if f then f:close() end
@@ -253,18 +264,6 @@ function PlayerUpdate()
 		player.FacialHairType = 0
 	end
 	
-	
-	
-	
-	if(file_exists('v2k4Patch.lua') and file_exists('JSON.lua')) then
-		v2k4Patch = require("v2k4Patch")
-		JSON = require("JSON")
-	
-	
-		loadAPlayer(db)
-	end
-
-	
 	local file_out2 = io.open("currently_editing_postEA.txt", "w")
 	for k, v in pairs(player) do
 		file_out2:write(k)
@@ -273,7 +272,98 @@ function PlayerUpdate()
 		file_out2:write("\n")
 	end
 	file_out2:close()
+	
+	if(file_exists('v2k4settings.txt') and file_exists('JSON.lua')) then
+	
+	
+	
+	
+	--if(file_exists('JSON.lua')) then
+		--v2k4Patch = require("v2k4Patch")
+		--JSON = require("JSON")
+		local v2k4debugfile = io.open("v2k4debugfile.txt", "w")
+		v2k4debugfile:write('loading settings\n')
+		--local v2k4settingsfile = io.open("v2k4settings.txt", "w")
+		-- do settings stuff
+		
+		
+		--v2k4settingsfile:close()
+		-- end of do settings stuff
+		
+		--loadAPlayer(db)
+		--player.FacialHairType = 14
+		
+		--local v2k4debugfile = io.open("v2k4debugfile.txt", "w")
+	
+		--v2k4debugfile:write("creating otherfile.txt\n")
+		
+		--local file = io.open("otherfile.txt", "w")
+		--for k, v in pairs(player) do
+		--	file:write(k)
+		--	file:write('=')
+		--	file:write(v)
+		--	file:write("\n")
+		--end
+		--file:close()
+		
+		v2k4debugfile:write('checking ' .. player.PlayerId .. '.txt exists\n')
+		if(file_exists(player.PlayerId .. '.txt')) then
+		
+			v2k4debugfile:write('->>>>> ' .. player.PlayerId .. '.txt file exists\n')
+			local lines = lines_from(player.PlayerId .. '.txt')
+			
+			
+			local file_out_temp = io.open("temp.txt", "w")
+			
+			
+			for k,v in pairs(lines) do
+			
+				local r = split(v, '=')
+				
+				local varName = ""
+				local varValue = ""
+				for key, value in pairs(r) do
+				
+					if (varName == "") then
+						varName = value
+					
+					else
+						varValue = value
+						file_out_temp:write(value)
+						file_out_temp:write("\n")
+						
+						--SetTableVariable(player,varName,varValue)
+						--player[varName] = varValue
+						--v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+						
+						if varName == "FacialHairType" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							player.FacialHairType = tonumber(varValue)
+						elseif varName == "HairStyle" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							player.HairStyle = tonumber(varValue)	
+						elseif varName == "Hair" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							player.Hair = tonumber(varValue)	
+						end
+						varName = "";
+					end
+			
+			
+				end
+				
+			end
+			
+			file_out_temp:close()
+		end	
+		
+		
+		v2k4debugfile:close()
+		
+	end
 
+	
+	
 end
 
 

@@ -57,14 +57,14 @@
 ## Player Training
 - You can now train "Aggression" in defending
 
+## UI
+- Change the Player Editor so it doesn't go to Career Hub after each change, instead it goes back to player select
+
 ## Teams
 - Redesigned the Club Prestige for Italian teams (affects values and league position)
 
 ## Objectives
 - Objectives should be fairer and easier to achieve now
-
-## UI
-- Change the Player Editor so it doesn't to Career Hub after each change, instead it goes back to player select
 
 ## Text
 - Fix broken text caused by the update (refresh the English Localization File)
