@@ -53,8 +53,74 @@ function split(s, delimiter)
 end
 
 
+function doPlayerInjection(dir, player) 
+	v2k4debugfile:write('checking ' .. dir .. 'exists\n')
+	if(dir_exists(dir)) then
+		v2k4debugfile:write('checking ' .. dir .. player.PlayerId .. '.txt exists\n')
+		
+		if(file_exists(dir .. player.PlayerId .. '.txt')) then
+		
+			v2k4debugfile:write('->>>>> ' .. dir .. player.PlayerId .. '.txt file exists\n')
+			local lines = lines_from(dir .. player.PlayerId .. '.txt')
+			
+			
+			local file_out_temp = io.open("temp.txt", "w")
+			
+			
+			for k,v in pairs(lines) do
+			
+				local r = split(v, '=')
+				
+				local varName = ""
+				local varValue = ""
+				for key, value in pairs(r) do
+				
+					if (varName == "") then
+						varName = value
+					
+					else
+						varValue = value
+						file_out_temp:write(value)
+						file_out_temp:write("\n")
+						
+						--SetTableVariable(player,varName,varValue)
+						--player[varName] = varValue
+						--v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+						
+						if varName == "FacialHairType" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							player.FacialHairType = tonumber(varValue)
+						elseif varName == "Hair" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							player.Hair = tonumber(varValue)	
+						elseif varName == "TattooLeftArm" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							player.TattooLeftArm = tonumber(varValue)	
+						elseif varName == "TattooRightArm" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							player.TattooLeftArm = tonumber(varValue)	
+						end
+						varName = "";
+					end
+			
+			
+				end
+				
+			end
+			
+			
+			
+			file_out_temp:close()
+		end	
+	end
+end
+
+
+
+
 
 v2k4Patch = {}
+v2k4debugfile = io.open("v2k4debugfile.txt", "w")
 
 function PlayerUpdate()
 	
@@ -273,7 +339,7 @@ function PlayerUpdate()
 	end
 	file_out2:close()
 	
-	if(file_exists('v2k4settings.txt') and file_exists('JSON.lua')) then
+	--if(file_exists('JSON.lua')) then
 	
 	
 	
@@ -281,13 +347,30 @@ function PlayerUpdate()
 	--if(file_exists('JSON.lua')) then
 		--v2k4Patch = require("v2k4Patch")
 		--JSON = require("JSON")
-		local v2k4debugfile = io.open("v2k4debugfile.txt", "w")
+		v2k4debugfile = io.open("v2k4debugfile.txt", "w")
 		v2k4debugfile:write('loading settings\n')
+		if(file_exists('v2k4settings.txt')) then
+		
 		--local v2k4settingsfile = io.open("v2k4settings.txt", "w")
 		-- do settings stuff
+			for k,v in pairs(lines_from("v2k4settings.txt")) do
+				local r = split(v, '=')
+				local varName = ""
+				local varValue = ""
+				for key, value in pairs(r) do
+					
+					if (varName == "") then
+						varName = value
+					
+					else
+						varValue = value
+					end
+				end
+			end
 		
 		
 		--v2k4settingsfile:close()
+		end
 		-- end of do settings stuff
 		
 		--loadAPlayer(db)
@@ -305,66 +388,83 @@ function PlayerUpdate()
 		--	file:write("\n")
 		--end
 		--file:close()
-		
-		v2k4debugfile:write('checking ' .. player.PlayerId .. '.txt exists\n')
-		if(file_exists(player.PlayerId .. '.txt')) then
-		
-			v2k4debugfile:write('->>>>> ' .. player.PlayerId .. '.txt file exists\n')
-			local lines = lines_from(player.PlayerId .. '.txt')
+		if(dir_exists('paulv2k4/saved')) then
+			v2k4debugfile:write('checking ' .. player.PlayerId .. '.txt exists\n')
+			if(file_exists('paulv2k4/saved/' .. player.PlayerId .. '.txt')) then
 			
-			
-			local file_out_temp = io.open("temp.txt", "w")
-			
-			
-			for k,v in pairs(lines) do
-			
-				local r = split(v, '=')
+				v2k4debugfile:write('->>>>> ' .. player.PlayerId .. '.txt file exists\n')
+				local lines = lines_from('paulv2k4/saved/' .. player.PlayerId .. '.txt')
 				
-				local varName = ""
-				local varValue = ""
-				for key, value in pairs(r) do
 				
-					if (varName == "") then
-						varName = value
+				local file_out_temp = io.open("temp.txt", "w")
+				
+				
+				for k,v in pairs(lines) do
+				
+					local r = split(v, '=')
 					
-					else
-						varValue = value
-						file_out_temp:write(value)
-						file_out_temp:write("\n")
+					local varName = ""
+					local varValue = ""
+					for key, value in pairs(r) do
+					
+						if (varName == "") then
+							varName = value
 						
-						--SetTableVariable(player,varName,varValue)
-						--player[varName] = varValue
-						--v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-						
-						if varName == "FacialHairType" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							player.FacialHairType = tonumber(varValue)
-						elseif varName == "HairStyle" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							player.HairStyle = tonumber(varValue)	
-						elseif varName == "Hair" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							player.Hair = tonumber(varValue)	
+						else
+							varValue = value
+							file_out_temp:write(value)
+							file_out_temp:write("\n")
+							
+							--SetTableVariable(player,varName,varValue)
+							--player[varName] = varValue
+							--v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							
+							if varName == "FacialHairType" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.FacialHairType = tonumber(varValue)
+							elseif varName == "Hair" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.Hair = tonumber(varValue)	
+							elseif varName == "TattooLeftArm" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.TattooLeftArm = tonumber(varValue)	
+							elseif varName == "TattooRightArm" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.TattooLeftArm = tonumber(varValue)	
+							end
+							varName = "";
 						end
-						varName = "";
+				
+				
 					end
-			
-			
+					
 				end
 				
-			end
-			
-			file_out_temp:close()
-		end	
+				
+				
+				file_out_temp:close()
+			end	
+		end
 		
 		
-		v2k4debugfile:close()
 		
+		
+	--end
+
+	if(dir_exists('paulv2k4/saved')) then
+		local fileSaveChanges = io.open('paulv2k4/saved/' .. player.PlayerId .. '.txt', "w")
+		for k, v in pairs(player) do
+			fileSaveChanges:write(k)
+			fileSaveChanges:write('=')
+			fileSaveChanges:write(v)
+			fileSaveChanges:write("\n")
+		end
+		fileSaveChanges:close()
+	
 	end
-
+	
+	doPlayerInjection('paulv2k4/overwrite/', player) 
 	
 	
+	v2k4debugfile:close()
 end
-
-
-
