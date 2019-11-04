@@ -1,8 +1,3 @@
-v2k4Patch = {}
-v2k4debugfile = io.open("v2k4debugfile.txt", "w")
-v2k4debugfile:write('initialisation\n')
-
-
 PLAYER_FLUSHNESS_COLOR_LIST = { 0x00, 0xFFDE64AE, 0xFFDE64AE, 0xE5DE64AE, 0xD8DE64AE, 0xCCDE64AE, 0x99DE64AE, 0x8CDE64AE, 0x7FDE64AE, 0x66DE64AE, 0x4CDE64AE }
 
 -- generic hair colors
@@ -57,20 +52,7 @@ function split(s, delimiter)
     return result;
 end
 
-function contains(list, x)
-	for _, v in pairs(list) do
-		if v == x then return true end
-	end
-	return false
-end
 
-function random_elem(tb)
-    local keys = {}
-    for k in pairs(tb) do table.insert(tb, k) end
-    return tb[keys[math.random(#keys)]]
-end
-
-v2k4debugfile:write('create hair and facial hair table arrays\n')
 local hair_bald = {
 	0, -- Bald
 	26 -- thin sides
@@ -95,8 +77,7 @@ local hair_short_wavy = {
 	57, -- Wavy Styled parting
 	114, -- Wavy Styled parting
 	115, -- Wavy Styled parting
-	118, -- Wavy Styled parting
-	192563  -- Bernd Leno hair
+	118 -- Wavy Styled parting
 }
 
 local hair_short_curly = {
@@ -110,8 +91,7 @@ local hair_short_straight = {
 	24, -- straight spiked fringe
 	64, -- Spiked top (mowhawk)
 	65, -- short and slick
-	133, -- straight spiked fringe
-	192563 -- Bernd Leno hair
+	133 -- straight spiked fringe
 }
 
 local hair_medium_straight = {
@@ -255,6 +235,11 @@ function doPlayerInjection(dir, player)
 							if(player.Head ~= 0) then
 								player.Head = tonumber(varValue)
 							end
+						--elseif varName == "FaceType" then
+						--	v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+						--	if(player.FaceType ~= 0) then
+						--		player.FaceType = tonumber(varValue)
+						--	end
 						elseif varName == "BodyType" then
 							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
 							if(player.BodyType ~= 0) then
@@ -279,10 +264,30 @@ function doPlayerInjection(dir, player)
 end
 
 
+function doPlayerRandomHair(player, use, growthchance)
+
+	-- If player is Male
+	if(use == 1 && player.Gender == 0) then
+		v2k4debugfile:write('Using Hair Growth System\n')
+		
+		local hairRandom = 100 - math.random(growthchance)
+		local hairRandomOther = math.random(100)
+		v2k4debugfile:write('Hair Growth System : ' .. hairRandom .. ' < ' .. hairRandomOther .. '?\n')
+		if(hairRandom < hairRandomOther) then
+			v2k4debugfile:write('Hair Growth System : Make a change \n')
+			
+		end
+
+		
+	end
+		
+
+end
 
 function doPlayerRandomFacialHair(player, use, growthchance)
 
-	if(use == 1) then
+	-- If player is Male
+	if(use == 1 && player.Gender == 0) then
 		v2k4debugfile:write('Using Facial Hair Growth System\n')
 		
 		local hairRandom = 100 - math.random(growthchance)
@@ -291,8 +296,7 @@ function doPlayerRandomFacialHair(player, use, growthchance)
 		if(hairRandom < hairRandomOther) then
 			v2k4debugfile:write('Facial Hair Growth System : Make a change \n')
 			
-			player.FacialHairType = math.random(30)
-			player.FacialHairChangeTime = os.time()
+			player.FacialHairType = math.random(17)
 			
 		end
 
@@ -302,98 +306,8 @@ function doPlayerRandomFacialHair(player, use, growthchance)
 
 end
 
-function doPlayerRandomHair(player, use, growthchance)
-
-	if(use == 1) then
-		v2k4debugfile:write('Using Hair Growth System\n')
-		
-		local hairRandom = 100 - math.random(growthchance)
-		local hairRandomOther = math.random(100)
-		v2k4debugfile:write('Hair Growth System : ' .. hairRandom .. ' < ' .. hairRandomOther .. '?\n')
-		if(hairRandom < hairRandomOther) then
-			v2k4debugfile:write('Hair Growth System : Make a change \n')
-					
-			if(player.Hair == 0 or player.Hair == 26) then
-				v2k4debugfile:write('Hair Growth System : is bald, staying bald \n')
-				if(math.random(100) < math.random(100)) then
-					player.Hair = 26
-				end
-			end
-			
-			if(contains(hair_afro, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_afro, staying hair_afro \n')
-				player.Hair = hair_afro[math.random( #hair_afro )]
-						
-			elseif(contains(hair_cornrows, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_cornrows, staying hair_cornrows \n')
-				player.Hair = hair_cornrows[math.random( #hair_cornrows )]
-			end
-			
-			if(contains(hair_medium_straight, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_medium_straight, staying hair_medium_straight \n')
-				player.Hair = hair_medium_straight[math.random( #hair_medium_straight )]
-			end
-			
-			if(contains(hair_medium_wavy, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_medium_wavy, staying hair_medium_wavy \n')
-				player.Hair = hair_medium_wavy[math.random( #hair_medium_wavy )]
-			end
-			
-			if(contains(hair_receeding, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_receeding, staying hair_receeding \n')
-				player.Hair = hair_receeding[math.random( #hair_receeding )]
-			end
-			
-			if(contains(hair_short_curly, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_short_curly, staying hair_short_curly \n')
-				player.Hair = hair_short_curly[math.random( #hair_short_curly )]
-			end
-			
-			if(contains(hair_short_straight, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_short_straight, staying hair_short_straight \n')
-				player.Hair = hair_short_straight[math.random( #hair_short_straight )]
-			end
-			
-			if(contains(hair_short_wavy, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_short_wavy, staying hair_short_wavy \n')
-				player.Hair = hair_short_wavy[math.random( #hair_short_wavy )]
-			end
-			
-			if(contains(hair_veryshort, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_veryshort, staying hair_veryshort \n')
-				player.Hair = hair_veryshort[math.random( #hair_veryshort )]
-			end
-			
-			if(contains(hair_wavyMediumLength, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_wavyMediumLength, staying hair_wavyMediumLength \n')
-				player.Hair = hair_wavyMediumLength[math.random( #hair_wavyMediumLength )]
-			end
-			
-			if(contains(hair_wavyShoulderLength, tonumber(player.Hair))) then
-				v2k4debugfile:write('Hair Growth System : is hair_wavyShoulderLength, staying hair_wavyShoulderLength \n')
-				player.Hair = hair_wavyShoulderLength[math.random( #hair_wavyShoulderLength )]
-			end
-			
-			
-			
-			
-			
-			
-		end
-
-		
-	end
-		
-
-end
-
-function doPlayerRandomShoe(player, use, growthchance) 
-	if(use == 1) then
-		v2k4debugfile:write('Using Dynamic Boot System\n')
-		
-	end
-end
-
+v2k4Patch = {}
+v2k4debugfile = io.open("v2k4debugfile.txt", "w")
 
 function PlayerUpdate()
 	
@@ -616,10 +530,8 @@ function PlayerUpdate()
 	local use_hairgrowth_system = 0
 	local use_facialhairgrowth_system = 0
 	local use_bodyweight_system = 0
-	local use_shoe_system = 0
 	local hairgrowth_system_randomgrowth_chance = 100
 	local facialhairgrowth_system_randomgrowth_chance = 100
-	local shoe_system_randomchange_chance = 100
 	
 	v2k4debugfile = io.open("v2k4debugfile.txt", "w")
 	v2k4debugfile:write('loading settings\n')
@@ -653,10 +565,6 @@ function PlayerUpdate()
 						facialhairgrowth_system_randomgrowth_chance = tonumber(varValue)
 					elseif varName == "bodyweight_system_randomgrowth_chance" then
 						bodyweight_system_randomgrowth_chance = tonumber(varValue)
-					elseif varName == "use_shoe_system" then
-						use_shoe_system = tonumber(varValue)
-					elseif varName == "shoe_system_randomchange_chance" then
-						shoe_system_randomchange_chance = tonumber(varValue)
 					
 					end
 				end
@@ -674,17 +582,10 @@ function PlayerUpdate()
 		doPlayerInjection('paulv2k4/saved/', player) 
 		
 		
-		-- make change
 		doPlayerRandomFacialHair(player, use_facialhairgrowth_system, facialhairgrowth_system_randomgrowth_chance)
 		
-		-- make change
-		doPlayerRandomHair(player, use_hairgrowth_system, hairgrowth_system_randomgrowth_chance)
-		
-		-- make change
-		doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
-		
-			
-			
+		--doPlayerRandomHair(player, use_hairgrowth_system, hairgrowth_system_randomgrowth_chance)
+				
 		-- save change
 		if(dir_exists('paulv2k4/saved')) then
 			local fileSaveChanges = io.open('paulv2k4/saved/' .. player.PlayerId .. '.txt', "w")
