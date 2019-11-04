@@ -52,6 +52,57 @@ function split(s, delimiter)
     return result;
 end
 
+local hair_short = {
+	0, -- Bald
+	1, -- Crew
+}
+
+local hair_afro = {
+	2, -- Small Afro
+	3, -- Big Afro
+}
+
+local hair_cornrows = {
+	4, -- Short Cornrows
+	5, -- Side Parted Long Cornrows
+	6, -- Ponytail Cornrows
+	7, -- Ponytail Cornrows 2
+}
+
+local hair_wavyShoulderLength = {
+	11, -- Wavy Long Hair with Fringe
+	12, -- Wavy Long Hair brushed back
+	
+}
+
+local hair_wavyMediumLength = {
+	13, -- Wavy - Thick - cut short at back parted
+	14, -- Wavy - Thick - cut short at back, fringe slicked
+}
+
+local facialHairShort = {
+	1, -- Chin Fuzz
+	2, -- Jaw Strap
+	4, -- Goatee Thin/Stubble
+	7, -- Soul Patch
+	9, -- Goatee Thick / Think mustache
+	10, -- Moustache
+	16 -- Think Chin Strap
+}
+
+local facialHairMedium = {
+	3, -- Goatee
+	5, -- Goatee, not joined up
+	15, -- Goatee, not joined up
+	17 -- Goatee
+}
+
+local facialHairLong = {
+	8, -- Long Thick Beard
+	14, -- Long Beard, No mustache
+	11, -- Long Beard, No mustache
+	13 -- Long Beard, No mustache
+}
 
 function doPlayerInjection(dir, player) 
 	v2k4debugfile:write('checking ' .. dir .. 'exists\n')
@@ -93,13 +144,52 @@ function doPlayerInjection(dir, player)
 						elseif varName == "Hair" then
 							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
 							player.Hair = tonumber(varValue)	
+						elseif varName == "ShoeType" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							player.ShoeType = tonumber(varValue)	
 						elseif varName == "TattooLeftArm" then
 							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							player.TattooLeftArm = tonumber(varValue)	
+							if(player.TattooLeftArm ~= 0) then
+								player.HasTattooUpperBody = 1
+								player.TattooLeftArm = tonumber(varValue)	
+							end
 						elseif varName == "TattooRightArm" then
 							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							player.TattooLeftArm = tonumber(varValue)	
+							if(player.TattooRightArm ~= 0) then
+								player.HasTattooUpperBody = 1
+								player.TattooRightArm = tonumber(varValue)	
+							end
+						elseif varName == "TattooRightLeg" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							if(player.TattooRightLeg ~= 0) then
+								player.HasTattooLowerBody = 1
+								player.TattooRightLeg = tonumber(varValue)	
+							end
+						elseif varName == "TattooLeftLeg" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							if(player.TattooLeftLeg ~= 0) then
+								player.HasTattooLowerBody = 1
+								player.TattooLeftLeg = tonumber(varValue)	
+							end
+						elseif varName == "HeadAssetId" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							if(player.HeadAssetId ~= 0) then
+								player.HeadAssetId = tonumber(varValue)
+								player.HeadVariation = 0
+							end
+						elseif varName == "Head" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							if(player.Head ~= 0) then
+								player.Head = tonumber(varValue)
+							end
+						elseif varName == "BodyType" then
+							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+							if(player.BodyType ~= 0) then
+								player.BodyType = tonumber(varValue)
+							end
 						end
+						
+						
 						varName = "";
 					end
 			
@@ -117,7 +207,26 @@ end
 
 
 
+function doPlayerRandomFacialHair(player, use, growthchance)
 
+	if(use == 1) then
+		v2k4debugfile:write('Using Facial Hair Growth System\n')
+		
+		local hairRandom = 100 - math.random(growthchance)
+		local hairRandomOther = math.random(100)
+		v2k4debugfile:write('Facial Hair Growth System : ' .. hairRandom .. ' < ' .. hairRandomOther .. '?\n')
+		if(hairRandom < hairRandomOther) then
+			v2k4debugfile:write('Facial Hair Growth System : Make a change \n')
+			
+			player.FacialHairType = math.random(30)
+			
+		end
+
+		
+	end
+		
+
+end
 
 v2k4Patch = {}
 v2k4debugfile = io.open("v2k4debugfile.txt", "w")
@@ -127,7 +236,7 @@ function PlayerUpdate()
 	
 	
 	local player = db.player
-	
+	--tohtml(db)
 	
 	
 	--require("testotherluafile");
@@ -339,132 +448,249 @@ function PlayerUpdate()
 	end
 	file_out2:close()
 	
-	--if(file_exists('JSON.lua')) then
+	local use_system = 0
+	local use_hairgrowth_system = 0
+	local use_facialhairgrowth_system = 0
+	local use_bodyweight_system = 0
+	local hairgrowth_system_randomgrowth_chance = 100
+	local facialhairgrowth_system_randomgrowth_chance = 100
 	
+	v2k4debugfile = io.open("v2k4debugfile.txt", "w")
+	v2k4debugfile:write('loading settings\n')
+	if(file_exists('v2k4settings.txt')) then
 	
-	
-	
-	--if(file_exists('JSON.lua')) then
-		--v2k4Patch = require("v2k4Patch")
-		--JSON = require("JSON")
-		v2k4debugfile = io.open("v2k4debugfile.txt", "w")
-		v2k4debugfile:write('loading settings\n')
-		if(file_exists('v2k4settings.txt')) then
-		
-		--local v2k4settingsfile = io.open("v2k4settings.txt", "w")
-		-- do settings stuff
-			for k,v in pairs(lines_from("v2k4settings.txt")) do
-				local r = split(v, '=')
-				local varName = ""
-				local varValue = ""
-				for key, value in pairs(r) do
+
+	-- do settings stuff
+		for k,v in pairs(lines_from("v2k4settings.txt")) do
+			local r = split(v, '=')
+			local varName = ""
+			local varValue = ""
+			for key, value in pairs(r) do
+				
+				if (varName == "") then
+					varName = value
+				
+				else
+					varValue = value
 					
-					if (varName == "") then
-						varName = value
+					if varName == "use_system" then 
+						use_system = tonumber(varValue)
+					elseif varName == "use_hairgrowth_system" then
+						use_hairgrowth_system = tonumber(varValue)
+					elseif varName == "use_facialhairgrowth_system" then
+						use_facialhairgrowth_system = tonumber(varValue)
+					elseif varName == "use_bodyweight_system" then
+						use_bodyweight_system = tonumber(varValue)
+					elseif varName == "hairgrowth_system_randomgrowth_chance" then
+						hairgrowth_system_randomgrowth_chance = tonumber(varValue)
+					elseif varName == "facialhairgrowth_system_randomgrowth_chance" then
+						facialhairgrowth_system_randomgrowth_chance = tonumber(varValue)
+					elseif varName == "bodyweight_system_randomgrowth_chance" then
+						bodyweight_system_randomgrowth_chance = tonumber(varValue)
 					
-					else
-						varValue = value
 					end
 				end
 			end
-		
-		
-		--v2k4settingsfile:close()
 		end
-		-- end of do settings stuff
-		
-		--loadAPlayer(db)
-		--player.FacialHairType = 14
-		
-		--local v2k4debugfile = io.open("v2k4debugfile.txt", "w")
 	
-		--v2k4debugfile:write("creating otherfile.txt\n")
-		
-		--local file = io.open("otherfile.txt", "w")
-		--for k, v in pairs(player) do
-		--	file:write(k)
-		--	file:write('=')
-		--	file:write(v)
-		--	file:write("\n")
-		--end
-		--file:close()
-		if(dir_exists('paulv2k4/saved')) then
-			v2k4debugfile:write('checking ' .. player.PlayerId .. '.txt exists\n')
-			if(file_exists('paulv2k4/saved/' .. player.PlayerId .. '.txt')) then
-			
-				v2k4debugfile:write('->>>>> ' .. player.PlayerId .. '.txt file exists\n')
-				local lines = lines_from('paulv2k4/saved/' .. player.PlayerId .. '.txt')
-				
-				
-				local file_out_temp = io.open("temp.txt", "w")
-				
-				
-				for k,v in pairs(lines) do
-				
-					local r = split(v, '=')
-					
-					local varName = ""
-					local varValue = ""
-					for key, value in pairs(r) do
-					
-						if (varName == "") then
-							varName = value
-						
-						else
-							varValue = value
-							file_out_temp:write(value)
-							file_out_temp:write("\n")
-							
-							--SetTableVariable(player,varName,varValue)
-							--player[varName] = varValue
-							--v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							
-							if varName == "FacialHairType" then
-								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-								player.FacialHairType = tonumber(varValue)
-							elseif varName == "Hair" then
-								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-								player.Hair = tonumber(varValue)	
-							elseif varName == "TattooLeftArm" then
-								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-								player.TattooLeftArm = tonumber(varValue)	
-							elseif varName == "TattooRightArm" then
-								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-								player.TattooLeftArm = tonumber(varValue)	
-							end
-							varName = "";
-						end
-				
-				
-					end
-					
-				end
-				
-				
-				
-				file_out_temp:close()
-			end	
-		end
-		
-		
-		
-		
-	--end
-
-	if(dir_exists('paulv2k4/saved')) then
-		local fileSaveChanges = io.open('paulv2k4/saved/' .. player.PlayerId .. '.txt', "w")
-		for k, v in pairs(player) do
-			fileSaveChanges:write(k)
-			fileSaveChanges:write('=')
-			fileSaveChanges:write(v)
-			fileSaveChanges:write("\n")
-		end
-		fileSaveChanges:close()
+	
 	
 	end
+		-- end of do settings stuff
+		
+	if use_system == 1 then 
+		
+		-- Player Dynamic Changing System - Load in
+		doPlayerInjection('paulv2k4/saved/', player) 
+		
+		
+		doPlayerRandomFacialHair(player, use_facialhairgrowth_system, facialhairgrowth_system_randomgrowth_chance)
+		
+		-- make change
+		if(use_hairgrowth_system == 1) then
+			v2k4debugfile:write('Using Hair Growth System\n')
+			
+			local hairRandom = 100 - math.random(hairgrowth_system_randomgrowth_chance)
+			local hairRandomOther = math.random(100)
+			v2k4debugfile:write('Hair Growth System : ' .. hairRandom .. ' < ' .. hairRandomOther .. '?\n')
+			if(hairRandom < hairRandomOther) then
+				v2k4debugfile:write('Hair Growth System : Make a change \n')
+				
+				if(player.Hair == 1) then 
+					if(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 2
+					elseif(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 4
+					elseif(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 20
+					end
+				end
+				
+				if(player.Hair == 2) then 
+					if(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 1
+					elseif(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 4
+					elseif(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 20
+					end
+				end
+				
+				if(player.Hair == 4) then 
+					if(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 1
+					elseif(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 2
+					elseif(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 20
+					end
+				end
+				
+				if(player.Hair == 20) then 
+					if(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 1
+					elseif(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 2
+					elseif(math.random(hairgrowth_system_randomgrowth_chance) > 50) then
+						player.Hair = 4
+					end
+				end
+				
+			end
+
+			
+		end
+			
+			
+		-- save change
+		if(dir_exists('paulv2k4/saved')) then
+			local fileSaveChanges = io.open('paulv2k4/saved/' .. player.PlayerId .. '.txt', "w")
+			for k, v in pairs(player) do
+				fileSaveChanges:write(k)
+				fileSaveChanges:write('=')
+				fileSaveChanges:write(v)
+				fileSaveChanges:write("\n")
+			end
+			fileSaveChanges:close()
+		
+		end
+		
+		doPlayerInjection('paulv2k4/overwrite/', player) 
 	
-	doPlayerInjection('paulv2k4/overwrite/', player) 
-	
-	
+	end
 	v2k4debugfile:close()
+end
+
+
+
+-- Converts Lua table to HTML output in table.html file
+function tohtml(x)
+  ret = tohtml_table(x,1)
+  writefile("table.html", ret)
+  os.execute("table.html")
+  return(ret)
+end
+
+-- Saves a string to file
+function writefile(filename, value)
+  if (value) then
+    local file = io.open(filename,"w+")
+    file:write(value)
+    file:close()
+  end
+end
+
+-- Flattens a table to html output
+function tohtml_table(x, table_level)
+  local k, s,  tcolor
+  local html_colors = {
+    "#339900","#33CC00","#669900","#666600","#FF3300",
+    "#FFCC00","#FFFF00","#CCFFCC","#CCCCFF","#CC66FF",
+    "#339900","#33CC00","#669900","#666600","#FF3300",
+    "#FFCC00","#FFFF00","#CCFFCC","#CCCCFF","#CC66FF"
+  }
+  local lineout = {}
+  local tablefound = false
+    if type(x) == "table" then
+    s = ""
+    k = 1
+    local i, v = next(x)
+    while i do
+      if (type(v) == "table") then
+        if (table_level<10) then
+          lineout[k] =  "<b>" .. flat(i) .. "</b>".. tohtml_table(v, table_level + 1)   
+        else
+          lineout[k] = "<b>MAXIMUM LEVEL BREACHED</b>"
+        end
+        tablefound = true
+      else
+        lineout[k] = flat(i) .. "=" .. tohtml_table(v)
+      end
+      k = k + 1
+      i, v = next(x, i)
+    end
+
+    for k,line in ipairs(lineout) do
+      if (tablefound) then
+        s = s .. "<tr><td>" .. line .. "</td></tr>\n"
+      else
+        s = s .. "<td>" .. line .. "</td>\n"
+      end
+    end
+    if not (tablefound) then
+      s = "<table border='1' bgcolor='#FFFFCC' cellpadding='5' cellspacing='0'>" ..
+        "<tr>" .. s .. "</tr></table>\n"
+    else
+      tcolor = html_colors[table_level]
+      s = "<table border='3' bgcolor='"..tcolor.."' cellpadding='10' cellspacing='0'>" ..
+          s ..  "</table>\n"
+    end
+
+    return s 
+  end
+  if type(x) == "function" then
+    return "FUNC"
+  end
+  if type(x) == "file" then
+    return "FILE"
+  end
+
+  return tostring(x) 
+end
+
+-- Flattens a table to string
+function flat(x)  
+  return toflat(x,1)
+end
+
+-- Flattens a table to string
+function toflat(x, tlevel)
+  local s
+  tlevel = tlevel + 1
+
+  if type(x) == "table" then
+    s = "{"
+    local i, v = next(x)
+    while i do
+      if (tlevel < 15) then
+        s = s .. i .. "=" .. toflat(v, tlevel) 
+      else
+        s = s .. i .. "={#}" 
+      end
+
+      i, v = next(x, i)
+      if i then
+        s = s .. ", " 
+      end
+    end
+    return s .. "}\n"
+  end
+  if type(x) == "function" then
+    return "FUNC"
+  end
+  if type(x) == "file" then
+    return "FILE"
+  end
+
+  return tostring(x) 
 end

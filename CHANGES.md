@@ -1,46 +1,94 @@
 # Version 1.5
 
 ## Dynamic Player Hair Growth/Style changes
-- Players will now grow or change their hair style - NOT DONE
-- Players will now grow or shave their beard - NOT DONE
-- Players can now be edited through the filesystem - NOT DONE
+- Players will now grow or change their hair style
+- Players will now grow or shave their beard
+- Players can now be edited through the filesystem
 
 ## Match simulation
 - Increase amount of subs per game
-- Increase amount of injuries per game
+- Increase amount of small injuries per game
+- Increase the goals scored per game
+- Adjust settings to improve certain teams (i.e Arsenal) general position  
 
 ## Gameplay
 - Fix an issue that was causing Cup matches to play differently to League matches
+- Change AI substitutions logic so they won't bring off a player that is playing well 
 
 ## Referees
-- Set all referees to "linient" card strictness
-- Set all referees to "strict" foul strictness
+- Set all referees to "lenient" card strictness
+- Set all referees to "strict" foul strictness  
 
 ## Transfers
-- Increase AI transfer activity substantially allowing for 1-2 per AI team
+- Increase AI transfer activity substantially allowing for at least 1-4 per AI team
+- Allow for more loan offers for your young players
+- Increase the Player's desire for a higher wage on transfer
+- Slightly increase English player's to USA transfer decision points (matching real world data)
+- Reconfigure "Next Big Thing" modifiers so they are much wider (should try for more players)  
 
 ## Player Values
 - Substantially increased prices of players with an OVR 78 or above
 - Decreased prices of players over 30 years old
-- Decreased prices of players who are not at top clubs
-
-## Finances
-- Improved financial accuracy in lower leagues
-
-## Fitness Recovery
-- Fitness recovery is now slightly less than default
+- Decreased prices of players who have high OVR but are not at top clubs  
 
 ## Player Training
-- You can now train "Aggression" in defending - NOT DONE
+- You can now train "Aggression" in defending
 
-## Job Offers / Searching
-- Made it so you can search for offers at any time of the season - NOT DONE
+## Fitness Recovery
+- Fitness recovery is now slightly less than default  
+
+## Finances
+- Decrease Stadium Maintenance for smaller grounds
+- Increase Youth Academy costs substantially (based on real world reports)  
+
+## Currency
+- Update the currency conversions to latest real world data  
+
+## Team Management
+- Changed First 11 Challengers to only 3 players
+- Changed Bench players to 7 
+- Changed Bench Challengers to 3 players  
+
+## File Management
+- Tutorials - Added some additional documentation to Transfer logic files to help others mod the game  
+
+## Morale
+- Made it so high tempered or difficult people are harder to keep happy  
+
+## Form
+- Fix broken form file - CPU form should now work correctly  
+
+## Youth System and Scouting
+- You can now have 20 players in your Youth team
+- You now must wait at least 6 months before a promotion to senior team can happen - AI teams now do not pull so many high calibre youth stars in to the team  
+
+## Objectives
+- Lowered the amount of chance to have a "profit" related objective
+- Objectives should be fairer and easier to achieve now  
+
+## Player Editor
+- Added Composure, Interceptions and Defensive Awareness to all editors
 
 ## UI
-- Change the Player Editor so it doesn't fully exit to Career Hub after each change - NOT DONE
+- Change the Player Editor so it doesn't go to Career Hub after each change, instead it goes back to player select
 
 ## Text
 - Fix broken text caused by the update (refresh the loc files)
+
+# Version 1.5 beta 2
+
+## Dynamic Player Hair Growth/Style changes
+- Players will now grow or shave their beard
+- Players can now be edited through the filesystem
+
+## Player Values
+- Further decreased values of over 31 year old players
+- Improved valuation of Italian League players
+
+## Player Editor
+- Added Traits screen to all editors
+- Allow birth year to go from 1900 all the way to 2012
+- Allow players to have a height from 4ft11 to 6ft7
 
 # Version 1.5 beta 1
 

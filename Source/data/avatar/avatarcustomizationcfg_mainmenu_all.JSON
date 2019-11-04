@@ -3,6 +3,7 @@
   "malePresetLayout": "CharacterLayoutId_11_V_11_Male",
   "femalePresetLayout": "CharacterLayoutId_11_V_11_Female",
   "attributeCategories": [
+  
     {
       "name": "HEAD_AND_FACE",
       "filters": {
@@ -67,6 +68,8 @@
       "filters": {
         "areFiltersAttributes": false,
         "data": [
+			
+		
           {
             "name": "BODY",
             "filters": {
@@ -74,8 +77,8 @@
               "data": [
                 {
                   "name": "HEIGHT",
-                  "minValue": 160,
-                  "maxValue": 188,
+                  "minValue": 151,
+                  "maxValue": 200,
                   "componentType": "SLIDER"
                 },
                 {
@@ -263,16 +266,16 @@
                         "isEditable": true
                       },
                       {
-                        "name": "WEAK_FOOT_ABILITY",
+                        "name": "COMPOSURE",
                         "minValue": 1,
-                        "maxValue": 5,
+                        "maxValue": 99,
                         "componentType": "BAR",
                         "isEditable": true
                       },
                       {
-                        "name": "COMPOSURE",
+                        "name": "WEAK_FOOT_ABILITY",
                         "minValue": 1,
-                        "maxValue": 99,
+                        "maxValue": 5,
                         "componentType": "BAR",
                         "isEditable": true
                       }
@@ -532,9 +535,23 @@
                 }
               ]
             }
-          }
+          },
+			{
+				"name": "TRAITS",
+				"filters": {
+					"areFiltersAttributes":true,
+					"data":	[
+					{
+						"name": "TRAITS"
+					}
+					]
+				}
+			}
         ]
       }
+    },
+	{
+      "name": "TATTOOS"
     },
     {
       "name": "INFO",
@@ -549,19 +566,19 @@
                 {
                   "name": "FIRST_NAME",
                   "minLength": 1,
-                  "maxLength": 12,
+                  "maxLength": 14,
                   "componentType": "INPUT_TEXT"
                 },
                 {
                   "name": "SURNAME",
                   "minLength": 1,
-                  "maxLength": 12,
+                  "maxLength": 14,
                   "componentType": "INPUT_TEXT"
                 },
                 {
                   "name": "KNOWN_AS",
                   "minLength": 1,
-                  "maxLength": 12,
+                  "maxLength": 14,
                   "componentType": "INPUT_TEXT"
                 },
                 {
@@ -571,7 +588,7 @@
                 {
                   "name": "KIT_NAME",
                   "minLength": 1,
-                  "maxLength": 12,
+                  "maxLength": 14,
                   "componentType": "INPUT_TEXT"
                 },
                 {
@@ -592,8 +609,8 @@
                 },
                 {
                   "name": "BIRTH_YEAR",
-                  "minValue": 1970,
-                  "maxValue": 2002,
+                  "minValue": 1900,
+                  "maxValue": 2018,
                   "componentType": "TOGGLE"
                 },
                 {
@@ -665,8 +682,7 @@
                   "name": "GLOVES"
                 },
                 {
-                  "name": "GK_GLOVES",
-                  "disabledOptions": [103, 104, 95, 96, 117, 118]
+                  "name": "GK_GLOVES"
                 },
                 {
                   "name": "LEFT_WRIST"
@@ -691,8 +707,7 @@
 						"areFiltersAttributes": true,
 						"data": [
 							{
-                						"name": "GOALCELEBRATION",
-                						"disabledOptions": [3610, 3612, 3616, 3617, 3620, 3623, 3624, 3628, 3609, 3611, 3615, 3618, 3619, 3621, 3622, 3625, 3626, 3627]
+                				"name": "GOALCELEBRATION"
 							},
 							{
 								"name": "RUNNINGCELEBRATION"
@@ -728,127 +743,5 @@
 			]
 		}
 	}
-  ],
-  "attributeDependencyTree": [
-    {
-	  "parents": [
-		"SURNAME"
-	  ],
-	  "children": [
-		"KIT_NAME"
-	  ]
-	},
-	{
-      "parents": [
-        "HEIGHT",
-        "WEIGHT"
-      ],
-      "children": [
-        "BODY_TYPE"
-      ]
-    },
-    {
-      "parents": [
-        "GENDER",
-        "TEAM"
-      ],
-      "children": [
-        "FACIAL_HAIR",
-        "NATIONALITY"
-      ]
-    },
-    {
-      "parents": [
-        "POSITION"
-      ],
-      "children": [
-        "GK_GLOVES",
-        "GK_PANTS",
-        "GLOVES",
-        "ROLE"
-      ]
-    },
-    {
-      "parents": [
-        "ROLE"
-      ],
-      "children": [
-        "CROSSING",
-        "FINISHING",
-        "HEADING_ACCURACY",
-        "SHORT_PASSING",
-        "VOLLEYS",
-        "WEAK_FOOT_ABILITY",
-        "MARKING",
-        "STANDING_TACKLE",
-        "SLIDING_TACKLE",
-        "DRIBBLING",
-        "CURVE",
-        "FREE_KICK_ACCURACY",
-        "LONG_PASSING",
-        "BALL_CONTROL",
-        "SHOT_POWER",
-        "JUMPING",
-        "STAMINA",
-        "STRENGTH",
-        "LONG_SHOTS",
-        "ACCELERATION",
-        "SPRINT_SPEED",
-        "AGILITY",
-        "REACTIONS",
-        "BALANCE",
-        "AGGRESSION",
-        "COMPOSURE",
-        "INTERCEPTIONS",
-        "POSITIONING",
-        "VISION",
-        "PENALTIES",
-        "GK_DIVING",
-        "GK_HANDLING",
-        "GK_KICKING",
-        "GK_POSITIONING",
-        "GK_REFLEXES",
-		"PREFERRED_POSITION"
-      ]
-    },
-    {
-      "parents": [
-        "GK_PANTS"
-      ],
-      "children": [
-        "ANKLE_TAPE"
-      ]
-    },
-    {
-      "parents": [
-        "BIRTH_MONTH",
-        "BIRTH_YEAR"
-      ],
-      "children": [
-        "BIRTH_DAY"
-      ]
-    },
-    {
-      "parents": [
-        "FACE"
-      ],
-      "children": [
-        "HEAD"
-      ]
-    },
-    {
-      "parents": [
-        "HEAD"
-      ],
-      "children": [
-        "CHIN",
-        "EAR",
-        "EYE",
-        "CHEEK_JAW",
-        "MOUTH",
-        "NOSE",
-        "BROW"
-      ]
-    }
   ]
 }
