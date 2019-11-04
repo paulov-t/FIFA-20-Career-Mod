@@ -40,6 +40,7 @@
 ## Finances
 - Decrease Stadium Maintenance for smaller grounds
 - Increase Youth Academy costs substantially (based on real world reports)  
+- Increase Prize Money thats carried over to the next season
 
 ## Currency
 - Update the currency conversions to latest real world data  
@@ -48,9 +49,6 @@
 - Changed First 11 Challengers to only 3 players
 - Changed Bench players to 7 
 - Changed Bench Challengers to 3 players  
-
-## File Management
-- Tutorials - Added some additional documentation to Transfer logic files to help others mod the game  
 
 ## Morale
 - Made it so high tempered or difficult people are harder to keep happy  
@@ -68,6 +66,9 @@
 
 ## Player Editor
 - Added Composure, Interceptions and Defensive Awareness to all editors
+- Added Traits screen to all editors
+- Allow birth year to go from 1900 all the way to 2012
+- Allow players to have a height from 4ft11 to 6ft7
 
 ## UI
 - Change the Player Editor so it doesn't go to Career Hub after each change, instead it goes back to player select
@@ -75,20 +76,8 @@
 ## Text
 - Fix broken text caused by the update (refresh the loc files)
 
-# Version 1.5 beta 2
-
-## Dynamic Player Hair Growth/Style changes
-- Players will now grow or shave their beard
-- Players can now be edited through the filesystem
-
-## Player Values
-- Further decreased values of over 31 year old players
-- Improved valuation of Italian League players
-
-## Player Editor
-- Added Traits screen to all editors
-- Allow birth year to go from 1900 all the way to 2012
-- Allow players to have a height from 4ft11 to 6ft7
+## File Management
+- Tutorials - Added some additional documentation to Transfer logic files to help others mod the game  
 
 # Version 1.5 beta 1
 
