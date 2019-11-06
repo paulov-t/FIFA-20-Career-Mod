@@ -1,3 +1,16 @@
+# Version 1.5.1
+
+## Dynamic Player Hair Growth/Style changes
+- In game Player Editor changes now save to the dynamic system
+
+## Player Values
+- Fix 70 OVR rated values
+- Fix values of players over 32 years old
+- Rebalance Potential
+
+## Teams 
+- License Juventus in Portugese
+
 # Version 1.5
 
 ## Dynamic Player Hair Growth/Style changes

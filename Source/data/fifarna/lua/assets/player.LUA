@@ -64,6 +64,49 @@ function contains(list, x)
 	return false
 end
 
+function getVariableFromTable(t, vr) 
+	if contains(t, vr) then 
+		
+		for _, v in pairs(t) do
+		if v == vr then return t[vr] end
+	end
+	
+	end
+	return nil
+end
+
+function getVariableFromFile(file, variableToGet) 
+	if(file_exists(file)) then
+		
+		local lines = lines_from(file)
+		
+		
+		for k,v in pairs(lines) do
+		
+			local r = split(v, '=')
+			
+			local varName = ""
+			local varValue = ""
+			for key, value in pairs(r) do
+			
+				if (varName == "") then
+					varName = value
+				
+				else
+					varValue = value
+					
+					if varName == variableToGet then
+						return varValue
+					end
+					
+				end
+			end
+		end
+	end
+	
+	return nil
+end
+
 function random_elem(tb)
     local keys = {}
     for k in pairs(tb) do table.insert(tb, k) end
@@ -79,7 +122,8 @@ local hair_bald = {
 local hair_receeding = {
 	29, -- receeding
 	72, -- receeding thick
-	112 -- receeding thick slight spike and mullet
+	112, -- receeding thick slight spike and mullet
+	43
 }
 
 local hair_veryshort = {
@@ -95,8 +139,7 @@ local hair_short_wavy = {
 	57, -- Wavy Styled parting
 	114, -- Wavy Styled parting
 	115, -- Wavy Styled parting
-	118, -- Wavy Styled parting
-	192563  -- Bernd Leno hair
+	118 -- Wavy Styled parting
 }
 
 local hair_short_curly = {
@@ -110,8 +153,7 @@ local hair_short_straight = {
 	24, -- straight spiked fringe
 	64, -- Spiked top (mowhawk)
 	65, -- short and slick
-	133, -- straight spiked fringe
-	192563 -- Bernd Leno hair
+	133 -- straight spiked fringe
 }
 
 local hair_medium_straight = {
@@ -185,95 +227,95 @@ function doPlayerInjection(dir, player)
 		if(file_exists(dir .. player.PlayerId .. '.txt')) then
 		
 			v2k4debugfile:write('->>>>> ' .. dir .. player.PlayerId .. '.txt file exists\n')
-			local lines = lines_from(dir .. player.PlayerId .. '.txt')
+			local lastEditedHour = getVariableFromFile(dir .. player.PlayerId .. '.txt', "v2k4LastEditedHour")
+			if(lastEditedHour ~= nil) then
+				v2k4debugfile:write('->>>>> check file last edited hour ' .. lastEditedHour .. '\n')
+			end
 			
+			if(lastEditedHour == nil or (tonumber(lastEditedHour) ~= tonumber(os.date("%H")))) then
 			
-			local file_out_temp = io.open("temp.txt", "w")
-			
-			
-			for k,v in pairs(lines) do
-			
-				local r = split(v, '=')
+				local lines = lines_from(dir .. player.PlayerId .. '.txt')
 				
-				local varName = ""
-				local varValue = ""
-				for key, value in pairs(r) do
+				for k,v in pairs(lines) do
 				
-					if (varName == "") then
-						varName = value
+					local r = split(v, '=')
 					
-					else
-						varValue = value
-						file_out_temp:write(value)
-						file_out_temp:write("\n")
+					local varName = ""
+					local varValue = ""
+					for key, value in pairs(r) do
+					
+						if (varName == "") then
+							varName = value
 						
-						--SetTableVariable(player,varName,varValue)
-						--player[varName] = varValue
-						--v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-						
-						if varName == "FacialHairType" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							player.FacialHairType = tonumber(varValue)
-						elseif varName == "Hair" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							player.Hair = tonumber(varValue)	
-						elseif varName == "ShoeType" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							player.ShoeType = tonumber(varValue)	
-						elseif varName == "TattooLeftArm" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							if(player.TattooLeftArm ~= 0) then
-								player.HasTattooUpperBody = 1
-								player.TattooLeftArm = tonumber(varValue)	
+						else
+							varValue = value
+							
+							if varName == "FacialHairType" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.FacialHairType = tonumber(varValue)
+							elseif varName == "Hair" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.Hair = tonumber(varValue)	
+							elseif varName == "ShoeType" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.ShoeType = tonumber(varValue)	
+							elseif varName == "TattooLeftArm" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.TattooLeftArm ~= 0) then
+									player.HasTattooUpperBody = 1
+									player.TattooLeftArm = tonumber(varValue)	
+								end
+							elseif varName == "TattooRightArm" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.TattooRightArm ~= 0) then
+									player.HasTattooUpperBody = 1
+									player.TattooRightArm = tonumber(varValue)	
+								end
+							elseif varName == "TattooRightLeg" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.TattooRightLeg ~= 0) then
+									player.HasTattooLowerBody = 1
+									player.TattooRightLeg = tonumber(varValue)	
+								end
+							elseif varName == "TattooLeftLeg" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.TattooLeftLeg ~= 0) then
+									player.HasTattooLowerBody = 1
+									player.TattooLeftLeg = tonumber(varValue)	
+								end
+							elseif varName == "HeadAssetId" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.HeadAssetId ~= 0) then
+									player.HeadAssetId = tonumber(varValue)
+									player.HeadVariation = 0
+								end
+							elseif varName == "Head" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.Head ~= 0) then
+									player.Head = tonumber(varValue)
+								end
+							elseif varName == "HeadClass" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.HeadClass ~= 0) then
+									player.HeadClass = tonumber(varValue)
+								end
+							elseif varName == "BodyType" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.BodyType ~= 0) then
+									player.BodyType = tonumber(varValue)
+								end
 							end
-						elseif varName == "TattooRightArm" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							if(player.TattooRightArm ~= 0) then
-								player.HasTattooUpperBody = 1
-								player.TattooRightArm = tonumber(varValue)	
-							end
-						elseif varName == "TattooRightLeg" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							if(player.TattooRightLeg ~= 0) then
-								player.HasTattooLowerBody = 1
-								player.TattooRightLeg = tonumber(varValue)	
-							end
-						elseif varName == "TattooLeftLeg" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							if(player.TattooLeftLeg ~= 0) then
-								player.HasTattooLowerBody = 1
-								player.TattooLeftLeg = tonumber(varValue)	
-							end
-						elseif varName == "HeadAssetId" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							if(player.HeadAssetId ~= 0) then
-								player.HeadAssetId = tonumber(varValue)
-								player.HeadVariation = 0
-							end
-						elseif varName == "Head" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							if(player.Head ~= 0) then
-								player.Head = tonumber(varValue)
-							end
-						elseif varName == "BodyType" then
-							v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-							if(player.BodyType ~= 0) then
-								player.BodyType = tonumber(varValue)
-							end
+							
+							
+							varName = "";
 						end
-						
-						
-						varName = "";
+				
+				
 					end
-			
-			
+					
 				end
 				
 			end
-			
-			
-			
-			file_out_temp:close()
 		end	
 	end
 end
@@ -282,7 +324,7 @@ end
 
 function doPlayerRandomFacialHair(player, use, growthchance)
 
-	if(use == 1) then
+	if(use == 1 and player.Gender ~= 1) then
 		v2k4debugfile:write('Using Facial Hair Growth System\n')
 		
 		local hairRandom = 100 - math.random(growthchance)
@@ -395,18 +437,13 @@ function doPlayerRandomShoe(player, use, growthchance)
 end
 
 
+
+
 function PlayerUpdate()
-	
-	
-	
+		
 	local player = db.player
-	--tohtml(db)
 	
 	
-	--require("testotherluafile");
-	-- loadAPlayer(); 
-	-- causes a command window to appear
-	--os.execute("mkdir paulv2k4")
 	
 	local file = io.open("currently_editing.txt", "w")
 	for k, v in pairs(player) do
@@ -416,12 +453,6 @@ function PlayerUpdate()
 		file:write("\n")
 	end
 	file:close()
-	
-	
-	
-	
-	-- female added in fifa 2016
-	--db.player.Gender = 0 --as:GetInt(player, "gender")  -- 0=male, 1=female
 	
 	local kitNumber = player.KitNumber
 	player.KitNumberTens = math.floor ( kitNumber / 10 )
@@ -668,36 +699,78 @@ function PlayerUpdate()
 	end
 		-- end of do settings stuff
 		
-	if use_system == 1 then 
+	if use_system >= 1 then 
 		
-		-- Player Dynamic Changing System - Load in
-		doPlayerInjection('paulv2k4/saved/', player) 
+		-- Use Dynamic System
+		if(player.IsAvatar ~= 1 and use_system == 1) then 
 		
+			local v2k4LastEditedHour = getVariableFromFile("paulv2k4/saved/" .. player.PlayerId .. '.txt', "v2k4LastEditedHour")
 		
-		-- make change
-		doPlayerRandomFacialHair(player, use_facialhairgrowth_system, facialhairgrowth_system_randomgrowth_chance)
-		
-		-- make change
-		doPlayerRandomHair(player, use_hairgrowth_system, hairgrowth_system_randomgrowth_chance)
-		
-		-- make change
-		doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
-		
+			local bOkToUseFile = true
 			
-			
-		-- save change
-		if(dir_exists('paulv2k4/saved')) then
-			local fileSaveChanges = io.open('paulv2k4/saved/' .. player.PlayerId .. '.txt', "w")
-			for k, v in pairs(player) do
-				fileSaveChanges:write(k)
-				fileSaveChanges:write('=')
-				fileSaveChanges:write(v)
-				fileSaveChanges:write("\n")
+			local viewStateFilePath = "paulv2k4/saved/__viewState.txt"
+			local currentEditedPlayerId = getVariableFromFile(viewStateFilePath, "PlayerId")
+			v2k4debugfile:write('PlayerId View State: ' .. currentEditedPlayerId .. ' vs ' .. player.PlayerId .. '\n')
+			if(currentEditedPlayerId ~= nil and tonumber(currentEditedPlayerId) == tonumber(player.PlayerId)) then
+				bOkToUseFile = false
 			end
-			fileSaveChanges:close()
+			
+			if(v2k4LastEditedHour ~= nil) then
+				v2k4debugfile:write('->>>>> check file last edited hour ' .. tostring(v2k4LastEditedHour) .. ' vs ' .. tostring(os.date("%H")) .. '\n')
+			end
+			
+			if(v2k4LastEditedHour ~= nil and (tonumber(v2k4LastEditedHour) == tonumber(os.date("%H")))) then
+				
+				bOkToUseFile = false
+			end
+			
+			local viewStateFile = io.open(viewStateFilePath, "w")
+			viewStateFile:write('PlayerId=' .. player.PlayerId .. '\n')
+			viewStateFile:write("v2k4LastLoaded=" .. os.date() .. "\n")
+			viewStateFile:close()
+			
+			--v2k4debugfile:write('Ok to use Save file??: ' .. bOkToUseFile .. '\n')
+			if(bOkToUseFile == true) then
+			
+			
+				-- Player Dynamic Changing System - Load in
+				doPlayerInjection('paulv2k4/saved/', player) 
+			
+				-- make change
+				doPlayerRandomFacialHair(player, use_facialhairgrowth_system, facialhairgrowth_system_randomgrowth_chance)
+				
+				-- make change
+				doPlayerRandomHair(player, use_hairgrowth_system, hairgrowth_system_randomgrowth_chance)
+				
+				-- make change
+				doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
+			
+			end
+			
+			-- save change
+			if(dir_exists('paulv2k4/saved')) then
+				local fileSaveChanges = io.open('paulv2k4/saved/' .. player.PlayerId .. '.txt', "w")
+				for k, v in pairs(player) do
+					fileSaveChanges:write(k)
+					fileSaveChanges:write('=')
+					fileSaveChanges:write(v)
+					fileSaveChanges:write("\n")
+				end
+				fileSaveChanges:write("v2k4LastLoaded=" .. os.date() .. "\n")
+				if(bOkToUseFile == false or v2k4LastEditedHour ~= nil) then 
+					fileSaveChanges:write("v2k4LastEditedHour=" .. os.date("%H") .. "\n")
+				else 
+					fileSaveChanges:write("v2k4LastDynamicSystemHour=" .. os.date("%H") .. "\n")
+				end
+				fileSaveChanges:close()
+				
+				
+			
+			end
 		
 		end
 		
+		-- Overwrite System
 		doPlayerInjection('paulv2k4/overwrite/', player) 
 	
 	end
