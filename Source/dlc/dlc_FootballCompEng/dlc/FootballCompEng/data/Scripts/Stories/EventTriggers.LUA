@@ -6,11 +6,17 @@ function Trigger_AboutToInitMode()
 		InternationalTeaser()
 	end
 	
-	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_AboutToInitMode\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_PostLoadEvent()
 	isFinalVar = Engine.IsFinal()
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_PostLoadEvent\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_AboutToSwitchJob( seasonNumber, isLoanReturn, fromTeam, toTeam, wasFired, isLoan, retiring )
@@ -23,11 +29,19 @@ function Trigger_AboutToSwitchJob( seasonNumber, isLoanReturn, fromTeam, toTeam,
 	if( isLoan == false ) then
 		Engine.EndStoryCategory( "JOBCHANGE", false )
 	end
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_AboutToSwitchJob\n')
+	v2k4debugfile:close()
 end 
 
 function Trigger_MainCompetitionScheduled()
 	Engine.AddDateEvent( "SSNPRVDAY1", 2 )
 	-- ExamineFor_RetiringPlayer()  NOTE: Retiring player currently removed
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_MainCompetitionScheduled\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_PostUserGame( matchResult, gametype, playType, matchSituationTypes )	
@@ -40,6 +54,10 @@ function Trigger_PostUserGame( matchResult, gametype, playType, matchSituationTy
 		--PostMatch_PlayerVsFormerTeam( matchResult, gametype, playType )
 		ImportantPostUserGame( matchResult, gametype, playType, matchSituationTypes )
 	end
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_PostUserGame\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_PostUserInternationalGame( matchResult, gametype, playType )
@@ -48,11 +66,19 @@ end
 
 function Trigger_PostCPUGame( matchResult, gametype )	
 	ExamineResultForIncident( matchResult, gametype, "SIMMED" )
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_PostCPUGame\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_PlayerInjury( teamId, playerId, severity, returnDate )
 	-- RetiringPlayerInjury( teamId, playerId, severity, returnDate )  NOTE: Retiring player currently removed
 	PlayerSagaInjuryEnding( teamId, playerId, severity, returnDate )
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_PlayerInjury\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_UserTeamKnockedOutOfCup()
@@ -61,10 +87,18 @@ end
 
 function Trigger_UserTeamAdvanceNextRound( numAdvancingTeams )
 	-- RetiringPlayerAdvanceInCup( numAdvancingTeams )  NOTE: Retiring player currently removed
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_UserTeamAdvanceNextRound\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_HourPassed( hoursRemaining )
 	-- deadlineDayPassedLMTR( hoursRemaining )  NOTE: LMTR currently removed
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_HourPassed\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_DynamicEvent( eventId, linkId )
@@ -90,6 +124,10 @@ function Trigger_NumDaysBeforeUserGame( numDays, gametype, fixture )
 		PreMatch_TopScorer( numDays, gametype, fixture )
 		ExamineFor_IMP( numDays, gametype, fixture )
 	end
+	
+	local v2k4debugfile = io.open("v2k4debugfile-career.txt", "w")
+	v2k4debugfile:write('Trigger_NumDaysBeforeUserGame\n')
+	v2k4debugfile:close()
 end
 
 function Trigger_NumDaysBeforeLastLeagueGame( numDays )

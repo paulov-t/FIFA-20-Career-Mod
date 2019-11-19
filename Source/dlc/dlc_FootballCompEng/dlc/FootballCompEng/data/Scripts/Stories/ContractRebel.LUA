@@ -1,0 +1,592 @@
+-- IMPORTANT NOTE
+--  Contract rebel feature currently removed in its entirety as a design choice.
+--  The code here currently has incompatibilities with the transfer system added for FIFA18.
+---------------------------------------------------------------------------------------------
+
+-- function ExamineFor_ContractRebel( teamId, playerId )
+	-- local storyId = "REBEL"
+	-- local storyActive = Engine.IsStoryIDActive( storyId ) -- Change to IsStoryActive( "storyId" )
+	-- if( storyActive == false ) then		
+		-- local numPlayersOnTeam = Engine.GetNumPlayers( teamId )
+		-- if( numPlayersOnTeam >= Tuning.REBEL.minNumPlayersOnTeam ) then
+			-- local oneClubPlayer = Engine.HasPlayerTrait( teamId, playerId, "ONE_CLUB_PLAYER" )
+			-- local isListed = Engine.IsPlayerOnTransferList( playerId )
+			-- local storyConflict = IsPlayerInvolvedInSaga( playerId )
+			-- local wouldLeave = WouldPlayerEvenLeaveClub( teamId, playerId )
+			-- local playerTier = Engine.GetPlayerTier( teamId, playerId )
+			-- if( playerTier <= 3 ) then
+				-- if( oneClubPlayer == false and isListed == false and storyConflict == false and wouldLeave == true ) then
+					-- local reason = GetReasonForPlayerUpset( teamId, playerId )		
+					-- if( reason > 0 ) then
+						-- local randShouldAdd = RollPercentageDice( Tuning.REBEL.willPlayerRebel ) -- add/remove true to force the the random								
+						-- if( randShouldAdd == true ) then
+							-- local involved = Engine.IsPlayerInvolvedInStoryCategory( playerId, "WAGE" )
+							-- if( involved == true ) then
+								-- local numStories = Engine.GetNumStoriesByCategory( "WAGE" )
+								-- for storyCount = numStories, 1, -1 do
+									-- local currentStory = Engine.GetStoryByCategoryAndIndex( "WAGE", storyCount )
+									-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+									-- if( storyPlayer == playerId ) then
+										-- local storyId2 = Engine.GetStoryId( currentStory )
+										-- Engine.EndStoryId( storyId2 )
+										-- break
+									-- end
+								-- end
+							-- end
+							-- StartStory_ContractRebel( teamId, playerId, reason )
+						-- end -- if( randShouldAdd == true ) then
+					-- end --if( reason > 0 ) then
+				-- end --if( contractInRange == true and isUltimatePro == false ) then
+			-- end --if( numPlayersOnTeam > 25 ) then
+		-- end --if( percThroughSeason < 85 ) then
+	-- else --if( storyActive == false ) then
+		-- OfferContractToRebel( playerId )
+	-- end --if( numStories == 0 ) then		
+-- end
+
+-- function MonthPassed_CPUContractRebel( months )
+	-- local storyId = "REBEL_CPU"
+	-- local storyActive = Engine.IsStoryIDActive( storyId )
+	-- if( storyActive == false ) then
+		-- -- local percThroughSeason = Engine.GetPercentageThroughSeason()
+		-- local inWindow = Engine.IsWithinTransferWindow()
+		-- if( inWindow == false ) then -- 
+			-- local chanceToStart = RollPercentageDice( Tuning.REBEL.chanceToStartPercent ) -- 10%
+			-- if( chanceToStart == true ) then
+				-- local userTeam = Engine.GetUserTeam()
+				-- local playerId = GetRebelCpuPlayer()
+				-- if( playerId > 0 ) then
+					-- local teamId = Engine.GetTeamIdFromPlayerId( playerId )
+					-- local reason = GetReasonForPlayerUpset( teamId, playerId )
+					-- if( reason > 0 ) then
+						-- StartStory_ContractRebel( teamId, playerId, reason )
+					-- end
+				-- end
+			-- end
+		-- end
+	-- end
+-- end
+
+-- function GetRebelCpuPlayer()
+	-- local numTeams = Engine.GetNumberOfTeamsInLeague()
+	-- local validPlayers = {}
+	-- local userTeam = Engine.GetUserTeam()
+	-- for teamCount = 1, numTeams do
+		-- local teamId = Engine.GetTeamIdByIndex( teamCount )
+		-- if( teamId ~= userTeam and teamId ~= -1 ) then
+			-- local numPlayersOnTeam = Engine.GetNumPlayers( teamId )
+			-- if( numPlayersOnTeam >= Tuning.REBEL.minNumPlayersOnTeam ) then
+				-- local playerId = GetPlayerToRebel( teamId )
+				-- if( playerId > 0 ) then
+					-- table.insert( validPlayers, playerId )
+				-- end
+			-- end
+		-- end
+	-- end
+	-- local tableSize = # validPlayers
+	-- local chosenPlayer = 0
+	-- if( tableSize > 0 ) then
+		-- local randNum = Engine.GetRandomNumber( 1, tableSize )
+		-- chosenPlayer = validPlayers[ randNum ]
+	-- end
+	-- return chosenPlayer
+-- end
+
+-- function GetPlayerToRebel( teamId )
+	-- teamId = Engine.StackRankTeamByOverall( teamId )
+	-- local numPlayers = 11
+	-- local validPlayers = {}
+	-- local isPap = Engine.IsPlayAsPlayer()
+	-- local papId = 0
+	-- if( isPap == true ) then
+		-- papId = Engine.GetPlayAsPlayerID()
+	-- end
+	-- for playerCount = 1, numPlayers do
+		-- local playerId = Engine.GetPlayer( teamId, playerCount )
+		-- if( playerId ~= papId ) then
+			-- local reason = GetReasonForPlayerUpset( teamId, playerId )
+			-- if( reason > 0 ) then
+				-- local oneClubPlayer = Engine.HasPlayerTrait( teamId, playerId, "ONE_CLUB_PLAYER" )
+				-- local isListed = Engine.IsPlayerOnTransferList( playerId )
+				-- local storyConflict = IsPlayerInvolvedInSaga( playerId )
+				-- local wouldLeave = WouldPlayerEvenLeaveClub( teamId, playerId )
+				-- local playerTier = Engine.GetPlayerTier( teamId, playerId )
+				-- if( oneClubPlayer == false and isListed == false and storyConflict == false and wouldLeave == true and playerTier < 2 ) then
+					-- table.insert( validPlayers, playerId )
+				-- end
+			-- end
+		-- end
+	-- end
+	-- local tableSize = # validPlayers
+	-- local chosenPlayer = 0
+	-- if( tableSize > 0 ) then
+		-- local randNum = Engine.GetRandomNumber( 1, tableSize )
+		-- chosenPlayer = validPlayers[ randNum ]
+	-- end
+	-- return chosenPlayer
+-- end
+
+-- function StartStory_ContractRebel( teamId, playerId, reason )
+	-- local category = "CONT_REB"
+	-- local storyId = "REBEL"
+	-- if( teamId ~= Engine.GetUserTeam() ) then
+		-- storyId = "REBEL_CPU"
+	-- end
+	-- if( Engine.MarkPlayerForStory( teamId, playerId, category, storyId ) == true ) then
+		-- local story = Engine.GetStoryById( storyId )
+		-- Engine.SetNoDeathAtEOS( story )
+		-- if( reason == 1 ) then
+			-- Engine.SetStoryVariable( story, "UNDERACHIEVE" )
+		-- elseif( reason == 2 ) then
+			-- Engine.SetStoryVariable( story, "TOOBIGFORTEAM" )
+		-- else
+			-- Engine.SetStoryVariable( story, "BADWAGE" )
+		-- end
+		-- local randDelay = Engine.GetRandomNumber( Tuning.REBEL.start_Delay_Low, Tuning.REBEL.start_Delay_High )
+		-- if( storyId ~= "REBEL_CPU" ) then
+			-- Engine.SetStoryContractOverride( story, 6 )	-- 6 is negotiating
+		-- end
+		-- Engine.AddDateEvent( "CONTREB_ST0", randDelay, storyId )
+	-- end	--if( Engine.MarkPlayerForStory( teamId, playerId, category, storyId ) == true ) then
+-- end
+
+-- function OfferContractToRebel( playerId )
+	-- -- already tested for user team
+	-- local storyId = "REBEL"
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- if( playerId == storyPlayer ) then
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local currentWage = Engine.GetPlayerWage( storyTeam, storyPlayer )
+		-- local offeredWage = Engine.GetPlayerOfferedWage( storyTeam, storyPlayer )
+		-- local perc = Tuning.REBEL.wagePercent
+		-- local percOfCurrent = ( currentWage * perc ) / 100
+		-- local randDelay = Engine.GetRandomNumber( Tuning.REBEL.stage0_Delay_Low, Tuning.REBEL.stage0_Delay_High )
+		-- local transferFunds, wageFunds = Engine.GetRemainingUserTeamBudget( storyTeam )
+		-- if( (offeredWage > currentWage + percOfCurrent) and (offeredWage >= wageFunds) ) then
+			-- Engine.AddDateEvent( "CONTREB_ACCEPT", randDelay, storyId )
+		-- else
+			-- Engine.AddDateEvent( "CONTREB_REJECT", randDelay, storyId )
+		-- end
+		-- Engine.SetStoryContractOverride( currentStory, 6 )	-- 6 is negotiating
+	-- end
+-- end
+
+-- function ContractRebelDynamicEvent( eventId, linkId )
+	-- local storyId = "REBEL"
+	-- if( string.find( linkId, storyId ) ~= nil ) then		
+		-- if( string.find( eventId, "CONTREB_ST" ) ~= nil ) then
+			-- ContractRebel_Stage( eventId, linkId )
+		-- elseif( eventId == "CONTREB_LIST" ) then
+			-- ContractRebelListedEvent( linkId )
+		-- elseif( eventId == "CONTREB_ACCEPT" ) then
+			-- ContractRebelAcceptContract( linkId )
+		-- elseif( eventId == "CONTREB_ACCEPT_P2" ) then
+			-- ContractRebelAcceptContractNews( linkId )
+		-- elseif( eventId == "CONTREB_REJECT" ) then
+			-- ContractRebelRejectContract( linkId )
+		-- end
+	-- end -- if( storyId == linkId ) then
+-- end
+
+-- function ContractRebel_Stage( eventId, storyId )
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )			
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local minDays = 0
+	-- local maxDays = 0
+	-- local newEventId = "CONTREB_ST"
+	-- Engine.SetStringPlayer( storyPlayer )
+	-- Engine.SetStringTeam( storyTeam )
+	-- if( eventId == "CONTREB_ST0" ) then
+		-- Engine.AddConversation( storyPlayer, "popup_contractrebel_notresigning_stage0_", 1, 4, "popup_contractrebel_notresigning_stage0_subject", currentStory )
+		-- minDays = Tuning.REBEL.stage1_Delay_Low
+		-- maxDays = Tuning.REBEL.stage1_Delay_High
+		-- if( storyId ~= "REBEL_CPU" ) then
+			-- Engine.SetStorySellPlayersOverride( currentStory, 3 )  -- 3 is not resigning
+			-- Engine.SetStoryContractOverride( currentStory, 2 )		-- 2 is not resigning
+			-- if( reason == "UNDERACHIEVE" ) then
+				-- Engine.SetStoryMoraleOverride( currentStory, 2 ) 	-- 2 is team under achieveing
+			-- elseif( reason == "TOOBIGFORTEAM" ) then
+				-- Engine.SetStoryMoraleOverride( currentStory, 3 ) 	-- 3 is too big for team
+			-- else
+				-- Engine.SetStoryMoraleOverride( currentStory, 4 ) 	-- 4 is bad wage
+			-- end		
+		-- end
+		-- newEventId = newEventId .. "1"
+	-- elseif( eventId == "CONTREB_ST1" ) then 
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+		-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" )
+		-- TriggerNews( "news_contractrebel_title_stage1_initial_", 1, 4, "news_contractrebel_body_stage1_initial_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 1 )
+		-- minDays = Tuning.REBEL.stage2_Delay_Low
+		-- maxDays = Tuning.REBEL.stage2_Delay_High
+		-- newEventId = newEventId .. "2"
+	-- elseif( eventId == "CONTREB_ST2" ) then		
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "MONEY" )
+		-- TriggerNews( "news_contractrebel_title_stage2_why_", 1, 4, "news_contractrebel_body_stage2_why_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 2 )
+		-- minDays = Tuning.REBEL.stage3_Delay_Low
+		-- maxDays = Tuning.REBEL.stage3_Delay_High
+		-- newEventId = newEventId .. "3"
+	-- elseif( eventId == "CONTREB_ST3" ) then 
+		-- local numOffers = 3
+		-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, numOffers, true ) -- 3 offers
+		-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+			-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+		-- end
+		-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- TriggerNews( "news_contractrebel_title_stage3_who_", 1, 4, "news_contractrebel_body_stage3_who_", 1, 4, currentStory )
+		-- Engine.AddConversation( storyPlayer, "popup_contractrebel_notsure_stage3_", 1, 4, "popup_contractrebel_notsure_stage3_subject", currentStory )
+		-- Engine.SetStoryStage( currentStory, 3 )
+		-- minDays = Tuning.REBEL.stage3half_Delay_Low	-- less cos of step 3.5
+		-- maxDays = Tuning.REBEL.stage3half_Delay_High
+		-- newEventId = newEventId .. "3.5"
+	-- elseif( eventId == "CONTREB_ST3.5" ) then 	
+		-- local inWindow = Engine.IsWithinTransferWindow()
+		-- local success = RollPercentageDice( Tuning.REBEL.willTeamBid ) -- add/remove true to force the the random								
+		-- if( inWindow == true and success == true ) then
+			-- local numOffers = 2
+			-- local actualOffers, offer1, offer2 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, numOffers, false ) -- 2 offers
+			-- local offerTeam = 0
+			-- if( actualOffers > 0 ) then
+				-- local randOffer = Engine.GetRandomNumber( 1, actualOffers )
+				-- if( randOffer == 1 ) then
+					-- offerTeam = offer1
+				-- else
+					-- offerTeam = offer2
+				-- end
+				-- Engine.CreateOfferForPlayer( storyTeam, storyPlayer, offerTeam )
+			-- end --if( actualOffers > 0 ) then
+		-- end --if( inWindow == true and success == true ) then
+		-- minDays = Tuning.REBEL.stage4_Delay_Low
+		-- maxDays = Tuning.REBEL.stage4_Delay_High
+		-- newEventId = newEventId .. "4"
+	-- elseif( eventId == "CONTREB_ST4" ) then
+		-- local numOffers = 1
+		-- local actualOffers, offer1 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, numOffers, true ) -- 1 offers
+		-- if( offer1 == nil ) then
+			-- offer1 = FindSuitablePlayersSafety( storyPlayer )
+		-- end
+		-- Engine.SetStringTeam( offer1, 2 )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+		-- TriggerNews( "news_contractrebel_title_stage4_agent_", 1, 4, "news_contractrebel_body_stage4_agent_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 4 )
+		-- minDays = Tuning.REBEL.stage4half_Delay_Low	-- less cos of step 4.5
+		-- maxDays = Tuning.REBEL.stage4half_Delay_High
+		-- newEventId = newEventId .. "4.5"
+	-- elseif( eventId == "CONTREB_ST4.5" ) then 	
+		-- local inWindow = Engine.IsWithinTransferWindow()
+		-- local successFirstTwo = RollPercentageDice( Tuning.REBEL.willTeamBid ) -- add/remove true to force the the random
+		-- local successAnother = RollPercentageDice( Tuning.REBEL.willTwoTeamsBid )
+		-- if( inWindow == true and ( successFirstTwo == true or successAnother == true ) ) then					
+			-- local numOffers = Tuning.REBEL.stage4half_numOffers_willTeamBid
+			-- local startRandom = 1
+			-- if( successAnother == true ) then
+				-- startRandom = 2
+				-- numOffers = Tuning.REBEL.stage4half_numOffers_willTwoTeamsBid
+			-- end
+			-- MakeCPUOfferForPlayer( storyTeam, storyPlayer, numOffers, startRandom )
+		-- end	
+		-- minDays = Tuning.REBEL.stage5_Delay_Low
+		-- maxDays = Tuning.REBEL.stage5_Delay_High
+		-- newEventId = newEventId .. "5"
+	-- elseif( eventId == "CONTREB_ST5" ) then 
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "NEWSPAPERS" )
+		-- TriggerNews( "news_contractrebel_title_stage5_speculation_", 1, 4, "news_contractrebel_body_stage5_speculation_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 5 )
+		-- minDays = Tuning.REBEL.stage6_Delay_Low
+		-- maxDays = Tuning.REBEL.stage6_Delay_High
+		-- newEventId = newEventId .. "6"
+	-- elseif( eventId == "CONTREB_ST6" ) then
+		-- local numOffers = 3
+		-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, numOffers, true ) -- 3 offers
+		-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+			-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+		-- end
+		-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- TriggerNews( "news_contractrebel_title_stage6_monitor_", 1, 4, "news_contractrebel_body_stage6_monitor_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 6 )
+		-- minDays = Tuning.REBEL.stage7_Delay_Low
+		-- maxDays = Tuning.REBEL.stage7_Delay_High
+		-- newEventId = newEventId .. "7"
+	-- elseif( eventId == "CONTREB_ST7" ) then
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+		-- TriggerNews( "news_contractrebel_title_stage7_further_", 1, 4, "news_contractrebel_body_stage7_further_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 7 )
+		-- minDays = Tuning.REBEL.stage8_Delay_Low
+		-- maxDays = Tuning.REBEL.stage8_Delay_High
+		-- newEventId = newEventId .. "8"
+	-- elseif( eventId == "CONTREB_ST8" ) then
+		-- local isGoing = RollPercentageDice( Tuning.REBEL.isGoingToLeave )
+		-- if( isGoing == true ) then
+			-- local isListed = Engine.IsPlayerOnTransferList( storyPlayer )
+			-- if( isListed == false ) then
+				-- Engine.AddConversation( storyPlayer, "popup_contractrebel_transferlistme_stage8_", 1, 4, "popup_contractrebel_stage8_subject", currentStory )
+			-- end
+			-- Engine.UpdateStoryActivity( currentStory )
+			-- newEventId = newEventId .. "10"
+			-- Engine.SetStoryVariable( currentStory, "0" )
+		-- else
+			-- Engine.AddConversation( storyPlayer, "popup_contractrebel_wanttostay_stage8_", 1, 4, "popup_contractrebel_stage8_subject", currentStory )
+			-- newEventId = newEventId .. "9"
+		-- end
+		-- maxDays = Tuning.REBEL.stage9_Delay_Low
+		-- minDays = Tuning.REBEL.stage9_Delay_High
+	-- elseif( eventId == "CONTREB_ST9" ) then
+		-- local numOffers = 1
+		-- local actualOffers, offer1 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, numOffers, true ) -- 1 offers
+		-- if( offer1 == nil ) then
+			-- offer1 = FindSuitablePlayersSafety( storyPlayer )
+		-- end
+		-- Engine.SetStringTeam( offer1, 2 )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "FULL_STADIUM" )
+		-- TriggerNews( "news_contractrebel_title_stage9_staying_", 1, 4, "news_contractrebel_body_stage9_staying_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 8 )
+		-- if( storyId ~= "REBEL_CPU" ) then
+			-- Engine.SetStorySellPlayersOverride( currentStory, -1 ) -- Clearing
+			-- Engine.SetStoryContractOverride( currentStory, -1 )	-- Clearing
+		-- end
+		-- Engine.EndStoryId( storyId )
+		-- maxDays = Tuning.REBEL.stage10_Delay_Low
+		-- minDays = Tuning.REBEL.stage10_Delay_High
+		-- newEventId = "CONTREBDONE1"
+	-- elseif( eventId == "CONTREB_ST10" ) then
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+		-- TriggerNews( "news_contractrebel_title_stage10_leaving_", 1, 4, "news_contractrebel_body_stage10_leaving_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 9 )
+		-- maxDays = 1
+		-- minDays = 1
+		-- newEventId = "CONTREBDONE2"
+	-- end
+	-- local randNo = Engine.GetRandomNumber( minDays, maxDays )
+	-- Engine.AddDateEvent( newEventId, randNo, storyId )
+	-- Engine.UpdateStoryActivity( currentStory )
+-- end
+
+-- function ContractRebelTransferComplete( buyingTeam, sellingTeam, playerId, transfer, contract, price, wage, playerValue )
+	-- local storyId = "REBEL"
+	-- if( sellingTeam ~= Engine.GetUserTeam() ) then
+		-- storyId = "REBEL_CPU"
+	-- end
+	-- local storyActive = Engine.IsStoryIDActive( storyId )
+	-- if( storyActive == true ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- if( playerId == storyPlayer ) then			
+			-- Engine.EndStoryId( storyId )
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeams( buyingTeam, sellingTeam )
+			-- Engine.SetStringCurrency( price )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "LEFT", "CLUB_CREST", sellingTeam )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", playerId )
+			-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", buyingTeam )
+			-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+			-- TriggerNews( "news_contractrebel_title_transfer_complete_", 1, 4, "news_contractrebel_body_transfer_complete_", 1, 4, currentStory )
+			-- Engine.SetStoryStage( currentStory, 10 )
+		-- end
+	-- end --if( storyActive == true ) then
+-- end
+
+-- function ContractRebelBidRejected( buyingTeamId, playerId, marketValue, marketWage, moneyOffered, sellingTeamId )
+	-- local storyId = "REBEL"
+	-- if( sellingTeam ~= Engine.GetUserTeam() ) then
+		-- storyId = "REBEL_CPU"
+	-- end
+	-- local storyActive = Engine.IsStoryIDActive( storyId )
+	-- if( storyActive == true ) then
+		-- local currentStory = Engine.GetStoryById( storyId ) 
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- if( storyPlayer == playerId ) then
+			-- local storyVar = Engine.GetStoryVariable( currentStory )			
+			-- local storyTeam = Engine.GetStoryTeam( currentStory )
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- if( storyVar == "0" ) then
+				-- Engine.SetStoryVariable( currentStory, "1" )
+			-- elseif( storyVar == "1" ) then
+				-- if( storyId == "REBEL" ) then
+					-- local userName = Engine.GetUsername()
+					-- Engine.SetInterrupting()
+					-- TriggerEmail( false, userName, "CM_Inbox_Sender_Board", "CM_Email_ContractRebel_SellHimNow_Subject_", 1, 4, "CM_Email_ContractRebel_SellHimNow_Body_", 1, 4 )
+					-- Engine.AddDateEvent( "CONTREB_LIST", 2, storyId )
+				-- end
+				-- local numOffers = 5
+				-- local startRandom = 1
+				-- MakeCPUOfferForPlayer( storyTeam, storyPlayer, numOffers, startRandom )
+				-- Engine.SetStoryVariable( currentStory, "2" )
+			-- elseif( storyVar == "2" ) then
+				-- Engine.SetStringTeam( buyingTeamId, 2 )
+				-- Engine.SetStoryAllowTransferNews( currentStory, false )
+				-- if( storyId == "REBEL" ) then
+					-- local userName = Engine.GetUsername()
+					-- Engine.SetInterrupting()
+					-- TriggerEmail( false, userName, "CM_Inbox_Sender_Board", "CM_Email_ContractRebel_WeveSoldHim_Subject_", 1, 4, "CM_Email_ContractRebel_WeveSoldHim_Body_", 1, 4 )
+				-- end
+				-- Engine.ForceAcceptTransferOffer( storyTeam, storyPlayer, buyingTeamId )
+			-- else
+				-- -- Normal rejection way before the demand to leave
+				-- Engine.SetStringTeams( storyTeam, buyingTeamId )
+				-- Engine.SetNewsImportance( "EXCLUSIVE" )
+				-- TriggerNews( "news_contractrebel_title_transfer_bidrejected_", 1, 4, "news_contractrebel_body_transfer_bidrejected_", 1, 4, currentStory )
+			-- end --if( storyVar == "0" ) then
+		-- end -- if( storyPlayer == playerId ) then
+	-- end --if( storyActive == true ) then
+-- end
+
+-- function ContractRebelListedEvent( storyId )
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local isListed = Engine.IsPlayerOnTransferList( storyPlayer )
+	-- if( isListed == false ) then
+		-- if( storyId == "REBEL" ) then
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- Engine.SetInterrupting()
+			-- local userName = Engine.GetUsername()
+			-- TriggerEmail( false, userName, "CM_Inbox_Sender_Board", "CM_Email_ContractRebel_ForceList_Subject_", 1, 4, "CM_Email_ContractRebel_ForceList_Body_", 1, 4 )
+			-- Engine.SetStorySellPlayersOverride( currentStory, 1 )	-- 1 is board selling
+			-- Engine.ForceUserPlayerOntoTransferList( storyPlayer )
+		-- else
+			-- Engine.ForceCPUPlayerOntoTransferList( storyTeam, storyPlayer )
+		-- end
+	-- end --if( isListed == false ) then
+-- end
+
+-- function ContractRebelAcceptContract( storyId )
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- Engine.PlayerContractAccept( storyTeam, storyPlayer )
+	-- if( storyId == "REBEL" ) then
+		-- Engine.AddConversation( storyPlayer, "popup_contractrebel_imsigning_", 1, 4, "popup_contractrebel_imsigning_subject", currentStory )
+	-- end
+	-- Engine.AddDateEvent( "CONTREB_ACCEPT_P2", 2, storyId )
+-- end
+
+-- function NumDaysLeft_CPUTransferRebel( numDays )
+	-- if( numDays == Tuning.REBEL.CPUTransfer_numDays_High or
+			-- numDays == Tuning.REBEL.CPUTransfer_numDays_Med or
+			-- numDays == Tuning.REBEL.CPUTransfer_numDays_Low ) then
+		-- local storyId = "REBEL_CPU"
+		-- local storyActive = Engine.IsStoryIDActive( storyId )
+		-- if( storyActive == true ) then
+			-- local chance = Tuning.REBEL.CPUTransfer_numDays_Low_Chance
+			-- if( numDays == Tuning.REBEL.CPUTransfer_numDays_High ) then
+				-- chance = Tuning.REBEL.CPUTransfer_numDays_High_Chance
+			-- elseif( numDays == Tuning.REBEL.CPUTransfer_numDays_Med ) then
+				-- chance = Tuning.REBEL.CPUTransfer_numDays_Med_Chance
+			-- end
+			-- local willRun = RollPercentageDice( chance )
+			-- if( willRun == true ) then
+				-- local currentStory = Engine.GetStoryById( storyId )
+				-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+				-- local storyTeam = Engine.GetStoryTeam( currentStory )
+				-- local choice = RollPercentageDice( 50 )
+				-- local stage = Engine.GetStoryStage( currentStory )
+				-- if( stage ~= 8 ) then
+					-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, false )
+					-- if( actualOffers > 0 ) then
+						-- local randOffer = Engine.GetRandomNumber( 1, actualOffers )
+						-- local chosenOffer = offer1
+						-- if( randOffer == 2 ) then
+							-- chosenOffer = offer2
+						-- elseif( randOffer == 3 ) then
+							-- chosenOffer = offer3
+						-- end
+						-- Engine.ForceTransfer( storyTeam, storyPlayer, chosenOffer, false )
+					-- else
+						-- ContractRebelAcceptContractNews( storyId )
+					-- end
+				-- else
+					-- ContractRebelAcceptContractNews( storyId )
+				-- end
+			-- end
+		-- end
+	-- end
+-- end
+
+-- function ContractRebelAcceptContractNews( storyId )
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- Engine.SetStringPlayer( storyPlayer )
+	-- Engine.SetStringTeam( storyTeam, 1 )		
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- TriggerNews( "news_contractrebel_title_contract_accepted_", 1, 4, "news_contractrebel_body_contract_accepted_", 1, 4, currentStory )
+	-- Engine.EndStoryId( storyId )			
+-- end
+
+-- function ContractRebelRejectContract( storyId )
+	-- if( storyId == "REBEL" ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- Engine.SetStringPlayer( storyPlayer )
+		-- Engine.SetStringTeam( storyTeam )
+		-- local userName = Engine.GetUsername()
+		-- Engine.SetInterrupting()
+		-- TriggerEmail( false, userName, "CM_Inbox_Sender_Board", "CM_Email_ContractRebel_PlayerRejectContractSubject_", 1, 4, "CM_Email_ContractRebel_PlayerRejectContractBody_", 1, 4 )
+		-- Engine.SetStorySellPlayersOverride( currentStory, 3 ) -- 3 is not resigning
+		-- Engine.SetStoryContractOverride( currentStory, 2 )	-- 2 is not resigning
+	-- end
+-- end
+
+-- function ContractRebelWindowOpen( numDays )
+	-- if( numDays == Tuning.REBEL.CPUTransfer_numDays_High or
+			-- numDays == Tuning.REBEL.CPUTransfer_numDays_Med or
+			-- numDays == Tuning.REBEL.CPUTransfer_numDays_Low ) then
+		-- local storyId = "REBEL"
+		-- for storyCount = 1, 2 do
+			-- if( storyCount == 2 ) then
+				-- storyId = "REBEL_CPU"
+			-- end
+			-- local storyActive = Engine.IsStoryIDActive( storyId )
+			-- if( storyActive == true ) then			
+				-- local currentStory = Engine.GetStoryById( storyId )
+				-- local storyVar = Engine.GetStoryVariable( currentStory )
+				-- if( storyVar == "0" or storyVar == "1" or storyVar == "2" ) then
+					-- local shouldMakeOffer = RollPercentageDice( Tuning.REBEL.shouldMakeOffer ) -- add/remove true to force the the random		
+					-- if( shouldMakeOffer == true ) then
+						-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+						-- local storyTeam = Engine.GetStoryTeam( currentStory )
+						-- local startRandom = 1
+						-- local numOffers = 5
+						-- MakeCPUOfferForPlayer( storyTeam, storyPlayer, numOffers, startRandom )
+					-- end --if( shouldMakeOffer == true ) then
+				-- end --if( storyVar == "0" || storyVar == "1" || storyVar == "2" ) then		
+			-- end --if( storyActive == true ) then
+		-- end
+	-- end --if( numDays == 5 or numDays == 10 or numDays == 15 ) then
+-- end

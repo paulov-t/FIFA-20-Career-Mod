@@ -1,0 +1,514 @@
+-- IMPORTANT NOTE
+--  Last minute transfer feature currently removed in its entirety as a design choice.
+--  The code here currently has incompatibilities with the transfer system added for FIFA18.
+---------------------------------------------------------------------------------------------
+
+-- function ExamineFor_LMTR( numDays ) 
+	-- if( numDays == Tuning.LMTR.triggerStoryDate ) then --15
+		-- local userTeam = Engine.GetUserTeam()
+		-- local userTeamLeague = Engine.GetLeagueId( userTeam )		
+		-- LMT_LeagueTableReceived()
+	-- end
+-- end
+
+-- function StartStory_LMTR( teamId, playerId, category, storyId )
+	-- if( Engine.MarkPlayerForStory( teamId, playerId, category, storyId ) == true ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- Engine.SetStoryPriority( currentStory, 3 )
+		-- Engine.SetStoryAllowLoan( currentStory, false )
+		-- local randNum = Engine.GetRandomNumber( Tuning.LMTR.storyStartDelay_Low, Tuning.LMTR.storyStartDelay_High ) -- Number of days of delay ( 1, 10 )
+		-- local dateEventId = "LMTR_1"
+		-- local userTeam = Engine.GetUserTeam()
+		-- if( teamId == userTeam ) then
+			-- dateEventId = "LMTR_USR1"
+		-- end
+		-- Engine.AddDateEvent( dateEventId, randNum, storyId )
+	-- end --if( Engine.MarkPlayerForStory( teamId, playerId, category, storyId .. storyCount ) == true ) then
+-- end
+
+-- function LMT_LeagueTableReceived()
+	-- local validPlayers = {}
+	-- local validUserPlayers = {}
+	-- local numValidPlayers = 0
+	-- local numValidUserPlayers = 0
+	-- numValidPlayers, numValidUserPlayers = ExamineLeague( validPlayers, validUserPlayers )
+	-- local minPlayers = Tuning.LMTR.minPlayers_CPU --1
+	-- local maxPlayers = Tuning.LMTR.maxPlayers_CPU  --2
+	-- local storyCount = 1
+	-- local storyId = "LMTR_"
+	-- if( numValidPlayers > 0 ) then
+		-- PickPlayersToStartStory( validPlayers, numValidPlayers, minPlayers, maxPlayers, storyId, storyCount )
+		-- local chanceOfUserProblem = Tuning.LMTR.changeOfUserProblem --20
+		-- local randNum = Engine.GetRandomNumber( 1, 100 )
+		-- if( randNum <= chanceOfUserProblem ) then
+			-- local userStory = "LMTR_USR"
+			-- PickPlayersToStartStory( validUserPlayers, numValidUserPlayers, 1, 1, userStory, 1 )
+		-- end
+	-- end
+-- end
+
+-- function ExamineLeague( validPlayers, validUserPlayers )
+	-- local numValidPlayers = 0
+	-- local numValidUserPlayers = 0
+	-- local numTeams = Engine.GetNumberOfTeamsInLeague()	
+	-- local currTeamId = 0
+	-- local userTeam = Engine.GetUserTeam()
+	-- for teamCount = 1, numTeams do
+		-- currTeamId = Engine.GetTeamIdByIndex( teamCount )
+		-- if( currTeamId > 0 ) then
+			-- if( userTeam == currTeamId ) then
+				-- numValidUserPlayers = ExamineTeamForLmtrPlayer( currTeamId, validUserPlayers, numValidUserPlayers )
+			-- else
+				-- numValidPlayers = ExamineTeamForLmtrPlayer( currTeamId, validPlayers, numValidPlayers )
+			-- end
+		-- end
+	-- end --for teamCount = 1, numTeams do
+	-- return numValidPlayers, numValidUserPlayers
+-- end
+
+-- function IsValidTeamLMTR( teamId, invalidTeams, invalidTeamCount )
+	-- local valid = true
+	-- for teamCount = 1, invalidTeamCount do
+		-- if( invalidTeams[ teamCount ] == teamId ) then
+			-- valid = false
+			-- break
+		-- end
+	-- end
+	-- return valid
+-- end
+
+-- function PickPlayersToStartStory( validPlayers, numValidPlayers, minPlayers, maxPlayers, storyId, storyCount )
+	-- local category = "REQTRANS"	
+	-- if( numValidPlayers > 0 ) then
+		-- if( numValidPlayers < maxPlayers ) then
+			-- maxPlayers = numValidPlayers
+		-- end
+		-- if( numValidPlayers < minPlayers ) then
+			-- minPlayers = numValidPlayers
+		-- end
+		-- local randPlayersToUse = Engine.GetRandomNumber( minPlayers, maxPlayers )
+		-- local invalidTeams = {}
+		-- local invalidTeamCount = 0
+		-- for randCount = 1, randPlayersToUse do
+			-- local exitLoop = false
+			-- local failCount = 0
+			-- while exitLoop == false do
+				-- local randPlayer = Engine.GetRandomNumber( 1, numValidPlayers )
+				-- local playerId = validPlayers[ randPlayer ]
+				-- if( playerId > 0 ) then
+					-- local teamId = Engine.GetTeamIdFromPlayerId( playerId )
+					-- if( IsValidTeamLMTR( teamId, invalidTeams, invalidTeamCount ) == true ) then
+						-- if( WouldPlayerEvenLeaveClub( teamId, playerId ) == true ) then
+							-- local reason = GetReasonForPlayerUpset( teamId, playerId )
+							-- if( reason > 0 ) then
+								-- if( IsPlayerInvolvedInSaga( playerId ) == false ) then
+									-- StartStory_LMTR( teamId, playerId, category, storyId .. storyCount )
+									-- invalidTeamCount = invalidTeamCount + 1
+									-- invalidTeams[ invalidTeamCount ] = teamId
+									-- storyCount = storyCount + 1
+									-- validPlayers[ randPlayer ] = 0
+									-- exitLoop = true
+								-- end --if( playerId ~= Engine.GetPlayAsPlayerID() ) then
+							-- end
+						-- end --if( WouldPlayerEvenLeaveClub( teamId, playerId ) == true ) then
+					-- end --if( IsInvalidTeamLMTR( teamId, invalidTeams, invalidTeamCount ) == false ) then
+				-- end --if( playerId > 0 ) then
+				-- failCount = failCount + 1
+				-- if( failCount > 3 ) then
+					-- exitLoop = true
+				-- end --failCount = failCount + 1
+			-- end --while exitLoop == false do
+		-- end --for randCount = 1, maxPlayers do				
+	-- end --if( numValidPlayers > 0 )
+-- end
+
+-- function LMTRDynamicEvent( eventId, storyId )
+	-- if( string.find( eventId, "LMTR" ) ~= nil ) then
+		-- if( Engine.GetNumStoriesByCategory( "REQTRANS" ) > 0 ) then
+			-- if( eventId == "LMTR_1" ) then
+				-- LMTR_Stage_1( storyId )
+			-- elseif( eventId == "LMTR_USR1" ) then
+				-- LMTR_Stage_2( storyId )				
+			-- elseif( eventId == "LMTR_USR_News" ) then
+				-- LMTR_Stage_3( storyId )
+			-- elseif( eventId == "LMTR_USR_BOARD" ) then
+				-- local randChance = RollPercentageDice( Tuning.LMTR.chanceOfLeaving_CPU ) -- User Chance of staying or leaving ( 1, 2 )
+				-- LMTR_Stage_4( storyId, randChance )
+			-- elseif( eventId == "LMTR2_USER_CLUBS" ) then
+				-- LMTR_Stage_5( storyId )
+			-- elseif( eventId == "LMTR2_USER_CONFUSED" ) then
+				-- LMTR_Stage_6( storyId )
+			-- elseif( eventId == "LMTR_2" ) then
+				-- local randChance = RollPercentageDice( Tuning.LMTR.chanceOfLeaving_USER ) -- CPU Chance of staying or leaving ( 1, 2 )
+				-- LMTR_Stage_7( storyId, randChance )
+			-- elseif( eventId == "LMTR2_CPU_TRANSFER" ) then
+				-- LMTR_Stage_8( storyId )
+			-- elseif( eventId == "LMTR2_USR_TFR" ) then
+				-- LMTR_Stage_9( storyId )
+			-- elseif( eventId == "LMTR3_USR_NOTTRANS" ) then
+				-- deadlineDayPassedLMTR( 0 )
+			-- end --if( eventId == "LMTR_1" ) then
+		-- end -- if( numStories > 0 ) then
+	-- end --if( string.find( eventId, "LMTR" ) ~= nil ) then
+-- end
+
+-- function LMTR_Stage_1( storyId )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- Engine.SetStoryMoraleOverride( currentStory, 5 ) 	-- 5 Player has demanded to leave
+		-- Engine.SetStringTeam( storyTeam, 1 )
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+		-- TriggerNews( "news_title_LMTR_TransferRequested_", 1, 4, "news_body_LMTR_TransferRequested_", 1, 4, currentStory )
+		-- Engine.AddDateEvent( "LMTR_2", Tuning.LMTR.boardDecisionDelay_CPU, storyId )
+		-- Engine.SetStoryStage( currentStory, 1 )
+	-- end
+-- end
+
+-- function LMTR_Stage_2( storyId )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- if( WouldPlayerEvenLeaveClub( storyTeam, storyPlayer ) == true ) then
+			-- Engine.SetStoryContractOverride( currentStory, 3 )	-- 3 is not resigning
+			-- Engine.SetStoryAllowLoan( currentStory, false )
+			-- Engine.SetStoryMoraleOverride( currentStory, 5 ) 	-- 5 Player has demanded to leave
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_LMTR_TransferRequested_", 1, 4, "PlayerFeedbackPopUp_LMTR_TransferRequested_subject", currentStory )
+			-- Engine.SetStoryStage( currentStory, 1 )
+			-- Engine.TriggerStoryPowHook( "LMTR_TRANSREQ", storyTeam, Engine.GetPlayerName( storyPlayer ) )
+			-- Engine.AddDateEvent( "LMTR_USR_News", Tuning.LMTR.newsDelay_USER, storyId )
+			-- Engine.AddDateEvent( "LMTR_USR_BOARD", Tuning.LMTR.boardDecisionDelay_USER, storyId )
+		-- else
+			-- Engine.EndStoryId( storyId )
+		-- end
+	-- end --if( Engine.GetNumStoriesWithId( storyId5 ) > 0 ) then
+-- end
+
+-- function LMTR_Stage_3( storyId )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- local randOffer = Engine.GetRandomNumber( 1, 2 )
+		-- local actualOffers, offer1, offer2 = GetSuitableTeamsForPlayer( storyTeam, storyPlayer, 2, false )
+		-- Engine.SetStringTeam( storyTeam, 1 )
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "MONEY" )
+		-- TriggerNews( "news_title_LMTR_TransferRequested_", 1, 4, "news_body_LMTR_TransferRequested_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 1 )
+		-- if( actualOffers > 0 ) then
+			-- Engine.CreateOfferForPlayer( storyTeam, storyPlayer, offer1 )
+		-- end
+		-- if( actualOffers > 1 ) then
+			-- Engine.CreateOfferForPlayer( storyTeam, storyPlayer, offer2 )
+		-- end
+		-- Engine.AddDateEvent( "LMTR2_USER_CLUBS", Tuning.LMTR.newsClubsDelay_USER, storyId )
+	-- end --if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+-- end
+
+-- function LMTR_Stage_4( storyId, randChance )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- local userName = Engine.GetUsername()
+		-- local actualOffers, offer1, offer2, offer3 = GetSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, false )
+		-- if( randChance == true ) then
+			-- if( actualOffers == 3 ) then
+				-- Engine.CreateOfferForPlayer( storyTeam, storyPlayer, offer3 )
+			-- end
+		-- end
+		-- Engine.SetStringTeam( storyTeam, 1 )
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- if( randChance == true ) then
+			-- TriggerEmail( false, userName, "CM_Inbox_Sender_Board", "CM_Email_Subject_LMTR_YourCall_", 1, 4, "CM_Email_Body_LMTR_YourCall_", 1, 4 )
+			-- Engine.SetStoryVariable( currentStory, "YourCall" )
+		-- else
+			-- TriggerEmail( false, userName, "CM_Inbox_Sender_Board", "CM_Email_Subject_LMTR_BoardSells_", 1, 4, "CM_Email_Body_LMTR_BoardSells_", 1, 4 )
+			-- Engine.SetStoryVariable( currentStory, "Sold" )
+			-- Engine.SetStoryContractOverride( currentStory, 4 ) -- 4 Listed by the Board
+			-- Engine.ForceUserPlayerOntoTransferList( storyPlayer )
+			-- Engine.SetStorySellPlayersOverride( currentStory, 1 )	-- 1 is board selling
+			-- Engine.TriggerStoryPowHook( "LMTR_BOARDLISTED", storyTeam, Engine.GetPlayerName( storyPlayer ) )
+		-- end	
+		-- Engine.SetStoryStage( currentStory, 2 )
+	-- end --if( Engine.GetNumStoriesWithId( storyId5 ) > 0 ) then
+-- end
+
+-- function LMTR_Stage_5( storyId )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- local actualOffers, offer1, offer2, offer3 = GetSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, true )
+		-- local confused = RollPercentageDice( Tuning.LMTR.chanceNewsConfused_USER )
+		-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+		-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+		-- TriggerNews( "news_title_LMTR_Clubs_", 1, 4, "news_body_LMTR_Clubs_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 3 )
+		-- if( confused == true ) then
+			-- Engine.AddDateEvent( "LMTR2_USER_CONFUSED", Tuning.LMTR.newsConfusedDelay_USER, storyId )
+		-- end
+	-- end
+-- end
+
+-- function LMTR_Stage_6( storyId )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- Engine.SetStringTeams( storyTeam, storyTeam )
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- TriggerNews( "news_title_LMTR_Result_Confused_", 1, 4, "news_body_LMTR_Result_Confused_", 1, 4, currentStory )
+		-- Engine.SetStoryStage( currentStory, 4 )
+	-- end --if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+-- end
+
+-- function LMTR_Stage_7( storyId, randChance )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- local numDays = Engine.GetNumDaysRemainingInTransferWindow()
+		-- if( numDays <= 1 ) then
+			-- numDays = 2
+		-- end
+		-- local randDay = Engine.GetRandomNumber( Tuning.LMTR.minBoardTransferDelay_CPU, ( numDays - 1 ) ) -- Delay for CPU Teams board decision ( 1 - 5 Days )
+		-- local confused = RollPercentageDice( Tuning.LMTR.chanceNewsConfused_CPU ) -- 25% Chance the News Is Confused ( 1 - 4 )
+		-- Engine.SetStringTeams( storyTeam, storyTeam )
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- Engine.SetNewsImportance( "EXCLUSIVE" )
+		-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+		-- if( randChance == true ) then --Stay
+			-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+			-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+			-- if( confused == true ) then
+				-- TriggerNews( "news_title_LMTR_Result_Confused_", 1, 4, "news_body_LMTR_Result_Confused_", 1, 4, currentStory )
+				-- Engine.SetStoryStage( currentStory, 4 )
+			-- else
+				-- TriggerNews( "news_title_LMTR_Result_Stay_", 1, 4, "news_body_LMTR_Result_Stay_", 1, 4, currentStory )
+				-- Engine.SetStoryStage( currentStory, 5 )
+			-- end
+			-- Engine.RemoveCPUPlayerFromTransferList( storyTeam, storyPlayer )
+			-- Engine.EndStoryId( storyId )
+		-- else --Leave
+			-- Engine.SetNewsForegroundImage( "LEFT", "CLUB_CREST", storyTeam )
+			-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+			-- if( confused == true ) then
+				-- TriggerNews( "news_title_LMTR_Result_Confused_", 1, 4, "news_body_LMTR_Result_Confused_", 1, 4, currentStory )
+				-- Engine.SetStoryStage( currentStory, 4 )
+			-- else
+				-- TriggerNews( "news_title_LMTR_Result_Leave_", 1, 4, "news_body_LMTR_Result_Leave_", 1, 4, currentStory )
+				-- Engine.SetStoryStage( currentStory, 6 )
+			-- end
+			-- Engine.ForceCPUPlayerOntoTransferList( storyTeam, storyPlayer )
+			-- Engine.AddDateEvent( "LMTR2_CPU_TRANSFER", randDay, storyId )
+		-- end
+		-- Engine.SetStoryStage( currentStory, 1 )
+	-- end --if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+-- end
+
+-- function LMTR_Stage_8( storyId )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- if( storyTeam ~= Engine.GetUserTeam() ) then
+			-- if( Engine.IsPlayerInvolvedInStoryId( storyPlayer, storyId ) == true )then
+				-- Engine.SetStoryStage( currentStory, 2 )
+				-- Engine.SetStoryAllowTransferNews( currentStory, false )
+				-- ForceSafeTransfer( storyTeam, storyPlayer )
+			-- end
+		-- end
+	-- end
+-- end
+
+-- function LMTR_Stage_9( storyId )
+	-- if( Engine.GetNumStoriesWithId( storyId ) > 0 ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- if( Engine.GetStoryStage( currentStory ) >= 2 ) then
+			-- local storyTeam = Engine.GetStoryTeam( currentStory )
+			-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+			-- Engine.SetStringTeams( storyTeam, storyTeam )
+			-- Engine.SetStringPlayer( storyPlayer, 1 )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+			-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+			-- TriggerNews( "news_title_LMTR_Result_Leave_", 1, 4, "news_body_LMTR_Result_Leave_", 1, 4, currentStory )
+			-- Engine.SetStoryStage( currentStory, 6 )
+		-- end
+	-- end
+-- end
+
+-- function LMTRTransferListed( teamId, playerId, leagueId, marketValue, currency )
+	-- local storyId = "LMTR_USR1"
+	-- local numStories = Engine.GetNumStoriesWithId( storyId )
+	-- if( numStories > 0 ) then
+		-- if( Engine.IsPlayerInvolvedInStoryId( playerId, storyId ) == true )then
+			-- local currentStory = Engine.GetStoryById( storyId )
+			-- --Engine.ForceUserPlayerOntoTransferList( playerId )
+			-- Engine.SetStorySellPlayersOverride( currentStory, 2 )	-- Transfer Request Accepted
+			-- Engine.AddDateEvent( "LMTR2_USR_TFR", 1, storyId )
+			-- Engine.TriggerStoryPowHook( "LMTR_LISTED", teamId, Engine.GetPlayerName( playerId ) )
+		-- end
+	-- end --if( numStories > 0 ) then
+-- end
+
+-- function LastMinTransferComplete( buyingTeam, sellingTeam, playerId, transfer, contract, price, wage, playerValue )
+	-- local category = "REQTRANS"
+	-- local numStories = Engine.GetNumStoriesByCategory( category )
+	-- if( Engine.IsPlayerInvolvedInStoryCategory( playerId, category ) == true ) then
+		-- for storyCount = numStories, 1,  -1 do -- go backwards in loop
+			-- local currentStory = Engine.GetStoryByCategoryAndIndex( category, storyCount )
+			-- local storyId = Engine.GetStoryId( currentStory )
+			-- if( Engine.IsPlayerInvolvedInStoryId( playerId, storyId ) == true )then
+				-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+				-- local storyTeam = Engine.GetStoryTeam( currentStory )
+				-- local boardDecision = Engine.GetStoryVariable( currentStory )
+				-- Engine.SetStringTeams( sellingTeam, buyingTeam )
+				-- Engine.SetStringPlayer( storyPlayer, 1 )
+				-- Engine.SetStringCurrency( price )
+				-- Engine.SetNewsImportance( "EXCLUSIVE" )
+				-- Engine.SetNewsForegroundImage( "LEFT", "CLUB_CREST", sellingTeam )
+				-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+				-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", buyingTeam )
+				-- Engine.SetNewsBackgroundImage( "MONEY" )
+				-- if( boardDecision == "Sold" ) then
+					-- TriggerNews( "news_title_LMTR_Result_BoardSold_", 1, 4, "news_body_LMTR_Result_BoardSold_", 1, 4, currentStory )
+					-- Engine.SetStoryStage( currentStory, 7 )
+				-- else
+					-- TriggerNews( "news_title_LMTR_Result_TransferComplete_", 1, 4, "news_body_LMTR_Result_TransferComplete_", 1, 4, currentStory )
+					-- Engine.SetStoryStage( currentStory, 8 )
+				-- end
+				-- if( storyTeam ~= Engine.GetUserTeam() ) then
+					-- Engine.RemoveCPUPlayerFromTransferList( storyTeam, storyPlayer )
+				-- end
+				-- Engine.TriggerStoryPowHook( "LMTR_LEFTCLUB", sellingTeam, Engine.GetPlayerName( storyPlayer ), buyingTeam )
+				-- Engine.KillStoryAfterMatch( currentStory )
+			-- end --if( Engine.IsPlayerInvolvedInStoryId( playerId, storyId1 ) == true )then
+		-- end --for storyCount = numStories, 1,  -1 do -- go backwards in loop
+	-- end --if( numStories > 0 ) then
+-- end
+
+-- function LMTREndOfTransferWindow( numDays )
+	-- if( numDays == 1 ) then
+		-- local category = "REQTRANS"
+		-- local numStories = Engine.GetNumStoriesByCategory( category )
+		-- if( numStories > 0 ) then
+			-- for storyCount = numStories, 1, -1 do
+				-- local currentStory = Engine.GetStoryByCategoryAndIndex( category, storyCount )
+				-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+				-- local storyId = Engine.GetStoryId( currentStory )
+				-- if( Engine.IsPlayerInvolvedInStoryId( storyPlayer, storyId ) == true )then
+					-- local storyTeam = Engine.GetStoryTeam( currentStory )
+					-- local boardDecision = Engine.GetStoryVariable( currentStory )
+					-- Engine.SetStringTeam( storyTeam, 1 )
+					-- Engine.SetStringPlayer( storyPlayer, 1 )
+					-- if( boardDecision == "Sold" ) then
+						-- Engine.SetStoryAllowTransferNews( currentStory, false )
+						-- ForceSafeTransfer( storyTeam, storyPlayer )
+					-- else
+						-- if( storyTeam ~= Engine.GetUserTeam() ) then
+							-- Engine.EndStoryId( storyId )
+						-- else
+							-- Engine.AddDateEvent( "LMTR3_USR_NOTTRANS", 2, storyId )
+						-- end
+					-- end
+				-- end --if( Engine.IsPlayerInvolvedInStoryId( storyPlayer, storyId ) == true )then
+			-- end
+		-- end --if( numStories > 0 ) then
+	-- end --if( numDays == 0 ) then
+-- end
+
+-- function ExamineTeamForLmtrPlayer( teamId, validPlayers, numValidPlayers )
+	-- local topNumPlayers = Tuning.LMTR.topNumPlayers
+	-- local numPlayersOnTeam = Engine.GetNumPlayers( teamId )
+	-- if( numPlayersOnTeam >= 23 ) then
+		-- teamId = Engine.StackRankTeamByOverall( teamId )	
+		-- local playerId = 0
+		-- local reason = 0
+		-- for playerCount = 1, topNumPlayers do
+			-- playerId = Engine.GetPlayer( teamId, playerCount )
+			-- Engine.ConditionalLuaAssert(teamId>0, "ExamineTeamForLmtrPlayer team:"..teamId)
+			-- reason = GetReasonForPlayerUpset( teamId, playerId )
+			-- if( reason > 0 ) then
+				-- numValidPlayers = numValidPlayers + 1
+				-- validPlayers[ numValidPlayers ] = playerId
+			-- end
+		-- end --for playerCount = 1, topNumPlayers do
+	-- end --if( numPlayersOnTeam >= 23 ) then
+	-- return numValidPlayers
+-- end
+
+-- function AddMatchingLastMinuteTransferToList( teamId, numPlayers, validPlayers ) -- Add player to index
+	-- local addedPlayers = 1
+	-- for playerCount = 1, numPlayers do
+		-- local currPlayer = Engine.GetPlayer( teamId, playerCount )
+		-- Engine.ConditionalLuaAssert(teamId>0, "AddMatchingLastMinuteTransferToList team:"..teamId)
+		-- local reason = GetReasonForPlayerUpset( teamId, currPlayer )
+		-- if( reason > 0 ) then
+			-- validPlayers[ addedPlayers ] = currPlayer
+			-- addedPlayers = addedPlayers + 1
+		-- end
+	-- end --for playerCount = 1, numPlayers do
+	-- return addedPlayers	- 1	--Cos of lua index from 0
+-- end
+
+-- function deadlineDayPassedLMTR( hoursLeft )
+	-- if( hoursLeft == 0 ) then
+		-- local storyId = "LMTR_USR1"
+		-- local numStories = Engine.GetNumStoriesWithId( storyId )
+		-- if( numStories > 0 ) then
+			-- local currentStory = Engine.GetStoryById( storyId )
+			-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+			-- if( Engine.IsPlayerInvolvedInStoryId( storyPlayer, storyId ) == true )then
+				-- local stage = Engine.GetStoryStage( currentStory )
+				-- if( stage < 7 ) then
+					-- local storyTeam = Engine.GetStoryTeam( currentStory )
+					-- Engine.SetStringTeam( storyTeam, 1 )
+					-- Engine.SetStringPlayer( storyPlayer, 1 )
+					-- Engine.SetNewsImportance( "EXCLUSIVE" )
+					-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+					-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+					-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+					-- TriggerNews( "news_title_LMTR_Result_Stay_", 1, 4, "news_body_LMTR_Result_Stay_", 1, 4, currentStory )
+					-- Engine.SetStoryContractOverride( currentStory, -1 )
+					-- Engine.TriggerStoryPowHook( "LMTR_STAYING", teamId, Engine.GetPlayerName( storyPlayer ) )
+					-- Engine.SetStoryStage( currentStory, 5 )
+					-- Engine.KillStoryAfterMatch( currentStory )
+				-- end
+			-- end --if( Engine.IsPlayerInvolvedInStoryId( storyPlayer, storyId ) == true )then
+		-- end --if( numStories > 0 ) then
+	-- end --if( daysLeft == 0 ) then
+-- end
+
+-- function PostSaleAudio_LMTR( playerId )
+	-- local storyId = "LMTR_USR1"
+	-- if( Engine.IsStoryIDActive( storyId ) == true ) then
+		-- local teamId = Engine.GetUserTeam()
+		-- local category = "REQTRANS"
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local stage = Engine.GetStoryStage( currentStory )
+		-- Engine.EndAllStoriesForPlayer( playerId )
+		-- if( Engine.MarkPlayerForStory( teamId, playerId, category, storyId ) == true ) then
+			-- local currentStory1 = Engine.GetStoryById( storyId )
+			-- Engine.SetStoryStage( currentStory1, stage )
+			-- Engine.KillStoryAfterMatch( currentStory1 )
+		-- end
+	-- end
+-- end

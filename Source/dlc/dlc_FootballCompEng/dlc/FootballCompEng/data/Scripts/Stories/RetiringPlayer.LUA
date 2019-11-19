@@ -1,0 +1,237 @@
+-- IMPORTANT NOTE
+--  Retiring player feature currently removed in its entirety due to incompatibility with
+--  precontracts of the transfer system added for FIFA18.
+---------------------------------------------------------------------------------------------
+
+-- function ExamineFor_RetiringPlayer()
+	-- local userTeam = Engine.GetUserTeam()
+	-- userTeam = Engine.StackRankTeamByAge( userTeam )
+	-- local numPlayersOnTeam = Engine.GetNumPlayers( userTeam )
+	-- if( numPlayersOnTeam >= Tuning.RETIRE.minPlayersOnTeamToStartStory ) then
+		-- local maxPlayersToCheck = Tuning.RETIRE.maxPlayersToCheck
+		-- local currentPlayer = 0
+		-- local playerIsInOnLoan = false
+		-- local playAsPlayerId = -1
+		-- for playerCount = 1, maxPlayersToCheck do
+			-- currentPlayer = Engine.GetPlayer( userTeam, playerCount )
+			-- playerIsInOnLoan = Engine.IsPlayerInOnLoan( userTeam, currentPlayer )
+			-- local playerTier = Engine.GetPlayerTier( userTeam, currentPlayer )
+			-- playAsPlayerId = Engine.GetPlayAsPlayerID()
+			-- if( playerTier < 3 and playerIsInOnLoan == false and playAsPlayerId ~= currentPlayer ) then
+				-- if( CouldPlayerRetire( userTeam, currentPlayer ) == true ) then
+					-- StartStory_RetiringPlayer( userTeam, currentPlayer )
+					-- break
+				-- end -- end if( CouldPlayerRetire( userTeam, currrentPlayer ) == true ) then
+			-- end --if( playerIsInOnLoan == false ) then
+		-- end -- for playerCount = 0, playerCount < maxPlayersToCheck do
+	-- end -- if( numPlayersOnTeam > 25 ) then
+-- end
+
+-- function StartStory_RetiringPlayer( teamId, playerId )
+	-- local category = "RETIRE"
+	-- local storyId = "POTRET"
+	-- if( Engine.MarkPlayerForStory( teamId, playerId, category, storyId ) == true ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- Engine.SetStoryPriority( currentStory, Tuning.RETIRE.storyPriority )
+		-- Engine.SetStoryAllowTransfers( currentStory, false )
+		-- Engine.ClearRetirementFlag( playerId )
+		-- local numDaysAfter = Engine.GetRandomNumber( Tuning.RETIRE.stage1_Delay_Low, Tuning.RETIRE.stage1_Delay_High )
+		-- Engine.AddDateEvent( "RET", numDaysAfter, storyId )
+		-- Engine.SetStorySellPlayersOverride( currentStory, -1 ) -- Clearing
+	-- end -- if( Engine.MarkPlayerForStory( teamId, playerId, category, storyId ) == true ) then
+-- end
+
+-- function CouldPlayerRetire( teamId, currentPlayer )
+	-- local playerCouldRetire = false;
+	-- local percentage = Engine.GetPlayerRetirementChance( teamId, currentPlayer )	
+	-- if( percentage == 100 ) then
+		-- playerCouldRetire = false		-- Not Could but Should		
+	-- else
+		-- local randno = Engine.GetRandomNumber( 0, 100 )
+		-- -- Uncomment the following line to force a retirement
+		-- -- randno = 0
+		-- if( randno < percentage ) then		-- if the randno number falls between 0 and random value
+			-- playerCouldRetire = true
+		-- end -- if( randno < percentage ) then
+	-- end -- if( percentage == 100 ) then
+	-- return playerCouldRetire
+-- end
+
+-- -- Post user game
+-- function ExamineForRetiringPlayer( matchResult, gametype )
+	-- if( gametype ~= "FRIENDLY" ) then
+		-- local storyId = "POTRET"
+		-- local storyActive = Engine.IsStoryIDActive( storyId )
+		-- if( storyActive == true ) then
+			-- local currentStory = Engine.GetStoryById( storyId )
+			-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+			-- local momPlayer = Engine.GetManOfTheMatch( matchResult )
+			-- if( storyPlayer == momPlayer ) then
+				-- local userTeam = Engine.GetUserTeam()
+				-- local homeTeam, awayTeam = Engine.GetMatchResultTeamIds( matchResult )
+				-- if( userTeam == homeTeam ) then
+					-- Engine.SetStringTeams( homeTeam, awayTeam )
+				-- else
+					-- Engine.SetStringTeams( awayTeam, homeTeam )
+				-- end					
+				-- Engine.SetStringPlayer( storyPlayer )
+				-- Engine.SetNewsImportance( "EXCLUSIVE" )
+				-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+				-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+				-- TriggerNews( "News_Title_PotentialRetirement_MoM_", 1, 4, "News_Item_PotentialRetirement_MoM_", 1, 5, currentStory )
+				-- Engine.SetStoryStage( currentStory, 1 )
+			-- end --if( storyPlayer == momPlayer ) then				
+		-- end -- if( storyActive == true ) then
+	-- end -- if( gametype ~= "FRIENDLY" ) then
+-- end
+
+-- function RetiringPlayerInjury( teamId, playerId, severity, returnDate )
+	-- local storyId = "POTRET"
+	-- local storyActive = Engine.IsStoryIDActive( storyId )
+	-- if( storyActive == true ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- if( storyPlayer == playerId ) then
+			-- if( Engine.GetInjuryDuration( teamId, playerId ) >= Tuning.RETIRE.injuryDuration ) then					
+				-- Engine.AddDateEvent( "Ret_Inj", 1, storyId )
+				-- Engine.AddDateEvent( storyId, Tuning.RETIRE.injuryDecisionDelay, storyId )
+			-- end --if( Engine.GetInjuryDuration( teamId, playerId ) >= 25 ) then
+		-- end -- if( storyPlayer == playerId ) then
+	-- end --if( storyActive == true ) then
+-- end
+
+-- function RetiringPlayerAdvanceInCup( numAdvancingTeams )
+	-- if( numAdvancingTeams == 4 ) then -- after the Quarters
+		-- local storyId = "POTRET"
+		-- local storyActive = Engine.IsStoryIDActive( storyId )
+		-- if( storyActive == true ) then
+			-- local currentStory = Engine.GetStoryById( storyId )
+			-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+			-- local storyTeam = Engine.GetStoryTeam( currentStory )
+			-- local playedInLastGame = Engine.DidPlayInLastGame( storyTeam, storyPlayer )
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- if( playedInLastGame == true ) then 					
+				-- Engine.SetNewsImportance( "EXCLUSIVE" )
+				-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+				-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+				-- TriggerNews( "News_Title_PotentialRetirement_ReachingNextRound_", 1, 4, "News_Item_PotentialRetirement_ReachingNextRound_", 1, 4, currentStory )
+				-- Engine.SetStoryStage( currentStory, 2 )
+			-- else
+				-- if( Engine.IsInjured( storyTeam, storyPlayer ) == false ) then					
+					-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_PotentialRetirement_ReachingNextRound_NotFielded_", 1, 4, "PlayerFeedbackPopUp_PotentialRetirement_ReachingNextRound_NotFielded_subject", currentStory, true )
+				-- end
+			-- end -- if( playedInLastGame == true ) then 
+		-- end --if( storyActive == true ) then
+	-- end --if( numAdvancingTeams == 8 ) then
+-- end
+
+-- function RetiringDynamicEvent( eventId, linkId )
+	-- local storyId = "POTRET"	
+	-- if( linkId == storyId ) then	
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- if( eventId == storyId ) then
+			-- local chanceOfRetirement = Tuning.RETIRE.chanceOfRetirementInjury
+			-- -- Uncomment following line to ensure retirement
+			-- --chanceOfRetirement = 100
+			-- local randChance = Engine.GetRandomNumber( 0, 100 )
+			-- if( randChance < chanceOfRetirement ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_PotentialRetirement_SufferedSevereInjury_Retires_", 1, 4, "PlayerFeedbackPopUp_PotentialRetirement_SufferedSevereInjury_subject", currentStory )
+				-- Engine.AddDateEvent( "PotRet_InjRet", 1, storyId )
+			-- else
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_PotentialRetirement_SufferedSevereInjury_NotRetiring_", 1, 4, "PlayerFeedbackPopUp_PotentialRetirement_SufferedSevereInjury_subject", currentStory, true )
+				-- Engine.SetStoryContractOverride( currentStory, -1 )
+				-- Engine.AddDateEvent( "PotRet_InjStay", 1, storyId )
+			-- end --if( randChance < chanceOfRetirement ) then
+		-- elseif( eventId == "PotRet_InjRet" ) then
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+			-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+			-- TriggerNews( "News_Title_PotentialRetirement_SufferedSevereInjury_Retires_", 1, 4, "News_Item_PotentialRetirement_SufferedSevereInjury_Retires_", 1, 4, currentStory ) -- Retires
+			-- Engine.RetirePlayer( storyTeam, storyPlayer )
+			-- Engine.SetStoryStage( currentStory, 3 )
+		-- elseif( eventId == "PotRet_InjStay" ) then
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+			-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+			-- TriggerNews( "News_Title_PotentialRetirement_SufferedSevereInjury_NoRetirement_", 1, 4, "News_Item_PotentialRetirement_SufferedSevereInjury_NoRetirement_", 1, 4, currentStory )
+			-- Engine.SetStoryStage( currentStory, 4 )
+		-- elseif( eventId == "PotRet_Ret" ) then
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+			-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+			-- TriggerNews( "CM_News_Title_PlayerAnnouncingRetirement_Retires_", 1, 4, "CM_News_Item_PlayerAnnouncingRetirement_Retires_", 1, 4, currentStory ) --Retires+
+			-- Engine.SetStoryStage( currentStory, 5 )
+		-- elseif( eventId == "PotRet_Stay" ) then
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+			-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+			-- TriggerNews( "CM_News_Title_PlayerAnnouncingRetirement_NotRetiring_", 1, 4, "CM_News_Item_PlayerAnnouncingRetirement_NotRetiring_", 1, 4, currentStory )
+			-- Engine.SetStoryStage( currentStory, 6 )
+		-- elseif( eventId == "PlayerRet" ) then
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+			-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+			-- TriggerNews( "News_Title_PlayerMightRetire_", 1, 4, "News_Body_PlayerMightRetire_", 1, 4, currentStory )
+		-- elseif( eventId == "RET" ) then
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_PotentialRetirement_PlayerMightRetire_", 1, 4, "PlayerFeedbackPopUp_PotentialRetirement_PlayerMightRetire_subject", currentStory )
+			-- Engine.RemoveUserPlayerFromTransferList( storyPlayer )
+			-- Engine.SetStoryContractOverride( currentStory, 0 )	-- 0 is think of retiring
+			-- Engine.SetStorySellPlayersOverride( currentStory, 0 )	-- 0 is think of retiring
+			-- Engine.SetStoryMoraleOverride( currentStory, 0 ) 	-- 0 is think of retiring
+			-- Engine.AddDateEvent( "PlayerRet", 1, storyId )
+		-- elseif( eventId == "Ret_Inj" ) then
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+			-- Engine.SetNewsBackgroundImage( "PRESS_CONFERENCE" )
+			-- TriggerNews( "News_Title_PotentialRetirement_SufferedSevereInjury_", 1, 4, "News_Item_PotentialRetirement_SufferedSevereInjury_", 1, 4, currentStory )
+			-- Engine.SetStoryStage( currentStory, 7 )
+		-- end--if( eventId == storyId ) then
+	-- end --if( linkId == storyId ) then	
+-- end
+
+-- function RetiringPlayerLastLeagueGame( numDays )
+	-- if( numDays == Tuning.RETIRE.numDaysBeforeLastMatch ) then
+		-- local storyId = "POTRET"
+		-- local storyActive = Engine.IsStoryIDActive( storyId )
+		-- if( storyActive == true ) then
+			-- local currentStory = Engine.GetStoryById( storyId )
+			-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+			-- local storyTeam = Engine.GetStoryTeam( currentStory )
+			-- local chanceOfRetirement = Tuning.RETIRE.chanceOfRetirementLastGame
+			-- local randChance = Engine.GetRandomNumber( 0, 100 )
+			-- Engine.SetStringPlayer( storyPlayer )
+			-- Engine.SetStringTeam( storyTeam )
+			-- if( randChance < chanceOfRetirement ) then
+				-- if( IsAbleToPlay( storyTeam, storyPlayer ) == true ) then
+					-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_PlayerAnnouncingRetirement_Retires_", 1, 4, "PlayerFeedbackPopUp_PlayerAnnouncingRetirement_Retires_subject", currentStory, true )
+				-- end
+				-- Engine.SetStoryMoraleOverride( currentStory, 1 ) 	-- 1 is retiring
+				-- Engine.SetStoryContractOverride( currentStory, 1 )	-- 1 is retiring
+				-- Engine.AddDateEvent( "PotRet_Ret", 1, storyId )
+				-- Engine.SetRetirementFlag( storyPlayer )
+				-- Engine.UpdateStoryActivity( currentStory )
+			-- else --if( randChance < chanceOfRetirement ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_PlayerAnnouncingRetirement_NotRetiring_", 1, 4, "PlayerFeedbackPopUp_PlayerAnnouncingRetirement_NotRetiring_subject", currentStory )
+				-- Engine.SetStoryMoraleOverride( currentStory, -1 ) 	-- Clearing
+				-- Engine.SetStoryContractOverride( currentStory, -1 )	-- Clearing
+				-- Engine.SetStorySellPlayersOverride( currentStory, -1 )	-- Clearing
+				-- Engine.EndStoryId( storyId )
+			-- end --if( randChance < chanceOfRetirement ) then
+		-- end --if( storyActive == true ) then
+	-- end --if( numDays == 2 ) then
+-- end

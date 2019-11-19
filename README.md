@@ -6,7 +6,7 @@
 - Top scorers and assisters are more realistic
 
 # Team Selection
-- The AI will always pick their best 11 players, rotating only for Friendlies
+- The AI will always pick their best 11 players, rotating only for Friendlies and Cup matches
 
 ## Finances
 

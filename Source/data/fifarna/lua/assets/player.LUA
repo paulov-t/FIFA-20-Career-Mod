@@ -256,6 +256,9 @@ function doPlayerInjection(dir, player)
 							elseif varName == "Hair" then
 								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
 								player.Hair = tonumber(varValue)	
+							elseif varName == "HairStyle" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.HairStyle = tonumber(varValue)	
 							elseif varName == "ShoeType" then
 								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
 								player.ShoeType = tonumber(varValue)	
@@ -283,12 +286,18 @@ function doPlayerInjection(dir, player)
 									player.HasTattooLowerBody = 1
 									player.TattooLeftLeg = tonumber(varValue)	
 								end
+							elseif varName == "TattooHead" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								if(player.TattooHead ~= 0) then
+									player.HasTattooHead = 1
+									player.TattooHead = tonumber(varValue)	
+								end
 							elseif varName == "HeadAssetId" then
 								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-								if(player.HeadAssetId ~= 0) then
+								--if(player.HeadAssetId ~= 0) then
 									player.HeadAssetId = tonumber(varValue)
-									player.HeadVariation = 0
-								end
+									--player.HeadVariation = 0
+								--end
 							elseif varName == "Head" then
 								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
 								if(player.Head ~= 0) then
@@ -296,15 +305,40 @@ function doPlayerInjection(dir, player)
 								end
 							elseif varName == "HeadClass" then
 								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
-								if(player.HeadClass ~= 0) then
+								--if(player.HeadClass ~= 0) then
 									player.HeadClass = tonumber(varValue)
-								end
+								--end
+							elseif varName == "HeadSkinType" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								--if(player.HeadClass ~= 0) then
+									player.HeadSkinType = tonumber(varValue)
+								--end
+							elseif varName == "FaceProxyHeadClass" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								--if(player.HeadClass ~= 0) then
+									player.FaceProxyHeadClass = tonumber(varValue)
+								--end
+							elseif varName == "FaceType" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								--if(player.HeadClass ~= 0) then
+									player.FaceType = tonumber(varValue)
+								--end
 							elseif varName == "BodyType" then
 								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
 								if(player.BodyType ~= 0) then
 									player.BodyType = tonumber(varValue)
 								end
+							elseif varName == "FaceGenSkinToneType" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.FaceGenSkinToneType = tonumber(varValue)
+							elseif varName == "IsCreatedPlayer" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.IsCreatedPlayer = tonumber(varValue)
+							elseif varName == "UseFaceTextureComposition" then
+								v2k4debugfile:write('->>>>> ->>>>> Attempting to set field ' .. varName .. ' to ' .. varValue .. '\n')
+								player.UseFaceTextureComposition = tonumber(varValue)
 							end
+							
 							
 							
 							varName = "";
@@ -316,6 +350,28 @@ function doPlayerInjection(dir, player)
 				end
 				
 			end
+			
+			
+			if (player.HeadClass == 0) then
+
+				local playerassetid = player.HeadAssetId
+
+				player.Head = playerassetid
+
+				--player.Eyebrow = 0
+				player.FaceType = playerassetid
+				
+				--player.FaceSideBurn = 0
+				--player.FacialHairColor = 0
+				--player.FacialHairType = 0
+				--player.HeadSkinType = 0
+				--player.HeadSkinToneType = 0
+
+				--player.Hair = playerassetid
+				--player.HairColor = 0
+				--player.UseFaceTextureComposition = 0
+			end
+			
 		end	
 	end
 end

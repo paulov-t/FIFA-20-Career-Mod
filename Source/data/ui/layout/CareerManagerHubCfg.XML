@@ -665,10 +665,8 @@
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_KITS_INJURY" DESTINATION="EnterInjuryList" BG_ICON="InjuryList_Small" PARAM="">
         <data ID="TITLE" TYPE="title" PARAM="CM_HUB_Injury_List" FORMAT="HS" />
       </subtile>
-	  <subtile SUBTILE_TYPE="TILE" NAME="PAM_KITS_EDIT_PLAYERS" DESTINATION="EnterEditAvatarManager" BG_ICON="EditPlayers_Small" PARAM="">
-      
-        <data ID="TITLE" TYPE="title" PARAM="CM_Settings_Edit_player_PAP" FORMAT="HS" />
-        <data ID="EDITLOCKED" TYPE="icon" PARAM="LOCKED" SHOW_IN_STATE="DISABLED" WIDTH="64" HEIGHT="64" X="18" Y="125" />
+	  <subtile SUBTILE_TYPE="TILE" NAME="EDIT_PLAYERS" DESTINATION="EnterEditAvatarPlayer" BG_ICON="EditPlayers_Small">    
+        <data ID="TITLE" TYPE="title" PARAM="CM_Settings_Edit_player_PAP" FORMAT="HS" />        
       </subtile>
     </tile>
   </panel>

@@ -1,0 +1,817 @@
+-- IMPORTANT NOTE
+--  Foreign player upset feature currently removed in its entirety as a design choice.
+--  The code here currently has incompatibilities with the transfer system added for FIFA18.
+---------------------------------------------------------------------------------------------
+
+-- function ExamineFor_UFP( months )
+	-- local category = "TRANSREQ"
+	-- local numStories = Engine.GetNumStoriesByCategory( category )
+	-- if( numStories == 0 ) then
+		-- local numDays = Engine.GetNumDaysUntilNextTransferWindow()
+		-- if( numDays <= Tuning.FOREIGN.numDays_Max and numDays >= Tuning.FOREIGN.numDays_Min ) then
+				-- Engine.AddDateEvent( "FOREIGN_DELAY", Tuning.FOREIGN.start_Delay )
+		-- end
+	-- end
+-- end
+
+-- function StartStory_UFP( teamId, playerId, category, storyId ) -- Get Reason and Triggerstory
+	-- if( Engine.MarkPlayerForStory( teamId, playerId, category, storyId ) == true ) then
+		-- local story = Engine.GetStoryById( storyId )
+		-- Engine.SetStoryPriority( currentStory, 3 )
+		-- Engine.SetNoDeathAtEOS( story )
+		-- local playerNationId = Engine.GetPlayerNationalityId( playerId )
+		-- local teamNationId = GetTeamNation( teamId )
+		-- local reason = Engine.GetReasonForLeavingAsString( teamNationId, playerNationId )
+		-- Engine.SetStoryAllowLoan( story, false )
+		-- Engine.SetStoryVariable( story, reason )
+		-- local category = "TRANSREQ"
+		-- local numStories = Engine.GetNumStoriesByCategory( category )
+		-- local numDaysAfter = Engine.GetRandomNumber( Tuning.FOREIGN.stage2_Delay_Low, Tuning.FOREIGN.stage2_Delay_High )
+		-- local randDay = Engine.GetRandomNumber( Tuning.FOREIGN.stage1_Delay_Low, Tuning.FOREIGN.stage1_Delay_High )
+		-- if( storyId == "FOREIGN-USR" ) then
+			-- ForeignUpsetStoryDynamicEvent1( "FOREIGN_1", storyId )
+		-- else
+			-- Engine.AddDateEvent( "FOREIGN_1", randDay, storyId )
+		-- end
+		-- Engine.AddDateEvent( "FOREIGN_2", numDaysAfter, storyId )
+	-- end
+-- end
+
+-- function LookForMatchingUserPlayer() -- Get User Players
+	-- local storyId = "FOREIGN-USR"
+	-- local category = "TRANSREQ"
+	-- local userTeam = Engine.GetUserTeam()
+	-- userTeam = Engine.StackRankTeamByOverall( userTeam )
+	-- local numPlayers = Engine.GetNumPlayers( userTeam )
+	-- local validPlayers = {}
+	-- local numValidPlayers = AddMatchingUserPlayerToList( numPlayers, validPlayers )
+	-- if( isFinal == false and IsLogging() == true ) then
+		-- for playerCount = 1, numValidPlayers do
+			-- Print( validPlayers[ playerCount ] )
+		-- end
+	-- end
+	-- local maxRandPlayers = Tuning.FOREIGN.maxRandPlayers
+	-- if( numValidPlayers > 0 ) then
+		-- if( numValidPlayers < maxRandPlayers ) then		
+			-- maxRandPlayers = numValidPlayers
+		-- end
+		-- SelectPlayerLoop( numValidPlayers, validPlayers, maxRandPlayers, category, storyId )
+	-- end
+-- end
+
+-- function LookForMatchingCPUPlayers( index ) -- Get CPU Players
+	-- local storyId = "FOREIGN" .. index
+	-- local category = "TRANSREQ" 
+	-- if( Engine.GetNumStoriesWithId( storyId ) == 0 ) then		
+		-- local numPlayers = MakePlayerQuery()
+		-- if( numPlayers > 0 ) then
+			-- local validPlayers = {}
+			-- local numValidPlayers = AddMatchingCPUPlayerToList( numPlayers, validPlayers )
+			-- if( numValidPlayers > 0 ) then
+				-- SelectPlayerLoop( numValidPlayers, validPlayers, numValidPlayers, category, storyId )
+			-- end
+		-- end --if( numPlayers > 0 ) then
+	-- end --if( Engine.GetNumStoriesWithId( storyId ) == 0 ) then
+-- end
+
+-- function SelectPlayerLoop( numValidPlayers, validPlayers, maxRand, category, storyId ) -- Select Player/s
+	-- if( numValidPlayers > 0 ) then 
+		-- local exitLoop = false			
+		-- local teamId = 0
+		-- local selectedPlayer = 0
+		-- local failCount = 0
+		-- while exitLoop == false do
+			-- local randPlayerChoice = Engine.GetRandomNumber( 1, maxRand )				
+			-- selectedPlayer = validPlayers[ randPlayerChoice ]
+			-- teamId = Engine.GetTeamIdFromPlayerId( selectedPlayer )
+			-- if( WouldPlayerEvenLeaveClub( teamId, selectedPlayer ) == true ) then
+				-- if( IsPlayerInvolvedInSaga( selectedPlayer ) == false ) then
+					-- exitLoop = StartStory_UFP( teamId, selectedPlayer, category, storyId )
+				-- end
+			-- end
+			-- failCount = failCount + 1
+			-- if( failCount > 2 ) then
+				-- exitLoop = true
+			-- end
+		-- end --while storyAdded == false do
+	-- end -- if( numValidPlayers ) then 
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent( eventId, storyId )
+	-- if( string.find( eventId, "FOREIGN" ) ~= nil ) then
+		-- if( eventId == "FOREIGN_DELAY" ) then
+			-- StartForeignPlayerUpset( eventId ) -- Player homeSick / Wants to leave
+		-- elseif( eventId == "FOREIGN_1" ) then
+			-- ForeignUpsetStoryDynamicEvent1( eventId, storyId ) -- Story Start
+		-- elseif( eventId == "FOREIGN_2" ) then
+			-- ForeignUpsetStoryDynamicEvent2( eventId, storyId ) --Speculation on Reasons
+		-- elseif( eventId == "FOREIGN_3" ) then
+			-- ForeignUpsetStoryDynamicEvent3( eventId, storyId ) -- Possibly a Club from another country
+		-- elseif( eventId == "FOREIGN_4" ) then
+			-- ForeignUpsetStoryDynamicEvent4( eventId, storyId ) -- Agent Comments
+		-- elseif( eventId == "FOREIGN_5" ) then
+			-- ForeignUpsetStoryDynamicEvent5( eventId, storyId ) -- Speculation on Story
+		-- elseif( eventId == "FOREIGN_6" ) then
+			-- ForeignUpsetStoryDynamicEvent6( eventId, storyId ) -- Update on Suitors
+		-- elseif( eventId == "FOREIGN_7" ) then
+			-- ForeignUpsetStoryDynamicEvent7( eventId, storyId ) -- More Speculation
+		-- elseif( eventId == "FOREIGN_8" ) then
+			-- ForeignUpsetStoryDynamicEvent8( eventId, storyId ) --Player Decides
+		-- elseif( eventId == "FOREIGN_9" ) then
+			-- ForeignUpsetStoryDynamicEvent9( eventId, storyId ) -- Wants to Remain
+		-- elseif( eventId == "FOREIGN_10" ) then
+			-- ForeignUpsetStoryDynamicEvent10( eventId, storyId ) -- Wants To Leave
+		-- elseif( eventId == "FOREIGN_11" ) then
+			-- ForeignUpsetStoryDynamicEvent11( eventId, storyId ) -- Warning from board
+		-- elseif( eventId == "FOREIGN_12" ) then
+			-- ForeignUpsetStoryDynamicEvent12( eventId, storyId ) -- Selling
+		-- elseif( eventId == "FOREIGN_13" ) then
+			-- ForeignUpsetStoryDynamicEvent13( eventId, storyId ) -- Accepting New Contract
+		-- elseif( eventId == "FOREIGN_REJ" ) then
+			-- ForeignUpsetContractReject( eventId, storyId )
+		-- end
+	-- end
+-- end
+
+-- function StartForeignPlayerUpset( eventId ) -- Chance of happening
+	-- local chanceOnePlayer = Tuning.FOREIGN.chanceOnePlayer --40 
+	-- local chanceTwoPlayers = Tuning.FOREIGN.chanceTwoPlayers --20 
+	-- if( Engine.GetRandomNumber( 1, 100 ) <= chanceOnePlayer ) then
+		-- LookForMatchingCPUPlayers( 0 )
+		-- if( Engine.GetRandomNumber( 1, 100 ) <= chanceTwoPlayers ) then
+			-- LookForMatchingCPUPlayers( 1 )
+		-- end
+	-- end
+	-- local chanceUserPlayer = Tuning.FOREIGN.chanceUserPlayer --30
+	-- if( Engine.GetRandomNumber( 1, 100 ) <= chanceUserPlayer ) then
+		-- LookForMatchingUserPlayer()
+	-- end
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent1( eventId, storyId )
+	-- local currentStory = Engine.GetStoryById( storyId ) 
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- Engine.SetStringTeam( storyTeam, 1 )
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+	-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+	-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" ) 
+	-- if( reason == "HOMESICK" ) then	
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_HOMESICK_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_HATESCOUNTRY_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_HATESWEATHER_", 1, 4, currentStory )
+		
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_UNSETTLED_", 1, 4, currentStory )
+		
+	-- end --if( reason == "HOMESICK" ) then
+	-- Engine.SetStoryStage( currentStory, 1 )
+-- end
+
+
+-- function ForeignUpsetStoryDynamicEvent2( eventId, storyId )--Speculation on Reasons
+	-- local numDaysAfter = Engine.GetRandomNumber( Tuning.FOREIGN.stage3_Delay_Low, Tuning.FOREIGN.stage3_Delay_High )
+	-- local currentStory = Engine.GetStoryById( storyId ) 
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- Engine.SetStringTeam( storyTeam, 1 )
+	-- Engine.AddDateEvent( "FOREIGN_3", numDaysAfter, storyId )
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )	
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+	-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+	-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" ) 
+	-- if( reason == "HOMESICK" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_RumourSpeculation_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_RumourSpeculation_HOMESICK_", 1, 4, currentStory )				
+		
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_RumourSpeculation_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_RumourSpeculation_HATESCOUNTRY_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_RumourSpeculation_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_RumourSpeculation_HATESWEATHER_", 1, 4, currentStory )
+		
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_RumourSpeculation_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_RumourSpeculation_UNSETTLED_", 1, 4, currentStory )
+		
+	-- end -- if( reason == "HOMESICK" ) then
+	-- Engine.SetStoryStage( currentStory, 2 )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent3( eventId, storyId ) -- Possibly a Club from another country
+	-- local currentStory = Engine.GetStoryById( storyId ) 
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local userTeam = Engine.GetUserTeam()
+	-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, true )
+	-- local numDaysAfter = Engine.GetRandomNumber( Tuning.FOREIGN.stage4_Delay_Low, Tuning.FOREIGN.stage4_Delay_High )
+	-- local reason1 = 9
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+		-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+	-- end
+	-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+	-- Engine.AddDateEvent( "FOREIGN_4", numDaysAfter, storyId )
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )	
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+	-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+	-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" ) 
+	-- if( reason == "HOMESICK" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_RumourTeamsInvolved_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_RumourTeamsInvolved_HOMESICK_", 1, 4, currentStory )
+		
+		-- if( storyTeam == userTeam ) then
+			-- reason1 = 6
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_ForeignPlayerWantsToLeave_HOMESICK_", 1, 3, "PlayerFeedbackPopUp_ForeignPlayerWantsToLeave_subject", currentStory )
+		-- end
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_RumourTeamsInvolved_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_RumourTeamsInvolved_HATESCOUNTRY_", 1, 4, currentStory )	
+		
+		-- if( storyTeam == userTeam ) then
+			-- reason1 = 7
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_ForeignPlayerWantsToLeave_HATESCOUNTRY_", 1, 3, "PlayerFeedbackPopUp_ForeignPlayerWantsToLeave_subject", currentStory )
+		-- end
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_RumourTeamsInvolved_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_RumourTeamsInvolved_HATESWEATHER_", 1, 4, currentStory )	
+		
+		-- if( storyTeam == userTeam ) then
+			-- reason1 = 8
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_ForeignPlayerWantsToLeave_HATESWEATHER_", 1, 3, "PlayerFeedbackPopUp_ForeignPlayerWantsToLeave_subject", currentStory )
+		-- end
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_RumourTeamsInvolved_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_RumourTeamsInvolved_UNSETTLED_", 1, 4, currentStory )	
+		
+		-- if( storyTeam == userTeam ) then
+			-- reason1 = 9
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_ForeignPlayerWantsToLeave_UNSETTLED_", 1, 3, "PlayerFeedbackPopUp_ForeignPlayerWantsToLeave_subject", currentStory )
+		-- end
+	-- end --if( reason == "HOMESICK" ) then
+	-- Engine.SetStoryStage( currentStory, 3 )
+	-- if( storyTeam == userTeam ) then
+		-- Engine.SetStoryMoraleOverride( currentStory, reason1 ) -- Unhappy with the "Reason1"
+	-- end
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent4( eventId, storyId ) -- Agent Comments
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- local numDaysAfter = Engine.GetRandomNumber( Tuning.FOREIGN.stage5_Delay_Low, Tuning.FOREIGN.stage5_Delay_High )
+	-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, true )
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+		-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+	-- end
+	-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+	-- Engine.AddDateEvent( "FOREIGN_5", numDaysAfter, storyId )
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )	
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+	-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+	-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" ) 
+	-- if( reason == "HOMESICK" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_AgentComments_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_AgentComments_HOMESICK_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_AgentComments_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_AgentComments_HATESCOUNTRY_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_AgentComments_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_AgentComments_HATESWEATHER_", 1, 4, currentStory )
+		
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_AgentComments_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_AgentComments_UNSETTLED_", 1, 4, currentStory )
+		
+	-- end --if( reason == "HOMESICK" ) then
+	-- Engine.SetStoryStage( currentStory, 4 )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent5( eventId, storyId ) -- Speculation on Story
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local numDaysAfter = Engine.GetRandomNumber( Tuning.FOREIGN.stage6_Delay_Low, Tuning.FOREIGN.stage6_Delay_High )
+	-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, true )
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+		-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+	-- end
+	-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+	-- Engine.AddDateEvent( "FOREIGN_6", numDaysAfter, storyId )
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )	
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+	-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+	-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" ) 
+	-- if( reason == "HOMESICK" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_WebSiteSpeculation_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_WebSiteSpeculation_HOMESICK_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_WebSiteSpeculation_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_WebSiteSpeculation_HATESCOUNTRY_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_WebSiteSpeculation_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_WebSiteSpeculation_HATESWEATHER_", 1, 4, currentStory )
+		
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_WebSiteSpeculation_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_WebSiteSpeculation_UNSETTLED_", 1, 4, currentStory )
+		
+	-- end --f( reason == "HOMESICK" ) then
+	-- Engine.SetStoryStage( currentStory, 5 )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent6( eventId, storyId ) -- Update on Suitors
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local numDaysAfter = Engine.GetRandomNumber( Tuning.FOREIGN.stage7_Delay_Low, Tuning.FOREIGN.stage7_Delay_High )
+	-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, true )
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+		-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+	-- end
+	-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+	-- Engine.AddDateEvent( "FOREIGN_7", numDaysAfter, storyId )
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )	
+	-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+	-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" ) 
+	-- if( reason == "HOMESICK" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_SpeculativeTeamsCloseIn_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_SpeculativeTeamsCloseIn_HOMESICK_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_SpeculativeTeamsCloseIn_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_SpeculativeTeamsCloseIn_HATESCOUNTRY_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_SpeculativeTeamsCloseIn_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_SpeculativeTeamsCloseIn_HATESWEATHER_", 1, 4, currentStory )
+		
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_SpeculativeTeamsCloseIn_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_SpeculativeTeamsCloseIn_UNSETTLED_", 1, 4, currentStory )
+		
+	-- end --if( reason == "HOMESICK" ) then
+	-- Engine.SetStoryStage( currentStory, 6 )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent7( eventId, storyId )-- More Speculation
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local numDaysAfter = Engine.GetRandomNumber( Tuning.FOREIGN.stage8_Delay_Low, Tuning.FOREIGN.stage8_Delay_High )
+	-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, true )
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+		-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+	-- end
+	-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+	-- Engine.AddDateEvent( "FOREIGN_8", numDaysAfter, storyId )
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )	
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+	-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+	-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" )
+	-- if( reason == "HOMESICK" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_FrustratingFiller_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_FrustratingFiller_HOMESICK_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_FrustratingFiller_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_FrustratingFiller_HATESCOUNTRY_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_FrustratingFiller_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_FrustratingFiller_HATESWEATHER_", 1, 4, currentStory )
+		
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_FrustratingFiller_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_FrustratingFiller_UNSETTLED_", 1, 4, currentStory )
+		
+	-- end --if( reason == "HOMESICK" ) then
+	-- MakeCPUOfferForForeignPlayer( storyTeam, storyPlayer, 5, 1 )
+	-- Engine.SetStoryStage( currentStory, 7 )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent8( eventId, storyId )--Player Decides
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local userTeam = Engine.GetUserTeam()
+	-- local wantsToLeave = RollPercentageDice( Tuning.FOREIGN.wantsToLeave ) -- 50%
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- Engine.SetStringTeam( storyTeam, 1 )
+	-- if( reason == "HOMESICK" ) then
+		-- if( wantsToLeave == true ) then
+			-- if( storyTeam == userTeam ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToStay_HOMESICK_", 1, 3, "PlayerFeedbackPopUp_DecisionToStay_subject", currentStory )
+			-- end
+			-- --Engine.SetStoryStage( currentStory, 8 )
+			-- Engine.AddDateEvent( "FOREIGN_9", Tuning.FOREIGN.stage9_Delay, storyId )
+		-- else
+			-- if( storyTeam == userTeam ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToLeave_HOMESICK_", 1, 3, "PlayerFeedbackPopUp_DecisionToLeave_subject", currentStory )
+				-- Engine.SetStoryContractOverride( currentStory, 3 )
+			-- else
+				-- Engine.ForceCPUPlayerOntoTransferList( storyTeam, storyPlayer )
+			-- end
+			-- Engine.AddDateEvent( "FOREIGN_10", Tuning.FOREIGN.stage10_Delay, storyId )
+		-- end
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- if( wantsToLeave == true ) then
+			-- if( storyTeam == userTeam ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToStay_HATESCOUNTRY_", 1, 3, "PlayerFeedbackPopUp_DecisionToStay_subject", currentStory )
+			-- end
+			-- --Engine.SetStoryStage( currentStory, 8 )
+			-- Engine.AddDateEvent( "FOREIGN_9", Tuning.FOREIGN.stage9_Delay, storyId )
+		-- else
+			-- if( storyTeam == userTeam ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToLeave_HATESCOUNTRY_", 1, 3, "PlayerFeedbackPopUp_DecisionToLeave_subject", currentStory )
+				-- Engine.SetStoryContractOverride( currentStory, 3 )
+			-- else
+				-- Engine.ForceCPUPlayerOntoTransferList( storyTeam, storyPlayer )
+			-- end
+			-- Engine.AddDateEvent( "FOREIGN_10", Tuning.FOREIGN.stage10_Delay, storyId )
+		-- end
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- if( wantsToLeave == true ) then
+			-- if( storyTeam == userTeam ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToStay_HATESWEATHER_", 1, 3, "PlayerFeedbackPopUp_DecisionToStay_subject", currentStory )
+			-- end
+			-- --Engine.SetStoryStage( currentStory, 8 )
+			-- Engine.AddDateEvent( "FOREIGN_9", Tuning.FOREIGN.stage9_Delay, storyId )
+		-- else
+			-- if( storyTeam == userTeam ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToLeave_HATESWEATHER_", 1, 3, "PlayerFeedbackPopUp_DecisionToLeave_subject", currentStory )
+				-- Engine.SetStoryContractOverride( currentStory, 3 )
+			-- else
+				-- Engine.ForceCPUPlayerOntoTransferList( storyTeam, storyPlayer )
+			-- end
+			-- Engine.AddDateEvent( "FOREIGN_10", Tuning.FOREIGN.stage10_Delay, storyId )
+		-- end
+	-- else
+		-- if( wantsToLeave == true ) then
+			-- if( storyTeam == userTeam ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToStay_UNSETTLED_", 1, 3, "PlayerFeedbackPopUp_DecisionToStay_subject", currentStory )
+			-- end
+			-- --Engine.SetStoryStage( currentStory, 8 )
+			-- Engine.AddDateEvent( "FOREIGN_9", Tuning.FOREIGN.stage9_Delay, storyId )
+		-- else
+			-- if( storyTeam == userTeam ) then
+				-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToLeave_UNSETTLED_", 1, 3, "PlayerFeedbackPopUp_DecisionToLeave_subject", currentStory )
+				-- Engine.SetStoryContractOverride( currentStory, 3 )
+			-- else
+				-- Engine.ForceCPUPlayerOntoTransferList( storyTeam, storyPlayer )
+			-- end
+			-- Engine.AddDateEvent( "FOREIGN_10", Tuning.FOREIGN.stage10_Delay, storyId )
+		-- end
+	-- end --if( reason == "HOMESICK" ) then
+	-- MakeCPUOfferForForeignPlayer( storyTeam, storyPlayer, 5, 1 )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent9( eventId, storyId )-- Wants to Remain
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local storyId = Engine.GetStoryId( currentStory )
+	-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, true )
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+		-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+	-- end
+	-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+	-- Engine.SetNewsBackgroundImage( "CONTRACT" )
+	-- if( reason == "HOMESICK" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_DecisionToStay_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_DecisionToStay_HOMESICK_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_DecisionToStay_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_DecisionToStay_HATESCOUNTRY_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_DecisionToStay_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_DecisionToStay_HATESWEATHER_", 1, 4, currentStory )
+		
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_DecisionToStay_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_DecisionToStay_UNSETTLED_", 1, 4, currentStory )
+		
+	-- end
+	-- Engine.SetStoryContractOverride( currentStory, -1 )
+	-- Engine.SetStoryStage( currentStory, 8 )
+	-- Engine.RemoveCPUPlayerFromTransferList( storyTeam, storyPlayer )
+	-- Engine.EndStoryId( storyId )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent10( eventId, storyId )-- Wants To Leave
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local actualOffers, offer1, offer2, offer3 = Engine.FindSuitableTeamsForPlayer( storyTeam, storyPlayer, 3, true )
+	-- local userTeam = Engine.GetUserTeam()
+	-- local numDays = Engine.GetNumDaysRemainingInTransferWindow()
+	-- Engine.SetStringPlayer( storyPlayer, 1 )
+	-- if( offer1 == nil or offer2 == nil or offer3 == nil ) then
+		-- offer1, offer2, offer3 = FindSuitablePlayersSafety( storyPlayer5 )
+	-- end
+	-- Engine.SetStringTeams( storyTeam, offer1, offer2, offer3 )
+	-- Engine.AddDateEvent( "FOREIGN_11", Tuning.FOREIGN.stage11_Delay, storyId ) -- On Transfer Event
+	-- Engine.SetNewsImportance( "EXCLUSIVE" )
+	-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )	
+	-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", storyTeam )
+	-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+	-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" )
+	-- if( reason == "HOMESICK" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_DecisionToLeave_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_DecisionToLeave_HOMESICK_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESCOUNTRY" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_DecisionToLeave_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_DecisionToLeave_HATESCOUNTRY_", 1, 4, currentStory )
+		
+	-- elseif( reason == "HATESWEATHER" ) then
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_DecisionToLeave_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_DecisionToLeave_HATESWEATHER_", 1, 4, currentStory )
+		
+	-- else
+		-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_DecisionToLeave_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_DecisionToLeave_UNSETTLED_", 1, 4, currentStory )
+		
+	-- end
+	-- Engine.SetStoryStage( currentStory, 9 )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent11( eventId, storyId )-- Board Warning
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local reason = Engine.GetStoryVariable( currentStory )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- if( storyTeam == Engine.GetUserTeam() ) then
+		-- local userName = Engine.GetUsername()
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- Engine.SetStringTeam( storyTeam, 1 )
+		-- TriggerEmail( false, userName, "CM_Inbox_Sender_Board", "CM_Email_Subject_ForeignPlayerUpset_BoardWarning_", 1, 4, "CM_Email_Body_ForeignPlayerUpset_BoardWarning_", 1, 4 )
+	-- end
+	-- Engine.AddDateEvent( "FOREIGN_12", Tuning.FOREIGN.stage12_Delay, storyId )
+	-- MakeCPUOfferForForeignPlayer( storyTeam, storyPlayer, 5, 1 )
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent12( eventId, storyId ) -- Board Sells player
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+	-- local storyTeam = Engine.GetStoryTeam( currentStory )
+	-- local storyId = Engine.GetStoryId( currentStory )
+	-- if( Engine.IsPlayerInvolvedInStoryId( storyPlayer, storyId ) == true ) then
+		-- Engine.SetStoryAllowTransferNews( currentStory, false )
+		-- ForceSafeTransfer( storyTeam, storyPlayer )
+	-- end
+-- end
+
+-- function ForeignUpsetStoryDynamicEvent13( eventId, storyId )--Player Decides to accept a new contract
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- if( Engine.GetStoryStage( currentStory ) < 8 ) then
+		-- local reason = Engine.GetStoryVariable( currentStory )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )
+		-- local userTeam = Engine.GetUserTeam()
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- Engine.SetStringTeam( storyTeam, 1 )
+		-- if( reason == "HOMESICK" ) then
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToStay_HOMESICK_", 1, 3, "PlayerFeedbackPopUp_DecisionToStay_subject", currentStory )
+			-- Engine.AddDateEvent( "FOREIGN_9", Tuning.FOREIGN.stage9_Delay, storyId )
+		-- elseif( reason == "HATESCOUNTRY" ) then
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToStay_HATESCOUNTRY_", 1, 3, "PlayerFeedbackPopUp_DecisionToStay_subject", currentStory )
+			-- Engine.AddDateEvent( "FOREIGN_9", Tuning.FOREIGN.stage9_Delay, storyId )
+		-- elseif( reason == "HATESWEATHER" ) then
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToStay_HATESWEATHER_", 1, 3, "PlayerFeedbackPopUp_DecisionToStay_subject", currentStory )
+			-- Engine.AddDateEvent( "FOREIGN_9", Tuning.FOREIGN.stage9_Delay, storyId )
+		-- else
+			-- Engine.AddConversation( storyPlayer, "PlayerFeedbackPopUp_DecisionToStay_UNSETTLED_", 1, 3, "PlayerFeedbackPopUp_DecisionToStay_subject", currentStory )
+			-- Engine.AddDateEvent( "FOREIGN_9", Tuning.FOREIGN.stage9_Delay, storyId )
+		-- end --if( reason == "HOMESICK" ) then
+		-- if( storyTeam == userTeam ) then
+			-- Engine.PlayerContractAccept( storyTeam, storyPlayer )
+		-- end
+	-- end --if( Engine.GetStoryStage( currentStory ) ~= 8 ) then
+-- end
+
+-- function ForeignTransferWindowOpen( numDays )
+	-- local category = "TRANSREQ"
+	-- local numStories = Engine.GetNumStoriesByCategory( category )
+	-- if( numStories > 0 ) then
+		-- if( numDays == 1 or numDays == 2 ) then
+			-- for storyCount = 1, numStories do
+				-- local numOffers = Engine.GetRandomNumber( 1, 3 )
+				-- local currentStory = Engine.GetStoryByCategoryAndIndex( category, storyCount )
+				-- local reason = Engine.GetStoryVariable( currentStory )
+				-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+				-- local storyTeam = Engine.GetStoryTeam( currentStory )
+				-- MakeCPUOfferForForeignPlayer( storyTeam, storyPlayer, numOffers, 1 )
+			-- end --for storyCount = 1, numStories do
+		-- end --if( numDays == 0 ) then
+	-- end --if( numStories > 0 ) then
+-- end
+
+-- function ForeignUpsetStoryEndOfWindow( numDays )-- EndOfWindow
+	-- local category = "TRANSREQ"
+	-- local numStories = Engine.GetNumStoriesByCategory( category )
+	-- if( numStories > 0 ) then
+		-- if( numDays == 0 ) then
+			-- for storyCount = numStories, 1, -1 do
+				-- local currentStory = Engine.GetStoryByCategoryAndIndex( category, storyCount )
+				-- local storyPlayer = Engine.GetStoryPlayer( currentStory )	
+				-- local storyTeam = Engine.GetStoryTeam( currentStory )
+				-- local storyId = Engine.GetStoryId( currentStory )
+				-- if( Engine.IsPlayerInvolvedInStoryId( storyPlayer, storyId ) == true ) then
+					-- Engine.SetStoryAllowTransferNews( currentStory, false )
+					-- ForceSafeTransfer( storyTeam, storyPlayer )
+				-- end
+				-- Engine.RemoveCPUPlayerFromTransferList( storyTeam, storyPlayer )
+				-- Engine.EndStoryId( storyId )
+			-- end --for storyCount = 1, numStories do
+		-- end --if( numDays > 20 ) then
+	-- end --if( numStories > 0 ) then
+-- end
+
+-- function ForeignUpsetStoryTransfered( buyingTeam, sellingTeam, playerId, transfer, contract, price, wage, playerValue ) -- After Transfer Event
+	-- local category = "TRANSREQ"
+	-- local numStories = Engine.GetNumStoriesByCategory( category )
+	-- for storyCount = numStories, 1, -1 do
+		-- local currentStory = Engine.GetStoryByCategoryAndIndex( category, storyCount )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- if( playerId == storyPlayer ) then
+			-- local reason = Engine.GetStoryVariable( currentStory )
+			-- local storyTeam = Engine.GetStoryTeam( currentStory )
+			-- local storyId = Engine.GetStoryId( currentStory )
+			-- local contract1 = ( contract / 12 )
+			-- Engine.SetStringPlayer( storyPlayer, 1 )
+			-- Engine.SetStringTeams( buyingTeam, storyTeam )
+			-- Engine.SetStringMultiCurrency( price, wage )
+			-- Engine.SetNewsImportance( "EXCLUSIVE" )
+			-- Engine.SetNewsForegroundImage( "LEFT", "CLUB_CREST", storyTeam )
+			-- Engine.SetNewsForegroundImage( "CENTER", "PLAYER_IMG", storyPlayer )	
+			-- Engine.SetNewsForegroundImage( "RIGHT", "CLUB_CREST", buyingTeam )
+			-- Engine.SetNewsBackgroundImage( "EXIT_DOOR" )
+			-- Engine.SetNewsCinematic ( "CM_News_PlayerActionNegative" ) 
+			-- if( reason == "HOMESICK" ) then
+				-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_Transfered_HOMESICK_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_Transfered_HOMESICK_", 1, 4, currentStory, contract1, price, wage )
+				
+			-- elseif( reason == "HATESCOUNTRY" ) then
+				-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_Transfered_HATESCOUNTRY_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_Transfered_HATESCOUNTRY_", 1, 4, currentStory, contract1, price, wage )
+				
+			-- elseif( reason == "HATESWEATHER" ) then
+				-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_Transfered_HATESWEATHER_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_Transfered_HATESWEATHER_", 1, 4, currentStory, contract1, price, wage )
+				
+			-- else
+				-- TriggerNews( "News_Title_ForeignPlayerWantsToLeave_Transfered_UNSETTLED_", 1, 4, "News_Body_ForeignPlayerWantsToLeave_Transfered_UNSETTLED_", 1, 4, currentStory, contract1, price, wage )
+				
+			-- end
+			-- Engine.SetStoryStage( currentStory, 10 )
+			-- Engine.RemoveCPUPlayerFromTransferList( storyTeam, storyPlayer )
+			-- Engine.EndStoryId( storyId )
+		-- end -- if( PlayerId == StoryPlayer ) then
+	-- end --for storyCount = numStories, 1, -1 do
+-- end
+
+-- function MakePlayerQuery() -- Player Queary for OVR
+	-- Engine.QueryPlayersByDBOverall( 82, 100 )
+	-- local numPlayers = Engine.GetNumPlayersFromQuery()
+	-- return numPlayers
+-- end
+
+-- function AddMatchingUserPlayerToList( numPlayers, validPlayers ) -- Add player to index
+	-- local addedPlayers = 1
+	-- local userTeam = Engine.GetUserTeam()
+	-- for playerCount = 1, numPlayers do
+		-- local currPlayerId = Engine.GetPlayer( userTeam, playerCount )
+		-- local match = IsMatchingPlayer( currPlayerId, -1 ) -- No user team check
+		-- if( match == true ) then
+			-- validPlayers[ addedPlayers ] = currPlayerId
+			-- addedPlayers = addedPlayers + 1
+		-- end
+	-- end
+	-- return addedPlayers	- 1	--Cos of lua index from 0
+-- end
+
+-- function AddMatchingCPUPlayerToList( numPlayers, validPlayers ) -- Choose CPU from list
+	-- local addedPlayers = 1
+	-- local userTeam = Engine.GetUserTeam()
+	-- for playerCount = 1, numPlayers do
+		-- local currPlayerId = Engine.GetPlayerIdFromQueryByIndex( playerCount )
+		-- local match = IsMatchingPlayer( currPlayerId, userTeam )
+		-- if( match == true ) then
+			-- validPlayers[ addedPlayers ] = currPlayerId
+			-- addedPlayers = addedPlayers + 1
+		-- end
+	-- end
+	-- return addedPlayers - 1 --Cos of lua index from 0
+-- end
+
+-- function IsMatchingPlayer( playerId, userTeam ) -- Is Player Not elligble for this story
+	-- local match = false
+	-- local teamId = Engine.GetTeamIdFromPlayerId( playerId )	
+	-- local numPlayersOnTeam = Engine.GetNumPlayers( teamId )
+	-- local enoughPlayers = ( numPlayersOnTeam >= 23 )
+	-- local playingAtHome = IsPlayingInHomeNation( teamId, playerId )
+	-- local isRetiring = Engine.IsPlayerInvolvedInStoryId( playerId, "POTRET" )
+	-- local isListed = Engine.IsPlayerOnTransferList( playerId )
+	-- local loanListed = Engine.IsPlayerOnLoanList( playerId )
+	-- -- Need Ultimate Professional trait check
+	-- local numYears = Engine.GetNumberOfYearsSincePlayerJoined( teamId, playerId ) 
+	-- -- Not playing at home, over a year at a club and not the user team	
+	-- if( enoughPlayers == true and playingAtHome == false and numYears > 1 and userTeam ~= teamId and isRetiring == false and isListed == false and loanListed == false ) then
+		-- match = true
+	-- end
+	-- return match
+-- end
+
+-- function IsPlayingInHomeNation( teamId, playerId ) -- Is the Player at home
+	-- local playingAtHome = true
+	
+	-- -- Get Player Nationality
+	-- local playerNationalityId = Engine.GetPlayerNationalityId( playerId )
+	
+	-- -- Get Team Nationality	
+	-- local teamNationId = GetTeamNation( teamId )
+	
+	-- -- Nations are different
+	-- if( teamNationId ~= playerNationalityId ) then
+		-- local isTeamUk = Engine.IsUnitedKingdomBasedNation( teamNationId )
+		-- local isPlayerUk = Engine.IsUnitedKingdomBasedNation( playerNationalityId )
+		-- if( isTeamUk == true and isPlayerUk == true ) then
+			-- playingAtHome = true
+		-- else
+			-- playingAtHome = false
+		-- end
+	-- end
+	-- return playingAtHome
+-- end
+
+-- function MakeCPUOfferForForeignPlayer( teamId, playerId, numOffers, startRandom )
+	-- local success = false
+	-- if( Engine.IsWithinTransferWindow() == true ) then
+		-- local maxOffers = Tuning.FOREIGN.maxNumberOfOffers
+		-- if( numOffers > maxOffers ) then
+			-- numOffers = maxOffers
+		-- end --if( numOffers > maxOffers ) then
+		-- local offers = {}
+		-- local offer1 = 0
+		-- local offer2 = 0
+		-- local offer3 = 0
+		-- local offer4 = 0
+		-- local offer5 = 0
+		-- local actualOffers, offer1, offer2, offer3, offer4, offer5 = Engine.FindSuitableTeamsForPlayer( teamId, playerId, numOffers, false )
+		-- offers[ 1 ] = offer1
+		-- offers[ 2 ] = offer2
+		-- offers[ 3 ] = offer3
+		-- offers[ 4 ] = offer4
+		-- offers[ 5 ] = offer5
+		-- if( actualOffers < startRandom ) then
+			-- startRandom = actualOffers
+		-- end --if( actualOffers < startRandom ) then
+		-- if( actualOffers < numOffers ) then
+			-- numOffers = actualOffers
+		-- end --if( actualOffers < numOffers ) then		
+		-- if( actualOffers > 0 ) then
+			-- local teamChoice = Engine.GetRandomNumber( startRandom, numOffers )
+			-- Engine.CreateOfferForPlayer( teamId, playerId, offers[ teamChoice ] )
+			-- success = true
+		-- end
+	-- end --if( Engine.IsWithinTransferWindow() == true ) then
+	-- return success
+-- end
+
+-- function NewContractForeignPlayer( teamId, playerId, status )
+	-- local storyId = "FOREIGN-USR"
+	-- if( Engine.IsStoryIDActive( storyId ) == true ) then
+		-- local currentStory = Engine.GetStoryById( storyId )
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- if( storyPlayer == playerId ) then
+			-- if( Engine.GetStoryStage( currentStory ) < 8 ) then
+				-- local storyTeam = Engine.GetStoryTeam( currentStory )			
+				-- local acceptId = "FOREIGN_13"
+				-- local rejectId = "FOREIGN_REJ"
+				-- OfferNewContract( currentStory, storyTeam, storyPlayer, acceptId, rejectId, storyId )
+			-- end --if( Engine.GetStoryStage( currentStory ) < 8 ) then
+		-- end --if( storyPlayer == playerId ) then
+	-- end
+-- end
+
+-- function ForeignUpsetContractReject( eventId, storyId )
+	-- local currentStory = Engine.GetStoryById( storyId )
+	-- if( Engine.GetStoryStage( currentStory ) < 8 ) then
+		-- local storyPlayer = Engine.GetStoryPlayer( currentStory )
+		-- local storyTeam = Engine.GetStoryTeam( currentStory )	
+		-- local userName = Engine.GetUsername()
+		-- Engine.SetStringPlayer( storyPlayer, 1 )
+		-- Engine.SetStringTeam( storyTeam, 1 )
+		-- Engine.SetInterrupting()
+		-- TriggerEmail( false, userName, "CM_Inbox_Sender_Board", "CM_Email_ContractRebel_PlayerRejectContractSubject_", 1, 4, "CM_Email_ContractRebel_PlayerRejectContractBody_", 1, 4 )
+		-- Engine.SetStoryContractOverride( currentStory, -1 )
+	-- end
+-- end

@@ -1,0 +1,910 @@
+{
+	"name":"PlayMatchFlow"
+	,"initial": { "targets":["PreMatchFlow"] }
+	,"transitions":
+	[
+		{
+			"event":"navigationBackoutStart"
+		}
+		,{
+			"event":"SetHubBackground"
+			,"actions":[ ["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MATCH_FLOW_BACKGROUND"]] ]
+		}
+	]
+	,"onEnter":
+	[
+		["loadViewModel",["KitSelectViewModel"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel",["KitSelectViewModel"]]
+		, ["sendAction",["navigationBackoutContinue"]]
+	]
+	,"states":
+	[
+		{
+			"name":"checkNewsScenesUnloaded"
+			,"onEnter": 
+			[
+				["sendAction",["condition", "areScenesUnloaded"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"scenesUnloaded",
+					"targets":["loadPreMatchCinematicsSublevel"]
+				}
+				,{
+					"event":"scenesNotUnloaded",
+					"targets":["waitForNewsScenesUnload"]
+				}			
+			]
+		}
+		,{
+			"name":"waitForNewsScenesUnload"
+			,"transitions":
+			[
+				{
+					"event":"scenesUnloaded",
+					"targets":["loadPreMatchCinematicsSublevel"]
+				}			
+			]
+		}
+		,{
+			"name":"loadPreMatchCinematicsSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["fbStartFlowEvent", "LoadPreMatchCinematicsSublevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"PreMatchCinematicsSublevelLoaded"
+					,"targets":["unloadNewsCinematicsSublevel"]
+				}
+			]
+		}
+		,{
+			"name":"unloadNewsCinematicsSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["fbStartFlowEvent", "UnloadNewsCinematicsSublevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"NewsCinematicsSublevelUnloaded",
+					"targets":["WaitForKitsBeforeMatch"]
+				}
+			]
+		}
+		,{
+			"name":"PreMatchFlow"
+			,"initial":
+			{
+				"targets":["SideSelect"]
+			}
+			,"onEnter":
+			[
+				["loadScreenController", ["PreMatchFlow"]]
+			]
+			,"onExit":
+			[
+				["unloadScreenController", ["PreMatchFlow"]]
+				,["sendScreenEvent", ["HideLoadingIcon",""]]
+			]
+			,"states":
+			[
+				{
+					"name":"SideSelect"
+					,"onEnter":
+					[
+						["loadViewModel",["SideSelectViewModel", ".direction"]]
+						,["loadView",["screen", "game/screens/playNow/SideSelect", "", ".direction"]]
+						,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["SideSelectViewModel"]]
+						,["unloadView",["screen", "game/screens/playNow/SideSelect"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["KitSelect"]
+						}
+						,{
+							"event":"btnY"
+							,"targets":["ControllerSetup"]
+						}
+					]
+				}
+				,{
+					"name":"KitSelect"
+					,"onEnter":
+					[
+						["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+						,["loadView",["screen", "game/screens/playNow/OfflineSelectTeam"]]
+						,["loadViewModel",["TeamSetupViewModel"]]
+						,["sendAction", ["evt_team_setup_state", ".NavTeamSetupState.STATE_KIT"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/playNow/OfflineSelectTeam"]]
+						,["unloadViewModel",["TeamSetupViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"kitSelectIdle"
+							,"transitions":
+							[
+								{
+									"event":"startLiveFixtureLogin"
+									,"targets":["startLiveFixtureLogin"]
+								}
+							]
+						}
+						,{
+							"name":"kitSelectLoginSuccess"
+							,"onEnter":
+							[
+								["sendScreenEvent",["DoLoginSuccessFlow"]]
+							]
+						}
+						,{
+							"name":"kitSelectLoginFail"
+							,"onEnter":
+							[
+								["sendScreenEvent",["DoLoginFailureFlow"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"startLiveFixtureLogin"
+									,"targets":["startLiveFixtureLogin"]
+								}
+							]
+						}
+						,{
+							"name":"kitSelectLogin"
+							,"type":"external"
+							,"file":"/online/onlineLoginFlow.nav"
+							,"inputs":
+							{
+								"startLiveFixtureLogin":"startLoginWithoutMultiplayerCheck"
+							}
+							,"outputs":
+							{
+								"loginSuccess":"kitSelectLoginSuccess"
+								,"loginFail":"kitSelectLoginFail"
+							}
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["WaitForKitsDuringSetup"]
+						}
+						,{
+							"event":"back"
+							,"targets":["SideSelect"]
+							,"let":{ "direction":"back" }
+						}
+						,{ "event":"evt_notify_controller_disconnect", "targets":["SideSelect"] }
+					]
+				}
+				,{
+					"onEnter":
+					[
+						["loadViewModel",["KickOffHubViewModel"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["KickOffHubViewModel"]]
+					]
+					,"states":
+					[
+						{	
+							"name":"KickOffHub"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/playNow/KickOffHub"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/playNow/KickOffHub"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["KitSelect"]
+								}
+								,{
+									"event":"HelpKinect"
+									,"targets":["HelpKinect"]
+								}
+								,{
+									"event":"SettingsController"
+									,"targets":["SettingsController"]
+								}								
+								,{
+									"event":"SettingsGame"
+									,"targets":["SettingsGame"]
+								}
+								,{
+									"event":"TeamManagement"
+									,"let":{"tmMode":"offlinePreMatchCareer"}
+									,"targets":["TeamManagementFlow"]
+								}
+								,{
+									"event":"AdvancePAMLockToPlayer"
+									,"targets":["ProSelectScreen"] 
+								},
+								{ "event":"evt_notify_controller_disconnect", "targets":["SideSelect"] }
+							]
+						}
+						,{
+							"onEnter":
+							[
+								["executeCMAction", ["ClearTheme"]]
+							]
+							,"onExit":
+							[
+								["executeCMAction",["SetupTheme"]]
+							]
+							,"states":
+							[
+								{
+									"name":"HelpFlow"
+									,"type":"external"
+									,"file":"/helpFlow.nav"
+									,"inputs":
+									{
+										"HelpKinect":"HelpKinect"
+									}
+									,"outputs":
+									{
+										"back":"KickOffHub"
+									}
+								}
+								,{
+									"name":"SettingsFlow"
+									,"type":"external"
+									,"file":"/settingsFlow.nav"
+									,"inputs":
+									{
+										"SettingsController":"SettingsController"
+										,"SettingsGame":"SettingsGame"
+									}
+									,"outputs":
+									{
+										"back":"KickOffHub"
+										,"out_notify_controller_disconnect":"SideSelect"
+									}
+								}
+								,{
+									"name":"ControllerSetupFlow"
+									,"type":"external"
+									,"file":"/settingsFlow.nav"
+									,"inputs":
+									{
+										"ControllerSetup":"SettingsController"
+									}
+									,"outputs":
+									{
+										"back":"SideSelect"
+										,"out_notify_controller_disconnect":"SideSelect"
+									}
+								}
+								,{
+									"onExit":
+									[
+										["sendAction",["updateScreen", "updateLocalTeamSheet"]]
+									]
+									,"transitions":
+									[
+										{ "event":"evt_notify_controller_disconnect", "targets":["PreMatchFlow"] }
+									]
+									,"states":					
+									[
+										{
+											"name":"TeamManagementFlow"
+											,"type":"external"
+											,"file":"/editTeamSheetFlow.nav"
+											,"outputs":
+											{
+												"back":"KickOffHub"
+											}
+										}
+									]
+								}
+								,{
+									"name":"ProSelectScreen"
+									,"onEnter":
+									[
+										["unloadScreenController", ["PreMatchFlow"]]
+										,["loadScreenController", ["ProSelectScreen"]]
+										,["loadView", ["screen", "game/screens/career/ProSelect"]]
+									]
+									,"onExit": 
+									[
+										["unloadView", ["screen", "game/screens/career/ProSelect"]]
+										,["unloadScreenController", ["ProSelectScreen"]]
+										,["loadScreenController", ["PreMatchFlow"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"Back"
+											,"targets":["KickOffHub"] 
+										}
+										,{
+											"event":"Advance"
+											,"targets":["KickOffHub"] 
+										}
+										,{
+											"event":"BackToSideSelect"
+											,"targets":["PreMatchFlow"] 
+										}
+										,{ "event":"evt_notify_controller_disconnect", "targets":["PreMatchFlow"] }
+									]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"WaitForKitsDuringSetup"
+					,"onEnter":
+					[
+						["sendAction",["condition", "WaitForKitsLoad"]]
+					]
+					,"onExit":[]
+					,"transitions":
+					[
+						{ "event":"KitsLoadComplete", "targets":["KickOffHub"] }
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"]
+				}
+				,{
+					"event":"Advance"
+					,"actions":[ ["executeCMAction",["EnterPlayerWarmup"]]
+								,["sendScreenEvent", ["ShowLoadingIcon",""]]
+								,["executeCMAction", ["ClearTheme"]]]
+					
+				}
+				,{
+					"event":"AdvancePAPLocked"
+					,"actions":[ ["executeCMAction",["EnterPlayerWarmup"]]
+								,["executeCMAction", ["ClearTheme"]]]
+				}
+				,{
+					"event":"AdvancePAPUnlocked"
+					,"actions":[ ["executeCMAction",["EnterPlayerWarmup"]]
+								,["executeCMAction", ["ClearTheme"]]]
+				}
+				,{
+					"event":"AdvancePAPMultiplayer"
+					,"targets":["ProSelectScreen"] 
+					,"actions":[["executeCMAction", ["ClearTheme"]]]
+				}
+				,{
+					"event":"SimGames"
+					,"actions":[ ["executeCMAction",["PrepareCommentatorNotes"]] ]
+				}
+				,{
+					"event":"CommentatorNotesReady"
+					,"actions":[ ["executeCMAction",["SimUserFixtureDay"]] ]
+				}
+				,{
+					"event":"AdvanceToMatch"
+					,"targets":["checkNewsScenesUnloaded"]
+					,"actions":[["executeCMAction", ["ClearTheme"]]
+								,["executeCMAction", ["SkipPreMatchPressConference"]]
+								,["executeCMAction", ["RemoveScreenshotNews"]]]
+				}
+				,{
+					"event":"StartBusCutScene"
+					,"targets":["BusCutScene"]
+					,"actions":[["executeCMAction", ["ClearTheme"]]]
+				}
+			]
+		}
+		,{
+			"name":"WaitForKitsBeforeMatch"
+			,"onEnter":
+			[
+				["sendAction",["condition", "WaitForKitsLoad"]]
+			]
+			,"onExit":[]
+			,"transitions":
+			[
+				{ "event":"KitsLoadComplete", "targets":["transitionToPMA"] }
+			]
+		}
+		,{
+			"name":"BusCutScene"
+			,"let":
+			{ 
+				"cutSceneName":"gmSignCutScene"
+				,"cutSceneSubLevel":"gmLoadCutScenesSublevel"
+			}
+			,"onExit":
+			[
+				["sendAction", ["unloadCutScenesSubLevel", "gmUnloadCutScenesSublevel"]]
+			]			
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/CutSceneFlow.nav"
+					,"outputs": 
+					{ 
+						"BackFromCutScene":"transitionToPMA"
+					}
+				}
+			]
+		}
+		,{
+			"name":"transitionToPMA"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["UxSetFlowSubState",".eSubState.TRANSITION_TO_PMA"]]
+			]
+			,"transitions":
+            [
+                {
+                    "event":"evt_transitionToPMADone"
+                    ,"targets":["PlayMatch"]
+					,"actions":[ ["executeCMAction",["EnterMatch"]] ]
+                }
+            ]
+		}
+		,{
+			"name":"PlayMatch"
+			,"onEnter":
+			[
+				["loadScreenController", ["PlayMatch"]]
+				,["sendScreenEvent", ["UxSetFlowSubState", ".eSubState.LOADING"]]
+			]
+			,"onExit":
+			[
+				/* No unloadScreenController or unloadView b/c we use it to populate pauseMenuFlow.CareerMatchResults while in WaitingForExitingMatch */
+                ["sendAction",["evt_hub_show_event"]]
+			]
+			, "initial":
+			{
+				"targets":["InGameFlow"]
+			}
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["ExitAndUnloadSC"] 
+				}
+			]
+			,"states":
+			[
+				{
+					"transitions":
+					[
+						{
+							"event":"GoToTitleScreen"
+							,"targets":["UnloadPrematchScenesSublevelCareerForSignOut"] 
+						}
+					]
+					,"states":
+					[
+						{
+							"name":"InGameFlow"
+							,"type":"external"
+							,"file":"/pauseMenuFlow.nav"
+							,"outputs":
+							{
+								"quit":"InviteFlowQuitDecision"
+								,"continue":"WaitingForExitingMatch"
+								,"profileSignOut":"profileSignOut"
+							}
+						}
+					]		
+				}
+				,{
+					"type":"external"
+					,"file":"/careerMode/postMatchSceneSublevelFlow.nav"
+					,"inputs":
+					{
+						"UnloadPrematchScenesSublevelCareerForSignOut":"UnloadPreMatchSublevel"
+					}
+					,"outputs": 
+					{ 
+						"Back":"ContinueGoToTitleScreen"
+					}
+				}
+				,{
+					"name":"ContinueGoToTitleScreen"
+					,"onEnter": 
+					[
+						["invoke", ["GoToTitleScreen"]]
+					]
+				}
+				,{
+					"name":"InviteFlowQuitDecision"
+					,"onEnter": 
+					[
+						["sendAction", ["condition", "isInviteFlowQuit"]]
+					]
+					,"transitions":
+					[
+						{ "event":"true", "actions":[ ["sendScreenEvent", ["UxSetFlowSubState",".eSubState.UNLOADING"]] ], "targets":["UnloadPrematchScenesSublevelCareerForInvite"] }
+						,{ "event":"false", "targets":["WaitingForExitingMatch"] }
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/careerMode/postMatchSceneSublevelFlow.nav"
+					,"inputs":
+					{
+						"UnloadPrematchScenesSublevelCareerForInvite":"UnloadPreMatchSublevel"
+					}
+					,"outputs": 
+					{ 
+						"Back":"InviteFlowQuitMatch"
+					}
+				}
+				,{
+					"name":"InviteFlowQuitMatch"
+					,"onEnter": 
+					[
+						["invoke", ["QuitMatchAfterInvite"]]
+					]
+				}
+			]
+		}
+		,{
+			"onExit":
+			[
+				/* Unload screen controller from playMatchFlow.PlayMatch */
+				["unloadScreenController", ["PlayMatch"]]
+			]
+			,"states":
+			[
+				{
+					"name":"ExitAndUnloadSC"
+					,"onEnter":
+					[
+						["invoke", ["Advance"]]
+					]
+				}
+				,{
+					"name":"WaitingForExitingMatch"
+				 }
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["PostMatchShowingResults"] 
+					,"actions":[ ["executeCMAction",["LeavePlayedMatch"]] ]
+				}
+				,{
+					"event":"StartLockerRoomCutScene"
+					,"targets":["LockerRoomCutScene"]
+				}
+				,{
+					"event":"evt_sign_out"
+					,"actions":[ ["unloadView", ["screen", "game/screens/career/Results", "", ""]] ]
+				}
+			]
+		}
+		,{
+			"name":"LockerRoomCutScene"
+			,"let":
+			{ 
+				"cutSceneName":"gmSignCutScene"
+				,"cutSceneSubLevel":"gmLoadCutScenesSublevel"
+			}
+			,"onEnter":
+			[
+				["unloadView", ["screen", "game/screens/career/Results", "", ""]] 
+				,["sendAction", ["loadCutScenesSubLevel", "gmLoadCutScenesSublevel"]]
+			]
+			,"onExit":
+			[
+				["executeCMAction",["LeavePlayedMatch"]]
+			]
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/CutSceneFlow.nav"
+					,"outputs": 
+					{ 
+						"BackFromCutScene":"PostMatchTournamentTreeCheck"
+					}
+				}
+			]
+		}
+		,{
+			"name":"PostMatchShowingResults"
+			,"onEnter":
+			[
+				["loadViewModel", ["CountdownTimerViewModel", "3000"]]
+				,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MAIN_HUB_BACKGROUND"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel", ["CountdownTimerViewModel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_countdown_done"
+					,"targets":["PostMatchTournamentTreeCheck"] 
+					,"actions":[ ["executeCMAction",["ViewTournamentTreeCheckPrepare"]] ]
+				}
+			]
+		}
+		,{
+			"name":"PostMatchTournamentTreeCheck"
+			,"onEnter":
+			[
+				["loadScreenController", ["PostMatchTournamentTreeCheck"]]
+			]
+			,"onExit":
+			[
+				["unloadScreenController", ["PostMatchTournamentTreeCheck"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"AdvanceTournamentTree"
+					,"targets":["ViewTournamentTree"] 
+					,"actions":[ ["executeCMAction",["ViewTournamentTreeFromPostMatch"]] ]
+				}
+				,{
+					"event":"AdvanceSave"
+					,"targets":["PostMatchSave"] 
+					,"actions":[ ["executeCMAction",["ExecutePostMatchFlow"]] ]
+				}
+			]
+		}
+		,{
+			"name":"ViewTournamentTree"
+			,"onEnter": 
+			[				
+				["loadViewModel", ["StandingsHubViewModel", "TournamentTree"]]
+				,["loadView", ["screen", "game/screens/career/Stats/StandingsHub"]]
+			]
+			,"onExit": 
+			[
+				["unloadView", ["screen", "game/screens/career/Stats/StandingsHub"]]
+				,["unloadViewModel", ["StandingsHubViewModel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["PostMatchSave"] 
+					,"actions":[ ["executeCMAction",["ExecutePostMatchFlow"]] ]
+				}
+			]
+		}
+		,{
+			"name":"PostMatchSave"
+			,"onEnter":
+			[
+				["sendAction",["condition", "isTournamentMode"]]
+			]
+			,"transitions":	
+			[
+				{
+					"event":"true"
+					,"targets":["PostMatchSaveTournament"]
+				}
+				,{
+					"event":"false"
+					,"targets":["PostMatchSaveCareer"]
+				}
+			]
+		}
+		,{
+			"name":"PostMatchSaveCareer"
+			,"onEnter":
+			[
+				["loadScreenController", ["PostMatchSave"]]
+			]
+			,"onExit":
+			[
+				["unloadScreenController", ["PostMatchSave"]]
+			]
+			,"transitions":	
+			[
+				{
+					"event":"Advance"
+					,"targets":["UnloadPrematchScenesSublevelCareer"]
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/careerMode/postMatchSceneSublevelFlow.nav"
+			,"inputs":
+			{
+				"UnloadPrematchScenesSublevelCareer":"UnloadPreMatchSublevel"
+			}
+			,"outputs": 
+			{ 
+				"Back":"AttendPressConference"
+			}
+		}
+		,{
+			"name":"AttendPressConference"
+			,"onEnter":
+			[
+				["executeCMAction",["IsAttendingPostMatchPressConference"]]
+			]
+			,"transitions":	
+			[
+				{
+					"event":"Yes"
+					,"actions":[ ["unloadView", ["screen", "game/screens/career/Results", "", ""]] ]
+					,"targets":["StartPressConferenceScene"]
+				}
+				,{
+					"event":"No"
+					,"targets":["LoadNewsScenesSublevelCareer"]
+					,"actions":[ ["executeCMAction",["SkipPostMatchPressConference"]] ]
+				}
+			]
+		}
+		,{
+			"onEnter":
+			[
+				["executeCMAction",["ClearTheme"]]
+			]
+			,"let":{"ENTRY_POINT":"postMatch"}
+			,"states":
+			[
+				{
+					"name":"StartPressConferenceScene"
+					,"type":"external"
+					,"file":"/careerMode/pressConferenceFlow.nav"
+					,"outputs": 
+					{ 
+						"Back":"LoadNewsScenesSublevelCareer"
+					}
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/careerMode/postMatchSceneSublevelFlow.nav"
+			,"inputs":
+			{
+				"LoadNewsScenesSublevelCareer":"LoadNewsSublevel"
+			}
+			,"outputs": 
+			{ 
+				"Back":"DetermineAdvanceEvent"
+			}
+		}
+		,{
+			"name":"DetermineAdvanceEvent"
+			,"onEnter":
+			[
+				["executeCMAction",["SendPostMatchAdvanceEvent"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"AdvanceHub"
+					,"targets":["Back"]
+				}
+				,{
+					"event":"AdvanceInbox"
+					,"targets":["Inbox"]
+				}
+				,{
+					"event":"AdvanceSackMail"
+					,"targets":["Inbox"] 
+					,"actions":[ ["executeCMAction",["GenerateSackedMail"]] ]
+				}
+			]
+		}
+		,{
+			"name":"Inbox"
+			,"type":"external"
+			,"file":"/careerMode/messagingHubFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"Back"
+			}
+		}
+		,{
+			"name":"PostMatchSaveTournament"
+			,"states":
+			[
+				{
+					"name":"WaitForFCE"
+					,"onEnter":
+					[
+						["loadScreenController", ["PostMatchWaitForFCE"]]
+					]
+					,"onExit":
+					[
+						["unloadScreenController", ["PostMatchWaitForFCE"]]
+					]
+					,"transitions":	
+					[
+						{
+							"event":"Advance"
+							,"targets":["AutoSimToNextFixture"]
+						}
+					]
+				}
+				,{
+					"name":"AutoSimToNextFixture"
+					,"type":"external"
+					,"file":"/careerMode/autosimToNextFixtureFlow.nav"
+					,"outputs": 
+					{ 
+						"Back":"AutoSave"
+					}
+				}
+				,{
+					"name":"AutoSave"
+					,"onEnter":
+					[
+						["loadScreenController", ["PostMatchSave"]]
+						,["executeCMAction",["DoAutoSave"]]
+					]
+					,"onExit":
+					[
+						["unloadScreenController", ["PostMatchSave"]]
+					]
+					,"transitions":	
+					[
+						{
+							"event":"Advance"
+							,"targets":["UnloadPrematchScenesSublevelTournament"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/careerMode/postMatchSceneSublevelFlow.nav"
+			,"inputs":
+			{
+				"UnloadPrematchScenesSublevelTournament":"UnloadPreMatchSublevel"
+			}
+			,"outputs": 
+			{ 
+				"Back":"LoadNewsScenesSublevelTournament"
+			}
+		}
+		,{
+			"type":"external"
+			,"file":"/careerMode/postMatchSceneSublevelFlow.nav"
+			,"inputs":
+			{
+				"LoadNewsScenesSublevelTournament":"LoadNewsSublevel"
+			}
+			,"outputs": 
+			{ 
+				"Back":"Back"
+			}
+		}
+	]
+}

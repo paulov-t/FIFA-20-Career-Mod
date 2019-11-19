@@ -1,3 +1,43 @@
+# Version 1.5.3
+
+## Transfers
+- Significant improvement of AI transfer logic
+- AI Teams no longer stockpile wingers
+- AI actively replace any lost players
+
+## Player Growth
+- Fix Player Growth file that didn't apply to all positions
+- Overgrowth will no longer happen for ALL positions
+- All positions "secondary" attributes now grow evenly
+
+## Player Contracts
+- Ensure AI attempt to keep their best players with only 1% not renewing
+- Players will now ask for longer length contracts
+
+## Youth System
+- Generated Youth Goalkeepers now have "Jumping" as a Primary Attribute
+- Generated Youth Skilled Wingers now have "Acceleration" and "Sprint Speed" as a Primary Attribute
+
+## UI
+- Change the Career Player Editor so it doesn't need to be unlocked
+
+## Integration - New Boots now available
+- Merge mod with Houss3m boots mod - Many thanks Houss3m!
+
+## Teams 
+- Created custom new Juventus logo
+- Created custom new Juventus kit icons to Kit Selection
+
+# Version 1.5.2
+
+## Dynamic Player Hair Growth/Style changes
+- Allow users to use new EA updated faces through the dynamic system
+
+## Finances
+- Increase the amount of Prize money carried over to the new season - rewarding you if you have a high rating
+- Increase the amount of Transfer budget carried over to the new season  - rewarding you if you have a high rating
+- Decrease Ground Maintenance costs slightly
+
 # Version 1.5.1
 
 ## Dynamic Player Hair Growth/Style changes
