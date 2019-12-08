@@ -1,0 +1,49 @@
+{
+	"name":"InternationalOffersFlow"
+	,"initial": { "targets":["InternationalOffers"] }
+	,"states":
+	[
+		{
+			"name":"InternationalOffers"
+			,"onEnter":
+			[
+				["loadScreenController", ["InternationalOffers"]]
+				,["loadView", ["screen", "game/screens/career/InternationalJobOffers"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/InternationalJobOffers"]]
+				,["unloadScreenController", ["InternationalOffers"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"InternationalOffersStall"
+					,"actions":[ ["executeCMAction",["InternationalsOfferStall"]] ]
+				}
+				,{
+					"event":"InternationalOffersAccept"
+					,"actions":[ ["executeCMAction",["InternationalsOfferAccept"]] ]
+					/* we won't go to [Inbox] here since InternationalsOfferAccept action needs the screen controller loaded when it executes, instead we will send Advance at the end of the action and we make the transition there */
+				}
+				,{
+					"event":"InternationalOffersDecline"
+					,"actions":[ ["executeCMAction",["InternationalsOfferDecline"]] ]
+				}
+				,{
+					/* will be sent by InternationalsOfferAccept action */
+					"event":"Advance"
+					,"targets":["out_Inbox"] 
+				}
+				,{
+					"event":"Back"
+					,"targets":["out_Back"] 
+				}
+			]
+		}
+		,{
+			"name":"ReturnToMainHub"
+			,"onEnter": [ ["invoke", ["GotoMainMenuHub"]] ]
+		}
+	]
+}

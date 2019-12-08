@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="AvatarLineupSelect" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.AvatarFluxHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+	<tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="AVATAR_LINEUP_SELECT_PANEL" >
+	  <buttons>
+		<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+	  </buttons>
+      <layout NAME="AVATAR_LINEUP_WORLD_TOUR_LAYOUT" X="195" Y="240" HELP_BAR_X="209" HELP_BAR_Y="940">
+		<tile NAME="AVATAR_LINEUP_SELECT_HEADER" X="20" Y="-250" />	  
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_0" X="-10" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_1" X="190" Y="-40" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_2" X="360" Y="-100" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_3" X="500" Y="-40" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_4" X="720" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_5" X="935" Y="-75" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_6" X="1100" Y="-80" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_7" X="1300" Y="-50" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_8" X="1460" Y="-130" />
+      </layout>
+	  <layout NAME="AVATAR_LINEUP_WORLD_TOUR_SWAP_AVATAR_LAYOUT" X="195" Y="240" HELP_BAR_X="209" HELP_BAR_Y="940">
+		<tile NAME="AVATAR_LINEUP_SELECT_HEADER_SWAP" X="20" Y="-250" />	  
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_0" X="720" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_1" X="560" Y="-105" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_2" X="880" Y="-105" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_3" X="400" Y="-95" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_4" X="1040" Y="-95" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_5" X="240" Y="-105" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_6" X="1200" Y="-105" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_7" X="80" Y="-95" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_8" X="1360" Y="-95" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_9" X="20" Y="-105" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_10" X="1500" Y="-105" />
+      </layout>
+      <layout NAME="AVATAR_LINEUP_11V11_FEMALE_LAYOUT" X="195" Y="240" HELP_BAR_X="209" HELP_BAR_Y="940">
+		<tile NAME="AVATAR_LINEUP_SELECT_HEADER" X="20" Y="-270" />	  
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_0" X="30" Y="-100" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_1" X="180" Y="-110" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_2" X="360" Y="-125" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_3" X="565" Y="-135" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_4" X="740" Y="-145" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_5" X="925" Y="-140" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_6" X="1120" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_7" X="1275" Y="-110" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_8" X="1425" Y="-100" />
+      </layout>
+      <layout NAME="AVATAR_LINEUP_11V11_MALE_LAYOUT" X="195" Y="240" HELP_BAR_X="209" HELP_BAR_Y="940">
+		<tile NAME="AVATAR_LINEUP_SELECT_HEADER" X="20" Y="-270" />	  
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_0" X="25" Y="-100" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_1" X="170" Y="-110" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_2" X="370" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_3" X="550" Y="-125" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_4" X="740" Y="-145" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_5" X="935" Y="-125" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_6" X="1120" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_7" X="1275" Y="-110" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_8" X="1450" Y="-100" />
+      </layout>
+      <layout NAME="AVATAR_LINEUP_MANAGER_LAYOUT" X="195" Y="240" HELP_BAR_X="209" HELP_BAR_Y="940">
+		<tile NAME="AVATAR_LINEUP_SELECT_HEADER_MANAGER" X="20" Y="-255" />	  
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_0" X="25" Y="-100" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_1" X="200" Y="-110" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_2" X="375" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_3" X="545" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_4" X="740" Y="-125" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_5" X="890" Y="-125" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_6" X="1050" Y="-120" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_7" X="1225" Y="-110" />
+		<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_8" X="1450" Y="-100" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="AVATAR_LINEUP_SELECT_PANEL">
+		<variable_set>
+		  <variable id="isSelected" type="bool" />
+		  <variable id="showCustomSelection" type="bool" />
+		</variable_set>
+	  <tile NAME="AVATAR_LINEUP_SELECT_HEADER_SWAP" TYPE="EXPANDABLE_TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="1535" HEIGHT="120"/>	
+		<data ID="title" TYPE="text" PARAM="AVATAR_LINEUP_SELECT_SWAP"  FORMAT="FONT_TILE_HM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|||middle" WIDTH="1535" HEIGHT="80">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="subtitle" TYPE="text" PARAM="AVATAR_MOOD_LINEUP_SUBTITLE_SWAP" FORMAT="FONT_MEDIUM_SMALL_LABEL_PREVIEW|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX|||middle" WIDTH="1535" HEIGHT="50">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="80" />
+		</data>
+		</tile>
+	  <tile NAME="AVATAR_LINEUP_SELECT_HEADER_MANAGER" TYPE="EXPANDABLE_TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="1535" HEIGHT="120"/>	
+		<data ID="title" TYPE="text" PARAM="AVATAR_LINEUP_MANAGER_SELECT"  FORMAT="FONT_TILE_HM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|||middle" WIDTH="1535" HEIGHT="80">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="subtitle" TYPE="text" PARAM="AVATAR_MOOD_LINEUP_MANAGER_SUBTITLE" FORMAT="FONT_MEDIUM_SMALL_LABEL_PREVIEW|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX|||middle" WIDTH="1535" HEIGHT="50">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="80" />
+		</data>
+		</tile>
+	  <tile NAME="AVATAR_LINEUP_SELECT_HEADER" TYPE="EXPANDABLE_TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="1535" HEIGHT="120"/>
+		<data ID="title" TYPE="text" PARAM="AVATAR_LINEUP_SELECT"  FORMAT="FONT_TILE_HM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|||middle" WIDTH="1535" HEIGHT="80">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="subtitle" TYPE="text" PARAM="AVATAR_MOOD_LINEUP_SUBTITLE" FORMAT="FONT_MEDIUM_SMALL_LABEL_PREVIEW|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX|||middle" WIDTH="1535" HEIGHT="50">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="80" />
+		</data>
+	</tile>
+	  <tile NAME="AVATAR_LINEUP_SELECT_AVATAR_0" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>		
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_1" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>		
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_2" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>				
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_3" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>				
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_4" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>						
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_5" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>		
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>				
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_6" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>		
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>				
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_7" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>		
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>				
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_8" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>		
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>				
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_9" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>	
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>					
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+	<tile NAME="AVATAR_LINEUP_SELECT_AVATAR_10" TYPE="TILE" SELECTABLE="TRUE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">	
+		<properties WIDTH="60" HEIGHT="82"/>		
+		<data ID="iconFIFA" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_FIFAAvatar_Active:SelectionIndicator_FIFAAvatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,false)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>				
+		<data ID="icon" TYPE="asset" PATH="tiles/avatar" PARAM="@#IfElse(@isSelected,SelectionIndicator_Avatar_Active:SelectionIndicator_Avatar_InActive)" VISIBLE="@#Equal(@showCustomSelection,true)" KEEP_SCALE="TRUE" UHLALPHA="0" HLALPHA="100">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		</data>
+		<data ID="playerHighlightedButton" TYPE="component" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE|TRUE" TRANSLATE="FALSE" X="11" Y="15" VISIBLE="@#Equal(@isSelected,false)" UHLALPHA="0" HLALPHA="100"/>
+	</tile>
+</panel>
+</root>

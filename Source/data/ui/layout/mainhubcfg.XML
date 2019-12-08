@@ -1,0 +1,1714 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="14/02/2014 15:27:39" VERSION="2">
+  <hub_settings NAME="MainHub" HUB_VERSION="2">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="mainHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.MainHubDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="TILE_EXPANDABLE" />
+    <tile_path TILE_PATH="FluxTile_Nested_Exported" TILE_NAME="TILE_NESTED" />
+    <tile_path TILE_PATH="game/components/FluxTiles/mainmenu/MoviePlayerTile.swf" TILE_NAME="TILE_MOVIE_PLAYER" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <variable_set>
+    <variable id="storyBackgroundContinueSmall"/>
+    <variable id="storyBackgroundContinueLarge"/>
+    <variable id="storyHeroActiveContinueSmall"/>
+    <variable id="storyHeroInactiveContinueSmall"/>
+    <variable id="storyHeroActiveContinueLarge"/>
+    <variable id="storyHeroInactiveContinueLarge"/>
+    <variable id="storyTeamCrest"/>
+    <variable id="storyProgressBar"/>
+    <variable id="storyChapterTitle"/>
+    <variable id="storyChapterDescription"/>
+    <variable id="storyTitle"/>
+    <variable id="UCLhomeCrest" type="int"/>
+    <variable id="UCLawayCrest" type="int"/>
+    <variable id="UCLroundName"/>
+  </variable_set>
+  <components>
+    <component PATH="game/fluxHelpers/MainHubLibrary.swf" X="0" Y="0" />
+    <component PATH="game/components/BackgroundPackTalent.swf" X="-344" Y="0" DATAPROVIDERID="PackTalentDP"/>
+  </components>
+  <buttons>
+    <button ID="MOV_BTN_MOVE" HINT="" ACTION="" DESTINATION="" />
+  </buttons>
+  <panel_set>
+    <panel NAME="MM_TAB_HOME_PANEL" LABEL="MM_TAB_HOME" IS_TAB="TRUE" DEFAULT_LAYOUT="TAB_HOME_BASE">
+      <buttons>
+        <button ID="START" HINT="TXT_SET_LEAD_PROFILE" ACTION="ACTION_SHOW_ACCOUNT_PICKER_TO_SET_LEAD" PARAMS="0" DESTINATION="" />
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="exitTitle" />
+      </buttons>
+      <layout NAME="TAB_HOME_BASE" X="169">
+        <tile NAME="CONTINUE_TILE_0" X="235" Y="302" />
+        <tile NAME="CONTINUE_TILE_1" X="579" Y="302"  />
+        <tile NAME="LIVE_CONTENT" X="922" Y="708"  />
+        <tile NAME="EATV_TILE" X="922" Y="302"  />
+	<tile NAME="ACCESSIBILITY_SHORTCUT" X="-1" Y="812"/>
+      </layout>
+      <layout NAME="TAB_HOME_BASE_ACCESSIBILITY_EXPANDED" X="169" EXTEND="TAB_HOME_BASE">
+        <tile NAME="ACCESSIBILITY_SHORTCUT" WIDTH="451" X="-231" Y="812" />
+      </layout>
+      <layout NAME="TAB_HOME_OFFLINE" EXTEND="TAB_HOME_BASE">
+        <tile NAME="LIVE_CONTENT_EMPTY" X="922" Y="708" />
+      </layout>
+      <layout NAME="TAB_HOME_OFFLINE_ACCESSIBILITY_EXPANDED" EXTEND="TAB_HOME_BASE">
+        <tile NAME="LIVE_CONTENT_EMPTY" X="922" Y="708" />
+        <tile NAME="ACCESSIBILITY_SHORTCUT" WIDTH="451" X="-231" Y="812" TILE_STATE="EXPANDED"/>
+      </layout>
+      <layout NAME="TAB_HOME_NOT_RETURNING_FUT" EXTEND="TAB_HOME_BASE">
+        <tile NAME="HOME_FUT_TILE" X="109" Y="708" />
+      </layout>
+      <layout NAME="TAB_HOME_INSTALL_PACKAGE" X="169">
+        <tile NAME="ACTIVATE_TILE" X="234" Y="302" />
+      </layout>
+      <layout NAME="TAB_HOME_INSTALL_NO_PACKAGE" X="169">
+        <tile NAME="KICK_OFF_TILE" X="235" Y="302" />
+        <tile NAME="INSTALL_TILE" X="926" Y="302" />
+        <tile NAME="FUT_DUMMY_TILE" X="926" Y="708" />
+      </layout>
+      <layout NAME="TAB_HOME_PRESS_MODE" >
+        <tile NAME="PRESS_KICK_OFF" X="235" Y="302" />
+      </layout>
+      <layout NAME="TAB_HOME_DEMO_MODE" >
+        <tile NAME="DEMO_KICK_OFF_TILE" X="235" Y="302" />
+        <tile NAME="DEMO_VOLTA_TILE" X="579" Y="302" />
+        <tile NAME="LIVE_CONTENT_DEMO" X="922" Y="708" />
+        <tile NAME="NEW_FEATURES_DEMO" X="922" Y="302" />
+      </layout>
+      <layout NAME="TAB_HOME_DEMO_MODE_OFFLINE" EXTEND="TAB_HOME_DEMO_MODE" REMOVE="LIVE_CONTENT_DEMO">
+        <tile NAME="LIVE_CONTENT_DEMO_EMPTY" X="922" Y="708" />
+      </layout>
+      <layout NAME="TAB_HOME_DEMO_MODE_KIOSK" X="42">
+        <tile NAME="KIOSK_KICK_OFF" X="215" Y="302" />
+        <tile NAME="KIOSK_VOLTA" X="720" Y="302" />
+        <tile NAME="KIOSK_SELL_SHEET" X="1225" Y="302" />
+      </layout>
+      <layout NAME="TAB_HOME_DEMO_MODE_REAL_MADRID_KIOSK" >
+        <tile NAME="KIOSK_REAL_MADRID_KICK_OFF_TILE" X="235" Y="302" />
+        <tile NAME="KIOSK_REAL_MADRID_SELL_SHEET" X="966" Y="302" />
+      </layout>
+      <layout NAME="TAB_HOME_TRIAL_OVER" >
+        <tile NAME="TRIAL_OVER_TILE" X="235" Y="302" />
+      </layout>
+      <layout NAME="TAB_HOME_TRIAL_LOADING" >
+        <tile NAME="TRIAL_LOAD_LARGE" X="235" Y="302" />
+      </layout>
+  	  <layout NAME="TAB_HOME_CGD_OVER" >
+      <!-- TODO-CGD: whitelisting may be broken from changes to POW/FET messaging. Revisit this for FUT 20: we may want to move to user-specific blaze settings instead. -->
+		<tile NAME="CGD_OVER_TILE" X="235" Y="302" />
+	  </layout>
+	  <layout NAME="TAB_HOME_CGD_LOADING" >
+		<tile NAME="CGD_LOAD_LARGE" X="235" Y="302" />
+	  </layout>
+    </panel>
+    <panel NAME="MM_TAB_PLAY_PANEL" LABEL="MM_TAB_PLAY" IS_TAB="TRUE" DEFAULT_LAYOUT="TAB_PLAY_BASE">
+      <buttons>
+        <button ID="START" HINT="TXT_SET_LEAD_PROFILE" ACTION="ACTION_SHOW_ACCOUNT_PICKER_TO_SET_LEAD" PARAMS="0" DESTINATION="" />
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="exitTitle" />
+      </buttons>
+      <layout NAME="TAB_PLAY_BASE" >
+        <tile NAME="PLAY_TILE_0" X="235" Y="302" />
+        <tile NAME="PLAY_TILE_1" X="601" Y="302" />
+        <tile NAME="PLAY_TILE_2" X="966" Y="302" />
+        <tile NAME="PLAY_TILE_3" X="1332" Y="302" />
+        <tile NAME="KICK_OFF" X="235" Y="708" />
+        <tile NAME="SKILLGAMES_NESTED" X="1332" Y="708" />
+        <tile NAME="TOURNAMENT" X="966" Y="708" />
+      </layout>
+      <layout NAME="TAB_PLAY_OFFLINE" EXTEND="TAB_PLAY_BASE" REMOVE="PLAY_TILE_0|PLAY_TILE_1|PLAY_TILE_2|PLAY_TILE_3">
+        <tile NAME="WORLDTOUR_TILE_PLAY" X="235" Y="302" />
+        <tile NAME="ULTIMATE_TEAM" X="601" Y="302" />
+        <tile NAME="CAREER_CONTINUE_LOAD_NEW" X="966" Y="302" />
+        <tile NAME="CHAMPIONS_LEAGUE_CONTINUE_LOAD_NEW" X="1332" Y="302" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_ONLINE_PANEL" LABEL="MM_TAB_ONLINE" IS_TAB="TRUE">
+      <buttons>
+        <button ID="START" HINT="TXT_SET_LEAD_PROFILE" ACTION="ACTION_SHOW_ACCOUNT_PICKER_TO_SET_LEAD" PARAMS="0" DESTINATION="" />
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="exitTitle" />
+      </buttons>
+      <layout NAME="ONLINE_PANEL_MINIMUM">
+        <tile NAME="NO_LIVE_COMP_SEASONS" X="235" Y="302" />
+        <tile NAME="PRO_CLUBS_LARGE" X="966" Y="302" />
+        <tile NAME="NO_LIVE_COMP_CO_OP_SEASONS" X="235" Y="708" />
+        <tile NAME="NO_LIVE_COMP_FRIENDLIES" X="966" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_SP1">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="FRIENDLIES" X="235" Y="708" />
+        <tile NAME="PRO_CLUBS_LARGE" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_2" X="966" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_SP2">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="FRIENDLIES" X="235" Y="708" />
+        <tile NAME="PRO_CLUBS_MED" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_1" X="966" Y="505" />
+        <tile NAME="LIVE_COMP_MED_TILE_2" X="966" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_SP3">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="FRIENDLIES" X="235" Y="708" />
+        <tile NAME="PRO_CLUBS_MED" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_1" X="966" Y="505" />
+        <tile NAME="LIVE_COMP_SMALL_TILE_1" X="966" Y="708" />
+        <tile NAME="LIVE_COMP_SMALL_TILE_2" X="1332" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_PS4_STREAM">
+        <tile NAME="NO_LIVE_COMP_SEASONS" X="235" Y="302" />
+        <tile NAME="PRO_CLUBS_LARGE" X="966" Y="302" />
+        <tile NAME="NO_LIVE_COMP_CO_OP_SEASONS" X="235" Y="708" />
+        <tile NAME="SMALL_NO_LIVE_COMP_FRIENDLIES" X="966" Y="708" />
+        <tile NAME="NO_LIVE_COMP_SONY_SYSTEM_VIEWER" X="1332" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_PS4_STREAM_SP1">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="SMALL_FRIENDLIES" X="235" Y="708" />
+        <tile NAME="SONY_SYSTEM_VIEWER" X="601" Y="708" />
+        <tile NAME="PRO_CLUBS_LARGE" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_2" X="966" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_PS4_STREAM_SP2">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="SMALL_FRIENDLIES" X="235" Y="708" />
+        <tile NAME="SONY_SYSTEM_VIEWER" X="601" Y="708" />
+        <tile NAME="PRO_CLUBS_MED" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_1" X="966" Y="505" />
+        <tile NAME="LIVE_COMP_MED_TILE_2" X="966" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_PS4_STREAM_SP3">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="SMALL_FRIENDLIES" X="235" Y="708" />
+        <tile NAME="SONY_SYSTEM_VIEWER" X="601" Y="708" />
+        <tile NAME="PRO_CLUBS_MED" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_1" X="966" Y="505" />
+        <tile NAME="LIVE_COMP_SMALL_TILE_1" X="966" Y="708" />
+        <tile NAME="LIVE_COMP_SMALL_TILE_2" X="1332" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_XB1_STREAM">
+        <tile NAME="NO_LIVE_COMP_SEASONS" X="235" Y="302" />
+        <tile NAME="PRO_CLUBS_LARGE" X="966" Y="302" />
+        <tile NAME="NO_LIVE_COMP_CO_OP_SEASONS" X="235" Y="708" />
+        <tile NAME="SMALL_NO_LIVE_COMP_FRIENDLIES" X="966" Y="708" />
+        <tile NAME="NO_LIVE_COMP_STREAMING_VIEWER_XONE" X="1332" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_XB1_STREAM_SP1">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="SMALL_FRIENDLIES" X="235" Y="708" />
+        <tile NAME="STREAMING_VIEWER_XONE" X="601" Y="708" />
+        <tile NAME="PRO_CLUBS_LARGE" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_2" X="966" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_XB1_STREAM_SP2">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="SMALL_FRIENDLIES" X="235" Y="708" />
+        <tile NAME="STREAMING_VIEWER_XONE" X="601" Y="708" />
+        <tile NAME="PRO_CLUBS_MED" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_1" X="966" Y="505" />
+        <tile NAME="LIVE_COMP_MED_TILE_2" X="966" Y="708" />
+      </layout>
+      <layout NAME="ONLINE_PANEL_XB1_STREAM_SP3">
+        <tile NAME="SEASONS" X="235" Y="302" />
+        <tile NAME="CO_OP_SEASONS" X="235" Y="505" />
+        <tile NAME="SMALL_FRIENDLIES" X="235" Y="708" />
+        <tile NAME="STREAMING_VIEWER_XONE" X="601" Y="708" />
+        <tile NAME="PRO_CLUBS_MED" X="966" Y="302" />
+        <tile NAME="LIVE_COMP_MED_TILE_1" X="966" Y="505" />
+        <tile NAME="LIVE_COMP_SMALL_TILE_1" X="966" Y="708" />
+        <tile NAME="LIVE_COMP_SMALL_TILE_2" X="1332" Y="708" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_CUSTOMISE_PANEL" LABEL="MM_TAB_CUSTOMISE" IS_TAB="TRUE" DEFAULT_LAYOUT="TAB_CUSTOMISE_BASE">
+      <buttons>
+        <button ID="START" HINT="TXT_SET_LEAD_PROFILE" ACTION="ACTION_SHOW_ACCOUNT_PICKER_TO_SET_LEAD" PARAMS="0" DESTINATION="" />
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="exitTitle" />
+      </buttons>
+      <layout NAME="TAB_CUSTOMISE_BASE" >
+        <tile NAME="CUSTOMISE_PROFILE" X="601" Y="302" />
+        <tile NAME="CUSTOMISE_ONLINE_SETTINGS" X="967" Y="302" />
+        <tile NAME="EASFC_FEATURES_TILE" X="1333" Y="302" />
+        <tile NAME="CUSTOMISE_EDIT_TEAMS" X="235" Y="608" />
+        <tile NAME="CUSTOMISE_TEAM_MANAGEMENT" X="601" Y="608" />
+        <tile NAME="CUSTOMISE_EDIT_PLAYER_NESTED" X="967" Y="608" />
+        <tile NAME="CUSTOMISE_EA_NESTED" X="1333" Y="608" />
+      </layout>
+      <layout NAME="TAB_SETTINGS_PC" EXTEND="TAB_CUSTOMISE_BASE" >
+        <tile NAME="CUSTOMISE_SETTINGS" X="235" Y="302" />
+      </layout>
+      <layout NAME="TAB_SETTINGS_XONE" EXTEND="TAB_CUSTOMISE_BASE">
+        <tile NAME="CUSTOMISE_SETTINGS_XONE_NESTED" X="235" Y="302" />
+      </layout>
+      <layout NAME="TAB_SETTINGS_PS4" EXTEND="TAB_CUSTOMISE_BASE">
+        <tile NAME="CUSTOMISE_SETTINGS_LARGE_PS" X="235" Y="302" />
+      </layout>
+      <layout NAME="TAB_SETTINGS_PS4_PSVR" EXTEND="TAB_CUSTOMISE_BASE">
+        <tile NAME="CUSTOMISE_SETTINGS_PSVR" X="235" Y="302" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_DEBUG_PANEL" LABEL="DEBUG" IS_TAB="TRUE" >
+      <layout NAME="TAB_DEBUG_BASE" >
+        <tile NAME="CONVERSATION_WHEEL_TEST" X="235" Y="302" />
+        <tile NAME="UI_TESTS" X="601" Y="302" />
+        <tile NAME="TEST_SCREEN_NESTED" X="967" Y="302" />
+        <tile NAME="PLAYER_HEADS_TEST_NESTED" X="235" Y="608" />
+        <tile NAME="BACKGROUND_TEST_NESTED" X="1333" Y="302" />
+        <tile NAME="CAREER_MODE" X="601" Y="608" />
+        <tile NAME="STORY_MODE" X="967" Y="608" />
+        <tile NAME="MOVIE_PLAYER" X="1333" Y="608" />
+        <tile NAME="FUT_DEBUG_PACK_OPENING" X="235" Y="914" />
+        <tile NAME="SAVED_INPUT" X="601" Y="914" />
+        <tile NAME="SAMPLE_SCENE" X="967" Y="914" />
+        <tile NAME="CUSTOMIZATION" X="967" Y="914" />
+        <tile NAME="GEN_PLAYER_FACES" X="1333" Y="914" />
+      </layout>
+      <layout NAME="TEST_SCREEN_EXPANDED">
+        <tile NAME="TEST_SCREEN_EXPANDED" X="235" Y="302" WIDTH="1454" HEIGHT="602" TILE_STATE="EXPANDED"/>
+        <tile NAME="FUT_DEBUG_PACK_OPENING" X="235" Y="914" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_WORLDTOUR_TEMP_PANEL" LABEL="SSF DEBUG" IS_TAB="TRUE" TRANSLATE="FALSE">
+      <layout NAME="TAB_WORLDTOUR_TEMP_BASE" >
+        <tile NAME="WORLDTOUR_TILE" X="235" Y="302" WIDTH="356" HEIGHT="600" />
+        <tile NAME="WORLDTOUR_DEBUG_MATCH_TILE" X="601" Y="302" WIDTH="356" HEIGHT="195" />
+        <tile NAME="WORLDTOUR_DEBUG_SCENE_TILE" X="601" Y="504" WIDTH="356" HEIGHT="195" />
+        <tile NAME="WORLDTOUR_DEBUG_DRILL_TILE" X="601" Y="707" WIDTH="356" HEIGHT="195" />
+        <tile NAME="DEBUGAVATAR_TILE" X="967" Y="302" WIDTH="356" HEIGHT="295" /> 
+      </layout>
+    </panel>
+    <panel NAME="MM_HOME_CONTINUE_TILES_DUMMY_PANEL" LABEL="Continue_Tile" IS_TAB="FALSE" />
+    <panel NAME="MM_TAB_CUSTOMISE_TEAMS_PANEL" LABEL="MM_CUSTOMISE_EDITTEAMS" IS_TAB="FALSE">
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_FLUX_TAB_CHANGED" DESTINATION="MM_TAB_CUSTOMISE_PANEL" />
+      </buttons>
+      <layout NAME="TAB_CUSTOMISE_TEAMS_BASE" >
+        <tile NAME="CUSTOMISE_EDIT_TEAM_MANAGEMENT" X="235" Y="302" />
+        <tile NAME="NATIONAL_SQUADS" X="235" Y="608" />
+        <tile NAME="STADIUMS" X="601" Y="608" />
+        <tile NAME="CLUB_TRANSFERS" X="967" Y="302" />
+        <tile NAME="DOWNLOAD_UPDATES" X="967" Y="608" />
+        <tile NAME="RESET_ALL_SQUADS" X="1333" Y="608" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_CUSTOMISE_SETTINGS_PANEL" LABEL="MM_CUSTOMISE_SETTINGS" IS_TAB="FALSE" DEFAULT_LAYOUT="TAB_CUSTOMISE_SETTINGS_BASE">
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_FLUX_TAB_CHANGED" DESTINATION="MM_TAB_CUSTOMISE_PANEL" />
+      </buttons>
+      <layout NAME="TAB_CUSTOMISE_SETTINGS_BASE" >
+        <tile NAME="GAME_SETTINGS" X="967" Y="302" />
+        <tile NAME="VIDEO_CALIBRATION" X="1333" Y="302" />
+        <tile NAME="BASIC_CONTROLS" X="235" Y="608" />
+        <tile NAME="ACCESSIBILITY" X="967" Y="608" />
+        <tile NAME="CONTROLLER_SETTINGS" X="235" Y="302" />
+        <tile NAME="SKILL_MOVES_CELEBRATIONS_NESTED" X="601" Y="608" />
+        <tile NAME="SELECT_ARENA_PLAYER_NESTED" X="1333" Y="608" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_SETTINGS_PS4" EXTEND="TAB_CUSTOMISE_SETTINGS_BASE">
+        <tile NAME="CONTROLLER_SETTINGS_REMOTE" X="235" Y="302" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_CUSTOMISE_ONLINE_PANEL" LABEL="MM_CUSTOMISE_ONLINESETTINGS_TAB" IS_TAB="FALSE" DEFAULT_LAYOUT="TAB_CUSTOMISE_ONLINE_BASE">
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_FLUX_TAB_CHANGED" DESTINATION="MM_TAB_CUSTOMISE_PANEL" />
+      </buttons>
+      <layout NAME="TAB_CUSTOMISE_ONLINE_BASE" >
+        <tile NAME="ORIGIN_ACCOUT_EA_SETTINGS" X="235" Y="302" />
+        <tile NAME="DLC_OPEN_STORE" X="235" Y="608" />
+        <tile NAME="PRIVACY_SETTINGS" X="967" Y="302" />
+        <tile NAME="MATCHMAKING_OPTIONS" X="967" Y="608" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_ONLINE_PC" >
+        <tile NAME="PRIVACY_SETTINGS_PC" X="235" Y="302" />
+        <tile NAME="MATCHMAKING_OPTIONS_PC" X="967" Y="302" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_CUSTOMISE_PROFILE_PANEL" LABEL="MM_CUSTOMISE_PROFILE" IS_TAB="FALSE" DEFAULT_LAYOUT="TAB_CUSTOMISE_PROFILE_BASE">
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_FLUX_TAB_CHANGED" DESTINATION="MM_TAB_CUSTOMISE_PANEL" />
+      </buttons>
+      <layout NAME="TAB_CUSTOMISE_PROFILE_BASE" >
+        <tile NAME="PROFILE_MANAGER" X="235" Y="302" />
+        <tile NAME="SAVE_SQUADS" X="967" Y="608" />
+        <tile NAME="LOAD_SQUADS" X="967" Y="302" />
+        <tile NAME="LOAD_FIFA_PROFILE" X="1333" Y="302" />
+        <tile NAME="SAVE_FIFA_PROFILE" X="1333" Y="608" />
+        <tile NAME="DELETE_FIFA_PROFILE" X="235" Y="608" />
+        <tile NAME="EULA" X="601" Y="608" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_CUSTOMISE_KINECT_PANEL" LABEL="MM_CUSTOMISE_KINECT" IS_TAB="FALSE" DEFAULT_LAYOUT="TAB_CUSTOMISE_KINECT_BASE">
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_FLUX_TAB_CHANGED" DESTINATION="MM_TAB_CUSTOMISE_PANEL" />
+      </buttons>
+      <layout NAME="TAB_CUSTOMISE_KINECT_BASE" >
+        <tile NAME="KIN_SETTINGS" X="235" Y="302" />
+        <tile NAME="KIN_COMBO" X="967" Y="608" />
+        <tile NAME="KIN_CUSTOM" X="967" Y="302" />
+        <tile NAME="KIN_FORMATIONS" X="1333" Y="608" />
+        <tile NAME="KIN_HELP" X="1333" Y="302" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_KINECT_PSVR_PS4" EXTEND="TAB_CUSTOMISE_KINECT_BASE">
+        <tile NAME="PSVR_HELP" X="1333" Y="302" />
+      </layout>
+    </panel>
+    <panel NAME="MM_TAB_CUSTOMISE_DEMO_PANEL" LABEL="MM_TAB_CUSTOMISE_DEMO" IS_TAB="TRUE">
+      <buttons>
+        <button ID="START" HINT="TXT_SET_LEAD_PROFILE" ACTION="ACTION_SHOW_ACCOUNT_PICKER_TO_SET_LEAD" PARAMS="0" DESTINATION="" />
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="exitTitle" />
+      </buttons>
+      <layout NAME="TAB_CUSTOMISE_PRESS_PLATFORMS_BASE" >
+        <tile NAME="DEMO_GAME_SETTINGS_SMALL" X="235" Y="302" />
+        <tile NAME="DEMO_BASIC_CONTROLS_LARGE" X="967" Y="302" />
+        <tile NAME="DEMO_CONTROLLER_SETTINGS_LARGE" X="235" Y="608" />
+        <tile NAME="DEMO_SKILL_MOVES" X="967" Y="608" />
+        <tile NAME="DEMO_CELEBRATIONS" X="1333" Y="608" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_DEMO_PLATFORMS_BASE" >
+        <tile NAME="DEMO_GAME_SETTINGS_SMALL" X="235" Y="302" />
+        <tile NAME="DEMO_BASIC_CONTROLS_SMALL" X="967" Y="302" />
+        <tile NAME="DEMO_CONTROLLER_SETTINGS" X="1333" Y="302" />
+        <tile NAME="DEMO_PRIVACY_SETTINGS_NESTED" X="235" Y="608" />
+        <tile NAME="DEMO_ONLINE_SETTINGS_EA_ACCOUNT" X="601" Y="608" />
+        <tile NAME="DEMO_VIDEO_CALIBRATION_SMALL" X="966" Y="608" />
+        <tile NAME="DEMO_ACCESSIBILITY_SMALL" X="1333" Y="608" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_DEMO_PC" EXTEND="TAB_CUSTOMISE_DEMO_PLATFORMS_BASE" REMOVE="DEMO_ONLINE_SETTINGS_EA_ACCOUNT">
+        <tile NAME="DEMO_SETTINGS_PRIVACY_NESTED" X="235" Y="608" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_DEMO_PS4" EXTEND="TAB_CUSTOMISE_DEMO_PLATFORMS_BASE">
+        <tile NAME="DEMO_REMOTE_PLAY_SMALL" X="235" Y="302" />
+        <tile NAME="DEMO_GAME_SETTINGS_SQUARE" X="601" Y="302" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_DEMO_XB1" >
+        <tile NAME="DEMO_GAME_SETTINGS_SMALL" X="235" Y="302" />
+        <tile NAME="DEMO_BASIC_CONTROLS_SMALL" X="966" Y="302" />
+        <tile NAME="DEMO_CONTROLLER_SETTINGS" X="1333" Y="302" />
+        <tile NAME="DEMO_VIDEO_CALIBRATION_SMALL" X="966" Y="608" />
+        <tile NAME="DEMO_ONLINE_SETTINGS_EA_ACCOUNT" X="601" Y="608" />
+        <tile NAME="DEMO_PRIVACY_SETTINGS_NESTED" X="235" Y="608" />
+        <tile NAME="DEMO_ACCESSIBILITY_SMALL" X="1333" Y="608" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_DEMO_KIOSK">
+        <tile NAME="DEMO_GAME_SETTINGS_SMALL" X="235" Y="302" />
+        <tile NAME="DEMO_BASIC_CONTROLS_LARGE" X="967" Y="302" />
+        <tile NAME="DEMO_CONTROLLER_SETTINGS_LARGE" X="235" Y="608" />
+        <tile NAME="DEMO_VIDEO_CALIBRATION_SMALL" X="967" Y="608" />
+        <tile NAME="DEMO_ACCESSIBILITY_SMALL" X="1333" Y="608" />
+      </layout>
+      <layout NAME="TAB_CUSTOMISE_DEMO_PC_KIOSK" EXTEND="TAB_CUSTOMISE_DEMO_PC" REMOVE="DEMO_SETTINGS_PRIVACY_NESTED">
+        <tile NAME="DEMO_GAME_SETTINGS_LARGE" X="235" Y="302" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="MM_TAB_HOME_PANEL">
+    <variable_set>
+      <variable id="showUCLMovieNew" type="bool" />
+      <variable id="showUCLMovieContinue" type="bool"/>
+    </variable_set>
+    <tile NAME="CONTINUE_TILE_0" PARAM="22" TYPE="TILE">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="LOADING_SPINNER" TYPE="component" PARAM="3" PATH="online/components/ui/StreamingIcon.swf" WIDTH="200" HEIGHT="200" >
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="100" />
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="100" />
+      </data>
+    </tile>
+    <tile NAME="CONTINUE_TILE_1" PARAM="10" TYPE="TILE">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="LOADING_SPINNER" TYPE="component" PARAM="3" PATH="online/components/ui/StreamingIcon.swf" WIDTH="200" HEIGHT="200" >
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="100" />
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="100" />
+      </data>
+    </tile>
+    <tile NAME="KICK_OFF_TILE" PARAM="10" TYPE="TILE" BACKGROUND="Kickoff_Install" DESTINATION="KickOffLocalMatch" NARRATION_HIGHLIGHT="ACC_KICK_OFF_TILE_HIGHLIGHTED" NARRATION_SELECT="ACC_KICK_OFF_TILE_SELECTED">
+      <properties WIDTH="681" HEIGHT="600" />
+      <data ID="TITLE" TYPE="title" PARAM="KickoffLocalMatch"  FORMAT="HS" />
+    </tile>
+    <tile NAME="DEMO_KICK_OFF_TILE" PARAM="10" TYPE="TILE" DESTINATION="KickOffLocalMatch" BACKGROUND="Kickoff_Demo" NARRATION_HIGHLIGHT="ACC_DEMO_KICK_OFF_TILE_HIGHLIGHTED" NARRATION_SELECT="ACC_DEMO_KICK_OFF_TILE_SELECTED" DECORATORS_RANGE="NONE">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="DEMO_KICK_OFF_TITLE" />
+    </tile>
+    <tile NAME="DEMO_VOLTA_TILE" PARAM="10" TYPE="TILE" DESTINATION="DemoVolta"  NARRATION_HIGHLIGHT="ACC_DEMO_VOLTA_TILE_HIGHLIGHTED" NARRATION_SELECT="ACC_DEMO_VOLTA_TILE_SELECTED" DECORATORS_RANGE="NONE">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="KICKOFF_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/Volta_Demo_Active.dds" WIDTH="335" HEIGHT="600" X="0" Y="0" HLALPHA="100" UHLALPHA="0"/>
+      <data ID="KICKOFF_INACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/Volta_Demo_Inactive.dds" WIDTH="335" HEIGHT="600" X="0" Y="0" HLALPHA="0" UHLALPHA="100"/>
+      <data ID="TITLE" TYPE="title" PARAM="DEMO_VOLTA_TITLE" />
+    </tile>
+    <tile NAME="PRESS_KICK_OFF" PARAM="10" TYPE="TILE" DESTINATION="KickOffLocalMatch" NARRATION_HIGHLIGHT="ACC_PRESS_KICK_OFF_HIGHLIGHTED" NARRATION_SELECT="ACC_PRESS_KICK_OFF_SELECTED" SELECTABLE="TRUE" DECORATORS_RANGE="NONE" USE_MASK="FALSE">
+      <properties WIDTH="699" HEIGHT="600" />
+      <data ID="TITLE" TYPE="title" PARAM="DEMO_KICK_OFF_TITLE" />
+      <data ID="KICKOFF_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KickOff_Press_Active.dds" WIDTH="699" HEIGHT="636" X="0" Y="-36"/>
+    </tile>
+	<tile NAME="PRESS_VOLTA" PARAM="10" TYPE="TILE" DESTINATION="NewWorldTourMode" NARRATION_HIGHLIGHT="ACC_PRESS_VOLTA_HIGHLIGHTED" NARRATION_SELECT="ACC_PRESS_VOLTA_SELECTED" SELECTABLE="TRUE" DECORATORS_RANGE="NONE" USE_MASK="FALSE">
+      <properties WIDTH="699" HEIGHT="600" />
+      <data ID="KICKOFF_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/Volta_Press_Active.dds" WIDTH="699" HEIGHT="600" X="0" Y="0" HLALPHA="100" UHLALPHA="0"/>
+      <data ID="KICKOFF_INACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/Volta_Press_Inactive.dds" WIDTH="699" HEIGHT="600" X="0" Y="0" HLALPHA="0" UHLALPHA="100"/>
+    </tile>
+    <tile NAME="HOME_FUT_TILE" PARAM="4" TYPE="TILE" DESTINATION="LaunchFUT" BACKGROUND="FUTMainMenuDefault" DECORATORS_RANGE="NONE" TRACE="FALSE" NARRATION_HIGHLIGHT="ACC_FUT_HIGHLIGHTED" NARRATION_SELECT="ACC_FUT_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" />
+      <data ID="CLUBBACKING" TYPE="rectangle" VISIBLE="TRUE" FORMAT="|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="324" HEIGHT="50" X="0" Y="96" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_PLAY_FUT" />
+      <data ID="BODYMESSAGE" VISIBLE="FALSE" TYPE="text" FORMAT="FONT_SMALL_MEDIUM||left|" TRANSLATE="FALSE" WIDTH="320" HEIGHT="320" X="18" Y="155" />
+      <data ID="LINKMESSAGEBACKING" VISIBLE="FALSE" TYPE="bar" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" X="0">
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" OFFSET="10" />
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+      </data>
+      <data ID="LINKMESSAGE" VISIBLE="FALSE" TYPE="text" FORMAT="FONT_TILE_TSL|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="320" HEIGHT="320" X="18" Y="330" />
+      <data ID="clubname" TYPE="text" FORMAT="FONT_TILE_IS||left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="750" HEIGHT="42" X="100" REL_TARGET="TITLE" REL_Y="39" />
+      <data ID="established" TYPE="text" FORMAT="FONT_SMALL_MEDIUM||left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="750" HEIGHT="42" X="100" REL_TARGET="TITLE" REL_Y="65" />
+      <data ID="logo" TYPE="asset" VISIBLE="FALSE" PATH="crestfuttile" FORMAT="STRETCH" TRANSLATE="FALSE" WIDTH="75" HEIGHT="75" X="18" REL_TARGET="TITLE" REL_Y="33" />
+    </tile>
+    <tile NAME="FUT_DUMMY_TILE" PARAM="4" TYPE="TILE" BACKGROUND="Install_FUT">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_PLAY_FUT" />
+      <data ID="DESCRIPTION" TYPE="text" PARAM="TXT_INSTALLMODE_FUT_TEXT" PATH="12" FORMAT="SS||left" WIDTH="390" HEIGHT="42" X="18" REL_TARGET="TITLE" REL_Y="10" />
+    </tile>
+    <tile NAME="ACTIVATE_TILE" TYPE="TILE" DESTINATION="activateFullGame" BACKGROUND="InstallComplete_Lrg" DECORATORS_RANGE="1|4">
+      <properties WIDTH="1452" HEIGHT="600" />
+      <data ID="installProgress" TYPE="title" PARAM="TXT_STREAMING_INSTALL_COMPLETE" />
+      <data ID="installStory" TYPE="text" PARAM="MM_STREAMING_INSTALL_COMPLETE_STORY" FORMAT="SM||left" WIDTH="512" HEIGHT="130" X="18" REL_TARGET="installProgress" REL_Y="10" />
+      <data ID="INSTALL" TYPE="component" PATH="game/components/FluxComponents/InstallProgress.swf" WIDTH="400" HEIGHT="105" X="68" Y="532" />
+    </tile>
+    <tile NAME="INSTALL_TILE" TYPE="TILE" BACKGROUND="InstallProgress_Lrg">
+      <properties WIDTH="721" HEIGHT="396" />
+      <data ID="installProgress" TYPE="title" PARAM="TXT_STREAMING_INSTALL_PROGRESS" />
+      <data ID="installStory" TYPE="text" PARAM="MM_STREAMING_INSTALL_PROGRESS_STORY" FORMAT="SM||left" WIDTH="390" HEIGHT="130" X="18" REL_TARGET="installProgress" REL_Y="10" />
+      <data ID="INSTALL" TYPE="component" PATH="game/components/FluxComponents/InstallProgress.swf" X="66" Y="334" />
+    </tile>
+    <tile NAME="EATV_TILE" TYPE="TILE_MOVIE_PLAYER" DESTINATION="StartMovie" NARRATION_HIGHLIGHT="ACC_EATV_HIGHLIGHT" NARRATION_SELECT="ACC_EATV_SELECTED">
+      <properties WIDTH="721" HEIGHT="396" />
+    </tile>
+    <tile NAME="LIVE_CONTENT_EMPTY" PARAM="12" TYPE="TILE" BACKGROUND="invalid_path_activates_shards" NARRATION_HIGHLIGHT="ACC_LIVE_CONTENT_EMPTY_HIGHLIGHT" NARRATION_SELECT="ACC_LIVE_CONTENT_EMPTY_SELECTED">
+      <properties WIDTH="721" HEIGHT="193" ENABLE_CYCLING="TRUE" />
+      <data TYPE="title" PARAM="TXT_FLT_INFO" ALIGN="leading" FORMAT="HS" WIDTH="721" HEIGHT="40" ID="FLTTEXT0" />
+      <data TYPE="text" PARAM="TXT_FLT_INFO_TEXT" ALIGN="leading" FORMAT="SS" WIDTH="680" HEIGHT="40" X="18" REL_TARGET="FLTTEXT0" REL_Y="10" ID="FLTTEXT1" />
+    </tile>
+    <tile NAME="LIVE_CONTENT_DEMO" PARAM="13" TYPE="TILE_NESTED" DATAPROVIDERID="MAINHUB_LIVECONTENT_DP" >
+      <properties WIDTH="721" HEIGHT="193" ENABLE_CYCLING="FALSE" />
+      <subtile SUBTILE_TYPE="TILE" NAME="LIVE_CONTENT_SUBTILE_DEMO_0" DESTINATION="">
+        <data TYPE="title" FORMAT="HS" ALIGN="left" TRANSLATE="FALSE" WIDTH="846" HEIGHT="40" ID="FLTTEXT0" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT1" />
+        <data ID="FLT_ACTION" PARAM="TXT_DYNAMICMESSAGING_TAKE|A|0|TRUE" TYPE="component" PATH="game/components/FluxComponents/TileActionableIndicator.swf" WIDTH="300" HEIGHT="39" X="0" Y="154" />
+      </subtile>
+    </tile>
+    <tile NAME="LIVE_CONTENT_DEMO_EMPTY" PARAM="12" TYPE="TILE" DESTINATION="BuyNowDemo" BACKGROUND="Demo_Upsell_Banner">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data TYPE="title" ALIGN="leading" PARAM="DEMO_OFFLINE_BANNER_HEADER" FORMAT="HS" WIDTH="721" HEIGHT="40" />
+      <data TYPE="text" ALIGN="leading" PARAM="DEMO_OFFLINE_BANNER_BODY" FORMAT="TSMU" WIDTH="423" HEIGHT="40" X="18" Y="70" />
+    </tile>
+    <tile NAME="NEW_FEATURES_DEMO" PARAM="13" TYPE="TILE" DESTINATION="SellSheet">
+      <properties WIDTH="721" HEIGHT="396" />
+      <data ID="FEATURE_ACTIVE" TYPE="image" PATH="imgAssets/tiles/mainHub/demo_new_features_Active.dds" WIDTH="721" HEIGHT="396" HLALPHA="100" UHLALPHA="0"/>
+      <data ID="FEATURE_INACTIVE" TYPE="image" PATH="imgAssets/tiles/mainHub/demo_new_features_Inactive.dds" WIDTH="721" HEIGHT="396" HLALPHA="0" UHLALPHA="100"/>
+      <data ID="TITLE" TYPE="title" FORMAT="HS" WIDTH="721" ALIGN="leading" HEIGHT="40" PARAM="DEMO_WHATS_NEW_INTRO_TITLE" />
+    </tile>    
+    <tile NAME="LIVE_CONTENT" PARAM="13" TYPE="TILE_NESTED" DATAPROVIDERID="MAINHUB_LIVECONTENT_DP" >
+      <properties WIDTH="721" HEIGHT="193" ENABLE_CYCLING="TRUE" />
+      <subtile SUBTILE_TYPE="TILE" NAME="LIVE_CONTENT_SUBTILE_0" DESTINATION="" NARRATION_HIGHLIGHT="ACC_LIVE_CONTENT_SUBTILE_0_HIGHLIGHT" NARRATION_SELECT="ACC_LIVE_CONTENT_SUBTILE_0_SELECTED">
+        <data TYPE="title" FORMAT="HS" TRANSLATE="FALSE" WIDTH="846" HEIGHT="40" ID="FLTTEXT0" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT1" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT2" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT3" />
+        <data ID="FLT_ACTION" PARAM="TXT_DYNAMICMESSAGING_TAKE|A|0|TRUE" TYPE="component" PATH="game/components/FluxComponents/TileActionableIndicator.swf" WIDTH="300" HEIGHT="39" X="0" Y="154" />
+        <data ID="STREAM_ONLINE_BACKING_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="STREAM_ONLINE_BACKING_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="VIEWERS_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="VIEWERS_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="STREAM_ONLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_ONLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="VIEWERS_TEXT" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" DESTINATION="" PARAM="" NAME="LIVE_CONTENT_SUBTILE_1" NARRATION_HIGHLIGHT="ACC_LIVE_CONTENT_SUBTILE_1_HIGHLIGHT" NARRATION_SELECT="ACC_LIVE_CONTENT_SUBTILE_1_SELECTED">
+        <data TYPE="title" FORMAT="HS" TRANSLATE="FALSE" WIDTH="846" HEIGHT="40" ID="FLTTEXT0" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT1" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT2" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT3" />
+        <data ID="FLT_ACTION" PARAM="TXT_DYNAMICMESSAGING_TAKE|A|0|TRUE" TYPE="component" PATH="game/components/FluxComponents/TileActionableIndicator.swf" WIDTH="300" HEIGHT="39" X="0" Y="154" />
+        <data ID="STREAM_ONLINE_BACKING_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="STREAM_ONLINE_BACKING_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="VIEWERS_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="VIEWERS_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="STREAM_ONLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_ONLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="VIEWERS_TEXT" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" DESTINATION="" PARAM="" NAME="LIVE_CONTENT_SUBTILE_2" NARRATION_HIGHLIGHT="ACC_LIVE_CONTENT_SUBTILE_2_HIGHLIGHT" NARRATION_SELECT="ACC_LIVE_CONTENT_SUBTILE_2_SELECTED">
+        <data TYPE="title" FORMAT="HS" TRANSLATE="FALSE" WIDTH="846" HEIGHT="40" ID="FLTTEXT0" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT1" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT2" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT3" />
+        <data ID="FLT_ACTION" PARAM="TXT_DYNAMICMESSAGING_TAKE|A|0|TRUE" TYPE="component" PATH="game/components/FluxComponents/TileActionableIndicator.swf" WIDTH="300" HEIGHT="39" X="0" Y="154" />
+        <data ID="STREAM_ONLINE_BACKING_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="STREAM_ONLINE_BACKING_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="VIEWERS_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="VIEWERS_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="STREAM_ONLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_ONLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="VIEWERS_TEXT" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" DESTINATION="" PARAM="" NAME="LIVE_CONTENT_SUBTILE_3" NARRATION_HIGHLIGHT="ACC_LIVE_CONTENT_SUBTILE_3_HIGHLIGHT" NARRATION_SELECT="ACC_LIVE_CONTENT_SUBTILE_3_SELECTED">
+        <data TYPE="title" FORMAT="HS" TRANSLATE="FALSE" WIDTH="846" HEIGHT="40" ID="FLTTEXT0" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT1" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT2" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT3" />
+        <data ID="FLT_ACTION" PARAM="TXT_DYNAMICMESSAGING_TAKE|A|0|TRUE" TYPE="component" PATH="game/components/FluxComponents/TileActionableIndicator.swf" WIDTH="300" HEIGHT="39" X="0" Y="154" />
+        <data ID="STREAM_ONLINE_BACKING_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="STREAM_ONLINE_BACKING_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="VIEWERS_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="VIEWERS_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="STREAM_ONLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_ONLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="VIEWERS_TEXT" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" DESTINATION="" PARAM="" NAME="LIVE_CONTENT_SUBTILE_4" NARRATION_HIGHLIGHT="ACC_LIVE_CONTENT_SUBTILE_4_HIGHLIGHT" NARRATION_SELECT="ACC_LIVE_CONTENT_SUBTILE_4_SELECTED">
+        <data TYPE="title" FORMAT="HS" TRANSLATE="FALSE" WIDTH="846" HEIGHT="40" ID="FLTTEXT0" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT1" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT2" />
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="FLTTEXT3" />
+        <data ID="FLT_ACTION" PARAM="TXT_DYNAMICMESSAGING_TAKE|A|0|TRUE" TYPE="component" PATH="game/components/FluxComponents/TileActionableIndicator.swf" WIDTH="300" HEIGHT="39" X="0" Y="154" />
+        <data ID="STREAM_ONLINE_BACKING_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="STREAM_ONLINE_BACKING_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/OnOfflineIconBackingInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="60" HEIGHT="60" X="661" Y ="0"/>
+        <data ID="VIEWERS_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="VIEWERS_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconViewerInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="33" HEIGHT="32" X="559" Y ="109"/>
+        <data ID="STREAM_ONLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_ONLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOnlineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="47" HEIGHT="41" X="668" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_H" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineActive.dds" HLALPHA="100" UHLALPHA="0" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data ID="STREAM_OFFLINE_ICON_UH" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/streamingBroadcast/IconOfflineInactive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="42" HEIGHT="40" X="670" Y ="10"/>
+        <data TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="423" HEIGHT="40" X="18" Y="70" ID="VIEWERS_TEXT" />
+      </subtile>
+    </tile>
+    <tile NAME="DEMO_VIDEO_TILE" TYPE="TILE_MOVIE_PLAYER" >
+      <properties WIDTH="721" HEIGHT="396" />
+    </tile>
+    <tile NAME="DEMO_PROMO_TILE" TYPE="TILE" DESTINATION="BuyNowDemo" DECORATORS_RANGE="NONE">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="TITLE" TYPE="title" PARAM="DEMO_WHATS_NEW_INTRO_TITLE" FORMAT="HS" WIDTH="721" HEIGHT="60" />
+      <data ID="DEMO_PROMO_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/Promo_Active.dds" WIDTH="721" HEIGHT="193" X="0" Y="0" HLALPHA="100" UHLALPHA="0"/>
+      <data ID="DEMO_PROMO_NONACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/Promo_Inactive.dds" WIDTH="721" HEIGHT="193" X="0" Y="0" HLALPHA="0" UHLALPHA="100"/>
+    </tile>
+    <tile NAME="KIOSK_REAL_MADRID_KICK_OFF_TILE" PARAM="10" TYPE="TILE" DESTINATION="KickOffLocalMatch" DECORATORS_RANGE="NONE">
+      <properties WIDTH="721" HEIGHT="600" />
+      <data ID="TITLE" TYPE="title" PARAM="DEMO_KICK_OFF_TITLE" />
+      <data ID="REAL_MADRID_KICKOFF_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/Kiosk_RM_KickOff_Active.dds" WIDTH="721" HEIGHT="600" X="0" Y="0" HLALPHA="100" UHLALPHA="0"/>
+      <data ID="REAL_MADRID_KICKOFF_INACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/Kiosk_RM_KickOff_Inactive.dds" WIDTH="721" HEIGHT="600" X="0" Y="0" HLALPHA="0" UHLALPHA="100"/>
+    </tile>
+    <tile NAME="KIOSK_REAL_MADRID_SELL_SHEET" TYPE="TILE" DESTINATION="SellSheet" DECORATORS_RANGE="NONE">
+      <properties WIDTH="721" HEIGHT="600" />
+      <data ID="TITLE" TYPE="title" PARAM="DEMO_WHATS_NEW_INTRO_TITLE" FORMAT="HS" WIDTH="600" HEIGHT="60" />
+      <data ID="REAL_MADRID_SELL_SHEET_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KIOSK_RM_Features_Active.dds" WIDTH="721" HEIGHT="600" X="0" Y="0" HLALPHA="100" UHLALPHA="0"/>
+      <data ID="REAL_MADRID_SELL_SHEET_NONACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KIOSK_RM_Features_Inactive.dds" WIDTH="721" HEIGHT="600" X="0" Y="0" HLALPHA="0" UHLALPHA="100"/>
+    </tile>
+    <tile NAME="KIOSK_SELL_SHEET" TYPE="TILE" DESTINATION="SellSheet" DECORATORS_RANGE="NONE">
+      <properties WIDTH="390" HEIGHT="595" />
+      <data ID="KIOSK_SELL_SHEET_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KIOSK_Features_Active.dds" WIDTH="390" HEIGHT="595" X="0" Y="0" HLALPHA="100" UHLALPHA="0" />
+      <data ID="KIOSK_SELL_SHEET_NONACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KIOSK_Features_Inactive.dds" WIDTH="390" HEIGHT="595" X="0" Y="0" HLALPHA="0" UHLALPHA="100" />
+      <data ID="TITLE" TYPE="title" PARAM="DEMO_WHATS_NEW_INTRO_TITLE" FORMAT="HS" WIDTH="390" HEIGHT="60" />
+    </tile>
+    <tile NAME="KIOSK_KICK_OFF" TYPE="TILE" DESTINATION="KickOffLocalMatch" DECORATORS_RANGE="NONE">
+      <properties WIDTH="495" HEIGHT="595" />
+      <data ID="KIOSK_KICK_OFF_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KIOSK_kick_off_Active.dds" WIDTH="495" HEIGHT="595" X="0" Y="0" HLALPHA="100" UHLALPHA="0" />
+      <data ID="KIOSK_KICK_OFF_NONACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KIOSK_kick_off_Inactive.dds" WIDTH="495" HEIGHT="595" X="0" Y="0" HLALPHA="0" UHLALPHA="100" />
+      <data ID="TITLE" TYPE="title" PARAM="DEMO_KICK_OFF_TITLE" FORMAT="HS" WIDTH="490" HEIGHT="60" />
+    </tile>
+    <tile NAME="KIOSK_VOLTA" TYPE="TILE" DESTINATION="DemoVolta" DECORATORS_RANGE="NONE">
+      <properties WIDTH="495" HEIGHT="595" />
+      <data ID="KIOSK_VOLTA_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KIOSK_volta_Active.dds" WIDTH="495" HEIGHT="595" X="0" Y="0" HLALPHA="100" UHLALPHA="0" />
+      <data ID="KIOSK_VOLTA_NONACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/KIOSK_volta_Inactive.dds" WIDTH="495" HEIGHT="595" X="0" Y="0" HLALPHA="0" UHLALPHA="100" />
+      <data ID="TITLE" TYPE="title" PARAM="DEMO_VOLTA_TITLE" FORMAT="HS" WIDTH="490" HEIGHT="60" />
+    </tile>
+    <tile NAME="KIOSK_CUSTOMISE" TYPE="TILE" BG_ICON="SettingsControls_Square" SUBPANEL_ID="MM_TAB_CUSTOMISE_DEMO_PANEL">
+      <properties WIDTH="846" HEIGHT="204" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_TAB_CUSTOMISE" FORMAT="HS" WIDTH="600" HEIGHT="60" />
+    </tile>
+    <tile NAME="TRIAL_OVER_TILE" PARAM="12" TYPE="TILE" BACKGROUND="TrialCompleted_Full" DESTINATION="evt_UpsellStoreTrial">
+      <properties WIDTH="1451" HEIGHT="602" />
+      <data TYPE="image" PATH="imgAssets/tiles/mainHub/Logo_FIFA17_NonActive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="183" HEIGHT="48" X="20" Y ="20" ID="FIFALOGO_UNHIGHLIGHTED" />
+      <data TYPE="image" PATH="imgAssets/tiles/mainHub/Logo_FIFA17.dds" HLALPHA="100" UHLALPHA="0" WIDTH="183" HEIGHT="48" X="20" Y ="20" ID="FIFALOGO_HIGHLIGHTED" />
+      <data TYPE="title" PARAM="TXT_TRIAL_UPSELL_TITLE" TRANSLATE="TRUE" FORMAT="HL" WIDTH="846" HEIGHT="20" X="20" Y="70" ID="TITLE" />
+      <data TYPE="text" PARAM="TXT_TRIAL_UPSELL_DESCR" TRANSLATE="TRUE" FORMAT="SM" WIDTH="480" HEIGHT="200" X="20" Y="150" ID="BODY" />
+    </tile>
+    <tile NAME="TRIAL_LOAD_LARGE" PARAM="12" TYPE="TILE" BACKGROUND="TrialCompleted_Full">
+      <properties WIDTH="1451" HEIGHT="602" />
+      <data TYPE="image" PATH="imgAssets/tiles/mainHub/Logo_FIFA17_NonActive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="183" HEIGHT="48" X="20" Y ="20" ID="FIFALOGO_UNHIGHLIGHTED" />
+      <data TYPE="image" PATH="imgAssets/tiles/mainHub/Logo_FIFA17.dds" HLALPHA="100" UHLALPHA="0" WIDTH="183" HEIGHT="48" X="20" Y ="20" ID="FIFALOGO_HIGHLIGHTED" />
+      <data TYPE="title" PARAM="TXT_TRIAL_LOADING" TRANSLATE="TRUE" FORMAT="HL" WIDTH="846" HEIGHT="20" X="20" Y="70" ID="TITLE" />
+      <data TYPE="text" PARAM="TXT_TRIAL_LOADING_DESCR" TRANSLATE="TRUE" FORMAT="SM" WIDTH="480" HEIGHT="200" X="20" Y="150" ID="BODY" />
+    </tile>
+    <tile NAME="CGD_OVER_TILE" PARAM="12" TYPE="TILE" BACKGROUND="TrialCompleted_Full" DESTINATION="StoreGeneric">
+      <properties WIDTH="1451" HEIGHT="602" />
+      <data TYPE="image" PATH="imgAssets/tiles/mainHub/Logo_FIFA18_NonActive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="183" HEIGHT="48" X="20" Y ="20" ID="FIFALOGO_UNHIGHLIGHTED" />
+      <data TYPE="image" PATH="imgAssets/tiles/mainHub/Logo_FIFA18.dds" HLALPHA="100" UHLALPHA="0" WIDTH="183" HEIGHT="48" X="20" Y ="20" ID="FIFALOGO_HIGHLIGHTED" />
+      <data TYPE="title" PARAM="TXT_CGD_EXPIRED_HEAD" TRANSLATE="TRUE" FORMAT="HL" WIDTH="846" HEIGHT="20" X="20" Y="70" ID="TITLE" />
+      <data TYPE="text" PARAM="TXT_CGD_EXPIRED_BODY" TRANSLATE="TRUE" FORMAT="SM" WIDTH="480" HEIGHT="200" X="20" Y="200" ID="BODY" />
+	</tile>
+    <tile NAME="CGD_LOAD_LARGE" PARAM="12" TYPE="TILE" BACKGROUND="TrialCompleted_Full">
+      <properties WIDTH="1451" HEIGHT="602" />
+      <data TYPE="image" PATH="imgAssets/tiles/mainHub/Logo_FIFA18_NonActive.dds" HLALPHA="0" UHLALPHA="100" WIDTH="183" HEIGHT="48" X="20" Y ="20" ID="FIFALOGO_UNHIGHLIGHTED" />
+      <data TYPE="image" PATH="imgAssets/tiles/mainHub/Logo_FIFA18.dds" HLALPHA="100" UHLALPHA="0" WIDTH="183" HEIGHT="48" X="20" Y ="20" ID="FIFALOGO_HIGHLIGHTED" />
+      <data TYPE="title" PARAM="CM_Loading" TRANSLATE="TRUE" FORMAT="HL" WIDTH="846" HEIGHT="20" X="20" Y="70" ID="TITLE" />
+      <data TYPE="text" PARAM="" TRANSLATE="TRUE" FORMAT="SM" WIDTH="480" HEIGHT="200" X="20" Y="150" ID="BODY" />
+      <data ID="LOADINGBAR" TYPE="component" PATH="game/components/FluxComponents/matchDayLive/LoadingBar.swf" WIDTH="1451" HEIGHT="4" X="0" Y="0" />
+    </tile> 
+    <tile NAME="ACCESSIBILITY_SHORTCUT" TYPE="TILE_EXPANDABLE" DESTINATION="SettingsAccessibility" SHOW_IN_STATE="ENABLED" DECORATORS_RANGE="NO_BACKGROUND" NARRATION_HIGHLIGHT="ACC_SHORTCUT_HIGHLIGHTED" NARRATION_SELECT="ACC_SHORTCUT_SELECTED">>
+      <properties WIDTH="226" HEIGHT="90" />
+      <data ID="BACKGROUND_HL" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_HIGHLIGHT_FLUX" X="136" WIDTH="315" HEIGHT="90" UHLALPHA="0" HLALPHA="100"/>
+      <data ID="BACKGROUND_UHL" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" X="136" WIDTH="315" HEIGHT="90" UHLALPHA="100" HLALPHA="0" />
+      <data ID="ICON" TYPE="asset" PATH="tileIcons" PARAM="accesibility_small_left" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" X="135" Y="0" HEIGHT="90" WIDTH="90" KEEP_SCALE="TRUE"/>
+      <data ID="TITLE" TYPE="text" PARAM="MM_ACCESSIBILITY_SETTINGS" FORMAT="FONT_TILE_TSM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|left" Y="30" HEIGHT="117" WIDTH="300">
+      	<align TARGET="ICON" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT"/>
+      </data>
+    </tile>
+ </panel>
+  <panel NAME="MM_TAB_PLAY_PANEL">
+    <variable_set>
+      <variable id="showUCLMovieNew" type="bool" />
+      <variable id="showUCLMovieLoad" type="bool"/>
+      <variable id="showUCLMovieContinue" type="bool"/>
+    </variable_set>
+    <tile NAME="PLAY_TILE_0" TYPE="TILE" >
+      <properties WIDTH="356" HEIGHT="396" />
+      <data ID="LOADING_SPINNER" TYPE="component" PARAM="3" PATH="online/components/ui/StreamingIcon.swf" WIDTH="200" HEIGHT="200" >
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="100" />
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="100" />
+      </data>
+    </tile>
+    <tile NAME="PLAY_TILE_1" TYPE="TILE" >
+      <properties WIDTH="356" HEIGHT="396" />
+      <data ID="LOADING_SPINNER" TYPE="component" PARAM="3" PATH="online/components/ui/StreamingIcon.swf" WIDTH="200" HEIGHT="200" >
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="100" />
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="100" />
+      </data>
+    </tile>
+    <tile NAME="PLAY_TILE_2" TYPE="TILE" >
+      <properties WIDTH="356" HEIGHT="396" />
+      <data ID="LOADING_SPINNER" TYPE="component" PARAM="3" PATH="online/components/ui/StreamingIcon.swf" WIDTH="200" HEIGHT="200" >
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="100" />
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="100" />
+      </data>
+    </tile>
+    <tile NAME="PLAY_TILE_3" TYPE="TILE" >
+      <properties WIDTH="356" HEIGHT="396" />
+      <data ID="LOADING_SPINNER" TYPE="component" PARAM="3" PATH="online/components/ui/StreamingIcon.swf" WIDTH="200" HEIGHT="200" >
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="100" />
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="100" />
+      </data>
+    </tile>
+    <tile NAME="KICK_OFF" PARAM="10" TYPE="TILE" DESTINATION="KickOffLocalMatch" DATAPROVIDERID="MAINHUB_MATCHDAY_DP" NARRATION_HIGHLIGHT="ACC_KICK_OFF_TILE_HIGHLIGHTED" NARRATION_SELECT="ACC_KICK_OFF_TILE_SELECTED">
+      <properties WIDTH="721" HEIGHT="193" />
+
+      <data ID="TITLE" TYPE="title" PARAM="KickoffLocalMatch" />
+
+      <data ID="VERSUS_TEXT" TYPE="text" VISIBLE="TRUE" FORMAT="TSM||center" PARAM="Versus_abbr" TRANSLATE="TRUE" WIDTH="721" HEIGHT="40" Y="96" />
+      <data ID="PRESS_VS" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/PressVS.dds" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST" WIDTH="81" HEIGHT="81" X="319" REL_TARGET="VERSUS_TEXT" REL_Y="-55"/>
+
+      <data ID="HOMETEAM" TYPE="asset" VISIBLE="FALSE" PATH="crest" FORMAT="STRETCH" WIDTH="91" HEIGHT="91" X="42" REL_TARGET="VERSUS_TEXT" REL_Y="-63" />
+      <data ID="RANKHOME" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/RankText.swf" FORMAT="SM||left||FONT_SMALL_MEDIUM|FONT_SMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="113" HEIGHT="48" REL_TARGET="HOMETEAM" REL_X="18" REL_Y="-91" />
+      <data ID="HOME_TEAM_NAME_FOR_RIVAL" TYPE="text" VISIBLE="FALSE" FORMAT="TSL||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="193" HEIGHT="40" REL_TARGET="HOMETEAM" REL_X="18" REL_Y="-65" />
+      <data ID="HOME_TEAM_NAME_FOR_RIVAL_ONLINE" TYPE="text" VISIBLE="FALSE" FORMAT="TSM||left|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="133" HEIGHT="40" REL_TARGET="HOMETEAM" REL_X="18" REL_Y="-30" />
+
+      <data ID="HOMEFORMRECT0" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMETEAM" REL_X="18" REL_Y="-56" />
+      <data ID="HOMEFORMRECT1" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT0" REL_X="2" REL_Y="-21" />
+      <data ID="HOMEFORMRECT2" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT1" REL_X="2" REL_Y="-21" />
+      <data ID="HOMEFORMRECT3" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT2" REL_X="2" REL_Y="-21" />
+      <data ID="HOMEFORMRECT4" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT3" REL_X="2" REL_Y="-21" />
+      <data ID="HOMETEAMFORM0" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT0" REL_X="-20" REL_Y="-23" />
+      <data ID="HOMETEAMFORM1" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT1" REL_X="-20" REL_Y="-23" />
+      <data ID="HOMETEAMFORM2" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT2" REL_X="-20" REL_Y="-23" />
+      <data ID="HOMETEAMFORM3" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT3" REL_X="-20" REL_Y="-23" />
+      <data ID="HOMETEAMFORM4" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT4" REL_X="-20" REL_Y="-23" />
+
+      <data ID="DATE" TYPE="text" VISIBLE="FALSE" FORMAT="TI||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="721" HEIGHT="22" Y="45" />
+      <data ID="TIME" TYPE="text" VISIBLE="FALSE" FORMAT="TI||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="721" HEIGHT="22" REL_TARGET="DATE" REL_Y="-6" />
+
+      <data ID="AWAYTEAM" TYPE="asset" VISIBLE="FALSE" PATH="crest" FORMAT="STRETCH" WIDTH="91" HEIGHT="91" X="588" REL_TARGET="VERSUS_TEXT" REL_Y="-63" />
+      <data ID="RANKAWAY" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/RankText.swf" FORMAT="SM||right||FONT_SMALL_MEDIUM|FONT_SMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="113" HEIGHT="48" REL_TARGET="AWAYTEAM" REL_X="-222" REL_Y="-91" />
+      <data ID="AWAY_TEAM_NAME_FOR_RIVAL" TYPE="text" VISIBLE="FALSE" FORMAT="TSL||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="193" HEIGHT="40" REL_TARGET="AWAYTEAM" REL_X="-302" REL_Y="-65" />
+      <data ID="AWAY_TEAM_NAME_FOR_RIVAL_ONLINE" TYPE="text" VISIBLE="FALSE" FORMAT="TSM||right|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="133" HEIGHT="40" REL_TARGET="AWAYTEAM" REL_X="-242" REL_Y="-30" />
+
+      <data ID="AWAYFORMRECT0" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYTEAM" REL_X="-222" REL_Y="-56" />
+      <data ID="AWAYFORMRECT1" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT0" REL_X="2" REL_Y="-21" />
+      <data ID="AWAYFORMRECT2" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT1" REL_X="2" REL_Y="-21" />
+      <data ID="AWAYFORMRECT3" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT2" REL_X="2" REL_Y="-21" />
+      <data ID="AWAYFORMRECT4" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT3" REL_X="2" REL_Y="-21" />
+      <data ID="AWAYTEAMFORM0" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT0" REL_X="-20" REL_Y="-23" />
+      <data ID="AWAYTEAMFORM1" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT1" REL_X="-20" REL_Y="-23" />
+      <data ID="AWAYTEAMFORM2" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT2" REL_X="-20" REL_Y="-23" />
+      <data ID="AWAYTEAMFORM3" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT3" REL_X="-20" REL_Y="-23" />
+      <data ID="AWAYTEAMFORM4" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT4" REL_X="-20" REL_Y="-23" />
+
+      <data ID="LOADINGBAR" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/matchDayLive/LoadingBar.swf" WIDTH="721" HEIGHT="4" X="0" Y="0" />
+      <data ID="NEW_TILE_BACKING_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/NewTileBacking_Active.dds" WIDTH="124" HEIGHT="40" HLALPHA="100" UHLALPHA="0" >  
+	    <align ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+	    <align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+	  </data>
+      <data ID="NEW_TILE_BACKING_INACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/NewTileBacking_Inactive.dds" WIDTH="124" HEIGHT="40" HLALPHA="0" UHLALPHA="100" >  
+	    <align ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+	    <align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+	  </data>
+      <data ID="NEW_TILE_TEXT" TYPE="text" VISIBLE="TRUE" FORMAT="TSM|COLOR_TEXT_HIGHLIGHT_FLUX_ALTERNATE|center|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB" PARAM="New" TRANSLATE="TRUE" WIDTH="91" HEIGHT="40" >  
+	    <align TARGET="NEW_TILE_BACKING_ACTIVE" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+	    <align TARGET="NEW_TILE_BACKING_ACTIVE"  ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="8" />
+	  </data>
+    </tile>
+    <tile NAME="WORLDTOUR_TILE_PLAY" PARAM="25" TYPE="TILE" DESTINATION="NewWorldTourMode" NARRATION_HIGHLIGHT="ACC_VOLTA_HIGHLIGHTED" NARRATION_SELECT="ACC_VOLTA_SELECTED">
+      <properties WIDTH="356" HEIGHT="396" />
+      <data ID="background" TYPE="asset" PATH="mainHub" PARAM="Volta_|3|" FORMAT="||right||||bottom" KEEP_SCALE="TRUE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+      </data>
+    </tile>
+    <tile NAME="ULTIMATE_TEAM" PARAM="4" TYPE="TILE" DESTINATION="LaunchFUT" BACKGROUND="FUTMainMenuDefault" DATAPROVIDERID="MAINHUB_FUT_DP" DECORATORS_RANGE="NONE" TRACE="FALSE" NARRATION_HIGHLIGHT="ACC_FUT_HIGHLIGHTED" NARRATION_SELECT="ACC_FUT_SELECTED">
+      <properties WIDTH="356" HEIGHT="396" />
+      <data ID="CLUBBACKING" TYPE="rectangle" VISIBLE="TRUE" FORMAT="|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="324" HEIGHT="48" X="0" Y="85" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_PLAY_FUT" />
+      <data ID="BODYMESSAGE" VISIBLE="FALSE" TYPE="text" FORMAT="FONT_SMALL_MEDIUM||left|" TRANSLATE="FALSE" WIDTH="320" HEIGHT="320" X="18" Y="155" />
+      <data ID="LINKMESSAGEBACKING" VISIBLE="FALSE" TYPE="bar" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX">
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="-18"/>
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" OFFSET="28" />
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+      </data>
+      <data ID="LINKMESSAGE" VISIBLE="FALSE" TYPE="text" PARAM="" FORMAT="FONT_TILE_TSL|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="320" HEIGHT="320" X="18" Y="330" />
+      <data ID="clubname" TYPE="text" FORMAT="FONT_TILE_IS||left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="420" HEIGHT="42" X="100" REL_TARGET="TITLE" REL_Y="16" />
+      <data ID="established" TYPE="text" FORMAT="FONT_SMALL_MEDIUM||left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="420" HEIGHT="42" X="100" REL_TARGET="TITLE" REL_Y="38" />
+      <data ID="logo" TYPE="asset" VISIBLE="FALSE" PATH="crestfuttile" FORMAT="STRETCH" TRANSLATE="FALSE" WIDTH="75" HEIGHT="75" X="18" REL_TARGET="TITLE" REL_Y="5" />
+    </tile>
+    <tile NAME="CAREER_CONTINUE_LOAD_NEW" PARAM="1" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="396" />
+      <subtile NAME="CAREER_CONTINUE" SUBTILE_TYPE="TILE" DESTINATION="ContinueCareer" BACKGROUND="ContinueCareer" PARAM="1" DATAPROVIDERID="MAINHUB_CONTINUE_CAREER_DP" NARRATION_HIGHLIGHT="ACC_CAREER_CONTINUE_HIGHLIGHTED" NARRATION_SELECT="ACC_CAREER_CONTINUE_SELECTED">
+        <data ID="CONTINUETITLE" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_CONTINUECAREER" />
+        <data ID="TeamId" TYPE="asset" PATH="crest" WIDTH="134" HEIGHT="134" X="111" Y="158" />
+        <data ID="NextMatchTeamId" TYPE="asset" PATH="crest" WIDTH="50" HEIGHT="50" X="290" Y="300" />
+        <data ID="NextMatchStaticText" TYPE="text" PARAM="MM_CONTINUE_NEXT_MATCH" FORMAT="IXS||right" WIDTH="230" HEIGHT="60" REL_TARGET="NextMatchTeamId" REL_X="-290" REL_Y="-50" />
+        <data ID="NextMatchDisplayText" TYPE="text" FORMAT="TSMU||right|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" TRANSLATE="FALSE" WIDTH="300" HEIGHT="60" REL_TARGET="NextMatchTeamId" REL_X="-355" REL_Y="-28" />
+        <data ID="LeagueStandingsChangePrevFixtureReference" TYPE="null" WIDTH="336" />
+        <data ID="LeagueStandingsChangePrevFixture" TYPE="icon" PARAM="DASH" WIDTH="32" HEIGHT="32" >
+          <align TARGET="LeagueStandingsChangePrevFixtureReference" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="18"/>
+          <align TARGET="CONTINUETITLE" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10"/>
+        </data>
+        <data ID="LeagueStandingsPrevFixture" TYPE="text" FORMAT="TSMU||left" TRANSLATE="FALSE" WIDTH="60" HEIGHT="35" REL_TARGET="LeagueStandingsChangePrevFixture" REL_X="0" REL_Y="-32" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CAREER_LOAD" DESTINATION="LoadCareer" PARAM="1" BACKGROUND="LoadCareer_MedTall" DECORATORS_RANGE="2" NARRATION_HIGHLIGHT="ACC_CAREER_LOAD_HIGHLIGHTED" NARRATION_SELECT="ACC_CAREER_LOAD_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_LOADCAREER" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CAREER_NEW" DESTINATION="NewCareer" PARAM="1" BACKGROUND="NewCareer_MedTall" DECORATORS_RANGE="4" NARRATION_HIGHLIGHT="ACC_CAREER_NEW_HIGHLIGHTED" NARRATION_SELECT="ACC_CAREER_NEW_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_NEWMANAGERCAREER" />
+      </subtile>
+    </tile>
+    <tile NAME="CHAMPIONS_LEAGUE_CONTINUE_LOAD_NEW" PARAM="23" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="396" />
+      <subtile SUBTILE_TYPE="TILE" NAME="CHAMPIONS_LEAGUE_CONTINUE" DESTINATION="ContinueChampionsLeagueTournament" BACKGROUND="Continue_UCL" NARRATION_HIGHLIGHT="ACC_CHAMP_CONTINUE_HIGHLIGHTED" NARRATION_SELECT="ACC_CHAMP_CONTINUE_SELECTED">
+        <data ID="BACKGROUND_VIDEO" TYPE="component" PATH="game/components/FluxComponents/FluxMoviePlayer.swf" PARAM="Fifa/Movies/Play_Continue_UCL" VISIBLE="@showUCLMovieContinue" UHLALPHA="0"/>
+        <data ID="LEAGUE_LOGO" TYPE="asset" PATH="league" PARAM="223" FORMAT="|||COLOR_UCL_DARK_BLUE" WIDTH="88" HEIGHT="88" Y="23">
+          <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        </data>
+        <data ID="ROUND_NAME" TYPE="text"  PARAM="@UCLroundName" Y="151" TRANSLATE="FALSE" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_UCL_DARK_BLUE">
+          <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        </data>
+        <data ID="VERSUS_TEXT" TYPE="text" VISIBLE="TRUE" FORMAT="FONT_BOLD_ACTIVE_LABEL||center" PARAM="Versus_abbr" TRANSLATE="TRUE" WIDTH="30" HEIGHT="30" Y="229">
+          <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        </data>
+        <data ID="VERSUS_CIRCLE" TYPE="asset" PATH="mainHub" PARAM="Versus" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="50" HEIGHT="50">
+          <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+          <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+        </data>
+        <data ID="HOME_CREST" TYPE="asset" PATH="crest" PARAM="@UCLhomeCrest"  WIDTH="90" HEIGHT="90">
+          <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="130" />
+          <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+        </data>
+        <data ID="AWAY_CREST" TYPE="asset" PATH="crest" PARAM="@UCLawayCrest" WIDTH="90" HEIGHT="90">
+          <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="-130" />
+          <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+        </data>
+        <data ID="CONTINUE" TYPE="text" PARAM="CHAMPIONS_LEAGUE_CONT_HOME" FORMAT="FONT_MEDIUM_SMALL_LABEL_DESCRIPTION|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_UCL_DARK_BLUE" Y="331" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CHAMPIONS_LEAGUE_LOAD" DESTINATION="LoadChampionsLeagueTournament" BACKGROUND="Load_UCL" NARRATION_HIGHLIGHT="ACC_CHAMP_LOAD_HIGHLIGHTED" NARRATION_SELECT="ACC_CHAMP_LOAD_SELECTED">
+        <data ID="BACKGROUND_VIDEO" TYPE="component" PATH="game/components/FluxComponents/FluxMoviePlayer.swf" PARAM="Fifa/Movies/Play_Load_UCL" VISIBLE="@showUCLMovieLoad" UHLALPHA="0"/>
+        <data ID="LEAGUE_LOGO" TYPE="asset" PATH="league" PARAM="223" FORMAT="|||COLOR_UCL_DARK_BLUE" WIDTH="88" HEIGHT="88" Y="23">
+          <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        </data>
+        <data ID="TITLE" TYPE="text" PARAM="CHAMPIONS_LEAGUE_LOAD_HOME" FORMAT="FONT_MEDIUM_SMALL_LABEL_DESCRIPTION||center" Y="331"/>
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CHAMPIONS_LEAGUE_NEW" DESTINATION="NewChampionsLeagueTournament" BACKGROUND="New_UCL" NARRATION_HIGHLIGHT="ACC_CHAMP_NEW_HIGHLIGHTED" NARRATION_SELECT="ACC_CHAMP_NEW_SELECTED">
+        <data ID="BACKGROUND_VIDEO" TYPE="component" PATH="game/components/FluxComponents/FluxMoviePlayer.swf" PARAM="Fifa/Movies/Play_New_UCL" VISIBLE="@showUCLMovieNew" UHLALPHA="0"/>
+        <data ID="LEAGUE_LOGO" TYPE="asset" PATH="league" PARAM="223" FORMAT="|||COLOR_UCL_DARK_BLUE" WIDTH="215" HEIGHT="215" Y="103">
+          <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        </data>
+      </subtile>
+    </tile>
+    <tile NAME="TOURNAMENT" PARAM="11" TYPE="TILE" DESTINATION="TournamentTypeHub" BG_ICON="Accomplishments_Small" NARRATION_HIGHLIGHT="ACC_TOURNAMENT_HIGHLIGHTED" NARRATION_SELECT="ACC_TOURNAMENT_SELECTED">
+      <properties WIDTH="356" HEIGHT="193" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_TOURNAMENTS" />
+    </tile>
+    <tile NAME="SKILLGAMES_NESTED" PARAM="11" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="193" />
+      <subtile SUBTILE_TYPE="TILE" NAME="SKILLGAMES_SUBTILE" DESTINATION="SkillGamesHub" BG_ICON="SkillGames_Small" NARRATION_HIGHLIGHT="ACC_SKILL_GAMES_PLAY_HIGHLIGHTED" NARRATION_SELECT="ACC_SKILL_GAMES_PLAY_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_SKILLGAMES" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="SKILLGAMES_PRACTICE_ARENA" DESTINATION="PracticeArenaAdvance" BG_ICON="PracticeArena_Small" PARAM="" NARRATION_HIGHLIGHT="ACC_SKILL_GAMES_PRACTICE_HIGHLIGHTED" NARRATION_SELECT="ACC_SKILL_GAMES_PRACTICE_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_PRACTICEARENA" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="SKILLGAMES_ARENA_PLAYER" DESTINATION="SettingsArenaPlayer" BG_ICON="SelectPlayerArena_Small" PARAM="" NARRATION_HIGHLIGHT="ACC_SKILL_GAMES_ARENA_P_HIGHLIGHTED" NARRATION_SELECT="ACC_SKILL_GAMES_ARENA_P_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Arena_Player_Selection" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="SKILLGAMES_ARENA_GK" DESTINATION="SettingsArenaGoalkeeper" BG_ICON="SelectKeeperArena_Small" PARAM="" NARRATION_HIGHLIGHT="ACC_SKILL_GAMES_ARENA_K_HIGHLIGHTED" NARRATION_SELECT="ACC_SKILL_GAMES_ARENA_K_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Arena_Keeper_Selection" />
+      </subtile>
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_ONLINE_PANEL">
+    <tile NAME="SEASONS" PARAM="3" TYPE="TILE" DESTINATION="SeasonsAdvance" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="MAINHUB_SEASONS_DP" DECORATORS_RANGE="3" NARRATION_HIGHLIGHT="ACC_SEASONS_HIGHLIGHTED" NARRATION_SELECT="ACC_SEASONS_SELECTED">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="SEASONS" />
+      <data ID="seasonsLbl" TYPE="text" PARAM="TXT_ONLINE_SEASONS_NEVER_PLAYED_INFO" FORMAT="I" WIDTH="330" HEIGHT="75" X="18" REL_TARGET="tileTitle" REL_Y="10" />
+      <data ID="componentDivision" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" WIDTH="70" HEIGHT="70" X="20" Y="55" />
+      <data ID="COMMUNITY_STATS" TYPE="text" FORMAT="I" WIDTH="750" HEIGHT="75" X="215" Y="98" REL_TARGET="tileTitle" TRANSLATE="FALSE"/>
+      <data ID="communityIcon" TYPE="image" PATH="imgAssets/online/Globe.dds" WIDTH="50" HEIGHT="50" X="150" Y="90" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+    </tile>
+    <tile NAME="CO_OP_SEASONS" PARAM="19" TYPE="TILE" DESTINATION="CoopSeasonsAdvance" BACKGROUND="ContinueCo-opSeasons_Med" DATAPROVIDERID="MAINHUB_COOP_SEASONS_DP" DECORATORS_RANGE="3" NARRATION_HIGHLIGHT="ACC_COOP_HIGHLIGHTED" NARRATION_SELECT="ACC_COOP_SELECTED">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="TXT_ONLINE_COOP_SEASONS_TAB_HEADER" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/CoopFriendIcon.dds" WIDTH="38" HEIGHT="38" X="18" REL_TARGET="tileTitle" REL_Y="10" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>
+      <data ID="friendsOnline" TYPE="text" FORMAT="I" WIDTH="750" HEIGHT="75" X="63" REL_TARGET="tileTitle" REL_Y="12" />
+      <data ID="notificationIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="!" WIDTH="48" HEIGHT="48" X="18" REL_TARGET="tileTitle" REL_Y="48" />
+      <data ID="friendsInPlayMode" TYPE="text" FORMAT="I" WIDTH="750" HEIGHT="75" X="77" REL_TARGET="tileTitle" REL_Y="56" />
+      <data ID="playingOnlineImg" TYPE="icon" PARAM="INTERNATIONAL" WIDTH="36" HEIGHT="36" X="18" REL_TARGET="tileTitle" REL_Y="98" />
+      <data ID="playingOnline" TYPE="text" FORMAT="I|0x6D777C" WIDTH="750" HEIGHT="150" X="55" REL_TARGET="tileTitle" REL_Y="93" />
+    </tile>
+    <tile NAME="FRIENDLIES" PARAM="15" TYPE="TILE" DESTINATION="FriendliesAdvance" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="MAINHUB_FRIENDLIES_DP" NARRATION_HIGHLIGHT="ACC_FRIENDLIES_HIGHLIGHT" NARRATION_SELECT="ACC_FRIENDLIES_SELECTED">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="MM_NARROW_ONLINE_FRIENDLIES" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/CoopFriendIcon.dds" WIDTH="38" HEIGHT="38" X="18" REL_TARGET="tileTitle" REL_Y="10" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>
+      <data ID="friendsOnline" TYPE="text" FORMAT="I" WIDTH="750" HEIGHT="75" X="63" REL_TARGET="tileTitle" REL_Y="10" />
+      <data ID="inviteContentTxt" TYPE="text" FORMAT="I" WIDTH="300" HEIGHT="60" X="70" REL_TARGET="tileTitle" REL_Y="33" />
+      <data ID="notificationIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="!" WIDTH="48" HEIGHT="48" X="18" REL_TARGET="tileTitle" REL_Y="24" />
+      <data ID="friendliesIcon" TYPE="image" PATH="imgAssets/trophy256x256/t1506.dds" FORMAT="STRETCH" WIDTH="164" HEIGHT="164" X="520" Y="20" />
+    </tile>
+    <tile NAME="SMALL_FRIENDLIES" PARAM="15" TYPE="TILE" DESTINATION="FriendliesAdvance" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="MAINHUB_FRIENDLIES_DP" NARRATION_HIGHLIGHT="ACC_FRIENDLIES_HIGHLIGHT" NARRATION_SELECT="ACC_FRIENDLIES_SELECTED">
+      <properties WIDTH="356" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="MM_NARROW_ONLINE_FRIENDLIES" />
+      <data ID="onlineIcon"  TYPE="image" PATH="imgAssets/online/CoopFriendIcon.dds" WIDTH="38" HEIGHT="38" X="18" REL_TARGET="tileTitle" REL_Y="10" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>
+      <data ID="friendsOnline" TYPE="text" FORMAT="I" WIDTH="160" HEIGHT="75" X="63" REL_TARGET="tileTitle" REL_Y="4" />
+      <data ID="inviteContentTxt" TYPE="text" FORMAT="I" WIDTH="300" HEIGHT="60" X="70" REL_TARGET="tileTitle" REL_Y="46" />
+      <data ID="notificationIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="!" WIDTH="48" HEIGHT="48" X="18" REL_TARGET="tileTitle" REL_Y="37" />
+      <data ID="friendliesIcon" TYPE="image" PATH="imgAssets/trophy256x256/t1506.dds" FORMAT="STRETCH" WIDTH="120" HEIGHT="120" X="222" Y="40" />
+    </tile>
+	  
+    <tile NAME="SONY_SYSTEM_VIEWER" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="193" />      
+      <subtile SUBTILE_TYPE="TILE" NAME="TOUR_VIEWER_PS" DESTINATION="ViewTournament" NARRATION_HIGHLIGHT="ACC_TOUR_VIEWER_HIGHLIGHTED" NARRATION_SELECT="ACC_TOUR_VIEWER_SELECTED" >
+        <data ID="firstPartyImage" TYPE="image" PATH="imgAssets/online/mainHub/PS4_Logo_Dark.dds" WIDTH="220" HEIGHT="220" X="65" Y="-40" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>
+        <data ID="tournamentText" TYPE="text" FORMAT="I" X="0" Y="105" WIDTH="356" HEIGHT="60" ALIGN="center" PARAM="TOURNAMENTS" />
+      </subtile>	  
+      <subtile SUBTILE_TYPE="TILE" NAME="STREAMING_VIEWER_PS" DESTINATION=" " NARRATION_HIGHLIGHT="ACC_STREAMING_VIEWER_HIGHLIGHTED" NARRATION_SELECT="ACC_STREAMING_VIEWER_SELECTED" >
+        <data ID="tileTitle" TYPE="title" PARAM="STREAMING_VIEWER" />
+        <data ID="iconPS" TYPE="image" PATH="imgAssets/online/LiveFromPS_Active.dds" WIDTH="100" HEIGHT="100" X="250" Y="94" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+      </subtile>	
+    </tile>
+	  
+    <tile NAME="STREAMING_VIEWER_XONE" PARAM="15" TYPE="TILE" DESTINATION=" " BACKGROUND="invalid_path_activates_shards" NARRATION_HIGHLIGHT="ACC_STREAMING_VIEWER_X1_HIGHLIGHTED" NARRATION_SELECT="ACC_STREAMING_VIEWER_X1_SELECTED">
+      <properties WIDTH="356" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="STREAMING_VIEWER" />
+      <data ID="iconX1" TYPE="image" PATH="imgAssets/online/TwitchIcon_Active.dds" WIDTH="130" HEIGHT="130" X="220" Y="36" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+    </tile>
+    <tile NAME="PRO_CLUBS_LARGE" PARAM="5" TYPE="TILE" DESTINATION="ProClubsAdvance" BACKGROUND="ProClubs_Lrg" DATAPROVIDERID="MAINHUB_PROCLUBS_DP" DECORATORS_RANGE="1" NARRATION_HIGHLIGHT="ACC_PROCLUBS_HIGHLIGHT" NARRATION_SELECT="ACC_PROCLUBS_SELECTED">
+      <properties WIDTH="721" HEIGHT="396" />
+      <data ID="tileTitle" TYPE="title" PARAM="MM_PLAY_PROCLUBS" />
+      <data ID="joinClubLbl" TYPE="text" PARAM="TXT_ONLINE_CLUBS_NEVER_PLAYED_INFO" FORMAT="SM" WIDTH="390" HEIGHT="75" X="18" REL_TARGET="tileTitle" REL_Y="10" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/ProClubs.dds" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="40" HEIGHT="40" X="18" Y="90" />
+      <data ID="friendsOnline" TYPE="text" FORMAT="SM" WIDTH="150" HEIGHT="75" X="63" Y="85" />
+      <data ID="crestImg" TYPE="image" HLALPHA="0" UHLALPHA="100" WIDTH="164" HEIGHT="164" X="18" Y="170" PATH="imgAssets/online/ProClubsLogoFlat.dds" />
+      <data ID="crestImgDark" TYPE="image" HLALPHA="100" UHLALPHA="0" WIDTH="164" HEIGHT="164" X="18" Y="170" PATH="imgAssets/online/ProClubsLogoFlatDark.dds" />
+    </tile>
+    <tile NAME="PRO_CLUBS_MED" PARAM="5" TYPE="TILE" DESTINATION="ProClubsAdvance" BACKGROUND="ProClubs_Med" DATAPROVIDERID="MAINHUB_PROCLUBS_DP" DECORATORS_RANGE="1" NARRATION_HIGHLIGHT="ACC_PROCLUBS_HIGHLIGHT" NARRATION_SELECT="ACC_PROCLUBS_SELECTED">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="MM_PLAY_PROCLUBS" />
+      <data ID="joinClubLbl" TYPE="text" PARAM="TXT_ONLINE_CLUBS_NEVER_PLAYED_INFO" FORMAT="I" WIDTH="270" HEIGHT="75" X="18" REL_TARGET="tileTitle" REL_Y="10" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/ProClubs.dds" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST" WIDTH="40" HEIGHT="40" X="148" Y="100" />
+      <data ID="friendsOnline" TYPE="text" FORMAT="SM" WIDTH="150" HEIGHT="75" X="195" Y="100" />
+      <data ID="crestImg" TYPE="image" HLALPHA="0" UHLALPHA="100" WIDTH="95" HEIGHT="95" X="30" Y="65" PATH="imgAssets/online/ProClubsLogoFlat.dds" />
+      <data ID="crestImgDark" TYPE="image" HLALPHA="100" UHLALPHA="0" WIDTH="95" HEIGHT="95" X="30" Y="65" PATH="imgAssets/online/ProClubsLogoFlatDark.dds" />
+    </tile>
+    <tile NAME="LIVE_COMP_SMALL_TILE_1" TYPE="TILE" DESTINATION="LiveCompetition2" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="LIVE_COMP_SMALL_TILE_2_DP">
+      <properties WIDTH="356" HEIGHT="193" />
+      <data ID="TITLE" TYPE="title" PARAM="TXT_LIVE_COMP_2" />
+      <data ID="LOGOIMAGE" TYPE="image" PATH="imgAssets/crest/light/notfound.dds" WIDTH="106" HEIGHT="106" X="222" Y="45" FORMAT="|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST||COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST" />
+      <data ID="LOADINGBAR" TYPE="component" PATH="game/components/FluxComponents/matchDayLive/LoadingBar.swf" WIDTH="356" HEIGHT="4" X="0" Y="0" />
+    </tile>
+    <tile NAME="LIVE_COMP_SMALL_TILE_2" TYPE="TILE" DESTINATION="LiveCompetition3" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="LIVE_COMP_SMALL_TILE_3_DP">
+      <properties WIDTH="356" HEIGHT="193" />
+      <data ID="TITLE" TYPE="title" PARAM="TXT_LIVE_COMP_3" />
+      <data ID="LOGOIMAGE" TYPE="image" PATH="imgAssets/crest/light/notfound.dds" WIDTH="106" HEIGHT="106" X="222" Y="45" FORMAT="|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST||COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST" />
+      <data ID="LOADINGBAR" TYPE="component" PATH="game/components/FluxComponents/matchDayLive/LoadingBar.swf" WIDTH="356" HEIGHT="4" X="0" Y="0" />
+    </tile>
+    <tile NAME="LIVE_COMP_MED_TILE_1" TYPE="TILE" DESTINATION="LiveCompetition1" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="LIVE_COMP_SMALL_TILE_1_DP">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="TITLE" TYPE="title" PARAM="TXT_LIVE_COMP_1" />
+      <data ID="LOGOIMAGE" TYPE="image" PATH="imgAssets/crest/light/notfound.dds" WIDTH="164" HEIGHT="164" X="500" Y="20" FORMAT="|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST||COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST" />
+      <data ID="LOADINGBAR" TYPE="component" PATH="game/components/FluxComponents/matchDayLive/LoadingBar.swf" WIDTH="721" HEIGHT="4" X="0" Y="0" />
+    </tile>
+    <tile NAME="LIVE_COMP_MED_TILE_2" TYPE="TILE" DESTINATION="LiveCompetition2" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="LIVE_COMP_SMALL_TILE_2_DP">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="TITLE" TYPE="title" PARAM="TXT_LIVE_COMP_2" />
+      <data ID="LOGOIMAGE" TYPE="image" PATH="imgAssets/crest/light/notfound.dds" WIDTH="164" HEIGHT="164" X="500" Y="20" FORMAT="|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST||COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST" />
+      <data ID="LOADINGBAR" TYPE="component" PATH="game/components/FluxComponents/matchDayLive/LoadingBar.swf" WIDTH="721" HEIGHT="4" X="0" Y="0" />
+    </tile>
+    <tile NAME="NO_LIVE_COMP_SEASONS" TYPE="TILE" DESTINATION="SeasonsAdvance" BACKGROUND="Seasons_Lrg" DATAPROVIDERID="MAINHUB_SEASONS_DP" NARRATION_HIGHLIGHT="ACC_NO_LIVE_COMP_SEASONS_HIGHLIGHTED" NARRATION_SELECT="ACC_NO_LIVE_COMP_SEASONS_SELECTED" DECORATORS_RANGE="3">
+      <properties WIDTH="721" HEIGHT="396" />
+      <data ID="tileTitle" TYPE="title" PARAM="SEASONS" />
+      <data ID="seasonsLbl" TYPE="text" PARAM="TXT_ONLINE_SEASONS_NEVER_PLAYED_INFO" FORMAT="SM" WIDTH="330" HEIGHT="75" X="18" REL_TARGET="tileTitle" REL_Y="10" />
+      <data ID="componentDivision" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" WIDTH="140" HEIGHT="140" X="0" Y="133" />
+      <data ID="COMMUNITY_STATS" TYPE="text" FORMAT="I" WIDTH="750" HEIGHT="75" X="85" Y="98" REL_TARGET="tileTitle" TRANSLATE="FALSE"/>
+      <data ID="communityIcon" TYPE="image" PATH="imgAssets/online/Globe.dds" WIDTH="50" HEIGHT="50" X="25" Y="90" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+    </tile>
+    <tile NAME="NO_LIVE_COMP_CO_OP_SEASONS" PARAM="257" TYPE="TILE" DESTINATION="CoopSeasonsAdvance" BACKGROUND="ContinueCo-opSeasons_Med" DATAPROVIDERID="MAINHUB_COOP_SEASONS_DP" NARRATION_HIGHLIGHT="ACC_NO_LIVE_COMP_CO_OP_SEASONS_HIGHLIGHTED" NARRATION_SELECT="ACC_NO_LIVE_COMP_CO_OP_SEASONS_SELECTED" DECORATORS_RANGE="3">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="TXT_ONLINE_COOP_SEASONS_TAB_HEADER" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/CoopFriendIcon.dds" WIDTH="38" HEIGHT="38" X="25" REL_TARGET="tileTitle" REL_Y="10" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+      <data ID="friendsOnline" TYPE="text" FORMAT="I" WIDTH="750" HEIGHT="75" X="71" REL_TARGET="tileTitle" REL_Y="14" />
+      <data ID="notificationIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="!" WIDTH="48" HEIGHT="48" X="18" REL_TARGET="tileTitle" REL_Y="46" />
+      <data ID="friendsInPlayMode" TYPE="text" FORMAT="I" WIDTH="750" HEIGHT="75" X="77" REL_TARGET="tileTitle" REL_Y="54" />
+      <data ID="playingOnlineImg" TYPE="icon" PARAM="INTERNATIONAL" WIDTH="36" HEIGHT="36" X="18" REL_TARGET="tileTitle" REL_Y="96" />
+      <data ID="playingOnline" TYPE="text" FORMAT="I|0x6D777C" WIDTH="750" HEIGHT="150" X="55" REL_TARGET="tileTitle" REL_Y="91" />
+    </tile>
+    <tile NAME="NO_LIVE_COMP_FRIENDLIES" PARAM="15" TYPE="TILE" DESTINATION="FriendliesAdvance" BACKGROUND="invalid_path_activates_shards" NARRATION_HIGHLIGHT="ACC_NO_LIVE_COMP_FRIENDLIES_HIGHLIGHTED" NARRATION_SELECT="ACC_NO_LIVE_COMP_FRIENDLIES_SELECTED" DATAPROVIDERID="MAINHUB_FRIENDLIES_DP">
+      <properties WIDTH="721" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="MM_NARROW_ONLINE_FRIENDLIES" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/CoopFriendIcon.dds" WIDTH="38" HEIGHT="38" X="18" REL_TARGET="tileTitle" REL_Y="10" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>
+      <data ID="friendsOnline" TYPE="text" FORMAT="I" WIDTH="750" HEIGHT="75" X="60" REL_TARGET="tileTitle" REL_Y="12" />
+      <data ID="inviteContentTxt" TYPE="text" FORMAT="I" WIDTH="300" HEIGHT="60" X="70" REL_TARGET="tileTitle" REL_Y="33" />
+      <data ID="notificationIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="!" WIDTH="48" HEIGHT="48" X="18" REL_TARGET="tileTitle" REL_Y="24" />
+      <data ID="friendliesIcon" TYPE="image" PATH="imgAssets/trophy256x256/t1506.dds" FORMAT="STRETCH" WIDTH="164" HEIGHT="164" X="520" Y="20" />
+    </tile>
+    <tile NAME="SMALL_NO_LIVE_COMP_FRIENDLIES" PARAM="15" TYPE="TILE" DESTINATION="FriendliesAdvance" NARRATION_HIGHLIGHT="ACC_NO_LIVE_COMP_FRIENDLIES_HIGHLIGHTED" NARRATION_SELECT="ACC_NO_LIVE_COMP_FRIENDLIES_SELECTED" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="MAINHUB_FRIENDLIES_DP">
+      <properties WIDTH="356" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="MM_NARROW_ONLINE_FRIENDLIES" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/CoopFriendIcon.dds" WIDTH="38" HEIGHT="38" X="25" REL_TARGET="tileTitle" REL_Y="10" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+      <data ID="friendsOnline" TYPE="text" FORMAT="I" WIDTH="160" HEIGHT="75" X="66" REL_TARGET="tileTitle" REL_Y="4" />
+      <data ID="inviteContentTxt" TYPE="text" FORMAT="I" WIDTH="300" HEIGHT="60" X="70" REL_TARGET="tileTitle" REL_Y="46" />
+      <data ID="notificationIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="!" WIDTH="48" HEIGHT="48" X="18" REL_TARGET="tileTitle" REL_Y="37" />
+      <data ID="friendliesIcon" TYPE="image" PATH="imgAssets/trophy256x256/t1506.dds" FORMAT="STRETCH" WIDTH="128" HEIGHT="128" X="222" Y="45" />
+    </tile>
+    <tile NAME="NO_LIVE_COMP_SONY_SYSTEM_VIEWER" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="193" />      
+      <subtile SUBTILE_TYPE="TILE" NAME="NO_LIVE_COMP_TOUR_VIEWER" DESTINATION="ViewTournament" NARRATION_HIGHLIGHT="ACC_TOUR_VIEWER_HIGHLIGHTED" NARRATION_SELECT="ACC_TOUR_VIEWER_SELECTED" >
+        <data ID="firstPartyImage" TYPE="image" PATH="imgAssets/online/mainHub/PS4_Logo_Dark.dds" WIDTH="220" HEIGHT="220" X="65" Y="-40" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>
+        <data ID="tournamentText" TYPE="text" FORMAT="I" X="0" Y="105" WIDTH="356" HEIGHT="60" ALIGN="center" PARAM="TOURNAMENTS" />
+      </subtile>	  
+      <subtile SUBTILE_TYPE="TILE" NAME="NO_LIVE_COMP_STREAMING_VIEWER" DESTINATION=" " NARRATION_HIGHLIGHT="ACC_NO_LIVE_COMP_STREAMING_VIEWER_HIGHLIGHTED" NARRATION_SELECT="ACC_NO_LIVE_COMP_STREAMING_VIEWER_SELECTED" >
+        <data ID="tileTitle" TYPE="title" PARAM="STREAMING_VIEWER" />
+        <data ID="iconPS" TYPE="image" PATH="imgAssets/online/LiveFromPS_Active.dds" WIDTH="100" HEIGHT="100" X="250" Y="92" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+      </subtile>	
+    </tile>
+    <tile NAME="NO_LIVE_COMP_STREAMING_VIEWER_XONE" PARAM="15" TYPE="TILE" DESTINATION=" " NARRATION_HIGHLIGHT="ACC_NO_LIVE_COMP_STREAMING_VIEWER_XONE_HIGHLIGHTED" NARRATION_SELECT="ACC_NO_LIVE_COMP_STREAMING_VIEWER_XONE_SELECTED" >
+      <properties WIDTH="356" HEIGHT="193" />
+      <data ID="tileTitle" TYPE="title" PARAM="STREAMING_VIEWER" />
+      <data ID="iconX1" TYPE="image" PATH="imgAssets/online/TwitchIcon_Active.dds" WIDTH="100" HEIGHT="100" X="250" Y="74" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_CUSTOMISE_PANEL">
+    <tile NAME="CUSTOMISE_SETTINGS" TYPE="TILE" BG_ICON="SettingsControls_Square" SUBPANEL_ID="MM_TAB_CUSTOMISE_SETTINGS_PANEL" NARRATION_HIGHLIGHT="ACC_CUST_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_SETTINGS_SELECTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CUSTOMISE_SETTINGS" />
+    </tile>
+    <tile NAME="CUSTOMISE_SETTINGS_XONE_NESTED" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_SETTINGS_XONE_SUBTILE" DESTINATION="" SUBPANEL_ID="MM_TAB_CUSTOMISE_SETTINGS_PANEL" BG_ICON="SettingsControls_Square" NARRATION_HIGHLIGHT="ACC_CUST_SETTINGS_X1_SUBTITLE_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_SETTINGS_X1_SUBTITLE_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CUSTOMISE_SETTINGS" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_SETTINGS_XONE_KINECT" SUBPANEL_ID="MM_TAB_CUSTOMISE_KINECT_PANEL" DESTINATION="" BG_ICON="KinectSettings_Square" PARAM="" NARRATION_HIGHLIGHT="ACC_CUST_SETTINGS_X1_KINECT_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_SETTINGS_X1_KINECT_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="KIN_KinectSettings" />
+      </subtile>
+    </tile>
+    <tile NAME="CUSTOMISE_SETTINGS_LARGE_PS" TYPE="TILE" BG_ICON="SettingsControls_Square" SUBPANEL_ID="MM_TAB_CUSTOMISE_SETTINGS_PANEL" NARRATION_HIGHLIGHT="ACC_CUST_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_SETTINGS_SELECTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CUSTOMISE_SETTINGS" />
+    </tile>
+    <tile NAME="CUSTOMISE_SETTINGS_PSVR" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_SETTINGS_PSVR_SUBTILE" DESTINATION="" SUBPANEL_ID="MM_TAB_CUSTOMISE_SETTINGS_PANEL" BG_ICON="SettingsControls_Square" NARRATION_HIGHLIGHT="ACC_CUST_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_SETTINGS_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CUSTOMISE_SETTINGS" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" SUBPANEL_ID="MM_TAB_CUSTOMISE_KINECT_PANEL" DESTINATION="" BG_ICON="PSVR_Square" PARAM="" NAME="PSVR" NARRATION_HIGHLIGHT="ACC_CUST_SETTINGS_PSVR_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_SETTINGS_PSVR_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PS4_PSVRSettings" />
+      </subtile>
+    </tile>
+    <tile NAME="CUSTOMISE_PROFILE" TYPE="TILE" BG_ICON="Profile_Square" SUBPANEL_ID="MM_TAB_CUSTOMISE_PROFILE_PANEL" NARRATION_HIGHLIGHT="ACC_CUST_PROFILE_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_PROFILE_SELECTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CUSTOMISE_PROFILE" />
+    </tile>
+    <tile NAME="CUSTOMISE_ONLINE_SETTINGS" TYPE="TILE" BG_ICON="OnlineSettings_Square" SUBPANEL_ID="MM_TAB_CUSTOMISE_ONLINE_PANEL" NARRATION_HIGHLIGHT="ACC_CUST_ONL_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_ONL_SETTINGS_SELECTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CUSTOMISE_ONLINESETTINGS" />
+    </tile>
+    <tile NAME="EASFC_FEATURES_TILE" TYPE="TILE" DESTINATION="powCatalogue" BG_ICON="Catalogue_Square" NARRATION_HIGHLIGHT="ACC_CUST_CATALOGUE_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_CATALOGUE_SELECTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="TXT_EASFC_STORE" />
+    </tile>
+    <tile NAME="CUSTOMISE_EDIT_TEAMS" TYPE="TILE" BG_ICON="EditTeams_Square" SUBPANEL_ID="MM_TAB_CUSTOMISE_TEAMS_PANEL" NARRATION_HIGHLIGHT="ACC_CUST_EDIT_TEAMS_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_EDIT_TEAMS_SELECTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CUSTOMISE_EDITTEAMS_TILE" />
+    </tile>
+    <tile NAME="CUSTOMISE_TEAM_MANAGEMENT" TYPE="TILE" DESTINATION="EditTeamManagement" BG_ICON="TeamSheets_Square" NARRATION_HIGHLIGHT="ACC_CUST_TEAM_MNGMT_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_TEAM_MNGMT_SELECTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Team_Management" />
+    </tile>
+    <tile NAME="CUSTOMISE_EDIT_PLAYER_NESTED" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_CREATE_PLAYER" DESTINATION="CreatePlayerAdvance" BG_ICON="CreatePlayer_Square" NARRATION_HIGHLIGHT="ACC_CUST_EDIT_PLAYER_CREATE_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_EDIT_PLAYER_CREATE_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="Menu_createplayer" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_EDIT_CREATED_PLAYER" DESTINATION="EditCreatedPlayerAdvance" BG_ICON="EditPlayer_Square" PARAM="" NARRATION_HIGHLIGHT="ACC_CUST_EDIT_PLAYER_EDIT_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_EDIT_PLAYER_EDIT_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="Edit_createdplayer" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_EDIT_PLAYER" DESTINATION="EditPlayerAdvance" BG_ICON="EditRealPlayer_Square" PARAM="" NARRATION_HIGHLIGHT="ACC_CUST_EDIT_PLAYER_EDIT_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_EDIT_PLAYER_EDIT_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="Editplayer" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_DELETE_PLAYER" DESTINATION="DeletePlayerAdvance" BG_ICON="DeletePlayer_Square" PARAM="" NARRATION_HIGHLIGHT="ACC_CUST_EDIT_PLAYER_DELETE_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_EDIT_PLAYER_DELETE_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="Deleteplayer" />
+      </subtile>
+    </tile>
+    <tile NAME="CUSTOMISE_EA_NESTED" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_EA_TRAX" DESTINATION="EATrax" BG_ICON="EASportsTrax_Square" NARRATION_HIGHLIGHT="ACC_CUST_EA_TRAX_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_EA_TRAX_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_eatrax" />
+        </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_SSF_TRAX" DESTINATION="SSFTrax" BG_ICON="EASportsTrax_Square" NARRATION_HIGHLIGHT="ACC_CUSTOMISE_SSF_TRAX_HIGHLIGHTED" NARRATION_SELECT="ACC_CUSTOMISE_SSF_TRAX_SELECTED" >
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_ssftrax" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CUSTOMISE_EA_CREDITS" DESTINATION="Credits" BG_ICON="Credits_Square" PARAM="" NARRATION_HIGHLIGHT="ACC_CUST_EA_CREDITS_HIGHLIGHTED" NARRATION_SELECT="ACC_CUST_EA_CREDITS_SELECTED">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="Credits" />
+      </subtile>
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_DEBUG_PANEL">
+    <tile NAME="CONVERSATION_WHEEL_TEST" TYPE="TILE" DESTINATION="CONVERSATION_WHEEL_TEST">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="CONVERSATION WHEEL" TRANSLATE="FALSE" />
+    </tile>
+    <tile NAME="UI_TESTS" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="OVERLAY_TEST" DESTINATION="OVERLAY_TEST" PARAM="28">
+        <data ID="TITLE" TYPE="title" PARAM="OVERLAY TEST" TRANSLATE="FALSE" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CRESTS_TEST" DESTINATION="CRESTS_TEST" PARAM="28">
+        <data ID="TITLE" TYPE="title" PARAM="CRESTS TEST" TRANSLATE="FALSE" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="FONT_CALIBRATOR" DESTINATION="FONT_CALIBRATOR" PARAM="28">
+        <data ID="TITLE" TYPE="title" PARAM="FONT CALIBRATOR" TRANSLATE="FALSE" />
+      </subtile>
+    </tile>
+    <tile NAME="TEST_SCREEN_EXPANDED" TYPE="TILE_EXPANDABLE" DESTINATION="TEST_SCREEN">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="TEST SCREEN" TRANSLATE="FALSE" />
+      <data TYPE="text" PARAM="This is for testing expandable tiles" FORMAT="SS" WIDTH="365" HEIGHT="60" X="18" REL_TARGET="TITLE" REL_Y="10" SHOW_IN_STATE="EXPANDED"/>
+    </tile>
+	<tile NAME="TEST_SCREEN_NESTED" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="TEST_SCREEN" DESTINATION="TEST_SCREEN">
+        <data ID="TITLE" TYPE="title" PARAM="TEST SCREEN" TRANSLATE="FALSE" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="TEST_FLUX" DESTINATION="TEST_FLUX">
+        <data ID="TITLE" TYPE="title" PARAM="TEST FLUX" TRANSLATE="FALSE" />
+      </subtile>
+    </tile>
+	<tile NAME="PLAYER_HEADS_TEST_NESTED" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="PLAYER_HEADS_TEST" DESTINATION="PLAYER_HEADS_TEST">
+	    <data ID="TITLE" TYPE="title" PARAM="PLAYER HEADS" TRANSLATE="FALSE" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="PLAYER_CAPTURES_TEST" DESTINATION="PLAYER_CAPTURES_TEST">
+	    <data ID="TITLE" TYPE="title" PARAM="PLAYER CAPTURES" TRANSLATE="FALSE" />
+      </subtile>
+    </tile>
+	<tile NAME="CAREER_MODE" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+	  <subtile SUBTILE_TYPE="TILE" NAME="CAREER_MODE_SCENE_SELECT" DESTINATION="CareerModeDebugSceneSelect" >
+        <data ID="TITLE" TYPE="title" PARAM="CAREER MODE DEBUG SCENE SELECT" TRANSLATE="FALSE" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="NEW_CAREER_MODE_SCENE_SELECT" DESTINATION="NewCareerModeDebugSceneSelect" >
+        <data ID="TITLE" TYPE="title" PARAM="NEW CAREER MODE DEBUG SCENE SELECT" TRANSLATE="FALSE" />
+      </subtile>
+    </tile>
+    <tile NAME="BACKGROUND_TEST_NESTED" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="BACKGROUND_TEST" DESTINATION="BACKGROUND_TEST">
+        <data ID="TITLE" TYPE="title" PARAM="BACKGROUND TEST" TRANSLATE="FALSE" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="BACKGROUND_ANIM_TEST" DESTINATION="BACKGROUND_ANIM_TEST">
+        <data ID="TITLE" TYPE="title" PARAM="BG ANIM TEST" TRANSLATE="FALSE" />
+      </subtile>
+    </tile>
+    
+    <tile NAME="STORY_MODE" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="STORY_SAVE_CREATOR" DESTINATION="SaveCreatorStoryMode" PARAM="23">
+        <data ID="TITLE" TYPE="title" PARAM="STORY SAVE CREATOR" TRANSLATE="FALSE" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="TEST_STORY_MODE" DESTINATION="TestStoryMode" PARAM="23">
+        <data ID="TITLE" TYPE="title" PARAM="TEST STORY MODE" TRANSLATE="FALSE" />
+      </subtile>
+    </tile>
+    <tile NAME="MOVIE_PLAYER" TYPE="TILE" DESTINATION="MOVIE_PLAYER" BACKGROUND="notfound">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="MOVIE PLAYER" FORMAT="HL" TRANSLATE="FALSE" WIDTH="225" HEIGHT="60" X="18" Y="12" />
+    </tile>
+    <tile NAME="FUT_DEBUG_PACK_OPENING" TYPE="TILE" DESTINATION="GotoFUTDebugPackOpening">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="FUT Pack Opening" TRANSLATE="FALSE"/>
+    </tile>
+    <tile NAME="SAVED_INPUT" TYPE="TILE" DESTINATION="PLAYBACK_SAVED_INPUT">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="PLAYBACK SI" TRANSLATE="FALSE"/>
+      <data TYPE="text" PARAM="Load a saved input file" FORMAT="SS" WIDTH="260" HEIGHT="60" X="18" REL_TARGET="TITLE" REL_Y="10" />
+    </tile>
+    <tile NAME="SAMPLE_SCENE" TYPE="TILE" DESTINATION="PLAY_SAMPLE_SCENE">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="SAMPLE SCENE" TRANSLATE="FALSE"/>
+    </tile>
+    <tile NAME="CUSTOMIZATION" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="TEST_CUSTOMIZE_PLAYER" DESTINATION="CUSTOMIZE_PLAYER" PARAM="23">
+        <data ID="TITLE" TYPE="title" PARAM="CUSTOMIZE_PLAYER" TRANSLATE="FALSE"/>
+      </subtile>
+    </tile>
+    <tile NAME="GEN_PLAYER_FACES" TYPE="TILE" DESTINATION="GEN_PLAYER_FACES_EV">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="Generate Faces" TRANSLATE="FALSE"/>
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_WORLDTOUR_TEMP_PANEL">
+    <tile NAME="WORLDTOUR_TILE" PARAM="25" TYPE="TILE" DESTINATION="NewWorldTourMode" NARRATION_HIGHLIGHT="ACC_VOLTA_HIGHLIGHTED" NARRATION_SELECT="ACC_VOLTA_SELECTED">
+      <properties WIDTH="356" HEIGHT="396" />
+      <data ID="background" TYPE="asset" PATH="mainHub" PARAM="Volta_|3|" FORMAT="||center||||middle">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+      </data>
+    </tile>
+    <tile NAME="WORLDTOUR_DEBUG_MATCH_TILE" PARAM="25" TYPE="TILE" DESTINATION="WorldTourMatchSelectDebug">
+      <properties WIDTH="356" HEIGHT="196" />
+      <data ID="title" TYPE="title" PARAM="DEBUG MATCH" TRANSLATE="FALSE"/>
+    </tile>
+    <tile NAME="WORLDTOUR_DEBUG_SCENE_TILE" PARAM="25" TYPE="TILE" DESTINATION="SceneSelectDebug">
+      <properties WIDTH="356" HEIGHT="196" />
+      <data ID="title" TYPE="title" PARAM="SCENE SELECT" TRANSLATE="FALSE"/>
+    </tile>
+    <tile NAME="WORLDTOUR_DEBUG_DRILL_TILE" PARAM="25" TYPE="TILE" DESTINATION="WorldTourDrillSelectDebug">
+      <properties WIDTH="356" HEIGHT="196" />
+      <data ID="title" TYPE="title" PARAM="DRILL SELECT" TRANSLATE="FALSE"/>
+    </tile>
+    <tile NAME="DEBUGAVATAR_TILE" TYPE="TILE" DESTINATION="AvatarFlowDebug">
+      <properties WIDTH="356" HEIGHT="396" />
+      <data ID="title" TYPE="title" PARAM="DEBUG AVATAR" TRANSLATE="FALSE"/>
+    </tile>
+  </panel>
+  <panel NAME="MM_HOME_CONTINUE_TILES_DUMMY_PANEL">
+    <tile NAME="HOME_CONTINUE_MANAGER_CAREER_LARGE" PARAM="1" TYPE="TILE" DESTINATION="ContinueCareer" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_MANAGER_CAREER_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_MANAGER_CAREER_SELECTED"  BACKGROUND="HomeTile_Tall" DECORATORS_RANGE="4">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="CONTINUETITLE" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_CONTINUECAREER" />
+      <data ID="TeamId" TYPE="asset" PATH="crest" WIDTH="201" X="67" Y="227" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align TARGET="TeamId" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="WIDTH" />
+      </data>
+      <data ID="NextMatchTeamId" TYPE="asset" PATH="crest" WIDTH="61" HEIGHT="61" Y="135" >
+        <align TARGET="CONTINUETITLE" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="16" />
+      </data>
+      <data ID="NextMatchStaticText" TYPE="text" PARAM="MM_CONTINUE_NEXT_MATCH" FORMAT="TSMU" ALIGN="leading" WIDTH="270" HEIGHT="60" >
+        <align TARGET="NextMatchTeamId" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="TRAILING" />
+        <align TARGET="NextMatchTeamId" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-65"/>
+      </data>
+      <data ID="NextMatchDisplayText" TYPE="text" FORMAT="TSLU|||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" ALIGN="leading" TRANSLATE="FALSE" WIDTH="270" HEIGHT="60" >
+        <align TARGET="NextMatchTeamId" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="TRAILING" />
+        <align TARGET="NextMatchTeamId" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-42"/>
+      </data>
+      <data ID="LeagueStandingsChangePrevFixture" TYPE="icon" PARAM="DASH" WIDTH="32" HEIGHT="32" X="18" Y="466" />
+      <data ID="LeagueStandingsPrevFixture" TYPE="text" FORMAT="TSLU||left" TRANSLATE="FALSE" WIDTH="100" HEIGHT="40" REL_TARGET="LeagueStandingsChangePrevFixture" REL_X="0" REL_Y="-38" />
+    </tile>
+    <tile NAME="HOME_CONTINUE_PLAYER_CAREER_LARGE" PARAM="2" TYPE="TILE" DESTINATION="NewCareer" BACKGROUND="NewCareer_Tall" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_PLAYER_CAREER_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_PLAYER_CAREER_SELECTED" DECORATORS_RANGE="4">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="CONTINUE_CAREER" TYPE="title" ALIGN="leading" PARAM="MM_HOME_NEWCAREER" />
+    </tile>
+    <tile NAME="HOME_CONTINUE_SEASONS_LARGE" PARAM="3" TYPE="TILE" DESTINATION="SeasonsAdvance" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_SEASONS_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_SEASONS_SELECTED" BACKGROUND="HomeTile_Tall" DECORATORS_RANGE="1">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="tileTitle" TYPE="title" ALIGN="leading" PARAM="SEASONS" />
+      <data ID="seasonsLbl" TYPE="text" PARAM="TXT_ONLINE_SEASONS_NEVER_PLAYED_INFO" FORMAT="SM" WIDTH="320" HEIGHT="75" X="8" REL_TARGET="tileTitle" REL_Y="10" />
+      <data ID="componentDivision" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" WIDTH="160">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" OFFSET="-50" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="200" />
+        <align TARGET="componentDivision" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="WIDTH" />
+      </data>
+      <data ID="COMMUNITY_STATS" TYPE="component" PATH="game/components/FluxComponents/CommunityCounter.swf" WIDTH="600" HEIGHT="90" X="22" Y="100" />
+      <data ID="LOGOIMAGE" TYPE="image" PATH="imgAssets/online/FifaCrest.dds" WIDTH="228" HEIGHT="228" Y="237" VISIBLE="FALSE" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+      </data>
+    </tile>
+    <tile NAME="HOME_CONTINUE_ULTIMATE_TEAM_LARGE" PARAM="4" TYPE="TILE" DESTINATION="LaunchFUT" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_ULTIMATE_TEAM_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_ULTIMATE_TEAM_SELECTED"  BACKGROUND="FUTMainMenuLargeDefault" DECORATORS_RANGE="NONE" TRACE="FALSE">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="CLUBBACKING" TYPE="rectangle" VISIBLE="TRUE" FORMAT="|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="306" HEIGHT="56" X="0" Y="132" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_CONTINUE_FUT" />
+      <data ID="BODYMESSAGE" TYPE="text" FORMAT="FONT_SMALL_MEDIUM||left|" TRANSLATE="FALSE" WIDTH="320" HEIGHT="320" X="18" Y="205" />
+      <data ID="LINKMESSAGEBACKING" VISIBLE="FALSE" TYPE="bar" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" X="0">
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="-18"/>
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" OFFSET="28" />
+        <align TARGET="LINKMESSAGE" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+      </data>
+      <data ID="LINKMESSAGE" VISIBLE="FALSE" TYPE="text" FORMAT="FONT_TILE_TSL|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="320" HEIGHT="320" X="18" Y="525" />
+      <data ID="clubname" TYPE="text" FORMAT="FONT_TILE_IS||left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="320" HEIGHT="42" X="88" REL_TARGET="TITLE" REL_Y="16" />
+      <data ID="established" TYPE="text" FORMAT="FONT_SMALL_MEDIUM||left|COLOR_TEXT_HIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="320" HEIGHT="42" X="88" REL_TARGET="TITLE" REL_Y="42" />
+      <data ID="logo" TYPE="asset" VISIBLE="FALSE" PATH="crestfuttile" FORMAT="STRETCH" TRANSLATE="FALSE" WIDTH="70" HEIGHT="70" X="18" REL_TARGET="TITLE" REL_Y="10" />
+    </tile>
+    <tile NAME="HOME_CONTINUE_PRO_CLUBS_LARGE" PARAM="5" TYPE="TILE"  NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_PRO_CLUBS_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_PRO_CLUBS_SELECTED"  DESTINATION="ProClubsAdvance" BACKGROUND="HomeTile_Tall" DECORATORS_RANGE="4">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="tileTitle" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_PROCLUBS" />
+      <data ID="joinClubLbl" TYPE="text" PARAM="TXT_ONLINE_CLUBS_NEVER_PLAYED_INFO" FORMAT="SM" WIDTH="320" HEIGHT="75" X="8" REL_TARGET="tileTitle" REL_Y="10" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/ProClubs.dds" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="40" HEIGHT="40" X="20" Y="110" />
+      <data ID="friendsOnline" TYPE="text" FORMAT="HS" WIDTH="330" HEIGHT="75" X="75" Y="100" />
+      <data ID="friendsOnlineLabel" TYPE="text" FORMAT="I" WIDTH="250" HEIGHT="90" X="18" Y="160" REL_TARGET="tileTitle"/>
+      <data ID="crestImg" TYPE="image" HLALPHA="0" UHLALPHA="100" WIDTH="228" HEIGHT="228" Y="230" PATH="imgAssets/online/ProClubsLogoFlat.dds" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />		  
+	  </data>
+      <data ID="crestImgDark" TYPE="image" HLALPHA="100" UHLALPHA="0" WIDTH="228" HEIGHT="228" Y="230" PATH="imgAssets/online/ProClubsLogoFlatDark.dds" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />		  
+		</data>
+    </tile>
+    <tile NAME="HOME_CONTINUE_WORLD_TOUR"  PARAM="25" TYPE="TILE" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_WORLD_TOUR_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_WORLD_TOUR_SELECTED" DESTINATION="NewWorldTourMode">
+      <properties WIDTH="335" HEIGHT="600" />
+	    <data ID="background" TYPE="asset" PATH="mainHub" PARAM="Volta_Tall_|3|" FORMAT="||center||||middle">
+  		  <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH"/>
+  		  <align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT"/>
+	    </data>
+	</tile>
+    <tile NAME="HOME_CONTINUE_MATCHDAY_LARGE" PARAM="10" TYPE="TILE" DESTINATION="KickOffLocalMatch"  NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_MATCHDAY_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_MATCHDAY_SELECTED"  DATAPROVIDERID="MAINHUB_MATCHDAY_DP" DECORATORS_RANGE="6" >
+      <properties WIDTH="335" HEIGHT="600" />
+
+      <data ID="TITLE" TYPE="title" PARAM="TXT_KICKOFF" />
+
+      <data ID="VERSUS_TEXT" TYPE="text" VISIBLE="TRUE" FORMAT="HXS||center" PARAM="Versus_abbr" TRANSLATE="TRUE" WIDTH="335" HEIGHT="40" Y="278" />
+      <data ID="PRESS_VS" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/IconVSHome_Active.dds" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX|||" WIDTH="96" HEIGHT="96">
+        <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="HOMETEAM" TYPE="asset" VISIBLE="FALSE" PATH="crest" FORMAT="STRETCH" WIDTH="101" HEIGHT="101" Y="252">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="15" />
+      </data>
+      <data ID="HOME_TEAM_NAME_FOR_RIVAL" TYPE="text" VISIBLE="TRUE" FORMAT="TSL||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="335" HEIGHT="40">
+        <align TARGET="HOMETEAM" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="TOP" OFFSET="-40" />
+      </data>
+      <data ID="HOME_TEAM_NAME_FOR_RIVAL_ONLINE" TYPE="text" VISIBLE="FALSE" FORMAT="TSM||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="130" HEIGHT="40">
+        <align TARGET="HOMETEAM" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+        <align TARGET="HOMETEAM" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="30" />
+      </data>
+
+      <data ID="AWAYTEAM" TYPE="asset" VISIBLE="FALSE" PATH="crest" FORMAT="STRETCH" WIDTH="101" HEIGHT="101" X="234" Y="252">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-15" />
+      </data>
+      <data ID="AWAY_TEAM_NAME_FOR_RIVAL" TYPE="text" VISIBLE="TRUE" FORMAT="TSL||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="335" HEIGHT="40">
+        <align TARGET="AWAYTEAM" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="35" />
+      </data>
+      <data ID="AWAY_TEAM_NAME_FOR_RIVAL_ONLINE" TYPE="text" VISIBLE="FALSE" FORMAT="TSM||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="130" HEIGHT="40">
+        <align TARGET="AWAYTEAM" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+        <align TARGET="AWAYTEAM" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="30" />
+      </data>
+
+      <data ID="LEAGUELOGO" TYPE="asset" VISIBLE="FALSE" PATH="league512x128" FORMAT="STRETCH" WIDTH="244" HEIGHT="61" X="56" Y="460" />
+
+      <data ID="RANKHOME" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/RankText.swf" FORMAT="THSU||center" TRANSLATE="FALSE" WIDTH="101" HEIGHT="48" REL_TARGET="HOMETEAM" REL_X="-101" REL_Y="-170" />
+      <data ID="HOMEFORMRECT0" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMETEAM" REL_X="-107" REL_Y="9" />
+      <data ID="HOMEFORMRECT1" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT0" REL_X="2" REL_Y="-21" />
+      <data ID="HOMEFORMRECT2" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT1" REL_X="2" REL_Y="-21" />
+      <data ID="HOMEFORMRECT3" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT2" REL_X="2" REL_Y="-21" />
+      <data ID="HOMEFORMRECT4" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT3" REL_X="2" REL_Y="-21" />
+      <data ID="HOMETEAMFORM0" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT0" REL_X="-20" REL_Y="-23" />
+      <data ID="HOMETEAMFORM1" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT1" REL_X="-20" REL_Y="-23" />
+      <data ID="HOMETEAMFORM2" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT2" REL_X="-20" REL_Y="-23" />
+      <data ID="HOMETEAMFORM3" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT3" REL_X="-20" REL_Y="-23" />
+      <data ID="HOMETEAMFORM4" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="HOMEFORMRECT4" REL_X="-20" REL_Y="-23" />
+
+      <data ID="DATE" TYPE="text" VISIBLE="FALSE" FORMAT="TI||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="335" HEIGHT="22" Y="110" />
+      <data ID="TIME" TYPE="text" VISIBLE="FALSE" FORMAT="TI||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" TRANSLATE="FALSE" WIDTH="335" HEIGHT="22" REL_TARGET="DATE" REL_Y="-6" />
+
+      <data ID="RANKAWAY" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/RankText.swf" FORMAT="THSU||center" TRANSLATE="FALSE" WIDTH="101" HEIGHT="48" REL_TARGET="AWAYTEAM" REL_X="-101" REL_Y="-170" />
+      <data ID="AWAYFORMRECT0" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYTEAM" REL_X="-107" REL_Y="9" />
+      <data ID="AWAYFORMRECT1" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT0" REL_X="2" REL_Y="-21" />
+      <data ID="AWAYFORMRECT2" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT1" REL_X="2" REL_Y="-21" />
+      <data ID="AWAYFORMRECT3" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT2" REL_X="2" REL_Y="-21" />
+      <data ID="AWAYFORMRECT4" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/tiles/mainHub/FormCircle.dds" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT3" REL_X="2" REL_Y="-21" />
+      <data ID="AWAYTEAMFORM0" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT0" REL_X="-20" REL_Y="-23" />
+      <data ID="AWAYTEAMFORM1" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT1" REL_X="-20" REL_Y="-23" />
+      <data ID="AWAYTEAMFORM2" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT2" REL_X="-20" REL_Y="-23" />
+      <data ID="AWAYTEAMFORM3" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT3" REL_X="-20" REL_Y="-23" />
+      <data ID="AWAYTEAMFORM4" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|FONT_XSMALL_MEDIUM|FONT_XSMALL_MEDIUM" TRANSLATE="FALSE" WIDTH="21" HEIGHT="21" REL_TARGET="AWAYFORMRECT4" REL_X="-20" REL_Y="-23" />
+
+      <data ID="LOADINGBAR" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/matchDayLive/LoadingBar.swf" WIDTH="335" HEIGHT="4" X="0" Y="0" />
+      <data ID="NEW_TILE_BACKING_ACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/NewTileBacking_Active.dds" WIDTH="124" HEIGHT="40" HLALPHA="100" UHLALPHA="0" >  
+	    <align ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+	    <align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+	  </data>
+      <data ID="NEW_TILE_BACKING_INACTIVE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/mainHub/NewTileBacking_Inactive.dds" WIDTH="124" HEIGHT="40" HLALPHA="0" UHLALPHA="100" >  
+	    <align ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+	    <align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+	  </data>
+      <data ID="NEW_TILE_TEXT" TYPE="text" VISIBLE="TRUE" FORMAT="TSM|COLOR_TEXT_HIGHLIGHT_FLUX_ALTERNATE|center|COLOR_TEXT_HIGHLIGHT_ACTIVE_FLUX_TAB" PARAM="New" TRANSLATE="TRUE" WIDTH="91" HEIGHT="40" >  
+	    <align TARGET="NEW_TILE_BACKING_ACTIVE" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+	    <align TARGET="NEW_TILE_BACKING_ACTIVE"  ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="8"/>
+	  </data>
+
+    </tile>
+    <tile NAME="HOME_CONTINUE_SKILL_GAMES_LARGE" PARAM="11" TYPE="TILE" DESTINATION="SkillGamesHub" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_SKILL_GAMES_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_SKILL_GAMES_SELECTED"  BACKGROUND="SkillGames_Tall" DECORATORS_RANGE="3">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PLAY_SKILLGAMES" />
+      <data TYPE="text" PARAM="MM_PLAY_SKILLGAMES_INFO" FORMAT="TSMU" WIDTH="300" HEIGHT="75" REL_TARGET="TITLE" REL_Y="0" X="18" />
+    </tile>
+    <tile NAME="HOME_CONTINUE_TOURNAMENT_LARGE" PARAM="6" TYPE="TILE" DESTINATION="LoadTournament" BACKGROUND="LoadTournament_Tall" DECORATORS_RANGE="3">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="TOURNAMENTS" />
+    </tile>
+    <tile NAME="HOME_CONTINUE_WOMEN_TOURNAMENT_LARGE" PARAM="19" TYPE="TILE" DESTINATION="LoadWomenTournament" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_WOMEN_TOURNAMENT_HIGHLIGHT" NARRATION_SELECT="ACC_HOME_CONTINUE_WOMEN_TOURNAMENT_SELECTED" BACKGROUND="LoadWomenTournament_Tall" DECORATORS_RANGE="1">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="WomenTournament" />
+    </tile>
+    <tile NAME="HOME_CONTINUE_ONLINE_FRIENDLIES_LARGE" PARAM="13" TYPE="TILE" DESTINATION="FriendliesAdvance" BACKGROUND="HomeTile_Tall" DECORATORS_RANGE="3" NARRATION_HIGHLIGHT="ACC_FRIENDLIES_HIGHLIGHT" NARRATION_SELECT="ACC_FRIENDLIES_SELECTED">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="tileTitle" TYPE="title" ALIGN="leading" PARAM="MM_NARROW_ONLINE_FRIENDLIES" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/CoopFriendIcon.dds" WIDTH="42" HEIGHT="42" X="20" REL_TARGET="tileTitle" Y="135" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>
+      <data ID="friendsOnline" TYPE="text" FORMAT="HS" WIDTH="330" HEIGHT="75" X="75" Y="130" />
+      <data ID="friendsOnlineLabel" TYPE="text" FORMAT="I" WIDTH="330" HEIGHT="75" X="18" Y="180" />
+      <data ID="inviteContentTxt" TYPE="text" FORMAT="I" WIDTH="300" HEIGHT="60" X="70" REL_TARGET="tileTitle" REL_Y="90" />
+      <data ID="notificationIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="!" WIDTH="48" HEIGHT="48" X="18" REL_TARGET="tileTitle"/>
+      <data ID="friendliesIcon" TYPE="image" PATH="imgAssets/trophy256x256/t1506.dds" FORMAT="STRETCH" WIDTH="228" HEIGHT="228" Y="225">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+      </data>
+    </tile>
+    <tile NAME="HOME_CONTINUE_COOP_SEASONS_LARGE" PARAM="17" TYPE="TILE" DESTINATION="CoopSeasonsAdvance" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_COOP_SEASONS_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_COOP_SEASONS_SELECTED" BACKGROUND="HomeTile_Tall" DECORATORS_RANGE="3">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="tileTitle" TYPE="title" ALIGN="leading" PARAM="TXT_ONL_continue_coopseasons"/>
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/CoopFriendIcon.dds" WIDTH="42" HEIGHT="42" X="20" REL_TARGET="tileTitle" Y="135" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>
+      <data ID="friendsOnline" TYPE="text" FORMAT="HS" WIDTH="330" HEIGHT="75" X="75" Y="130" />
+      <data ID="friendsOnlineLabel" TYPE="text" FORMAT="I" WIDTH="330" HEIGHT="75" X="18" Y="180" />
+      <data ID="notificationIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="!" WIDTH="48" HEIGHT="48" X="18" REL_TARGET="tileTitle" REL_Y="67" />
+      <data ID="friendsInPlayMode" TYPE="text" FORMAT="I" WIDTH="410" HEIGHT="75" X="82" REL_TARGET="tileTitle" REL_Y="75" />
+      <data ID="LOGOIMAGE" TYPE="image" PATH="imgAssets/online/FifaCrest.dds" WIDTH="228" HEIGHT="228" Y="237">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+      </data>
+    </tile>
+    <tile NAME="HOME_CONTINUE_LIVE_COMP_LARGE" PARAM="20" TYPE="TILE" DESTINATION="LiveCompetitionsAdvance" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_LIVE_COMP_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_LIVE_COMP_SELECTED" BACKGROUND="HomeTile_Tall" DECORATORS_RANGE="3">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="tileTitle" TYPE="title" PARAM="TXT_ONL_continue_livecomp" />
+      <data ID="LOGOIMAGE" TYPE="image" PATH="imgAssets/online/FifaCrest.dds" WIDTH="228" HEIGHT="228" Y="237">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	  </data>
+    </tile>
+    <tile NAME="HOME_CONTINUE_STORY_LARGE" PARAM="21" TYPE="TILE" NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_STORY_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_STORY_SELECTED" DESTINATION="ContinueStoryMode" DECORATORS_RANGE="NONE" >
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="background" TYPE="asset" PATH="mainHub/story" PARAM="@storyHeroActiveContinueLarge" />
+      <data ID="title" TYPE="asset" PATH="mainHub/title" PARAM="@storyTitle" KEEP_SCALE="TRUE" FORMAT="||center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|||top"/>
+      <data ID="separator" TYPE="bar" WIDTH="130" HEIGHT="2" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_BACKGROUND" HLALPHA="50" UHLALPHA="50">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM"/>
+      </data>
+      <data ID="action" TYPE="text" PARAM="MM_continue_caps" FORMAT="FONT_MEDIUM_SMALL_LABEL_DESCRIPTION||center" >
+        <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="15"/>
+      </data>
+    </tile>
+    <tile NAME="HOME_CONTINUE_NEW_STORY_LARGE" PARAM="22" TYPE="TILE" DESTINATION="NewStoryMode"  NARRATION_HIGHLIGHT="ACC_HOME_CONTINUE_NEW_STORY_HIGHLIGHTED" NARRATION_SELECT="ACC_HOME_CONTINUE_NEW_STORY_SELECTED" DECORATORS_RANGE="NONE">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="background" TYPE="asset" PATH="mainHub/story" PARAM="home_journey_new"/>
+      <data ID="title" TYPE="asset" PATH="mainHub/title" PARAM="@storyTitle" KEEP_SCALE="TRUE" FORMAT="||center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|||top">
+        <align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+      </data>
+    </tile>
+    <tile NAME="CHAMPIONS_LEAGUE_CONT_HOME" PARAM="23" TYPE="TILE" DESTINATION="ContinueChampionsLeagueTournament"  NARRATION_HIGHLIGHT="ACC_CHAMPIONS_LEAGUE_CONT_HOME_HIGHLIGHTED" NARRATION_SELECT="ACC_CHAMPIONS_LEAGUE_CONT_HOME_SELECTED" BACKGROUND="Continue_UCL_Tall" DECORATORS_RANGE="NONE">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="BACKGROUND_VIDEO" TYPE="component" PATH="game/components/FluxComponents/FluxMoviePlayer.swf" PARAM="Fifa/Movies/Home_Continue_UCL_Tall" VISIBLE="@showUCLMovieContinue" UHLALPHA="0"/>
+      <data ID="LEAGUE_LOGO" TYPE="asset" PATH="league" PARAM="223" FORMAT="|||COLOR_UCL_DARK_BLUE" WIDTH="148" HEIGHT="148" Y="46">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+      <data ID="ROUND_NAME" TYPE="text"  PARAM="@UCLroundName" TRANSLATE="FALSE" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_UCL_DARK_BLUE" Y="229" >
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+      <data ID="VERSUS_TEXT" TYPE="text" VISIBLE="TRUE" FORMAT="FONT_BOLD_ACTIVE_LABEL||center" PARAM="Versus_abbr" TRANSLATE="TRUE" WIDTH="30" HEIGHT="30" Y="301">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+      <data ID="VERSUS_CIRCLE" TYPE="asset" PATH="mainHub" PARAM="Versus" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="42" HEIGHT="42">
+        <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="HOME_CREST" TYPE="asset" PATH="crest" PARAM="@UCLhomeCrest"  WIDTH="90" HEIGHT="90">
+        <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="130"/>
+        <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="AWAY_CREST" TYPE="asset" PATH="crest" PARAM="@UCLawayCrest" WIDTH="90" HEIGHT="90">
+        <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="-130"/>
+        <align TARGET="VERSUS_TEXT" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="CONTINUE" TYPE="text" PARAM="CHAMPIONS_LEAGUE_CONT_HOME" FORMAT="FONT_MEDIUM_SMALL_LABEL_DESCRIPTION||center" Y="432" />
+    </tile>
+    <tile NAME="CHAMPIONS_LEAGUE_NEW_CONT_HOME" PARAM="24" TYPE="TILE" DESTINATION="NewChampionsLeagueTournament" BACKGROUND="New_UCL_Tall" NARRATION_HIGHLIGHT="ACC_CHAMPIONS_LEAGUE_NEW_CONT_HOME_HIGHLIGHTED" NARRATION_SELECT="ACC_CHAMPIONS_LEAGUE_NEW_CONT_HOME_SELECTED" DECORATORS_RANGE="NONE">
+      <properties WIDTH="335" HEIGHT="600" />
+      <data ID="BACKGROUND_VIDEO" TYPE="component" PATH="game/components/FluxComponents/FluxMoviePlayer.swf" PARAM="Fifa/Movies/Home_New_UCL_Tall" VISIBLE="@showUCLMovieNew" UHLALPHA="0"/>
+      <data ID="LEAGUE_LOGO" TYPE="asset" PATH="league" PARAM="223" FORMAT="|||COLOR_UCL_DARK_BLUE" WIDTH="215" HEIGHT="215" Y="47">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_CUSTOMISE_TEAMS_PANEL">
+    <tile NAME="CUSTOMISE_EDIT_TEAM_MANAGEMENT" TYPE="TILE" DESTINATION="EditTeamManagement" BACKGROUND="TeamSheets">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_Team_Management" />
+    </tile>
+    <tile NAME="NATIONAL_SQUADS" TYPE="TILE" DESTINATION="InternationalSelections" BG_ICON="NationalSquads_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Internationalselections" />
+    </tile>
+    <tile NAME="STADIUMS" TYPE="TILE" DESTINATION="Stadiums" BG_ICON="Stadiums_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="STADIUMS" />
+    </tile>
+    <tile NAME="CLUB_TRANSFERS" TYPE="TILE" DESTINATION="ClubTransfers" BACKGROUND="ClubTransfers">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_Clubtransfers" />
+    </tile>
+    <tile NAME="DOWNLOAD_UPDATES" TYPE="TILE" DESTINATION="EditTeamUpdates" BG_ICON="DownloadUpdates_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Osdk_lv3_downloadupdates" />
+    </tile>
+    <tile NAME="RESET_ALL_SQUADS" TYPE="TILE" DESTINATION="EditTeamsReset" BG_ICON="ResetAllSquads_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Resetallsquads" />
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_CUSTOMISE_SETTINGS_PANEL">
+    <tile NAME="GAME_SETTINGS" TYPE="TILE" DESTINATION="SettingsGame" NARRATION_HIGHLIGHT="ACC_GAME_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_GAME_SETTINGS_SELECTED" BG_ICON="SettingsControls_Square" >
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_GAME_SETTINGS" />
+    </tile>
+    <tile NAME="VIDEO_CALIBRATION" TYPE="TILE" DESTINATION="SettingsVideoBrightness" NARRATION_HIGHLIGHT="ACC_VIDEO_CALIBRATION_HIGHLIGHTED" NARRATION_SELECT="ACC_VIDEO_CALIBRATION_SELECTED" BG_ICON="VideoCalibration_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_SETTINGS_VIDEO" />
+    </tile>
+    <tile NAME="BASIC_CONTROLS" TYPE="TILE" DESTINATION="HelpBasic" NARRATION_HIGHLIGHT="ACC_BASIC_CONTROLS_HIGHLIGHTED" NARRATION_SELECT="ACC_BASIC_CONTROLS_SELECTED" BG_ICON="BasicControls_Square||PTF|">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_SETTINGS_BASIC_CONTROLS" />
+    </tile>
+    <tile NAME="CONTROLLER_SETTINGS" TYPE="TILE" DESTINATION="SettingsController" NARRATION_HIGHLIGHT="ACC_CONTROLLER_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_CONTROLLER_SETTINGS_SELECTED" BG_ICON="ControllerSettings_Square||PTF|">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_SETTINGS_CONTROLLER" />
+    </tile>
+    <tile NAME="CONTROLLER_SETTINGS_REMOTE" TYPE="TILE_NESTED">
+      <properties WIDTH="721" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="CONTROLLER_SETTINGS_REMOTE_SUBTILE" DESTINATION="SettingsController" NARRATION_HIGHLIGHT="ACC_CONTROLLER_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_CONTROLLER_SETTINGS_SELECTED" BG_ICON="ControllerSettings_SquarePS4">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_SETTINGS_CONTROLLER" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="REMOTE_PLAY" DESTINATION="REMOTE_PLAY" NARRATION_HIGHLIGHT="ACC_REMOTE_PLAY_HIGHLIGHTED" NARRATION_SELECT="ACC_REMOTE_PLAY_SELECTED" BACKGROUND="RemotePlay" PARAM="">
+        <data ID="TITLE" TYPE="title" PARAM="MM_REMOTE_PLAY_HEADER" />
+      </subtile>
+    </tile>
+    <tile NAME="ACCESSIBILITY" TYPE="TILE" DESTINATION="SettingsAccessibility" NARRATION_HIGHLIGHT="ACC_ACCESSIBILITY_HIGHLIGHTED" NARRATION_SELECT="ACC_ACCESSIBILITY_SELECTED" BG_ICON="Accessibility_Square" >
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_ACCESSIBILITY_SETTINGS" />
+    </tile>
+    <tile NAME="SKILL_MOVES_CELEBRATIONS_NESTED" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="SKILL_MOVES" DESTINATION="HelpSkillMoves" NARRATION_HIGHLIGHT="ACC_SKILL_MOVES_HIGHLIGHTED" NARRATION_SELECT="ACC_SKILL_MOVES_SELECTED" BG_ICON="SkillMoves_Square">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Skillmoveshelp" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CELEBRATIONS" DESTINATION="HelpCelebrations" NARRATION_HIGHLIGHT="ACC_CELEBRATIONS_HIGHLIGHTED" NARRATION_SELECT="ACC_CELEBRATIONS_SELECTED" BG_ICON="Celebrations_Square">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="misc_GamerCelebrationsHelp" />
+      </subtile>
+    </tile>
+    <tile NAME="SELECT_ARENA_PLAYER_NESTED" TYPE="TILE_NESTED">
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="SELECT_ARENA_PLAYER_SUBTILE" DESTINATION="SettingsArenaPlayer" NARRATION_HIGHLIGHT="ACC_ARENA_PLAYER_HIGHLIGHTED" NARRATION_SELECT="ACC_ARENA_PLAYER_SELECTED" BG_ICON="SelectPlayerArena_Square">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Arena_Player_Selection" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="SELECT_ARENA_KEEPER" DESTINATION="SettingsArenaGoalkeeper" NARRATION_HIGHLIGHT="ACC_ARENA_KEEPER_HIGHLIGHTED" NARRATION_SELECT="ACC_ARENA_KEEPER_SELECTED" BG_ICON="SelectKeeperArena_Square" PARAM="">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Arena_Keeper_Selection" />
+      </subtile>
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_CUSTOMISE_ONLINE_PANEL">
+    <tile NAME="ORIGIN_ACCOUT_EA_SETTINGS" TYPE="TILE" DESTINATION="OnlineSettingsEA" BACKGROUND="invalid_path_activates_shards" BG_ICON="EAAccountSettings_Square">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="OSDK_EA_ACCT_SETTINGS" />
+    </tile>
+    <tile NAME="DLC_OPEN_STORE" TYPE="TILE_NESTED">
+      <properties WIDTH="721" HEIGHT="296" />
+	  <subtile NAME="DLC_OPEN_STORE_TILE" SUBTILE_TYPE="TILE" DESTINATION="dlcOpenStore" BG_ICON="DLCStore_Square">
+        <properties WIDTH="721" HEIGHT="296" />
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_DLC_STORE_TEXT" />
+      </subtile>
+	  <subtile NAME="DLC_OPEN_STORE_COMMENTARY" SUBTILE_TYPE="TILE" DESTINATION="dlcOpenStore" BG_ICON="DLCStore_Square">
+        <properties WIDTH="721" HEIGHT="296" />
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_DLC_COMMENTARY_LANGUAGE_STORE_TEXT" />
+      </subtile>
+    </tile>
+    <tile NAME="PRIVACY_SETTINGS" TYPE="TILE" DESTINATION="powPrivacySettings" BG_ICON="PrivacySettings_Square">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PRIVACY_SETTINGS" />
+    </tile>
+    <tile NAME="PRIVACY_SETTINGS_PC" TYPE="TILE" DESTINATION="powPrivacySettings" BACKGROUND="PrivacySettings_Large">
+      <properties WIDTH="721" HEIGHT="602" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_PRIVACY_SETTINGS_N" />
+    </tile>
+    <tile NAME="MATCHMAKING_OPTIONS" TYPE="TILE" DESTINATION="matchmakingOptions" BG_ICON="MatchMakingSettings_Med">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="matchmaking_options_title_n" />
+    </tile>
+    <tile NAME="MATCHMAKING_OPTIONS_PC" TYPE="TILE" DESTINATION="matchmakingOptions" BACKGROUND="MatchmakingOptions_Large">
+      <properties WIDTH="721" HEIGHT="602" />
+      <data ID="TITLE" TYPE="title" PARAM="matchmaking_options_title_n" />
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_CUSTOMISE_PROFILE_PANEL">
+    <tile NAME="PROFILE_MANAGER" TYPE="TILE" DESTINATION="ProfileManager" BACKGROUND="ProfileManager">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_CP_ProfileManager" />
+    </tile>
+    <tile NAME="SAVE_SQUADS" TYPE="TILE" DESTINATION="SaveSquads" BG_ICON="SaveSquads_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CP_Savesquads" />
+    </tile>
+    <tile NAME="LOAD_SQUADS" TYPE="TILE" DESTINATION="LoadSquads" BG_ICON="LoadSquads_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CP_Loadsquads" />
+    </tile>
+    <tile NAME="LOAD_FIFA_PROFILE" TYPE="TILE" DESTINATION="LoadProfile" BG_ICON="LoadFIFAProfile_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CP_loadfifa08profiles" />
+    </tile>
+    <tile NAME="SAVE_FIFA_PROFILE" TYPE="TILE" DESTINATION="SaveProfile" BG_ICON="SaveFIFAProfile_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_CP_Savefifa08profiles" />
+    </tile>
+    <tile NAME="DELETE_FIFA_PROFILE" TYPE="TILE" DESTINATION="DeleteProfile" BG_ICON="Delete_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="delete_uppercase" />
+    </tile>
+    <tile NAME="EULA" TYPE="TILE" DESTINATION="Eula" BG_ICON="EndUserLicenseAgreement_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_EULA" />
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_CUSTOMISE_KINECT_PANEL">
+    <tile NAME="KIN_SETTINGS" TYPE="TILE" DESTINATION="KIN_BasicSettings" BACKGROUND="keepOriginal/BasicSettings||PTF|">
+      <properties WIDTH="721" HEIGHT="602" />
+      <data ID="TITLE" TYPE="title" PARAM="KIN_BasicSettings" />
+    </tile>
+    <tile NAME="KIN_COMBO" TYPE="TILE" DESTINATION="KIN_ComboSettings" BG_ICON="ComboSettings_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="KIN_ComboSettings_header" />
+    </tile>
+    <tile NAME="KIN_CUSTOM" TYPE="TILE" DESTINATION="KIN_CustomSettings" BG_ICON="SettingsControls_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="KIN_CustomSettings_header" />
+    </tile>
+    <tile NAME="KIN_FORMATIONS" TYPE="TILE" DESTINATION="KIN_FormationSettings" BG_ICON="FormationSettings_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="KIN_FormationSettings_header" />
+    </tile>
+    <tile NAME="KIN_HELP" TYPE="TILE" DESTINATION="HelpKinect" BG_ICON="VoiceRecognitionHelp_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="KIN_KinectHelp_header" />
+    </tile>
+    <tile NAME="PSVR_HELP" TYPE="TILE" DESTINATION="HelpKinect" BG_ICON="VoiceRecognitionHelp_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PS4_PSVRHelp" />
+    </tile>
+  </panel>
+  <panel NAME="MM_TAB_CUSTOMISE_DEMO_PANEL">
+    <tile NAME="DEMO_GAME_SETTINGS_SMALL" TYPE="TILE" DESTINATION="SettingsGame" BG_ICON="SettingsControls_Square">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_GAME_SETTINGS" />
+    </tile>
+    <tile NAME="DEMO_GAME_SETTINGS_SQUARE" TYPE="TILE" DESTINATION="SettingsGame" BG_ICON="SettingsControls_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_GAME_SETTINGS" />
+    </tile>
+    <tile NAME="DEMO_GAME_SETTINGS_LARGE" TYPE="TILE" DESTINATION="SettingsGame" BG_ICON="SettingsControls_Square">
+      <properties WIDTH="721" HEIGHT="602" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_GAME_SETTINGS" />
+    </tile>
+    <tile NAME="DEMO_BASIC_CONTROLS_SMALL" TYPE="TILE" DESTINATION="HelpBasic" BG_ICON="BasicControls_Square||PTF|">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_SETTINGS_BASIC_CONTROLS" />
+    </tile>
+    <tile NAME="DEMO_BASIC_CONTROLS_LARGE" TYPE="TILE" DESTINATION="HelpBasic" BG_ICON="BasicControls_Square||PTF|">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_SETTINGS_BASIC_CONTROLS" />
+    </tile>
+    <tile NAME="DEMO_REMOTE_PLAY" TYPE="TILE" DESTINATION="REMOTE_PLAY" BACKGROUND="RemotePlay">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_REMOTE_PLAY_HEADER" />
+    </tile>
+    <tile NAME="DEMO_REMOTE_PLAY_SMALL" TYPE="TILE" DESTINATION="REMOTE_PLAY" BG_ICON="RemotePlay_Small">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_REMOTE_PLAY_HEADER" />
+    </tile>
+    <tile NAME="DEMO_ONLINE_SETTINGS_EA_ACCOUNT" TYPE="TILE" DESTINATION="OnlineSettingsEA" BG_ICON="Credits_Square" >
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="OSDK_EA_ACCT_SETTINGS" />
+    </tile>
+    <tile NAME="DEMO_PRIVACY_SETTINGS_NESTED" TYPE="TILE_NESTED" PARAM="" >
+      <properties WIDTH="356" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="DEMO_EULA_SMALL" DESTINATION="Eula" BG_ICON="EndUserLicenseAgreement_Square">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_EULA" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="DEMO_PRIVACY_SETTINGS" DESTINATION="powPrivacySettings" BG_ICON="PrivacySettings_Small" DECORATORS_RANGE="NONE">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PRIVACY_SETTINGS_N" />
+      </subtile>
+    </tile>
+    <tile NAME="DEMO_SETTINGS_PRIVACY_NESTED" TYPE="TILE_NESTED" PARAM="">
+      <properties WIDTH="721" HEIGHT="296" />
+      <subtile SUBTILE_TYPE="TILE" NAME="DEMO_EULA" DESTINATION="Eula" BG_ICON="EndUserLicenseAgreement_Square">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_EULA" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="DEMO_SETTINGS_PRIVACY" DESTINATION="powPrivacySettings" BG_ICON="PrivacySettings_Small" DECORATORS_RANGE="NONE">
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_PRIVACY_SETTINGS_N" />
+      </subtile>
+    </tile>
+    <tile NAME="DEMO_VIDEO_CALIBRATION_SMALL" TYPE="TILE" DESTINATION="SettingsVideoBrightness" BG_ICON="VideoCalibration_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="Videocalibration"/>
+    </tile>
+    <tile NAME="DEMO_VIDEO_CALIBRATION_LARGE" TYPE="TILE" DESTINATION="SettingsVideoBrightness" BG_ICON="VideoCalibration_Square">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="Videocalibration" />
+    </tile>
+    <tile NAME="DEMO_ACCESSIBILITY_SMALL" TYPE="TILE" DESTINATION="SettingsAccessibility" BG_ICON="Accessibility_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_ACCESSIBILITY_SETTINGS"/>
+    </tile>
+    <tile NAME="DEMO_CONTROLLER_SETTINGS" TYPE="TILE" DESTINATION="SettingsController" BG_ICON="ControllerSettings_Square||PTF|">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_SETTINGS_CONTROLLER" />
+    </tile>
+    <tile NAME="DEMO_CONTROLLER_SETTINGS_LARGE" TYPE="TILE" DESTINATION="SettingsController" BG_ICON="ControllerSettings_Square||PTF|">
+      <properties WIDTH="721" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_SETTINGS_CONTROLLER" />
+    </tile>
+	<tile NAME="DEMO_SKILL_MOVES" TYPE="TILE" DESTINATION="HelpSkillMoves" BG_ICON="SkillMoves_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="MM_Skillmoveshelp" />
+    </tile>
+    <tile NAME="DEMO_CELEBRATIONS" TYPE="TILE" DESTINATION="HelpCelebrations" BG_ICON="Celebrations_Square">
+      <properties WIDTH="356" HEIGHT="296" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="misc_GamerCelebrationsHelp" />
+    </tile>
+  </panel>
+</root>

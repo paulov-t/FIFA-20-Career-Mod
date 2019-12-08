@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="KickoffOffboardingHub" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+    <component PATH="game/components/BackgroundImage.swf" X="730" Y="0" DATAPROVIDERID="BACKGROUND_IMAGE_DP"/>
+  </components>
+  <panel_set>
+    <panel NAME="GAME_TYPE_SELECT" LABEL="" IS_TAB="FALSE">
+      <layout NAME="GAME_TYPE_SELECT_LAYOUT" X="134" Y="0">
+        <tile NAME="GAME_TYPE_SELECT_LIST" X="0" Y="650" />
+        <tile NAME="GAME_TYPE_DESCRIPTION" X="0" Y="0" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="GAME_TYPE_SELECT">  
+	<variable_set>
+		<variable id="modeTypeName" type="string"/>
+		<variable id="modeTypeDesc" type="string"/>
+	</variable_set>
+	<tile NAME="GAME_TYPE_SELECT_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DATAPROVIDERID="GridControlDP">
+      <properties WIDTH="1112" HEIGHT="267" />
+      <data ID="modeTypeLabel" TYPE="text" ALIGN="leading" FORMAT="FONT_DESCRIPTION_PREVIEW_FHD|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_BOLD_BIG_HIGHLIGHTED|FONT_DESCRIPTION_PREVIEW_FHD" Y="8" WIDTH="350" HEIGHT="267" TRANSLATE="FALSE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="18" />
+	  </data>
+      <data ID="titleMarker" TYPE="rectangle" FORMAT="|COLOR_FILL_HIGHLIGHT_CONTRAST" WIDTH="4" HLALPHA="100" UHLALPHA="0">
+	    <align TARGET="modeTypeLabel" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+		<align TARGET="modeTypeLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />		
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="0" />		
+	  </data>
+      <data ID="modeTypeIcon" TYPE="asset" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX|" PATH="kickOffIcon/offBoarding" WIDTH="102" HEIGHT="102">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+	  </data>
+    </tile>
+    <tile NAME="GAME_TYPE_DESCRIPTION" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+	  <data ID="header" ALIGN="leading" TYPE="text" FORMAT="FONT_TILE_HS|COLOR_FILL_HIGHLIGHT||COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" PARAM="TRY_THESE_MODES" HEIGHT="500" WIDTH="850" X="0" Y="70" TRANSLATE="TRUE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="0" />
+	  </data>
+	  <data ID="gameTypeName" ALIGN="leading" TYPE="text" FORMAT="FONT_TILE_HXXL|COLOR_FILL_HIGHLIGHT||COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" PARAM="@modeTypeName" HEIGHT="500" WIDTH="850" X="0" Y="110" TRANSLATE="FALSE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="0" />		
+	  </data>
+	  <data ID="gameTypeDesc" TYPE="text" ALIGN="leading" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="@modeTypeDesc" HEIGHT="400" WIDTH="850"  Y="350" TRANSLATE="FALSE">
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="2" />		
+	  </data>
+      <properties WIDTH="850" HEIGHT="640"  />  
+    </tile>
+  </panel>
+ </root>

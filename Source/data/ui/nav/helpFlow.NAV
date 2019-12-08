@@ -1,0 +1,57 @@
+{
+	"name":"Help"
+	,"states":
+	[
+		{
+			"name":"HelpBasic"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/settings/controllerHelp", "BASIC_CONTROLS_HELP", ""]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/settings/controllerHelp"]]
+			]
+		}
+		,{
+			"name":"HelpSkillMoves"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/settings/controllerHelp", "SKILL_MOVES_HELP", ""]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/settings/controllerHelp"]]
+			]
+		}
+		,{
+			"name":"HelpCelebrations"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/settings/controllerHelp", "CELEBRATIONS_HELP", ""]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/settings/controllerHelp"]]
+			]
+		}
+		,{
+			"name":"HelpKinect"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/kinect/KinectHelp", ""]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/kinect/KinectHelp"]]
+			]
+		}
+	]
+	,"transitions":
+	[
+		{
+			"event":"back"
+			,"targets":["back"]
+		}
+	]
+}

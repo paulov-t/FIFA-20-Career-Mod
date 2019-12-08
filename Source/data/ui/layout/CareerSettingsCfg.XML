@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2017 15:27:39" VERSION="2">
+  <hub_settings NAME="CareerSettingsHub">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+	<tile_path TILE_PATH="FluxTile_Nested_Exported" TILE_NAME="TILE_NESTED" />
+  </hub_settings>
+  <components>
+	<component PATH="game/fluxHelpers/CareerHubSettingsLibrary.swf" X="0" Y="0" />
+  </components>
+  <panel_set>
+    <panel NAME="CAREER_SETTINGS_PANEL" LABEL="CAREER_SETTINGS_TAB_TITLE" IS_TAB="FALSE" >
+      <buttons>
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="Back" />
+      </buttons>
+      <layout NAME="CAREER_SETTINGS_BASE_LAYOUT" >
+        <tile NAME="CAREER_SETTINGS_ADVANCE" X="110" Y="145" />
+        <tile NAME="CAREER_SETTINGS_MATCH_DIFF" X="535" Y="145" />
+        <tile NAME="CAREER_SETTINGS_HALF_LENGTH" X="960" Y="145" />
+        <tile NAME="CAREER_SETTINGS_CURRENCY" X="1385" Y="145" />
+        <tile NAME="CAREER_SETTINGS_EURO" X="110" Y="535" />
+        <tile NAME="CAREER_SETTINGS_TRANSFER" X="535" Y="535" />
+        <tile NAME="CAREER_SETTINGS_INTERNATIONAL_OFFERS" X="960" Y="535" />
+        <tile NAME="CAREER_SETTINGS_STADIUM" X="1385" Y="535" />
+      </layout>
+    </panel>
+    <panel NAME="CAREER_SETTINGS_PANEL_DUMMY" LABEL="CAREER_SETTINGS_DUMMY_TITLE" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="CAREER_SETTINGS_PANEL">
+    <variable_set>
+      <variable id="matchDifficultyDesc" type="string"/>
+	  <variable id="currencyIcon" type="string"/>
+	  <variable id="matchDifficultyIcon" type="string"/>
+	  <variable id="halfLengthValue" type="string"/>
+	  <variable id="internationalIcon" type="string"/>
+	  <variable id="transferWindow" type="string"/>
+    </variable_set>
+    <tile NAME="CAREER_SETTINGS_ADVANCE" TYPE="TILE" DESTINATION="Advance">
+      <properties WIDTH="415" HEIGHT="380" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CSH_ADVANCE_TITLE"/>
+      <data ID="IMAGE" TYPE="asset" PATH="careerSettings" PARAM="Icon_Advance" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" WIDTH="150" HEIGHT="150">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+    </tile>
+    <tile NAME="CAREER_SETTINGS_MATCH_DIFF" TYPE="TILE" DESTINATION="BogusEnableMouseSupport">
+      <properties WIDTH="415" HEIGHT="380" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CSH_MATCH_DIFFICULTY_TITLE"/>
+	  <data ID="IMAGE" TYPE="asset" PATH="careerSettings" PARAM="@matchDifficultyIcon" FORMAT="|||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" HLALPHA="0" UHLALPHA="100" WIDTH="150" HEIGHT="150">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="@matchDifficultyDesc" FORMAT="I|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" HLALPHA="100" UHLALPHA="0" SHOW_IN_STATE="ENABLED" WIDTH="300" HEIGHT="270">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="FLUXTOGGLECOMP" VISIBLE="TRUE" TYPE="component" PARAM="||true|true|true" PATH="game/components/FluxComponents/FluxToggleComponent.swf" X="0" Y="300" WIDTH="350" HEIGHT="50" DATAPROVIDERID="FluxToggleComponentDP">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+    </tile>
+    <tile NAME="CAREER_SETTINGS_HALF_LENGTH" TYPE="TILE" DESTINATION="BogusEnableMouseSupport">
+      <properties WIDTH="415" HEIGHT="380" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CSH_HALF_LENGTH_TITLE"/>
+	  <data ID="IMAGE" TYPE="asset" PATH="careerSettings" PARAM="Icon_Half_Length" FORMAT="|||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" HLALPHA="0" UHLALPHA="100" WIDTH="150" HEIGHT="150">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+	  <data ID="HALF_VALUE" TYPE="text" PARAM="@halfLengthValue" TRANSLATE="FALSE" FORMAT="SL||center|COLOR_TEXT_UNHIGHLIGHT_FLUX" HLALPHA="0" UHLALPHA="100" WIDTH="415" HEIGHT="40">
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CSH_HALF_LENGTH_DESC" FORMAT="I|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" HLALPHA="100" UHLALPHA="0" SHOW_IN_STATE="ENABLED" WIDTH="300" HEIGHT="270">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="FLUXTOGGLECOMP" VISIBLE="TRUE" TYPE="component" PARAM="||true|true|true" PATH="game/components/FluxComponents/FluxToggleComponent.swf" X="0" Y="300" WIDTH="350" HEIGHT="50" DATAPROVIDERID="FluxToggleComponentDP">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+    </tile>
+    <tile NAME="CAREER_SETTINGS_CURRENCY" TYPE="TILE" DESTINATION="BogusEnableMouseSupport">
+      <properties WIDTH="415" HEIGHT="380" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CSH_CURRENCY_TITLE"/>
+      <data ID="IMAGE" TYPE="asset" PATH="careerSettings" PARAM="@currencyIcon" FORMAT="|||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" HLALPHA="0" UHLALPHA="100" WIDTH="150" HEIGHT="150">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CSH_CURRENCY_DESC" FORMAT="I|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" HLALPHA="100" UHLALPHA="0" SHOW_IN_STATE="ENABLED" WIDTH="300" HEIGHT="270">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="FLUXTOGGLECOMP" VISIBLE="TRUE" TYPE="component" PARAM="||true|true|true" PATH="game/components/FluxComponents/FluxToggleComponent.swf" X="0" Y="300" WIDTH="350" HEIGHT="50" DATAPROVIDERID="FluxToggleComponentDP">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+    </tile>
+    <tile NAME="CAREER_SETTINGS_EURO" TYPE="TILE" DESTINATION="BogusEnableMouseSupport">
+      <properties WIDTH="415" HEIGHT="380" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CSH_EUROPEAN_COMPETITIONS_TITLE"/>
+      <data ID="IMAGE_ECL" TYPE="asset" PATH="league" PARAM="223" FORMAT="|COLOR_UCL_DARK_BLUE||COLOR_UCL_DARK_BLUE" HLALPHA="0" UHLALPHA="100" WIDTH="150" HEIGHT="150" X ="45">
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="IMAGE_EL" TYPE="asset" PATH="league" PARAM="224" FORMAT="|||" HLALPHA="0" UHLALPHA="100" WIDTH="150" HEIGHT="150" X ="230">
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CSH_EUROPEAN_COMPETITIONS_DESC" FORMAT="I|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" HLALPHA="100" UHLALPHA="0" SHOW_IN_STATE="ENABLED" WIDTH="300" HEIGHT="270">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="FLUXTOGGLECOMP" VISIBLE="TRUE" TYPE="component" PARAM="||true|true|true" PATH="game/components/FluxComponents/FluxToggleComponent.swf" X="0" Y="300" WIDTH="350" HEIGHT="50" DATAPROVIDERID="FluxToggleComponentDP">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+    </tile>
+    <tile NAME="CAREER_SETTINGS_TRANSFER" TYPE="TILE" DESTINATION="BogusEnableMouseSupport">
+      <properties WIDTH="415" HEIGHT="380" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CSH_TRANSFER_WINDOW_TITLE"/>
+      <data ID="IMAGE" TYPE="asset" PATH="careerSettings" PARAM="@transferWindow" FORMAT="|||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" HLALPHA="0" UHLALPHA="100" WIDTH="150" HEIGHT="150">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CSH_TRANSFER_WINDOW_DESC" FORMAT="I|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" HLALPHA="100" UHLALPHA="0" SHOW_IN_STATE="ENABLED" WIDTH="300" HEIGHT="270">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="FLUXTOGGLECOMP" VISIBLE="TRUE" TYPE="component" PARAM="||true|true|true" PATH="game/components/FluxComponents/FluxToggleComponent.swf" X="0" Y="300" WIDTH="350" HEIGHT="50" DATAPROVIDERID="FluxToggleComponentDP">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+    </tile>
+    <tile NAME="CAREER_SETTINGS_INTERNATIONAL_OFFERS" TYPE="TILE" DESTINATION="BogusEnableMouseSupport">
+      <properties WIDTH="415" HEIGHT="380" />
+	  <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CSH_INTERNATIONAL_OFFERS"/>
+	  <data ID="IMAGE" TYPE="asset" PATH="careerSettings" PARAM="@internationalIcon" FORMAT="|||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" HLALPHA="0" UHLALPHA="100" WIDTH="150" HEIGHT="150">
+	    <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+	    <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+	  </data>
+	  <data ID="DESCRIPTION" TYPE="text" PARAM="CSH_INT_OFFERS_DESC" FORMAT="I|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" HLALPHA="100" UHLALPHA="0" SHOW_IN_STATE="ENABLED" WIDTH="300" HEIGHT="270">
+	    <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+	    <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+	  </data>
+	  <data ID="FLUXTOGGLECOMP" VISIBLE="TRUE" TYPE="component" PARAM="||true|true|true" PATH="game/components/FluxComponents/FluxToggleComponent.swf" X="0" Y="300" WIDTH="350" HEIGHT="50" DATAPROVIDERID="FluxToggleComponentDP">
+	    <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+	  </data>
+    </tile>
+    <tile NAME="CAREER_SETTINGS_STADIUM" TYPE="TILE" DESTINATION="BogusEnableMouseSupport">
+      <properties WIDTH="415" HEIGHT="380" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CSH_STADIUM_TITLE"/>
+      <data ID="IMAGE" TYPE="asset" PATH="careerSettings" PARAM="Icon_Stadium" FORMAT="|||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" HLALPHA="0" UHLALPHA="100" WIDTH="150" HEIGHT="150">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CSH_STADIUM_DESC" FORMAT="I|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL|||middle" HLALPHA="100" UHLALPHA="0" SHOW_IN_STATE="ENABLED" WIDTH="300" HEIGHT="270">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+        <align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="FLUXTOGGLECOMP" VISIBLE="TRUE" TYPE="component" PARAM="||true|true|true" PATH="game/components/FluxComponents/FluxToggleComponent.swf" X="0" Y="300" WIDTH="350" HEIGHT="50" DATAPROVIDERID="FluxToggleComponentDP">
+        <align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+    </tile>
+  </panel>
+</root>

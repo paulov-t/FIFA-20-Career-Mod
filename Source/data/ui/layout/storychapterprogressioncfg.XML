@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryChapterProgressionHub" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" X="167" Y="95" WIDTH="1535" DATAPROVIDERID="FLUX_HEADER_DP" />
+  </components>
+  <buttons>
+    <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+  </buttons>
+  <panel_set>
+    <panel NAME="STORY_CHAPTER_PROGRESSION" LABEL="" IS_TAB="FALSE">
+      <layout NAME="CHAPTER_PROGRESSION" X="167" Y="234">
+        <tile NAME="CHAPTER_LIST" X="0" Y="0" />
+        <tile NAME="CHAPTER_INFO_SUMMARY" X="0" Y="84" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="STORY_CHAPTER_PROGRESSION">
+    <tile NAME="CHAPTER_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DATAPROVIDERID="GridControlDP" >
+      <properties WIDTH="297" HEIGHT="74" />
+      <data ID="chapterNum" TYPE="text" FORMAT="FONT_TILE_HM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center" UHLALPHA="0" X="3" Y="0" WIDTH="74" HEIGHT="74" TRANSLATE="FALSE" />
+      <data ID="chapterNumUnhighlight" TYPE="text" FORMAT="FONT_TILE_UXHS|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center" HLALPHA="0" X="3" Y="10" WIDTH="74" HEIGHT="74" TRANSLATE="FALSE" />
+      <data ID="progressBarBackground" TYPE="rectangle" PARAM="0xFFFFFF" UHLALPHA="10" HLALPHA="10" X="0" Y="69" WIDTH="74" HEIGHT="5" />
+      <data ID="progressBar" TYPE="bar" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" X="0" Y="69" WIDTH="74" HEIGHT="5" />
+    </tile>
+    <tile NAME="CHAPTER_INFO_SUMMARY" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND" DATAPROVIDERID="STORY_CHAPTER_PROGRESSION_TILE_DP">
+      <properties WIDTH="1585" HEIGHT="578"  />
+      <data ID="background" TYPE="rectangle" PARAM="0xFFFFFF" UHLALPHA="10" HLALPHA="10" WIDTH="1585" HEIGHT="578" />
+      <data ID="objectivesBackground" TYPE="rectangle" PARAM="0xFFFFFF" UHLALPHA="10" HLALPHA="10" WIDTH="1086" HEIGHT="578" />
+      <data ID="headerBackground" TYPE="rectangle" PARAM="0xFFFFFF" UHLALPHA="10" HLALPHA="10" WIDTH="1086" HEIGHT="39" />
+      <data ID="chapterInfoSummaryPanel" TYPE="component" PATH="game/components/storyMode/ObjectivesList.swf" FORMAT="|COLOR_TEXT_LABEL||COLOR_TEXT_LABEL" WIDTH="1086" HEIGHT="578" DATAPROVIDERID="SMChapterProgressionDP"/>
+      <data ID="rewardBackground" TYPE="asset" PATH="story" PARAM="Backing_FUT" WIDTH="500" HEIGHT="578" X="1085" Y="0" />
+      <data ID="rewardTitle" TYPE="text" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" VISIBLE="FALSE" TRANSLATE="FALSE" UHLALPHA="50" HLALPHA="50" WIDTH="500" HEIGHT="110"  X="1086" Y="10"  />
+      <data ID="rewardImage" TYPE="asset" PATH="smrewards" WIDTH="230" HEIGHT="339" KEEP_SCALE="TRUE" X="1221" Y="120" VISIBLE="TRUE" />
+	  <data ID="lock" TYPE="asset" PARAM="iconLocked" PATH="tiles/story" KEEP_SCALE="TRUE" WIDTH="180" HEIGHT="180">
+		<align TARGET="rewardImage" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+		<align TARGET="rewardImage" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-10"/>
+	  </data>
+	  <data ID="colored_box_completion" TYPE="rectangle" PARAM="COLOR_FILL_HIGHLIGHT_CONTRAST"  HEIGHT="32">
+		<align TARGET="textCompletion" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		<align TARGET="rewardImage" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+		<align TARGET="rewardImage" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="85" />
+	  </data>	
+	  <data ID="right_edgeCompletion" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" WIDTH="20" HEIGHT="32">
+		<align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" /> 
+		<align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" /> 
+	  </data>		
+	  <data ID="left_edgeCompletion" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" WIDTH="25" HEIGHT="32">
+		<align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" /> 
+		<align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" /> 
+	  </data>
+	  <data ID="textCompletion" TYPE="text" FORMAT="|COLOR_FILL_WARNING|center||||middle" TRANSLATE="FALSE" IMMEDIATE_LOAD="FALSE" WIDTH="100">
+		<align TARGET="rewardImage" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+		<align TARGET="rewardImage" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="85" />
+	  </data>	
+      <data ID="rewardLockedMessage" TYPE="text" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" PARAM="SM_CHAPTER_FUT_REWARD_UNLOCK" UHLALPHA="50" HLALPHA="50" WIDTH="350" HEIGHT="250" X="1161" Y="480" />
+      <data ID="progressFurtherText" TYPE="text" PARAM="SM_CHAPTER_LOCKED" FORMAT="FONT_TILE_HXS||center|COLOR_TEXT_LABEL" VISIBLE="FALSE" WIDTH="1086" HEIGHT="578" X="0" Y="241" UHLALPHA="65" />
+    </tile>
+  </panel>
+ </root>

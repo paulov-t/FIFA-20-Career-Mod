@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryImportSave" HUB_VERSION="3">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <variable_set>
+	  <variable id="language" type="string"/>
+	  <variable id="flag" type="int"/>
+	  <variable id="newOverall" type="string"/>
+	  <variable id="firstName" type="string"/>
+	  <variable id="lastName" type="string"/>
+	  <variable id="importOverall" type="string"/>
+	  <variable id="positionIcon" type="int"/>
+	  <variable id="positionName" type="string"/>
+	  <variable id="personalityIcon" type="string"/>
+	  <variable id="appearanceValue" type="int"/>
+	  <variable id="goalsValue" type="int"/>
+	  <variable id="assistsValue" type="int"/>
+	  <variable id="teamCrests" type="int"/>
+	  <variable id="teamName" type="string"/>
+	  <variable id="newVisible" type="bool"/>
+	  <variable id="newTitleVisible" type="bool"/>
+	  <variable id="importVisible" type="bool"/>
+	  <variable id="importTitleVisible" type="bool"/>
+	  <variable id="dialogueVisible" type="bool"/>
+	  <variable id="crestVisiblity" type="bool"/>
+	  <variable id="subtitlesVisible" type="bool"/>
+	  <variable id="readyVisible" type="bool"/>
+	  <variable id="canDownload" type="bool"/>
+	  <variable id="parentTeamVisible" type="bool"/>
+
+	  <variable id="descriptionParamList" type="string"/>
+	  <variable id="valueParamList" type="string"/>
+	  <variable id="valueVisibleList" type="bool"/>
+	  <variable id="toggleParamList" type="string"/>
+	  <variable id="toggleVisibleList" type="bool"/>
+	  <variable id="canDownloadVisibleList" type="bool"/>
+  </variable_set>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" PARAM="SM_EPISODIC_TITLE|SM_EPISODIC_SUBTITLE" X="209" Y="95" WIDTH="1535" />
+  </components>
+  <panel_set>
+    <panel NAME="STORY_IMPORT_SAVE" >
+	  <buttons>
+		<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+	  </buttons>
+      <layout NAME="SELECT_NEW" X="209" Y="292">
+		<tile NAME="BACKGROUND" X="799" Y="0" />
+		<tile NAME="MENU_LIST" X="0" Y="0" />
+        <tile NAME="START_NEW" X="798" Y="0" />
+		<tile NAME="ADVANCE" X="0" Y="460" />
+      </layout>
+    </panel>
+	<panel NAME="DOWNLOAD_PANEL" >
+	  <buttons>
+		<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+	  </buttons>
+	  <layout NAME="DOWNLOAD_DIALOGUE" X="450" Y="200">
+        <tile NAME="INFO_BOX_TILE" X="0" Y="0" />
+        <tile NAME="TILE_GO_TO_STORE" X="0" Y="377"  />
+		<tile NAME="TILE_CONTINUE_WITH_DEFAULT" X="462" Y="377"/>
+      </layout>
+	</panel>
+  </panel_set>
+  <panel NAME="STORY_IMPORT_SAVE">
+	 <tile NAME="BACKGROUND" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE">	
+      <properties WIDTH="746" HEIGHT="620"/>
+  </tile>
+	 <tile NAME="MENU_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" >
+      <properties WIDTH="788" HEIGHT="450" />
+      <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="150" ROWS="3" />
+	  <buttons>
+		<button ID="ADVANCE" HINT="" ACTION="ACTION_BUTTON_A" />
+	  </buttons>
+      <data ID="description" TYPE="text" PARAM="@descriptionParamList[i]" FORMAT="FONT_FLUX_TITLE_HIGHLIGHT_HS|COLOR_FILL_WARNING||COLOR_FILL_UNHIGHLIGHT_ACTIVE_FLUX_TAB||FONT_FLUX_TITLE_UNHIGHLIGHT_HS" TRANSLATE="TRUE" >
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="45" />
+	  </data>
+	   <data ID="value" TYPE="text" WIDTH="375" HEIGHT="50" PARAM="@valueParamList[i]" FORMAT="FONT_HEAVY_SMALL_LABEL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_DESCRIPTION||FONT_MEDIUM_SMALL_LABEL_DESCRIPTION|middle" VISIBLE="@valueVisibleList[i]" TRANSLATE="FALSE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="10" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-25"/>
+      </data>
+	   <data ID="toggle" TYPE="component" PARAM="@toggleParamList[i]" PATH="game/components/FluxComponents/FluxToggleComponent.swf" WIDTH="375" HEIGHT="50" VISIBLE="@toggleVisibleList[i]">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="10" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-25"/>
+      </data>
+     <data ID="canDownload" PARAM="SM_EPISODIC_GO_TO_STORE|A|0|TRUE" TYPE="component" PATH="game/components/FluxComponents/TileActionableIndicator.swf" WIDTH="300" HEIGHT="39" VISIBLE="@canDownloadVisibleList[i]">
+	    <align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" /> 
+	 </data>
+    </tile>
+    <tile NAME="START_NEW" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" >	
+      <properties WIDTH="747" HEIGHT="620"  />
+      <data ID="newBackgroundAsset" TYPE="asset" PATH="tiles/story" PARAM="NewGame" KEEP_SCALE="TRUE" HEIGHT="450" FORMAT="||right||||bottom" VISIBLE="@newTitleVisible">	
+                <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+	  </data> 
+	  <data ID="newTitle" TYPE="title" FORMAT="FONT_TILE_HL" PARAM="SM_EPISODIC_START_NEW_TITLE" VISIBLE="@newTitleVisible"/>
+      <data ID="newDescription" TYPE="text" PARAM="SM_EPISODIC_START_NEW_SUBTITLE" FORMAT="FONT_MEDIUM_SMALL_LABEL_PREVIEW|||COLOR_PURPLE_GRAY" HEIGHT="620" WIDTH="500" X="18" REL_TARGET="newTitle" REL_Y="10" VISIBLE="@newTitleVisible"/>
+      <data ID="newOverall" TYPE="text" FORMAT="DEMO_SELL_SHEET_TITLE_FONT||center|COLOR_PURPLE_GRAY" TRANSLATE="FALSE" HEIGHT="90" WIDTH="119" X="0" Y="173" PARAM="@newOverall" VISIBLE="@newVisible"/>
+      <data ID="newOverallLabel" TYPE="text" PARAM="Overall_abbr3" FORMAT="FONT_DESCRIPTION_PREVIEW_FHD||center|COLOR_PURPLE_GRAY" HEIGHT="30" WIDTH="119" REL_TARGET="newOverall" X="0" REL_Y="-17" HLALPHA="50" VISIBLE="@newVisible"/>	  
+      <data ID="spacer" TYPE="rectangle" PARAM="COLOR_TEXT_PREVIEW" WIDTH="1" HEIGHT="105" X="115" Y="194" VISIBLE="@newVisible"/>  
+      <data ID="newFirstName" TYPE="text" FORMAT="FONT_LARGE_REGULAR_PREVIEW|||COLOR_PURPLE_GRAY" TRANSLATE="FALSE" HEIGHT="5" WIDTH="320" X="143" Y="182" HLALPHA="50" PARAM="@firstName" VISIBLE="@newVisible"/>
+      <data ID="newLastName" TYPE="text" FORMAT="FONT_TILE_HLU|COLOR_TEXT_PREVIEW|||COLOR_PURPLE_GRAY" TRANSLATE="FALSE" HEIGHT="70" WIDTH="320" X="140" Y="228" PARAM="@lastName" VISIBLE="@newVisible"/>
+
+      <data ID="importBackgroundAsset" TYPE="asset" PATH="tiles/story" PARAM="ReturningUser" KEEP_SCALE="TRUE" HEIGHT="450"  FORMAT="||right||||bottom" VISIBLE="@importTitleVisible">	
+    		<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+	  </data> 
+      <data ID="importTitle" TYPE="title" FORMAT="FONT_TILE_HL" PARAM="SM_EPISODIC_IMPORT_TITLE" VISIBLE="@importTitleVisible"/>
+      <data ID="importDescription" TYPE="text" PARAM="SM_EPISODIC_IMPORT_SUBTITLE" FORMAT="FONT_MEDIUM_SMALL_LABEL_PREVIEW|||COLOR_PURPLE_GRAY" HEIGHT="620" WIDTH="400" X="18" REL_TARGET="importTitle" REL_Y="10" VISIBLE="@importTitleVisible"/>
+	  <data ID="importOverall" TYPE="text" FORMAT="DEMO_SELL_SHEET_TITLE_FONT||center|COLOR_PURPLE_GRAY" TRANSLATE="FALSE" HEIGHT="90" WIDTH="119" X="0" Y="173" PARAM="@importOverall" VISIBLE="@importVisible"/>
+      <data ID="importOverallLabel" TYPE="text" PARAM="Overall_abbr3" FORMAT="FONT_DESCRIPTION_PREVIEW_FHD||center|COLOR_PURPLE_GRAY" HEIGHT="30" WIDTH="119" REL_TARGET="importOverall" X="0" REL_Y="-17" HLALPHA="50" VISIBLE="@importVisible"/>	   
+      <data ID="importFirstName" TYPE="text" FORMAT="FONT_DESCRIPTION_PREVIEW_FHD|||COLOR_PURPLE_GRAY" TRANSLATE="FALSE" HEIGHT="620" WIDTH="320" X="143" Y="187" HLALPHA="50" PARAM="@firstName" VISIBLE="@importVisible"/>
+      <data ID="importLastName" TYPE="text" FORMAT="FONT_TITLEBAR_FHD|||COLOR_PURPLE_GRAY" TRANSLATE="FALSE" HEIGHT="50" WIDTH="320" X="140" Y="213" PARAM="@lastName" VISIBLE="@importVisible"/>	  
+	  <data ID="spacer2" TYPE="rectangle" PARAM="COLOR_TEXT_PREVIEW" WIDTH="1" HEIGHT="105" X="115" Y="194" VISIBLE="@importVisible"/>  
+      <data ID="positionIcon" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" WIDTH="14" HEIGHT="14" X="144" Y="276"  PARAM="@positionIcon" VISIBLE="@importVisible"/>
+      <data ID="positionName" TYPE="text" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION" TRANSLATE="FALSE" WIDTH="89" HEIGHT="100" Y="266" REL_TARGET="positionIcon" REL_X="5" PARAM="@positionName" VISIBLE="@importVisible"/>
+      <data ID="personalityIcon" TYPE="asset" PATH="personality" WIDTH="28" HEIGHT="28" X="200" Y="268" PARAM="@personalityIcon" VISIBLE="@importVisible"/>	  
+      <data ID="teamCrest1" TYPE="asset" PATH="crest" WIDTH="100" HEIGHT="100" X="18" Y="332" PARAM="@teamCrests[0]" VISIBLE="@parentTeamVisible"/>
+      <data ID="teamCrest2" TYPE="asset" PATH="crest" WIDTH="100" HEIGHT="100" X="138" Y="332" PARAM="@teamCrests[1]" VISIBLE="@crestVisiblity[0]"/>
+      <data ID="teamCrest3" TYPE="asset" PATH="crest" WIDTH="100" HEIGHT="100" X="248" Y="332" PARAM="@teamCrests[2]" VISIBLE="@crestVisiblity[1]"/>
+		
+
+	  <data ID="subtitleTitle" TYPE="title" FORMAT="FONT_TILE_HL" PARAM="SM_EPISODIC_DIALOGUE" VISIBLE="@subtitlesVisible"/>
+      <data ID="subtitleDescription" TYPE="text" PARAM="SM_EPISODIC_SUBTITLES_DESC" FORMAT="FONT_MEDIUM_SMALL_LABEL_PREVIEW|||COLOR_PURPLE_GRAY" HEIGHT="620" WIDTH="500" X="18" REL_TARGET="subtitleTitle" REL_Y="10" VISIBLE="@subtitlesVisible"/>
+      <data ID="subtitleBackgroundAsset" TYPE="asset" PATH="settingsImg" PARAM="StoryModeSubtitles" HEIGHT="367" WIDTH="821" VISIBLE="@subtitlesVisible">
+          <align TARGET="subtitleDescription" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="45" />
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	  </data>
+
+	  <data ID="languageTitle" TYPE="title" FORMAT="FONT_TILE_HL" PARAM="SM_EPISODIC_DIALOGUE" VISIBLE="@dialogueVisible"/>
+      <data ID="languageDescription" TYPE="text" PARAM="SM_EPISODIC_DIALOGUE_DESC" FORMAT="FONT_MEDIUM_SMALL_LABEL_PREVIEW|||COLOR_PURPLE_GRAY" TRANSLATE="TRUE" VISIBLE="@dialogueVisible">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+		<align TARGET="languageTitle" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+	  </data>
+	  <data ID="dialogueflag" TYPE="asset" PATH="flags512x512" PARAM="@flag" HEIGHT="350" WIDTH="355" VISIBLE="@dialogueVisible">
+          <align TARGET="languageDescription" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-20" />
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	  </data>
+	 <data ID="seperator" TYPE="hspacer" HEIGHT="2" WIDTH="746" VISIBLE="@dialogueVisible">
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-160" />
+	  </data>
+	<data ID="warning" TYPE="asset" PATH="tiles/story" PARAM="warning_med" WIDTH="45" HEIGHT="45" VISIBLE="@canDownload">	
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+		<align TARGET="seperator" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="20" />
+	</data>
+	<data ID="downloadTitle" TYPE="text" FORMAT="FONT_TILE_TSL|COLOR_FILL_HIGHLIGHT_ALTERNATE||COLOR_FILL_HIGHLIGHT_ALTERNATE" PARAM="SM_EPISODIC_DOWNLOAD_NEEDED" TRANSLATE="TRUE" VISIBLE="@canDownload">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="80"/>
+		<align TARGET="seperator" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="20"/>
+	</data>
+	<data ID="downloadDesc" TYPE="text" PARAM="SM_EPISODIC_DOWNLOAD_DESC" FORMAT="FONT_MEDIUM_SMALL_LABEL_PREVIEW|||COLOR_PURPLE_GRAY" WIDTH="720" TRANSLATE="TRUE" VISIBLE="@canDownload">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+		<align TARGET="downloadTitle" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+	</data>
+		
+	  <data ID="readyTitle" TYPE="title" FORMAT="DEMO_SELL_SHEET_TITLE_FONT" PARAM="SM_EPISODIC_READY_TITLE" VISIBLE="@readyVisible" Y="30"/>
+      <data ID="readyBackgroundAsset" TYPE="asset" PATH="tiles/story" PARAM="advance" HEIGHT="548" WIDTH="628" KEEP_SCALE="TRUE" FORMAT="||||||bottom" VISIBLE="@readyVisible">
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+	  </data>
+  </tile>	
+    <tile NAME="ADVANCE" TYPE="EXPANDABLE_TILE" >	
+      <properties WIDTH="788" HEIGHT="160"  />
+	  <data ID="title" TYPE="text" FORMAT="FONT_FLUX_TITLE_HIGHLIGHT_HL|COLOR_FILL_WARNING|center|COLOR_FILL_UNHIGHLIGHT_ACTIVE_FLUX_TAB||FONT_FLUX_TITLE_UNHIGHLIGHT_HL|middle" PARAM="Advance_upper"/>
+    </tile>
+</panel>
+<panel NAME="DOWNLOAD_PANEL">
+	<tile NAME="INFO_BOX_TILE" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE">
+      <properties WIDTH="915" HEIGHT="367" />
+		<data ID="colored_box" PATH="tiles/story" TYPE="asset" WIDTH="915" HEIGHT="85" PARAM="ToneSeparator_large">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+		</data>
+	 <data ID="flag" TYPE="asset" PATH="flags512x512" PARAM="@flag" HEIGHT="350" WIDTH="350">
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-70"/>
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="20"/>
+	 </data>
+	<data ID="warning" TYPE="asset" PATH="tiles/story" PARAM="warning_med" WIDTH="45" HEIGHT="45">	
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="20"/>
+	</data>
+	<data ID="title" TYPE="title" PARAM="SM_EPISODIC_DOWNLOAD_TITLE" FORMAT="FONT_FLUX_TITLE_HIGHLIGHT_HS|||COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" TRANSLATE="TRUE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="60"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="20"/>
+	</data>
+	<data ID="desc" TYPE="text" FORMAT="FONT_TILE_SM||||||COLOR_TEXT_HIGHLIGHT_FLUX" PARAM="SM_EPISODIC_DOWNLOAD_DESC" WIDTH="470" TRANSLATE="TRUE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20"/>
+		<align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="30"/>
+	</data>
+    </tile>
+    <tile NAME="TILE_GO_TO_STORE" TYPE="EXPANDABLE_TILE" >
+      <properties HEIGHT="157" 	WIDTH="452" />
+      <data ID="description" TYPE="text" FORMAT="FONT_FLUX_TITLE_HIGHLIGHT_HS|COLOR_FILL_WARNING|center|COLOR_FILL_UNHIGHLIGHT_ACTIVE_FLUX_TAB||FONT_FLUX_TITLE_UNHIGHLIGHT_HS|middle" TRANSLATE="TRUE" PARAM="SM_EPISODIC_GO_TO_STORE">
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	 </tile>
+	<tile NAME="TILE_CONTINUE_WITH_DEFAULT" TYPE="EXPANDABLE_TILE" DESTINATION="advance" >
+      <properties HEIGHT="157" 	WIDTH="452"/>
+      <data ID="description" TYPE="text" FORMAT="FONT_FLUX_TITLE_HIGHLIGHT_HS|COLOR_FILL_WARNING|center|COLOR_FILL_UNHIGHLIGHT_ACTIVE_FLUX_TAB||FONT_FLUX_TITLE_UNHIGHLIGHT_HS|middle" PARAM="SM_EPISODIC_CONTINUE_WITH_DEFAULT" TRANSLATE="TRUE">
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	</data>
+    </tile>
+  </panel>
+</root>

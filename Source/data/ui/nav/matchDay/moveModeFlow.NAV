@@ -1,0 +1,48 @@
+{
+	"name":"moveModeFlow"
+	, "initial":
+	{
+		"targets":["modeInitialization"]
+	}
+	,"onEnter":
+	[
+		["sendScreenEvent", ["UxSetFlowState",".eState.MOTM_MATCH"]]
+		,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.PREGAME"]]
+		,["sendScreenEvent", ["UxEnterGameFlow", "PlayNowInProgress"]]
+		,["loadViewModel", ["MatchdayModeViewModel", "0"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel", ["MatchdayModeViewModel"]]
+		,["sendScreenEvent", ["UxExitGameFlow"]]
+	]
+	,"states":
+	[
+	
+		{
+			"name":"modeInitialization"
+			,"onEnter":
+			[
+				["sendAction",["enterMode"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"ps3MoveActive"
+					,"targets":["matchDaySetup"]
+				}
+			]	
+		}
+		,{
+			"name":"matchDaySetup"
+			,"type":"external"
+			,"file":"/matchDay/setupFlow.nav"
+			,"outputs":
+			{
+				"quit":"back"
+				,"back":"back"
+				,"profileSignOut":"profileSignOut"
+			}
+		}
+	]
+}

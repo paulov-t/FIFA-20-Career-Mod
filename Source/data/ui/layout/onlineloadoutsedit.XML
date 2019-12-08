@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="08/03/2017 14:23:53" VERSION="1">
+  <hub_settings NAME="OnlineLoadOutsEditHub">
+    <helper_class_name CLASSNAME="game.fluxHelpers.LoadOutsEditFluxHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="game/components/FluxTiles/online/LoadOutsAttributesTile.swf" TILE_NAME="TILE_LOADOUTS_ATTRIBUTES" />
+	<tile_path TILE_PATH="game/components/FluxTiles/online/LoadOutsProfileSettingsTile.swf" TILE_NAME="TILE_LOADOUTS_PROFILE_SETTINGS" />
+	<tile_path TILE_PATH="game/components/FluxTiles/online/LoadOutsTraitsTile.swf" TILE_NAME="TILE_LOADOUTS_TRAITS" />
+  </hub_settings>
+  <panel_set>
+	<panel NAME="ONL_LOADOUTS_EDIT" LABEL="TXT_ONLINE_CLUB_MYPRO_PANEL_TITLE" IS_TAB="FALSE" />
+    <panel NAME="LOADOUTS_EDIT_DUMMY_PANEL" LABEL="TXT_VPRO_PRESET" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="ONL_LOADOUTS_EDIT"> 
+	<tile NAME="VPRO_TRAITS" TYPE="TILE_LOADOUTS_TRAITS" DATAPROVIDERID="VPRO_LOADOUTS_TRAITS" DESTINATION="editTraitsTree">  
+      <properties WIDTH="846" HEIGHT="632" X="109" Y="278"/>
+    </tile>
+	<tile NAME="VPRO_PROFILE_SETTINGS" TYPE="TILE_LOADOUTS_PROFILE_SETTINGS" DATAPROVIDERID="VPRO_LOADOUTS_PROFILE_SETTINGS_DP" DESTINATION="profilesettings">
+      <properties WIDTH="845" HEIGHT="310" X="966" Y="278"/>
+    </tile>
+	<tile NAME="VPRO_ATTRIBUTES_LIST" TYPE="TILE_LOADOUTS_ATTRIBUTES" DATAPROVIDERID="KEY_VALUE_VPRO_PROGRESSION" DESTINATION="PlayerGrowth">
+      <properties WIDTH="845" HEIGHT="310" X="966" Y="600"/>
+    </tile>
+  </panel>
+</root>

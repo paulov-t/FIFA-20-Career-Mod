@@ -1,0 +1,133 @@
+{
+	"name":"hubFlow",
+	"type": "parallel",
+	"states":
+	[
+		{
+			"states":
+			[
+				{
+					"name":"powCatalogue"
+					,"onEnter":
+					[
+						["loadViewModel",["easfcHubViewModel"]]
+						,["loadView",["screen", "pow/screens/POWCatalogue"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "pow/screens/POWCatalogue"]]
+						,["unloadViewModel",["easfcHubViewModel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["back"]
+						}
+					]
+				}
+				,{
+					"name":"powPrivacySettings"
+					,"onEnter":
+					[						
+						["loadView",["screen", "pow/screens/POWPrivacySettings"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "pow/screens/POWPrivacySettings"]]					
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["back"]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"LaunchFUT"
+					,"targets":["launchFUTFlow"]
+				}
+				,{
+					"event":"ContinueCareer"
+					,"targets":["continueCareerModeFlow"]
+				}
+				,{
+					"event":"NewCareer"
+					,"targets":["newCareerModeFlow"]
+				}
+				,{
+					"event":"LoadCareer"
+					,"targets":["loadCareerModeFlow"]
+				}
+				,{
+					"event":"SkillGamesHub"
+					,"targets":["skillGamesFlow"]
+				}
+			]
+		}
+		,{
+			"initial":
+			{
+				"targets":["default"]
+			},
+			"states":
+			[
+				{
+					"name": "default",
+					"transitions":
+					[
+						{
+							"event": "disconnect",
+							"targets": ["disconnectPopup"]
+						},
+						{
+							"event": "disconnectFirstParty",
+							"targets": ["disconnectFirstPartyPopup"]
+						},
+						{
+							"event": "error",
+							"targets": ["errorPopup"]
+						}
+					]
+				},
+				{
+					"name": "disconnectPopup",
+					"onEnter":
+					[
+						["loadView", ["popup", "POW_DISCONNECT_POPUP", "OSDK_LOST_CON_TO_EA|OK|back"]]
+					],
+					"onExit":
+					[
+						["unloadView", ["popup", "POW_DISCONNECT_POPUP"]]
+					]
+				},
+				{
+					"name": "disconnectFirstPartyPopup",
+					"onEnter":
+					[
+						["loadView", ["popup", "POW_DISCONNECT_POPUP", "OSDK_LOST_CON|OK|back"]]
+					],
+					"onExit":
+					[
+						["unloadView", ["popup", "POW_DISCONNECT_POPUP"]]
+					]
+				},
+				{
+					"name": "errorPopup",
+					"onEnter":
+					[
+						["loadView", ["popup", "POW_ERROR_POPUP", "TXT_EASFC_ERROR|OK|back"]]
+					],
+					"onExit":
+					[
+						["unloadView", ["popup", "POW_ERROR_POPUP"]]
+					]
+				}
+			]
+		}
+	]
+}

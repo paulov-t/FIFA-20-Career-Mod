@@ -1,0 +1,854 @@
+{
+	"name":"futLogInFlow"
+	, "initial":
+	{
+		"targets":["FUTLoginStart"]
+	}
+	,"onExit":
+	[
+		["unloadViewModel",["FUTLoginViewModel"]]
+		,["unloadViewModel",["LiveScreenViewModel"]]
+		,["unloadViewModel",["FluxViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"FUTLoginFlow_Wrapper"
+			,"onEnter":
+			[
+				["invoke", ["evt_invite_flow_ready"]]
+			]
+			,"states":
+			[
+				{
+					"name":"FUTLoginStart"
+					,"onEnter":
+					[
+						["loadViewModel",["FUTLoginViewModel"]]
+						,["sendAction",["condition", "beginFUTLogin"]]
+						,["loadViewModel",["LiveScreenViewModel", ".DynamicContentType.FUTLOAD"]]
+						,["loadViewModel",["FluxViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["loadFUTGlobalViewModels"]
+						},
+						{
+							"event":"ShowMainMenu"
+							,"targets":["quit"]
+						}
+					]
+				}
+				,{
+					"name":"loadFUTGlobalViewModels"
+					,"onEnter":
+					[
+						["loadViewModel",["futglobalviewmodel"]]
+						,["loadViewModel",["futdronecommandviewmodel"]]
+						,["loadViewModel",["futprofilerviewmodel"]]
+						,["loadViewModel",["futplayeridentityviewmodel"]]
+						,["loadViewModel",["futplayerbioviewmodel"]]
+						,["loadViewModel",["futseasonalcampaignwidgetviewmodel"]]
+						,["sendScreenEvent", ["CheckUIFEnums"]]
+						,["sendScreenEvent", ["ShowImmediateFELoadingIcon"]]
+						,["sendScreenEvent", ["UXSaveGMTrackerInfo", ".GameModeRecordID.GM_ULTIMATE_TEAM"]] /* This action will call advance */
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["getSettings"]
+						}
+					]
+				}
+				,{
+					"name":"getSettings"
+					,"onEnter":
+					[
+						["sendAction",["condition", "checkSettings"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"captcha"
+							,"targets":["captcha"]
+						}
+						,{
+							"event":"funCaptcha"
+							,"targets":["funCaptcha"]
+						}
+						,{
+							"event":"advance"
+							,"targets":["deviceRestrictions"]  /* server says no captcha is needed or unknown error from getSettings call */
+						}
+					]
+				}
+				,{
+					"name":"captcha"
+					,"onEnter":
+					[
+						["loadViewModel",["futcaptchaviewmodel"]]
+						,["loadView",["screen", "external/ion_fut/screens/security/futCaptcha"]]
+						,["sendScreenEvent", ["HideFELoadingIcon"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "external/ion_fut/screens/security/futCaptcha"]]
+						,["unloadViewModel",["futcaptchaviewmodel"]]
+						,["sendScreenEvent", ["ShowImmediateFELoadingIcon"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["captchaLoginSuccess"]
+						}
+						,{
+							"event":"back"
+							,"targets":["captchaLoginFailed"] /* Captcha screen is not allowed to backout, the only reason backout is captcha failed, which means fut login failed */									
+						}
+					]
+				}
+				,{
+					"name":"funCaptcha"
+					,"onEnter":
+					[
+						["loadViewModel",["futfuncaptchaviewmodel"]]
+						,["sendAction",["notify", "legacyCaptchaGroup"]]
+						,["sendAction", ["funCaptchaRequired"]]
+						,["sendScreenEvent", ["HideFELoadingIcon"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["futfuncaptchaviewmodel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"captchaSuccess"
+							,"targets":["captchaLoginSuccess"]
+						}
+						,{
+							"event":"captchaFailed"
+							,"targets":["captchaLoginFailed"] /* Captcha screen is not allowed to backout, the only reason backout is captcha failed, which means fut login failed */									
+						}
+					]
+				}
+				,{
+					"name":"postCaptchaStatus"
+					,"states":
+					[
+						{
+							"name":"captchaLoginSuccess"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["invoke", ["advance"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["getSettings"]
+								}
+							]
+						}
+						,{
+							"name":"captchaLoginFailed"
+							,"onEnter":
+							[
+								["sendAction", ["condition", "futLoginFailed"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["back"]
+								}
+								,{
+									"event": "invite_accepted_during_fut_login_failed"
+									,"targets":["inviteAcceptedDuringFutLoginFailed"]	
+								}
+							]
+						}
+					]
+					
+				}
+				,{
+					"name":"deviceRestrictionsWrapper"
+					,"onEnter":
+					[
+						["loadViewModel", ["futdevicerestrictionviewmodel"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel", ["futdevicerestrictionviewmodel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"deviceRestrictions"
+							,"transitions":
+							[
+								{
+									"event":"showScreen"
+									,"targets":["deviceRestrictScreen"]
+								}
+							]
+						}
+						,{
+							"name":"deviceRestrictScreen"
+							,"onEnter":
+							[
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["loadView",["screen", "external/ion_fut/screens/security/futDeviceRestrictions"]]
+								,["sendScreenEvent", ["HideFELoadingIcon"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "external/ion_fut/screens/security/futDeviceRestrictions"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["back"]
+								}
+							]
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["DownloadServerDb"]
+						}
+					]
+				}
+				,{
+					"name":"DownloadServerDb"
+					,"onEnter":
+					[
+						["sendAction",["condition", "downloadServerDb"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["RetrieveContentData"]
+						}
+					]
+				}
+				,{
+					"name":"RetrieveContentData"
+					,"onEnter":
+					[
+						["sendAction",["condition", "retrieveContentData"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["RetrieveRarityData"]
+						}
+					]
+				}
+				,{
+					"name":"RetrieveRarityData"
+					,"onEnter":
+					[
+						["sendAction",["condition", "retrieveRarityData"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["RetrieveUserData"]
+						}
+					]
+				}
+				,{
+					"name":"RetrieveUserData"
+					,"onEnter":
+					[
+						["sendAction",["condition", "retrieveUserData"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["LiveScreenViewModel"]]
+						,["unloadViewModel",["FluxViewModel"]]
+						,["sendScreenEvent", ["HideFELoadingIcon"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["LoadScreenCompleted"]
+						}
+						,{
+							"event":"btnY"
+							,"targets":["LoadScreenCompleted"]
+						}
+						,{
+							"event":"createClub"
+							,"targets":["introLiveMessageCheck"]
+						}
+					]
+				}
+				,{
+					"name":"LoadScreenCompleted"
+					,"onEnter":
+					[
+						["sendAction",["condition", "loadingScreenComplete"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["CheckRewards"]
+						}
+						,{
+							"event":"createClub"
+							,"targets":["introLiveMessageCheck"]
+						}
+						,{
+							"event":"GoToSignLoan"
+							,"targets":["starterSquad"]
+						}
+						,{
+							"event":"GoToKitSelect"
+							,"targets":["onboardingKitSelect"]
+						}
+						,{
+							"event":"GoToBadgeSelect"
+							,"targets":["onboardingBadgeSelect"]
+						}
+						,{
+							"event":"GoToChangeClubName"
+							,"targets":["changeClubName"]
+						}
+					]
+				}
+				,{
+					"name":"changeClubName"
+					,"onEnter":
+					[
+						["loadViewModel",["futchangeclubnameviewmodel"]]
+						,["loadView",["screen", "external/ion_fut/screens/ManagerQuest/FutChangeClubName"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "external/ion_fut/screens/ManagerQuest/FutChangeClubName"]]
+						,["unloadViewModel",["futchangeclubnameviewmodel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["back"]
+						}
+						,{
+							"event":"advance"
+							,"targets":["CheckRewards"]
+						}
+					]
+				}
+				,{
+					"name":"forcedChangeClubName"
+					,"onEnter":
+					[
+						["loadViewModel",["futchangeclubnameviewmodel"]]
+						,["loadView",["screen", "external/ion_fut/screens/ManagerQuest/FutChangeClubName"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "external/ion_fut/screens/ManagerQuest/FutChangeClubName"]]
+						,["unloadViewModel",["futchangeclubnameviewmodel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["back"]
+						}
+						,{
+							"event":"advance"
+							,"targets":["ReturningUser"]
+						}
+					]
+				}
+				,{
+					"name":"FinalizeLogin_Wrapper"
+					,"onExit":
+					[
+						["unloadViewModel",["FUTLoginViewModel"]]
+						,["sendScreenEvent", ["HideFELoadingIcon"]]
+					]
+					,"states":
+					[
+						{
+							"name":"CheckRewards"
+							,"onEnter":
+							[
+								["sendAction",["condition", "CheckRewards"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"CheckRewardsComplete"
+									,"targets":["CheckRewardsComplete"]
+								}
+							]
+						}
+						,{
+							"name":"CheckRewardsComplete"
+							,"onEnter":
+							[
+								["sendAction",["condition", "loginComplete"]]
+							]
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["advance"]
+						}
+						,{
+							"event":"TriggerInviteFlow"
+							,"targets":["InviteFlowTriggered"]
+						}
+						,{
+							"event":"GoToStoryModeReward"
+							,"targets":["StoryModeReward"]
+						}
+						,{
+							"event":"GotoNewItemScreen"
+							,"targets":["newItems"]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"goToInviteFlow"
+					,"actions":[ ["sendScreenEvent", ["CatchInviteAtFUTLogin"]] ]
+				}
+			]
+		}
+		,{
+			"name":"preStarterSquadIntro_Wrapper"
+			,"onEnter":
+			[
+				["sendAction",["condition", "loadingScreenComplete"]]
+			]
+			,"states":
+			[
+				{
+					"name":"introLiveMessageCheck"
+					,"type":"external"
+					,"file":"/fut/futLiveMessaging.nav"
+					,"outputs":
+					{
+						"advance":"starterSquadIntro"
+					}
+				}
+				,{
+					"name":"starterSquadIntro"
+					,"onEnter":
+					[
+						["loadView",["screen", "external/ion_fut/screens/futStarterSquadIntro"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "external/ion_fut/screens/futStarterSquadIntro"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["createClub"]
+						},
+						{
+							"event":"goToInviteFlow"
+							,"actions":[   ["sendScreenEvent", ["CatchInviteWhileOnboarding"]]
+										 , ["sendScreenEvent", ["ShowOnboardingInviteErrPopup"]] ]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"goToInviteFlow"
+					,"actions":[   ["sendScreenEvent", ["CatchInviteWhileOnboarding"]]
+								 , ["sendScreenEvent", ["ShowOnboardingInviteErrPopup"]] ]
+				}
+			]
+		}
+		,{
+			"name":"starterSquadIntro_Wrapper"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["ShowOnboardingInviteErrPopup"]]
+			]
+			,"states":
+			[
+				{
+					"name":"createClub"
+					,"onEnter":
+					[
+						["loadViewModel",["futcreateclubviewmodel"]]
+						,["loadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSelect"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSelect"]]
+						,["unloadViewModel",["futcreateclubviewmodel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["RetrieveRarity_NewUser"]/* Load the newly created user data */
+						}
+						,{
+							"event":"skip"
+							,"targets":["RetrieveRarityData"]
+						}
+						,{
+							"event":"back"
+							/* Consume the back and use {leaveFut, processInvite} instead. */
+						}
+						,{
+							"event":"leaveFut"
+							,"targets":["back"]
+						}
+						,{
+							"event":"fail"
+							,"targets":["back"]
+						}
+						,{
+							"event":"processInvite"
+							,"targets":["inviteAcceptedDuringFutLoginFailed"]
+						}
+					]
+				}
+				,{
+					"name":"RetrieveRarity_NewUser"
+					,"onEnter":
+					[
+						["sendAction",["condition", "retrieveRarityData"]]/* Using FUTLoginViewModel */
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["initNewUserAndPackOpen"]
+						}
+					]
+				}
+				,{
+					"name":"initNewUserAndPackOpenWrapper"
+					,"onEnter":
+					[
+						["sendAction",["notify", "syncOpenPackAnim"]] /* Using FUTLoginViewModel */
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideFELoadingIcon"]]
+					]
+					,"states":
+					[
+						
+						{
+							"name":"initNewUserAndPackOpen"
+							, "initial":
+							{
+								"targets":["OpenPackAnim"]
+							}
+							,"onEnter":
+							[
+								["sendAction",["condition", "retrieveUserData"]] /* Using FUTLoginViewModel */
+							]
+							,"onExit":
+							[
+								["sendScreenEvent", ["HideFELoadingIcon"]]
+							]
+							,"states":
+							[
+								{
+									"name":"OpenPackAnim"
+									,"type":"external"
+									,"file":"/fut/futOpenPackAnimFlow.nav"
+									,"outputs": 
+									{ 
+										"back":"SignalOpenPackComplete"
+									}
+								}
+								,{
+									"name":"SignalOpenPackComplete"
+									,"onEnter":
+									[
+										["sendScreenEvent", ["ShowFELoadingIcon"]]
+										,["sendAction",["condition", "openPackAnimComplete"]] /* In FUTLoginViewModel, it's waiting for item rarity download to complete, before it can move on from this state */
+									]
+								}
+							]
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["starterSquad"]
+						}
+						,{
+							"event":"GoToSignLoan"
+							,"targets":["starterSquad"]
+						}
+						,{
+							"event":"createClub"
+							,"targets":["back"]
+						}
+					]
+				}
+				,{
+					"name":"starterSquad"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["HideFELoadingIcon"]]
+						,["loadViewModel",["futonboardingloansquadviewmodel"]]
+						,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.FUT_SQUAD_BACKGROUND"]]
+						,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_FUT_SQUAD_CENTER"]]
+						,["loadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSquads"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSquads"]]
+						,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.FUT_MODE_BACKGROUND"]]
+						,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"]]
+						,["unloadViewModel",["futonboardingloansquadviewmodel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["back"]
+						}
+						,{
+							"event":"skipOnboarding"
+							,"targets":["CheckRewards"]
+						}
+						,{
+							"event":"advance"
+							,"targets":["onboardingKitSelect"]
+						}
+						,{
+							"event":"GoToReturningUser"
+							,"targets":["ReturningUser"]
+						}
+					]
+				}
+				,{
+					"name":"showLoanPlayer"
+					,"onEnter":
+					[
+						["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+						,["loadViewModel",["futplayersublevelviewmodel"]]
+						
+					]
+					,"onExit":
+					[
+						["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+						,["unloadViewModel",["futplayersublevelviewmodel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"onboardingKitSelect"
+							,"onEnter":
+							[
+								["loadViewModel",["futonboardingkitviewmodel"]]
+								,["loadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSelect"]]
+								
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSelect"]]
+								,["unloadViewModel",["futonboardingkitviewmodel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["back"]
+								}
+								,{
+									"event":"advance"
+									,"targets":["onboardingBadgeSelect"]
+								}
+							]
+						}
+						,{
+							"name":"onboardingBadgeSelect"
+							,"onEnter":
+							[
+								["loadViewModel",["futonboardingbadgeviewmodel"]]
+								,["loadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSelect"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSelect"]]
+								,["unloadViewModel",["futonboardingbadgeviewmodel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["onboardingKitSelect"]
+								}
+								,{
+									"event":"advance"
+									,"targets":["onboardingSummary"]
+								}
+							]
+						}
+						,{
+							"name":"onboardingSummary"
+							,"onEnter":
+							[
+								["loadViewModel",["futonboardingsummaryviewmodel"]]
+								,["loadView",["background", "BACKGROUND", "futclubsummary"]]
+								,["loadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSummary"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "external/ion_fut/screens/onboarding/FutOnboardingSummary"]]
+								,["unloadView",["background"]]
+								,["unloadViewModel",["futonboardingsummaryviewmodel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["back"]
+								}
+								,{
+									"event":"GoToReturningUser"
+									,"targets":["ReturningUser"]
+								}
+								,{
+									"event":"GoToForcedChangeClubName"
+									,"targets":["forcedChangeClubName"]
+								}
+								,{
+									"event":"advance"
+									,"targets":["CheckRewards"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"ReturningUser"
+					,"onEnter":
+					[
+						["loadViewModel",["futreturninguserrewardviewmodel"]]
+						,["loadView",["screen", "external/ion_fut/screens/futRewardsScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "external/ion_fut/screens/futRewardsScreen"]]
+						,["unloadViewModel",["futreturninguserrewardviewmodel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["CheckRewards"]
+						},
+						{
+							"event":"GotoNewItemScreen"
+							,"targets":["CheckRewards"]
+						},
+						{
+							"event":"back"
+							,"targets":["back"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeReward"
+					,"onEnter":
+					[
+						["loadViewModel",["futstorymoderewardviewmodel"]]
+						,["loadView",["screen", "external/ion_fut/screens/futRewardsScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "external/ion_fut/screens/futRewardsScreen"]]
+						,["unloadViewModel",["futstorymoderewardviewmodel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["advance"]
+						},
+						{
+							"event":"GotoNewItemScreen"
+							,"targets":["newItems"]
+						},
+						{
+							"event":"GotoStoreScreen"
+							,"targets":["futStore"]
+						},
+						{
+							"event":"back"
+							,"targets":["back"]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"goToInviteFlow"
+					,"actions":[   ["sendScreenEvent", ["CatchInviteWhileOnboarding"]]
+								 , ["sendScreenEvent", ["ShowOnboardingInviteErrPopup"]] ]
+				}
+			]
+		}
+		,{
+			"name":"InviteFlowTriggered"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["AdvanceUserToSession"]]
+			]
+		}
+		,{
+			"name":"newItems"
+			,"type":"external"
+			,"file":"/fut/futNewItemsFlow.nav"
+			,"outputs":
+			{
+				"back":"advance"
+			}
+		}
+		,{
+			"name":"futStore"
+			,"type":"external"
+			,"file":"/fut/store/futStoreFlow.nav"
+			,"outputs":
+			{
+				"back":"advance"
+			}
+		}
+	]
+}

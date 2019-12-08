@@ -1,0 +1,440 @@
+{
+	"name":"trainingFlow"
+	,"let":{"GameMode":"careertraining"}
+	,"initial":
+	{
+		"targets":["trainingInitialization"]
+	}
+	,"onEnter":
+	[
+		["sendAction", ["notify", "telemetryEnterGameMode", ".GameMode"] ]
+	]
+	,"onExit": 
+	[	
+		["sendAction", ["notify", "telemetryExitGameMode", ".GameMode"] ]
+	]
+	,"transitions":
+	[
+		{ "event":"goToInviteFlow", "targets":["out_CareerInviteAccepted"] }
+		,{ "event":"profileSignOut", "targets":["profileSignOut"] }
+	]
+	,"states":
+	[
+		{
+			"name":"trainingInitialization"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["UxSetFlowSubState",".eSubState.CAREER_TRAINING"]]
+				,["invoke", ["evt_advance_to_mode"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_advance_to_mode"
+					,"targets":["trainingHub"]
+				}
+			]
+		}
+		,{
+			"name":"trainingHub"
+			,"onEnter":
+			[
+				["loadViewModel",["CMTrainingWidgetViewModel"]]
+				,["loadView",["widget", "game/components/CareerComponents/BreadcrumbsWidget.swf"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["widget", "game/components/CareerComponents/BreadcrumbsWidget.swf"]]
+				,["unloadViewModel",["CMTrainingWidgetViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"managerHubScreen"
+					,"onEnter":
+					[
+						["loadView",["screen", "game/screens/Career/careerTraining/ManagerTrainingHub", "", ".direction"]]
+					]
+					,"onExit":
+					[
+						["if", [["==", ".trainingMode", "player"]
+						,[
+							["sendAction", ["notify", "updatePAPPlayer"]]
+						]
+						,[	/*Don't do anything on else */
+						]]]
+						,["unloadView",["screen", "game/screens/Career/careerTraining/ManagerTrainingHub"]]
+						,["unloadViewModel",["CMTrainingManagerHubViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"managerHub"
+							,"onEnter":
+							[
+								["loadViewModel",["CMTrainingManagerHubViewModel", "0"]] /*STATE_INITIAL*/
+							]
+						}
+						,{
+							"name":"managerHubResults"
+							,"onEnter":
+							[
+								["loadViewModel",["CMTrainingManagerHubViewModel", "3"]] /*STATE_RESULTS*/
+							]
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["prepareGame"]
+						}
+						,{
+							"event":"evt_add_slot"
+							,"cond":["==", ".trainingMode", "manager"]
+							,"targets":["playerSelect"]
+						}
+						,{
+							"event":"evt_add_slot"
+							,"cond":["==", ".trainingMode", "player"]
+							,"targets":["drillSelect"]
+						}
+						,{
+							"event":"evt_preset_hub"
+							,"targets":["presets"]
+						}
+						,{
+							"event":"back"
+							,"targets":["back"]
+							,"let":{ "direction":"back" }
+						}
+					]
+				}
+				,{
+					"onEnter":
+					[
+						["loadViewModel",["CMTrainingPlayerAttributesViewModel"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["CMTrainingPlayerAttributesViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"playerSelect"
+							,"onEnter":
+							[
+								["sendAction", ["updateWidgetState", "1"]]
+								,["loadViewModel",["CMTrainingPlayerSelectViewModel"]]
+								,["loadView",["screen", "game/screens/Career/careerTraining/PlayerSelect", "", ".direction"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/Career/careerTraining/PlayerSelect"]]
+								,["unloadViewModel",["CMTrainingPlayerSelectViewModel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["drillSelect"]
+								}
+								,{
+									"event":"back"
+									,"targets":["managerHub"]
+									,"let":{ "direction":"back" }
+								}
+							]
+						}
+						,{
+							"name":"drillSelect"
+							,"onEnter":
+							[
+								["sendAction", ["updateWidgetState", "2"]]
+								,["loadViewModel",["CMTrainingDrillSelectViewModel"]]
+								,["loadView",["screen", "game/screens/Career/careerTraining/DrillSelect", "", ".direction"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/Career/careerTraining/DrillSelect"]]
+								,["unloadViewModel",["CMTrainingDrillSelectViewModel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["managerHub"]
+								}
+								,{
+									"event":"back"
+									,"cond":["==", ".trainingMode", "manager"]
+									,"targets":["playerSelect"]
+									,"let":{ "direction":"back" }
+								}
+								,{
+									"event":"back"
+									,"cond":["==", ".trainingMode", "player"]
+									,"targets":["managerHub"]
+									,"let":{ "direction":"back" }
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"presets"
+					,"onEnter":
+					[
+						["unloadView",["widget", "game/components/CareerComponents/BreadcrumbsWidget.swf"]]
+						,["loadViewModel",["PresetSelectViewModel"]]
+						,["loadView",["screen", "game/screens/career/careerTraining/Presets", "", ".direction"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/career/careerTraining/Presets"]]
+						,["unloadViewModel",["PresetSelectViewModel"]]
+						,["loadView",["widget", "game/components/CareerComponents/BreadcrumbsWidget.swf"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["managerHub"]
+							,"let":{ "direction":"back" }
+						}
+						,{
+							"event":"back"
+							,"targets":["managerHub"]
+							,"let":{ "direction":"back" }
+						}
+					]
+				}
+			]
+		}		
+		,{
+			"type":"external"
+			,"file":"/reloadfestadiumflow.nav"
+			,"inputs":
+			{
+				"backToHub":"WaitForLoad"
+			}
+			,"outputs":
+			{
+				"ReloadReady":"managerHubResults"
+				,"LoadStarted":"managerHubResults"
+			}
+		}
+		,{
+			"name":"trainingGame"
+			, "initial":
+			{
+				"targets":["prepareGame"]
+			}
+			,"transitions":
+			[
+				{
+					"event":"evt_quit_to_training_hub"
+					,"targets":["backToHub"]
+				}
+			]
+			,"states":
+			[
+				{
+					"name":"prepareGame"
+					, "initial":
+					{
+						"targets":["WaitForStadiumCompleteNoSave"]
+					}
+					,"onEnter":
+					[	
+						["loadViewModel",["SkillGameInstructionsViewModel"]]
+						,["sendAction", ["evt_sign_out_flow_not_ready"]]
+						,["sendAction", ["evt_invite_flow_not_ready"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["SkillGameInstructionsViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/reloadfestadiumflow.nav"
+							,"inputs":
+							{
+								"WaitForStadiumCompleteNoSave":"WaitForLoad"
+							}
+							,"outputs":
+							{
+								"ReloadReady":"readyToAdvance"
+								,"LoadStarted":"readyToAdvance"
+							}
+						}
+						,{
+							"name":"readyToAdvance"
+							,"onEnter":
+							[	
+								["sendAction", ["advanceRequest"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["showInstructions"]
+								}
+							]
+						}
+						,{
+							"onEnter":
+							[	
+								["loadView",["screen", "game/screens/skillGames/SkillGamePause", "", ".direction"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/skillGames/SkillGamePause"]]
+							]
+							,"states":
+							[
+								{
+									"name":"showInstructions"
+									,"transitions":
+									[
+										{
+											"event":"evt_training_allow_advance_to_game"
+											,"targets":["showInstructionsAllowAdvance"]
+										}
+									]
+								}
+								,{
+									"name":"showInstructionsAllowAdvance"
+									,"transitions":
+									[
+										{
+											"event":"resume"
+											,"targets":["gameRunning"]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"gameActive"
+					,"states":
+					[
+						{
+							"name":"gameRunning"
+							,"onEnter":
+							[
+								["sendAction", ["transitionManager", ".NavTransitionManager.TO_GAME"]]
+                                ,["sendAction",["evt_hub_hide_event"]]
+							]
+							,"onExit":
+							[
+								["sendAction", ["transitionManager", ".NavTransitionManager.TO_FE"]]
+                                ,["sendAction",["evt_hub_show_event"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"cmTrainingLoadResults"
+									,"targets":["showResults"]
+								}
+								,{
+									"event":"cmTrainingLoadPause"
+									,"targets":["showPause"]
+								}
+								,{
+									"event":"evt_sign_out"
+									,"targets":["showPause"]
+								}
+							]
+						}
+						,{
+							"name":"showPause"
+							,"onEnter":
+							[
+								["loadViewModel",["CMTrainingSkillGamePauseViewModel"]]
+								,["loadView",["screen", "game/screens/skillGames/SkillGamePause", "", ".direction"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/skillGames/SkillGamePause"]]
+								,["unloadViewModel",["CMTrainingSkillGamePauseViewModel"]]
+							]
+							,"states":
+							[
+								{
+									"name":"pauseOverlay"
+									,"transitions":
+									[
+										{
+											"event":"resume"
+											,"targets":["gameRunning"]
+										}
+										,{
+											"event":"restart"
+											,"targets":["gameRunning"]
+										}
+										,{
+											"event":"back"
+											,"targets":["gameRunning"]
+										}
+										,{
+											"event":"popupShow"
+											,"targets":["quitPopup"]
+										}
+									]
+								}
+								,{
+									"name":"quitPopup"
+									,"onEnter":
+									[
+										["loadView", ["popup", "TXT_TRAINING_QUIT_DRILL", "TXT_TRAINING_QUIT_DRILL|Yes|popupYes|No|popupNo"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "TXT_TRAINING_QUIT_DRILL"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"popupNo"
+											,"targets":["pauseOverlay"]
+										}
+									]
+								}
+							]
+						}
+						,{
+							"name":"showResults"
+							,"onEnter":
+							[
+								["loadViewModel",["CMTrainingSkillGameResultsViewModel"]]
+								,["loadView",["screen", "game/screens/skillGames/SkillGameResults", "", ".direction"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/skillGames/SkillGameResults"]]
+								,["unloadViewModel",["CMTrainingSkillGameResultsViewModel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"restart"
+									,"targets":["gameRunning"]
+								}
+								,{
+									"event":"advance"
+									,"targets":["prepareGame"]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

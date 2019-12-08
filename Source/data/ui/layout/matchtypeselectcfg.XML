@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="MatchTypeSelectHub" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+    <component PATH="game/components/BackgroundImage.swf" X="770" Y="-6" DATAPROVIDERID="BACKGROUND_IMAGE_DP"/>
+  </components>
+  <buttons>
+    <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+    <button ID="OPTION_TOP" ACTION="ACTION_NAV" DESTINATION="open_ko_leaderboard" />
+  </buttons>
+  <panel_set>
+    <panel NAME="MATCH_TYPE_SELECT" LABEL="" IS_TAB="FALSE">
+      <layout NAME="MATCH_TYPE_SELECT_LAYOUT" X="134" Y="0">
+        <tile NAME="MATCH_TYPE_SELECT_LIST" X="0" Y="650" />
+        <tile NAME="MATCH_TYPE_SELECT_TILE" X="0" Y="0" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="MATCH_TYPE_SELECT">  
+	<variable_set>
+		<variable id="kickOffGroupStatsDpId" type="int"/>
+		<variable id="matchTypeNameLabel" type="string"/>
+		<variable id="matchTypeDescLabel" type="string"/>
+		<variable id="detailedStatsVisibility" type="bool"/>
+		<variable id="tooManyUsersVisibility" type="bool"/>
+	</variable_set>
+	<tile NAME="MATCH_TYPE_SELECT_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DATAPROVIDERID="GridControlDP">
+      <properties WIDTH="1652" HEIGHT="267" />
+      <data ID="matchTypeLabel" TYPE="title" FORMAT="FONT_DESCRIPTION_PREVIEW_FHD|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|leading|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_BOLD_BIG_HIGHLIGHTED|FONT_DESCRIPTION_PREVIEW_FHD" X="0" Y="8" WIDTH="267" HEIGHT="267" TRANSLATE="FALSE" />
+      <data ID="matchTypeStatus" TYPE="text" ALIGN="leading" FORMAT="FONT_BOLD_CRUMBS_PATH|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_MEDIUM_DESCRIPTION|FONT_BOLD_CRUMBS_PATH" WIDTH="228" HEIGHT="267" TRANSLATE="FALSE">
+		<align TARGET="matchTypeLabel" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+		<align TARGET="matchTypeLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" />		
+	  </data>
+	  <data ID="leagueIconHighlight" TYPE="asset" PATH="league/dark" X="140" Y="140" WIDTH="108" HEIGHT="108" HLALPHA="100" UHLALPHA="0"/>
+	  <data ID="leagueIconUnhighlight" TYPE="asset" PATH="league/light" X="140" Y="140" WIDTH="108" HEIGHT="108" HLALPHA="0" UHLALPHA="100"/>
+      <data ID="matchTypeIcon" TYPE="asset" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX|" PATH="kickOffIcon/matchSelect" X="145" Y="145" WIDTH="102" HEIGHT="102"/>
+      <data ID="matchTypeInProgressIcon" TYPE="asset" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX|" PATH="kickOffIcon/matchSelect" X="165" Y="150" WIDTH="92" HEIGHT="92"/>
+      <data ID="matchProgressBar" TYPE="component" PATH="game/components/FluxComponents/MiniProgressBar.swf" PARAM = "1|7" FORMAT="|COLOR_FILL_HIGHLIGHT_CONTRAST||COLOR_FILL_HIGHLIGHT_CONTRAST|" X="0" Y="255" WIDTH="267" HEIGHT="12" />
+    </tile>
+    <tile NAME="MATCH_TYPE_SELECT_TILE" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="1800" HEIGHT="640"  />
+	  <data ID="matchTypeName" TYPE="text" FORMAT="FONT_TILE_HXL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|left|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" PARAM="@matchTypeNameLabel" HEIGHT="500" WIDTH="1050" X="0" Y="70" TRANSLATE="FALSE"/>
+	  <data ID="matchTypeDesc" TYPE="text" FORMAT="FONT_REGULAR_ACTIVE_LABEL_DESCRIPTION|COLOR_TEXT_UNHIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="@matchTypeDescLabel" HEIGHT="400" WIDTH="920" TRANSLATE="FALSE">
+		<align TARGET="matchTypeName" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="4" />
+		<align TARGET="matchTypeName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" />		
+	  </data>
+	  <data ID="detailedStatsCallout" TYPE="component" PATH="game/components/FluxComponents/TileActionableIndicator.swf" PARAM="KO_LEADERBOARD|Y|0|TRUE|TRUE|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST" FORMAT="|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST|COLOR_FILL_HIGHLIGHT_ALTERNATE_CONTRAST" X="10" WIDTH="300" HEIGHT="39" VISIBLE="@detailedStatsVisibility">
+		<align TARGET="matchTypeDesc" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />		
+	  </data>
+	  <data ID="matchTypeStats" TYPE="component" PATH="game/components/FluxComponents/KickoffGroupStats.swf" HEIGHT="242" WIDTH="900" X="0" TRANSLATE="FALSE" DATAPROVIDERID="@kickOffGroupStatsDpId" VISIBLE="@detailedStatsVisibility">
+		<align TARGET="detailedStatsCallout" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="20"/>		
+	  </data>
+	  <data ID="tooManyUsersWarning" TYPE="text" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX" HEIGHT="400" WIDTH="1000" X="0" PARAM="KO_TooManyUsersWarning" TRANSLATE="TRUE" VISIBLE="@tooManyUsersVisibility">
+		<align TARGET="matchTypeName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="375"/>		
+		<align TARGET="matchTypeName" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="10" />
+	  </data>
+    </tile>
+  </panel>
+ </root>

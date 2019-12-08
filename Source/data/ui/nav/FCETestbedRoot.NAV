@@ -1,0 +1,20 @@
+{
+    "name":"root"
+    ,"states":
+	[
+		{
+			"name":"careerModeFlow"
+			,"type":"external"
+			,"file":"/careerMode/careerModeFlow.nav"
+			,"outputs":
+			{
+				"ExitCareerMode":"done"
+				,"out_goToInviteFlow":"done"
+				,"profileSignOut":"done"
+			}
+		}
+		,{
+			"name":"done"
+		}
+	]
+}

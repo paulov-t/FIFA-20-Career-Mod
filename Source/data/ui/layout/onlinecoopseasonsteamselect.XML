@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="04/24/2013 16:17:53">
+  <hub_settings NAME="OnlineCoopTeamSelectHub">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="seasonsMatchLobby" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.SeasonsTeamSelectFluxHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_Nested_Exported" TILE_NAME="TILE_NESTED" />
+    <tile_path TILE_PATH="game/components/FluxTiles/career/FluxTile_StartingXI.swf" TILE_NAME="TILE_STARTING_XI" />
+  </hub_settings>
+  <components>
+    <component PATH="game/components/FluxComponents/online/SeasonsStatusWidget.swf" X="108" Y="68" />
+  </components>
+  <panel_set>
+    <panel NAME="ONL_COOP_TS_HIDDEN_PANEL" LABEL="TXT_ONLINE_COOP_SEASONS_TAB_TITLE" IS_TAB="FALSE" />
+    <panel NAME="ONL_COOP_TS_DEFAULT_PANEL" LABEL="TXT_ONLINE_SEASONS_PLAY_MATCH" IS_TAB="TRUE" />
+    <buttons>
+      <button ID="BACK" HINT="Exit" ACTION="ACTION_BACKOUT" />
+    </buttons>
+  </panel_set>
+  <panel NAME="ONL_COOP_TS_HIDDEN_PANEL" />
+  <panel NAME="ONL_COOP_TS_DEFAULT_PANEL">
+    <tile NAME="FIND_A_MATCH" TYPE="TILE" DESTINATION="Search" DATAPROVIDERID="FRIEND_PRESENCE_DP" NARRATION_HIGHLIGHT="ACC_COOP_FIND_MATCH_HIGHLIGHTED" NARRATION_SELECT="ACC_COOP_FIND_MATCH_SELECTED">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="278" />
+      <data ID="title" TYPE="title" ALIGN="leading" PARAM="TXT_FIND_A_MATCH" PATH="" FORMAT="HS" WIDTH="418" HEIGHT="150" />
+      <data ID="iconActive" TYPE="image" PATH="imgAssets/online/tileIcons/IconFootball.dds" WIDTH="180" HEIGHT="180" X="238" Y="24" HLALPHA="100" UHLALPHA="100" VISIBLE="FALSE" FORMAT="STRETCH|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>      
+      <data ID="loadingicon" TYPE="component" PARAM="" PATH="online/components/ui/StreamingIcon.swf" WIDTH="150" HEIGHT="150" X="333" Y="99" />
+      <data ID="friendinfo" TYPE="component" PARAM="" PATH="game/components/FluxComponents/online/FriendInfo.swf" WIDTH="100" HEIGHT="100" X="0" Y="123" />
+    </tile>
+    <tile NAME="SELECT_TEAM" TYPE="TILE" DESTINATION="SelectTeam" DATAPROVIDERID="TEAM_AND_KIT_INFO_DP" NARRATION_HIGHLIGHT="ACC_COOP_SELECT_TEAM_HIGHLIGHTED" NARRATION_SELECT="ACC_COOP_SELECT_TEAM_SELECTED">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="492" />
+      <data ID="title" TYPE="title" ALIGN="leading" PARAM="TXT_CHANGE_TEAM" FORMAT="HS" WIDTH="418" HEIGHT="50" />
+      <data ID="iconActive" TYPE="image" PATH="imgAssets/online/tileIcons/IconClubChange.dds" WIDTH="180" HEIGHT="180" X="238" Y="24" HLALPHA="100" UHLALPHA="100" FORMAT="STRETCH|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>      
+      <data ID="starsReference" TYPE="null" WIDTH="225" X="20" />
+      <data ID="stars" TYPE="component" WIDTH="215" HEIGHT="40" PATH="game/components/FluxComponents/Stars.swf" Y="115" >
+        <align TARGET="starsReference"  ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" />
+      </data>
+      <data ID="teamStats" TYPE="component" WIDTH="215" HEIGHT="60" PATH="game/components/FluxComponents/TeamStats.swf" X="18" Y="128" />
+    </tile>
+    <tile NAME="MATCHMAKING_SETTINGS" TYPE="TILE_NESTED">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="706" />
+      <subtile SUBTILE_TYPE="TILE" NAME="MATCHMAKING_SETTINGS_SUBTILE" DESTINATION="MatchSettings" DATAPROVIDERID="DICT_MATCHUP_SETTINGS" NARRATION_HIGHLIGHT="ACC_COOP_MATCHMAKING_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_COOP_MATCHMAKING_SETTINGS_SELECTED">
+        <data ID="title" TYPE="title" ALIGN="leading" PARAM="TXT_MATCHMAKING_SETTINGS_BREAK" FORMAT="HS" WIDTH="418" HEIGHT="150" />
+        <data ID="matchmakingStatus" TYPE="text" FORMAT="SS" WIDTH="221" HEIGHT="67" X="20" REL_TARGET="title" Y="150" />
+        <data ID="iconActive" TYPE="image" PATH="imgAssets/online/tileIcons/IconSettings.dds" WIDTH="180" HEIGHT="180" X="238" Y="24" HLALPHA="100" UHLALPHA="100" FORMAT="STRETCH|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX"/>        
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" DESTINATION="ControllerSettings" DATAPROVIDERID="CONTROLLER_INFO_DP" PARAM="" NAME="ONL_COOP_TS_CONTROLLER_SETTINGS" NARRATION_HIGHLIGHT="ACC_COOP_CONTROLLER_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_COOP_CONTROLLER_SETTINGS_SELECTED">
+        <data ID="title" TYPE="title" ALIGN="leading" PARAM="TXT_CONTROLLER_SETTINGS_BREAK" FORMAT="HS" WIDTH="418" HEIGHT="150" />
+        <data ID="controllerStatus" TYPE="text" FORMAT="SS" WIDTH="196" HEIGHT="67" X="20" REL_TARGET="title" Y="150" />
+        <data ID="iconActive" TYPE="image" PATH="imgAssets/tiles/seasonsMatchLobby/notfound.dds" FORMAT="STRETCH|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="180" HEIGHT="180" X="238" Y="24" HLALPHA="100" UHLALPHA="100" />        
+      </subtile>
+    </tile>
+    <tile NAME="CONTINUE_GAME_TILE" TYPE="TILE" DESTINATION="CancelContinue" DATAPROVIDERID="SEASONS_USER_INFO_DP" NARRATION_HIGHLIGHT="ACC_COOP_CONTINUE_GAME_HIGHLIGHTED" NARRATION_SELECT="ACC_COOP_CONTINUE_GAME_SELECTED">
+      <properties WIDTH="418" HEIGHT="632" X="109" Y="278" />
+      <data ID="txtNextMatch" TYPE="text" ALIGN="leading" PARAM="CM_NextMatchCaps" FORMAT="HS|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" WIDTH="378" HEIGHT="150" X="20" Y="10" />
+      <data ID="subTitle" TYPE="text" ALIGN="leading" PARAM="" FORMAT="SS|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" WIDTH="378" HEIGHT="25" X="20" Y="80" />
+      <data ID="title" TYPE="text" PARAM="TXT_BEGINS_IN" FORMAT="SM|COLOR_TEXT_SECONDARY_LABEL|center|COLOR_TEXT_SECONDARY_LABEL" WIDTH="418" HEIGHT="150" X="0" Y="160" />
+      <data ID="timerComponent" TYPE="component" PATH="game/components/FluxComponents/online/CountdownSpinner.swf" WIDTH="174" HEIGHT="174" X="125" Y="210" />
+      <data ID="localTeamLogo" TYPE="asset" VISIBLE="TRUE" PATH="crest/dark" FORMAT="STRETCH" TRANSLATE="FALSE" WIDTH="100" HEIGHT="100" X="20" Y="400" />
+      <data ID="placeholderTeamLogo" TYPE="asset" VISIBLE="TRUE" PATH="crest/dark" FORMAT="STRETCH|COLOR_SLIDER_TRACK||COLOR_SLIDER_TRACK" TRANSLATE="FALSE" WIDTH="100" HEIGHT="100" X="300" Y="400" />
+      <data ID="txtVs" TYPE="text" PARAM="TXT_VS_LARGE" FORMAT="SL|COLOR_TEXT_PREVIEW|center|COLOR_TEXT_PREVIEW" WIDTH="418" HEIGHT="150" X="0" Y="435" />
+      <data ID="settingsStrLabel" TYPE="text" PARAM="TXT_HEADTOHEAD_SETTINGS" FORMAT="TSM|COLOR_TEXT_PREVIEW|center|COLOR_TEXT_PREVIEW" WIDTH="418" HEIGHT="75" X="0" Y="540" />
+      <data ID="settingsString" TYPE="text" PARAM="" FORMAT="TSL|COLOR_TEXT_RED|center|COLOR_TEXT_RED" WIDTH="418" HEIGHT="75" X="0" Y="570" />
+    </tile>
+	<tile NAME="COOP_TEAM_MANAGEMENT" TYPE="TILE_STARTING_XI" DESTINATION="TeamManagement" DATAPROVIDERID="PG_INFO_DP" NEEDS_PUBLISH="1" NARRATION_HIGHLIGHT="ACC_COOP_TEAM_MANAGEMENT_HIGHLIGHTED" NARRATION_SELECT="ACC_COOP_TEAM_MANAGEMENT_SELECTED">
+      <properties WIDTH="846" HEIGHT="632" X="537" Y="278" />
+      <data ID="TITLE" TYPE="title" PARAM="CM_HUB_Squad" FORMAT="HS" WIDTH="600" HEIGHT="135" X="18" Y="14" />
+    </tile>
+    <tile NAME="CONTINUE_GAME_TILE2" TYPE="TILE" DESTINATION="CancelContinue" DATAPROVIDERID="SEASONS_USER_INFO_RIGHT_DP" NARRATION_HIGHLIGHT="ACC_COOP_CONTINUE_GAME_HIGHLIGHTED" NARRATION_SELECT="ACC_COOP_CONTINUE_GAME_SELECTED">
+      <properties WIDTH="418" HEIGHT="632" X="1393" Y="278" />
+      <data ID="dividerImage" TYPE="image" PATH="imgAssets/online/DividerLine.dds" FORMAT="STRETCH" WIDTH="415" HEIGHT="15" X="2" Y="335" />
+      <data ID="txtLastMatch" TYPE="text" ALIGN="leading" PARAM="TXT_LAST_MATCH" FORMAT="HS|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" WIDTH="378" HEIGHT="150" X="20" Y="10" />
+      <data ID="userTeamLogo" TYPE="asset" VISIBLE="TRUE" PATH="crest/dark" FORMAT="STRETCH" TRANSLATE="FALSE" WIDTH="100" HEIGHT="100" X="20" Y="200" />
+      <data ID="oppTeamLogo" TYPE="asset" VISIBLE="TRUE" PATH="crest/dark" FORMAT="STRETCH" TRANSLATE="FALSE" WIDTH="100" HEIGHT="100" X="20" Y="400" />
+      <data ID="prevMatchUserTeamStr" TYPE="text" PARAM="" FORMAT="SM|COLOR_TEXT_PREVIEW|left|COLOR_TEXT_PREVIEW" WIDTH="350" HEIGHT="75" X="20" Y="130" />
+      <data ID="prevMatchOppTeamStr" TYPE="text" PARAM="" FORMAT="SM|COLOR_TEXT_PREVIEW|left|COLOR_TEXT_PREVIEW" WIDTH="350" HEIGHT="75" X="20" Y="510" />
+      <data ID="userTeamAbbrScore" TYPE="component" PATH="game/components/FluxComponents/online/TeamAndScore.swf" WIDTH="273" HEIGHT="100" X="125" Y="210" />
+      <data ID="oppTeamAbbrScore" TYPE="component" PATH="game/components/FluxComponents/online/TeamAndScore.swf" WIDTH="273" HEIGHT="100" X="125" Y="410" />
+    </tile>
+  </panel>
+</root>

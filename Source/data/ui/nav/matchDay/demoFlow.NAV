@@ -1,0 +1,152 @@
+{
+	"name":"singleMatchFlow"
+	,"initial":
+	{
+		"targets":["SsfPreMatchScreen"]
+	}
+	,"onEnter":
+	[
+		["sendScreenEvent", ["UxSetFlowState",".eState.WORLD_TOUR_DEMO"]]
+	]
+	,"onExit":
+	[
+		["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]]
+	]
+	,"states":
+	[
+		{
+			"name":"SsfPreMatchScreen"
+			,"initial":
+			{
+				"targets":["waitForIntroMatchLoaded"]
+			}
+			,"onEnter":
+			[					
+				["sendScreenEvent", ["ShowLoadingIcon"]]
+				,["loadViewModel",["KickoffSSFPrematchScreenViewmodel"]]
+				,["loadView", ["screen", "game/screens/playNow/SSFPreMatchScreen"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/playNow/SSFPreMatchScreen"]]
+				,["unloadViewModel",["KickoffSSFPrematchScreenViewmodel"]]
+				,["sendScreenEvent", ["HideLoadingIcon"]]
+			]
+			,"states":
+			[
+				{
+					"name":"waitForIntroMatchLoaded"
+					,"transitions":
+					[
+						{"event":"introMatchLoaded","targets":["conditionAardvarkCheck"]}
+					]		
+				}
+				,{
+					"name":"conditionAardvarkCheck"
+					,"onEnter":
+					[
+						["sendAction", ["conditionAardvark", "SKIP_VOLTA_DEMO_VIDEO"]]
+					]
+					,"transitions":
+					[
+						{"event":"true","targets":["NoVideoIntroFlow"]}
+						,{"event":"false","targets":["IntroFlow"]}
+					]		
+				}
+				,{
+					"name":"NoVideoIntroFlow"
+					,"onEnter":
+					[
+						["sendAction", ["startIntroMatch"]]
+						,["invoke", ["evt_controller_disconnect_flow_not_ready"]] /* Block controller disconnect flow until we are in the intro match */
+					]
+					,"transitions":
+					[
+						{"event":"startMatch","actions":[["sendAction", ["fbStartFlowEvent", "gmIntroFlowPreMatchVideoSkip"]]],"targets":["exitIntroBootFlow"]}
+					]
+				}
+			]
+		}
+		,{
+			"name":"IntroFlow"
+			,"onEnter":
+			[
+				["sendAction", ["fbStartFlowEvent", "gmIntroFlowPreMatchVideo"]]
+				,["sendAction", ["startIntroMatch"]]
+				,["invoke", ["evt_controller_disconnect_flow_not_ready"]] /* Block controller disconnect flow until we are in the intro match */
+			]
+			,"transitions":
+			[
+				{"event":"videoStarted","targets":["CanSkipVoltaVideoCondition"]}
+			]
+		}
+		,{
+			"name":"CanSkipVoltaVideoCondition"
+			,"onEnter":
+			[
+				["sendAction",["condition", "canSkipVoltaVideo"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","targets":["IntroFlowVideoPlayingCanSkip"]}
+				,{"event":"profileSignOut","targets":["exitIntroMatch"]}
+				,{"event":"videoStopped","targets":["exitIntroBootFlow"]}
+			]
+		}
+		,{
+			"name":"IntroFlowVideoPlayingCanSkip"
+			,"onEnter":
+			[	
+				["loadView", ["screen", "game/screens/misc/VideoOverlay"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/misc/VideoOverlay"]]
+			]
+			,"transitions":
+			[
+				{"event":"profileSignOut","targets":["exitIntroMatch"]}
+				,{"event":"videoStopped","targets":["exitIntroBootFlow"]}
+				,{"event":"advance","actions":[["sendAction", ["fbStartFlowEvent", "gmIntroFlowPreMatchVideoSkip"]]],"targets":["exitIntroBootFlow"]}
+			]
+		}
+		,{
+			"name":"exitIntroMatch"
+			,"onEnter":
+			[
+				["sendAction", ["fbStartFlowEvent", "gmIntroFlowPreMatchVideoAbort"]]
+				,["sendAction", ["transitionManager", ".NavTransitionManager.TO_FE_QUICK"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["abortIntroMatch"]]
+			]
+		}
+		,{
+			"name":"exitIntroBootFlow"
+			,"onEnter":
+			[
+				["invoke", ["bootflowFinished"]]
+				,["invoke", ["evt_controller_disconnect_flow_ready"]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["SetIntroMatchState"]]
+			]
+			,"transitions":
+			[
+				{"event":"bootflowFinished","targets":["pauseIntroFlow"]}
+			]
+		}
+		,{
+			"name":"pauseIntroFlow"
+			,"type":"external"
+			,"file":"/pauseMenuFlow.nav"
+			,"outputs":
+			{
+				"quit":"quit"
+				,"continue":"quit"
+			}
+		}
+	]
+}

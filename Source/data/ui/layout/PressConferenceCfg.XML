@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="PressConference">
+	<tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+	<tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="PRESS_CONF_MAIN" IS_TAB="FALSE">
+	  <layout NAME="CAREER_PRESS_CONF_BASE_LAYOUT" HELP_BAR_Y="980">
+        <tile NAME="DUMMY" X="1" Y="1" />
+        <tile NAME="INTRO_BANNER" X="0" Y="800" />
+        <tile NAME="SUMMARY_QUESTIONS" X="100" Y="100" />
+        <tile NAME="SUBTITLE" X="0" Y="870" />
+        <tile NAME="CHATWHEEL" X="0" Y="0" />
+      </layout>
+	</panel>
+  </panel_set>
+  <panel NAME="PRESS_CONF_MAIN">
+    <variable_set>
+	  <variable id="playerIdList" type="int" />
+	  <variable id="teamIdList" type="int" />
+	  <variable id="nameList" type="string" />
+	  <variable id="moraleParam" type="string" />
+	  <variable id="moraleTrend" type="int" />
+	  <variable id="moraleDescList" type="string" />
+	  <variable id="moraleLabelList" type="string" />
+	  <variable id="pitchAreaList" type="string" />
+	  <variable id="positionList" type="string" />
+	  <variable id="roleList" type="string"/>
+	  <variable id="isFocusedList" type="bool"/>
+	  <variable id="introBannerText" type="string"/>
+	</variable_set>
+	<tile NAME="DUMMY" TYPE="TILE" SELECTABLE="FALSE" DESTINATION="" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="16" HEIGHT="16"/>
+    </tile>
+    <tile NAME="INTRO_BANNER" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="1920" HEIGHT="114"/>
+	  <data ID="BANNER" TYPE="component" PATH="game/components/FluxComponents/PressConferenceIntroBanner.swf" PARAM="@introBannerText" X="50" Y="0" />
+    </tile>
+	<tile NAME="SUMMARY_QUESTIONS" TYPE="TILE_LIST" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="425" HEIGHT="700"/>
+	  <listProperties LIST_TYPE="TILE" ROWS="4" COLUMNS="1" ITEM_HEIGHT="157" ITEM_WIDTH="425" TOTAL_ITEMS="4" LIST_Y="71"/>
+	  <backgroundData>
+	    <data ID="TITLE" TYPE="text" PARAM="Summary_upper" ALIGN="leading" FORMAT="HS|COLOR_TEXT_HIGHLIGHT_FLUX|||||" TRANSLATE="TRUE" X="-3" Y="0"/>
+	  </backgroundData>
+      <data ID="BACKGROUND" TYPE="rectangle" FORMAT="|0x2C2B2B||0x2C2B2B|||" WIDTH="425" HEIGHT="157" X="0" Y="0" VISIBLE="@#Not(@isFocusedList[i])"/>
+	  <data ID="ROWBAND" TYPE="rectangle" FORMAT="|0x252627||0x252627|||" WIDTH="425" HEIGHT="40" X="0" Y="117" VISIBLE="@#Not(@isFocusedList[i])"/>
+	  <data ID="HIGHLIGHT_BACKGROUND" TYPE="rectangle" FORMAT="|0x16686D||0x16686D|||" WIDTH="425" HEIGHT="157" X="0" Y="0" VISIBLE="@isFocusedList[i]"/>
+	  <data ID="HIGHLIGHT_ROWBAND" TYPE="rectangle" FORMAT="|0x14575C||0x14575C|||" WIDTH="425" HEIGHT="40" X="0" Y="117" VISIBLE="@isFocusedList[i]"/>
+	  <data ID="HIGHLIGHT_MARK" TYPE="rectangle" FORMAT="|0x0FF4ED||0x0FF4ED|||" WIDTH="4" HEIGHT="157" X="0" Y="0" VISIBLE="@isFocusedList[i]"/>
+	  <data ID="PLAYER_HEAD" TYPE="asset" PARAM="@playerIdList[i]" PATH="heads" X="10" Y="5" WIDTH="112" HEIGHT="112" VISIBLE="@#DoesNotEqual(@playerIdList[i],-1)"/>
+	  <data ID="TEAM_CREST" TYPE="asset" PATH="crest/dark" PARAM="@teamIdList[i]" X="23" Y="18" WIDTH="86" HEIGHT="86" VISIBLE="@#DoesNotEqual(@teamIdList[i],-1)"/>
+	  <data ID="REF_RECTANGLE_TEXTS" TYPE="null" WIDTH="250" X="146"/>
+	  <data ID="NAME" TYPE="text" ALIGN="leading" FORMAT="TSM||||||" PARAM="@nameList[i]" TRANSLATE="FALSE" HEIGHT="30"  Y="10">
+		  <align TARGET="REF_RECTANGLE_TEXTS" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING"/>
+	  </data>	  
+	  <data ID="MORALE_SLIDER" TYPE="component" PATH="game/components/FluxComponents/PlayerMoraleSlider.swf" PARAM="@#Pattern(@moraleParam[i],*|1000)" FORMAT="|COLOR_SAFE_BLACK||COLOR_SAFE_BLACK" WIDTH="180" HEIGHT="36">
+	    <align TARGET="NAME" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="5"/>
+	    <align TARGET="NAME" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="2"/>
+	  </data>
+	  <data ID="MORALE_TREND_UP" TYPE="asset" PATH="eventIcon32x32" PARAM="FormUp" WIDTH="32" HEIGHT="32" VISIBLE="@#Equal(@moraleTrend[i],1)">
+	    <align TARGET="MORALE_SLIDER" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	    <align TARGET="MORALE_SLIDER" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="TRAILING" OFFSET="15"/>
+	  </data>
+	  <data ID="MORALE_TREND_CONST" TYPE="asset" PATH="eventIcon32x32" PARAM="LongDash" WIDTH="32" HEIGHT="32" VISIBLE="@#Equal(@moraleTrend[i],0)">
+	    <align TARGET="MORALE_SLIDER" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	    <align TARGET="MORALE_SLIDER" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="TRAILING" OFFSET="15"/>
+	  </data>
+	  <data ID="MORALE_TREND_DOWN" TYPE="asset" PATH="eventIcon32x32" PARAM="FormDown" WIDTH="32" HEIGHT="32" VISIBLE="@#Equal(@moraleTrend[i],-1)">
+	    <align TARGET="MORALE_SLIDER" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	    <align TARGET="MORALE_SLIDER" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="TRAILING" OFFSET="15"/>
+	  </data>
+	  <data ID="MORALE_LABEL" TYPE="text" ALIGN="leading" FORMAT="TSMU||||||" PARAM="@moraleLabelList[i]" TRANSLATE="TRUE" WIDTH="259" HEIGHT="30">
+	    <align TARGET="MORALE_SLIDER" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM"/>
+	    <align TARGET="REF_RECTANGLE_TEXTS" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING"/>
+	  </data>
+	  <data ID="MORALE_TEXT" TYPE="text" ALIGN="leading" FORMAT="TSM||||||" PARAM="@moraleDescList[i]" TRANSLATE="FALSE" WIDTH="259" HEIGHT="30">
+	    <align TARGET="MORALE_LABEL" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+	    <align TARGET="MORALE_LABEL" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="TRAILING" OFFSET="5"/>
+	  </data>
+	  <data ID="POSITION" TYPE="component" PATH="game/components/FluxComponents/Position.swf" PARAM="@pitchAreaList[i]" WIDTH="15" HEIGHT="15" X="15" Y="130" VISIBLE="@#DoesNotEqual(@playerIdList[i],-1)"/>
+	  <data ID="SQUAD" TYPE="text" PARAM="txt_cmhub_squad" FORMAT="TSM||center||||" HEIGHT="30" WIDTH="300" Y="122" VISIBLE="@#DoesNotEqual(@teamIdList[i],-1)">
+		<align TARGET="TEAM_CREST" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	  </data>
+	  <data ID="POSITION_TEXT" TYPE="text" PARAM="@positionList[i]" TRANSLATE="FALSE" FORMAT="TSM||||||" HEIGHT="30" X="40" Y="122" VISIBLE="@#DoesNotEqual(@playerIdList[i],-1)"/>
+	  <data ID="POSITION_SEPARATOR" TYPE="rectangle" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|||" WIDTH="3" HEIGHT="26" VISIBLE="@#DoesNotEqual(@playerIdList[i],-1)">
+	    <align TARGET="ROWBAND" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	    <align TARGET="POSITION_TEXT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="14"/>
+	  </data>
+	  <data ID="ROLE" TYPE="text" PARAM="@roleList[i]" TRANSLATE="FALSE" FORMAT="TSM||||||" HEIGHT="30" VISIBLE="@#DoesNotEqual(@playerIdList[i],-1)">
+	    <align TARGET="POSITION_TEXT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+	    <align TARGET="POSITION_SEPARATOR" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="8"/>
+	  </data>
+    </tile>
+	<tile NAME="SUBTITLE" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="1920" HEIGHT="200"/>
+	  <!-- We need to offset X because in the component FLA the origin is set in the middle of X axis -->
+	  <data ID="SUBTITLE" TYPE="component" PATH="game/components/Subtitle.swf" X="960" Y="0" DATAPROVIDERID="SubtitleDP"/>
+	</tile>
+	<tile NAME="CHATWHEEL" TYPE="TILE" HIGHLIGHTABLE="TRUE" SELECTABLE="FALSE" DESTINATION="" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="1920" HEIGHT="1080" />
+	  <data ID="WHEEL" TYPE="component" PATH="game/components/ConversationWheel.swf" PARAM="1|850" DATAPROVIDERID="SMConversationDP" X="960" Y="948" />
+	</tile>
+  </panel>
+ </root>

@@ -1,0 +1,326 @@
+{
+	"name":"editTeamSheetFlow"
+	,"onEnter":
+	[
+		["loadViewModel",["TeamSheetEditorViewModel", ".tmMode"]]
+		,["loadView",["screen", "game/screens/teamsheets/TeamSheetEditor"]]
+	]
+	,"onExit":
+	[
+		["unloadView",["screen", "game/screens/teamsheets/TeamSheetEditor"]]
+		,["unloadViewModel",["TeamSheetEditorViewModel"]]
+	]
+	, "initial":
+	{
+			"targets":["teamSheetEditor"]
+	}
+	,"states":
+	[
+		{
+			"transitions":
+			[
+				{ "event":"evt_notify_controller_disconnect", "targets":["CardedKeeperDecision"] }
+			]
+			,"states":
+			[
+				{
+					"name":"teamSheetEditor"
+					,"states":
+					[
+						{	
+							"name":"teamSheetEditorMain"
+							,"transitions":
+							[
+								{
+									"event":"advanceRequest"
+									,"targets":["showSavePopup"]
+								},
+								{
+									"event":"back"
+									,"let":{"futSyncMode":"initialize"}
+									,"targets":["back"]
+								}
+								,{
+									"event":"TooManyMarkingsPopup"
+									,"targets":["TooManyMarkingsPopup"]
+								}
+								,{
+									"event":"OutOfSubsPopup"
+									,"targets":["OutOfSubsPopup"]
+								}
+								,{
+									"event":"PlayerInjuredPopup"
+									,"targets":["PlayerInjuredPopup"]
+								}
+								,{
+									"event":"PlayerSuspendedPopup"
+									,"targets":["PlayerSuspendedPopup"]
+								}
+								,{
+									"event":"PlayerIntlDutyPopup"
+									,"targets":["PlayerIntlDutyPopup"]
+								}
+								,{
+									"event":"SwapKeeperPopup"
+									,"targets":["SwapKeeperPopup"]
+								}
+								,{
+									"event":"RedCardedKeeper"
+									,"targets":["RedCardedKeeperPopup"]
+								}
+								,{
+									"event":"InjuredPlayerNeedSub"
+									,"targets":["InjuredPlayerNeedSub"]
+								}
+								,{
+									"event":"CardedKeeperNeedSub"
+									,"targets":["CardedKeeperNeedSub"]
+								}
+							]
+						}
+						,{
+							"name":"TooManyMarkingsPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup", "MAXMARKINGS_POPUP", "ManMarkingMaxWarning|OK|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "MAXMARKINGS_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"OutOfSubsPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup", "OUTOFSUBS_POPUP", "OutOfSubs|OK|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "OUTOFSUBS_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"PlayerInjuredPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup", "PLAYERINJURED_POPUP", "SubInjuredHelp|OK|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "PLAYERINJURED_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"PlayerSuspendedPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup", "PLAYERSUSPENDED_POPUP", "SubSuspendedHelp|OK|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "PLAYERSUSPENDED_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"PlayerIntlDutyPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup", "PLAYERINTLDUTY_POPUP", "SubIntlDutyHelp|OK|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "PLAYERINTLDUTY_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"SwapKeeperPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup", "SWAPKEEPER_POPUP", "KeeperSubError|OK|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "SWAPKEEPER_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"RedCardedKeeperPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup", "REDCARDEDKEEPER_POPUP", "howToChangeGKRedCarded|OK|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "REDCARDEDKEEPER_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"InjuredPlayerNeedSub"
+							,"onEnter":
+							[
+								["loadView", ["popup", "SUB_INJURED_PLAYER", "SubInjuredPlayerWarning|Okay_abbr2|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "SUB_INJURED_PLAYER"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"CardedKeeperNeedSub"
+							,"onEnter":
+							[
+								["loadView", ["popup", "SUB_CARDED_KEEPER", "tm_GKRedCarded|Okay_abbr2|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "SUB_CARDED_KEEPER"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["teamSheetEditorMain"]
+								}
+							]
+						}
+						,{
+							"name":"showSavePopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SaveTeamSheetPopup", "TXT_SAVE_TEAM_SHEET|TXT_YES|popupYes|TXT_NO|popupNo|TXT_Option_Continue_Editing|popupCancel"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "SaveTeamSheetPopup"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"popupYes"
+									,"actions":[ ["sendAction", ["updateScreen", "saveTeamSheet"] ] ]
+								}
+								,{
+									"event":"popupNo"
+									,"actions":[ ["sendAction", ["updateScreen", "discardTeamSheet"] ] ]
+								}
+								,{
+									"event":"popupCancel"
+									,"actions":[ ["sendAction", ["updateScreen", "resetReady"] ] ]
+									,"targets":["teamSheetEditorMain"]
+								}
+								,{
+									"event":"PrepareCareerModeForSave"
+									,"actions":[ ["executeCMAction",["PrepareSave"]] ]
+								}
+								,{
+									"event":"back"
+									,"targets":["back"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"CardedKeeperDecision"
+					,"onEnter":
+					[
+						["sendAction",["condition", "isKeeperRedCarded"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"true"
+							,"targets":["AutoSwapKeeperPopup"]
+						}
+						,{
+							"event":"false"
+							,"targets":["ResumeDisconnect"]
+						}
+					]
+				}
+				,{
+					"name":"AutoSwapKeeperPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup", "GKRedCardedForcedExit", "GKRedCardedForcedExit|Okay_abbr2|back"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "GKRedCardedForcedExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["ResumeDisconnect"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"ResumeDisconnect"
+			,"onEnter":
+			[
+				["sendAction",["evt_notify_controller_disconnect"]]
+			]
+		}
+	]
+}

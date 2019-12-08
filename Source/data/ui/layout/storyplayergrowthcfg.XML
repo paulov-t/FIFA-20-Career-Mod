@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+	<hub_settings NAME="StoryPlayerGrowth" HUB_VERSION="3">
+		<artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+		<helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+		<tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+		<tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+	</hub_settings>
+	<variable_set>
+		<variable id="categoryLabel" type="string"/>
+		<variable id="categoryId" type="int"/>
+		<variable id="categoryDescription" type="string"/>
+		<variable id="validCategoryHighlighted" type="bool"/>
+		<variable id="skillPoints" type="int"/>
+		<variable id="traitUnlockLabel" type="string"/>
+		<variable id="isFinisherCreator" type="bool"/>
+		<variable id="isTargetMan" type="bool"/>
+		<variable id="lockedChapterTraitHighlighted" type="bool"/>
+		<variable id="lockedTraitHighlighted" type="bool"/>
+		<variable id="traitCost" type="int"/>
+		<variable id="unpurchaseableTraitHighlighted" type="bool"/>
+		<variable id="traitTitle" type="string"/>
+		<variable id="traitDescription" type="string"/>	
+		<variable id="mentorTraitTitle" type="string"/>
+		<variable id="mentorTraitDescription" type="string"/>
+		<variable id="nonLockedChapterTraitHighlighted" type="bool"/>
+		<variable id="playerName" type="string"/>
+		<variable id="playerHead" type="int"/>
+		<variable id="skillVisible" type="bool"/>
+	</variable_set>
+	<components>
+		<component PATH="game/components/FluxComponents/FluxHubHeader.swf" X="166" Y="75" WIDTH="900" DATAPROVIDERID="FLUX_HEADER_DP"/>
+	</components>
+	<buttons>
+		<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+	</buttons>
+	<panel_set>
+		<panel NAME="STORY_CATEGORY_SELECT" LABEL="SM_PG_ATTRIBUTES_TAB" IS_TAB="TRUE">
+			<layout NAME="STORY_CATEGORY_SELECT" X="146" Y="257">
+				<tile NAME="STORY_ATTRIBUTE_CATEGORY_SELECTOR" X="-146" Y="-10" SELECTABLE="FALSE" />
+				<tile NAME="STORY_ATTRIBUTE_PLAYER" X="820" Y="-257" SELECTABLE="FALSE" />
+			</layout>
+		</panel>
+		<panel NAME="STORY_TRAIT_SELECT" LABEL="SM_PG_TRAITS_TAB" IS_TAB="TRUE">
+			<layout NAME="STORY_TRAIT_SELECT" X="146" Y="257">
+				<tile NAME="STORY_TRAIT_SELECTOR" X="-146" Y="-10" SELECTABLE="FALSE" />
+				<tile NAME="STORY_TRAITS_PLAYER" X="820" Y="-257" SELECTABLE="FALSE" />
+			</layout>
+		</panel>
+		<panel NAME="STORY_MENTOR_SELECT" LABEL="SM_PG_MENTOR_TAB" IS_TAB="TRUE">
+			<layout NAME="STORY_MENTOR_SELECT" X="146" Y="257">
+				<tile NAME="STORY_MENTOR_SELECTOR" X="10" Y="0" />
+				<tile NAME="MENTOR_TRAITS" X="900" Y="-257" />
+			</layout>
+		</panel>
+	</panel_set>
+	<panel NAME="STORY_CATEGORY_SELECT">
+		<tile NAME="STORY_ATTRIBUTE_CATEGORY_SELECTOR" TYPE="EXPANDABLE_TILE" DECORATORS_RANGE="NO_BACKGROUND" HIGHLIGHTABLE="TRUE">
+			<properties WIDTH="1920" HEIGHT="700"  />
+			<data ID="attributeCategorySelector" TYPE="component" PATH="game/components/playerGrowth/AttributeCategorySelector.swf" DATAPROVIDERID="PLAYER_GROWTH_CATEGORIES_DP" X="599" Y="366"  WIDTH="640" HEIGHT="640" />
+			<data ID="attributeDetails" TYPE="component" VISIBLE="@nonLockedChapterTraitHighlighted" PATH="game/components/playerGrowth/AttributeDetails.swf" X="1220" Y="163" WIDTH="600" HEIGHT="200" DATAPROVIDERID="PlayerGrowthAttributesDP"/>
+			<data ID="categoryIcon" TYPE="asset" PATH="playerGrowth/categories" PARAM="@categoryId" FORMAT="|COLOR_TEXT_LABEL||COLOR_TEXT_LABEL|" WIDTH="41" HEIGHT="41" X="1164" Y="38" />			
+			<data ID="categoryLabel" TYPE="text" PARAM="@categoryLabel" FORMAT="FONT_TITLEBAR_FHD||||FONT_REGULAR|FONT_REGULAR" TRANSLATE="FALSE" WIDTH="597" HEIGHT="41" X="1220" Y="28" />
+			<data ID="categoryDescription" TYPE="text" PARAM="@categoryDescription" VISIBLE="@validCategoryHighlighted" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION||leading" WIDTH="597" HEIGHT="41" X="1220" Y="87" />
+		</tile>
+		<tile NAME="STORY_ATTRIBUTE_PLAYER" TYPE="EXPANDABLE_TILE" DECORATORS_RANGE="NO_BACKGROUND" HIGHLIGHTABLE="TRUE">
+			<properties WIDTH="960" HEIGHT="200"/>
+			<data ID="skillPoints" TYPE="asset" PATH="playerGrowth/points" FORMAT="|COLOR_TEXT_SELECTED||COLOR_TEXT_SELECTED" PARAM="@skillPoints" WIDTH="44" HEIGHT="44" VISIBLE="@skillVisible" >
+				<align TARGET="skillPointsLabel" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20"/>
+				<align TARGET="skillPointsLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+			</data>
+			<data ID="skillPointsLabel" TYPE="text" PARAM="SM_PG_SKILL_POINTS_AVAILABLE" FORMAT="FONT_TILE_UXHS|COLOR_TEXT_LABEL|left|COLOR_TEXT_LABEL" WIDTH="600" HEIGHT="40" VISIBLE="@skillVisible" >
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" />
+			</data>
+			<data ID="playerName" TYPE="text" PARAM="@playerName" FORMAT="FONT_TILE_UXHS|COLOR_TEXT_ALT_PREVIEW||COLOR_TEXT_ALT_PREVIEW" WIDTH="445" HEIGHT="40" TRANSLATE="FALSE" >
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"  OFFSET="100" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-100"/>
+			</data>
+			<data ID="heroHead" TYPE="asset" PATH="heads" PARAM="@playerHead" WIDTH="108" HEIGHT="108" IMMEDIATE_LOAD="FALSE">
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="-10"/>
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" OFFSET="-20" />
+			</data>
+		</tile>
+	</panel>
+	<panel NAME="STORY_TRAIT_SELECT">
+		<tile NAME="STORY_TRAIT_SELECTOR" TYPE="EXPANDABLE_TILE" DECORATORS_RANGE="NO_BACKGROUND" HIGHLIGHTABLE="TRUE">
+			<properties WIDTH="1920" HEIGHT="700"  />
+			<data ID="traitSelect" TYPE="component" PATH="game/components/online/playerGrowth/OnlineTraitTree.swf" DATAPROVIDERID="PLAYER_GROWTH_TRAITS_DP" PARAM="|||||576" WIDTH="882" HEIGHT="640" X="166" Y="16"/>
+			<data ID="finisherLabel" TYPE="text" PARAM="SM_PG_FINISHER_TRAITS" VISIBLE="@isFinisherCreator" FORMAT="FONT_BOLD_ACTIVE_LABEL" X="166" Y="2" WIDTH="471" HEIGHT="40" UHLALPHA="75" HLALPHA="75"/>
+			<data ID="creatorLabel" TYPE="text" PARAM="SM_PG_CREATOR_TRAITS" VISIBLE="@isFinisherCreator" FORMAT="FONT_BOLD_ACTIVE_LABEL" X="637" Y="2" WIDTH="471" HEIGHT="40" UHLALPHA="75" HLALPHA="75"/>
+			<data ID="targetManLabel" TYPE="text" PARAM="SM_PG_TARGETMAN_TRAITS" VISIBLE="@isTargetMan" FORMAT="FONT_BOLD_ACTIVE_LABEL||center" Y="470" WIDTH="471" HEIGHT="40" UHLALPHA="75" HLALPHA="75">
+				<align TARGET="traitSelect" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			<data ID="chaptersLabel" TYPE="text" PARAM="SM_PG_CHAPTER_TRAITS" FORMAT="FONT_BOLD_ACTIVE_LABEL||leading" X="166" Y="555" WIDTH="400" HEIGHT="40"/>
+			<data ID="chaptersSeparator" TYPE="hspacer" X="166" Y="605" WIDTH="400" HEIGHT="2"/>
+			<data ID="categorySeparator" TYPE="hspacer" VISIBLE="@nonLockedChapterTraitHighlighted" X="1220" Y="226" WIDTH="533" HEIGHT="2"/>
+			<data ID="attributeListSeparator" TYPE="hspacer" VISIBLE="@nonLockedChapterTraitHighlighted" X="1220" Y="295" WIDTH="533" HEIGHT="2"/>
+			<data ID="attributeDetails" TYPE="component" VISIBLE="@nonLockedChapterTraitHighlighted" PATH="game/components/playerGrowth/AttributeDetails.swf" X="1220" Y="236" WIDTH="600" HEIGHT="200" DATAPROVIDERID="PlayerGrowthAttributesDP"/>
+			<data ID="traitTitle" TYPE="text" PARAM="@traitTitle" FORMAT="FONT_TILE_HSU|COLOR_TEXT_STORY_TITLE|leading|COLOR_TEXT_STORY_TITLE" TRANSLATE="FALSE" WIDTH="533" HEIGHT="41" X="1220" Y="1" />
+			<data ID="traitDescription" TYPE="multilinetext" PARAM="@traitDescription" VISIBLE="@nonLockedChapterTraitHighlighted" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION" WIDTH="533" HEIGHT="126" X="1220" Y="103" />
+			<data ID="traitCostLabel" TYPE="text" VISIBLE="@lockedTraitHighlighted" FORMAT="FONT_DESCRIPTION_PREVIEW_FHD|COLOR_TEXT_LABEL||COLOR_TEXT_LABEL" PARAM="SM_PG_SKILL_POINT_COST" WIDTH="597" HEIGHT="41" X="1220" Y="57"/>
+			<data ID="traitCostIcon" TYPE="asset" PATH="playerGrowth/points" PARAM="@traitCost" VISIBLE="@lockedTraitHighlighted" FORMAT="|COLOR_TEXT_LABEL||COLOR_TEXT_LABEL" WIDTH="36" HEIGHT="36" Y="60" REL_TARGET="traitCostLabel" REL_X="5"/>
+			<data ID="insufficientLabel" TYPE="text"  VISIBLE="@unpurchaseableTraitHighlighted" FORMAT="FONT_DESCRIPTION_PREVIEW_FHD|COLOR_TEXT_ALERT||COLOR_TEXT_ALERT" PARAM="InsufficientFunds" WIDTH="597" HEIGHT="41" REL_TARGET="traitCostLabel" REL_X="46" Y="57" />
+			<data ID="traitUnlockLabel" TYPE="text" PARAM="@traitUnlockLabel" VISIBLE="@lockedChapterTraitHighlighted" FORMAT="FONT_DESCRIPTION_PREVIEW_FHD|COLOR_TEXT_LABEL||COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="597" HEIGHT="41" X="1220" Y="57" UHLALPHA="30" HLALPHA="30"/>
+		</tile>
+		<tile NAME="STORY_TRAITS_PLAYER" TYPE="EXPANDABLE_TILE" DECORATORS_RANGE="NO_BACKGROUND" HIGHLIGHTABLE="TRUE">
+			<properties WIDTH="960" HEIGHT="200"/>
+			<data ID="skillPoints" TYPE="asset" PATH="playerGrowth/points" FORMAT="|COLOR_TEXT_SELECTED||COLOR_TEXT_SELECTED" PARAM="@skillPoints" WIDTH="44" HEIGHT="44" VISIBLE="@skillVisible" >
+				<align TARGET="skillPointsLabel" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20"/>
+				<align TARGET="skillPointsLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+			</data>
+			<data ID="skillPointsLabel" TYPE="text" PARAM="SM_PG_SKILL_POINTS_AVAILABLE" FORMAT="FONT_TILE_UXHS|COLOR_TEXT_LABEL|left|COLOR_TEXT_LABEL" WIDTH="600" HEIGHT="40" VISIBLE="@skillVisible" >
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" />
+			</data>
+			<data ID="playerName" TYPE="text" PARAM="@playerName" FORMAT="FONT_TILE_UXHS|COLOR_TEXT_ALT_PREVIEW||COLOR_TEXT_ALT_PREVIEW" WIDTH="445" HEIGHT="40" TRANSLATE="FALSE" >
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"  OFFSET="100" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-100"/>
+			</data>
+			<data ID="heroHead" TYPE="asset" PATH="heads" PARAM="@playerHead" WIDTH="108" HEIGHT="108" IMMEDIATE_LOAD="FALSE">
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="-10"/>
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" OFFSET="-20" />
+			</data>
+		</tile>
+	</panel>
+	<panel NAME="STORY_MENTOR_SELECT">
+		<tile NAME="STORY_MENTOR_SELECTOR" TYPE="TILE_LIST" HIGHLIGHTABLE="TRUE" DATAPROVIDERID="GridControlDP" DECORATORS_RANGE="NO_BACKGROUND" SELECTABLE="FALSE" >
+			<properties WIDTH="910" HEIGHT="635"  />
+			<data ID="background" TYPE="bar" PARAM="100" FORMAT="|COLOR_FILL_HIGHLIGHT||COLOR_PURE_BLACK" UHLALPHA="60" HLALPHA="100" WIDTH="910" HEIGHT="123" />
+			<data ID="line" TYPE="bar" PARAM="100" FORMAT="|COLOR_FILL_HIGHLIGHT_CONTRAST|" UHLALPHA="0" HLALPHA="100" WIDTH="4" HEIGHT="123" />
+			<data ID="head" TYPE="asset" PATH="heads" WIDTH="72" HEIGHT="72">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-15"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="90"/>
+			</data>
+			<data ID="name" TYPE="text" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE">
+				<align TARGET="head" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" />
+				<align TARGET="head" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			</data>
+			  <data ID="slider" TYPE="component" PATH="game/components/PartnershipRating.swf" HEIGHT="24" >
+				<align TARGET="head" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="25" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-200" />
+			  </data>
+			<data ID="traitCrest" TYPE="asset" PATH="playerGrowth/traits_md" FORMAT="" WIDTH="65" HEIGHT="65" >
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="825"/>
+			</data>
+			<data ID="checkbox" TYPE="checkbox" X="780" Y="33" WIDTH="36" HEIGHT="36">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="10"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			</data>
+			<data ID="colored_box" TYPE="rectangle" WIDTH="968" HEIGHT="127" FORMAT="COLOR_FILL_PANEL_HIGHLIGHT_ROWBAND" HLALPHA="10" UHLALPHA="10"/>
+		</tile>
+		<tile NAME="MENTOR_TRAITS" TYPE="EXPANDABLE_TILE" VISIBLE="FALSE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="700" HEIGHT="1000"/>
+			<data ID="playerName" TYPE="text" PARAM="@playerName" FORMAT="FONT_TILE_UXHS|COLOR_TEXT_ALT_PREVIEW||COLOR_TEXT_ALT_PREVIEW" WIDTH="445" HEIGHT="40" TRANSLATE="FALSE" >
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"  OFFSET="100" />
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="80"/>
+			</data>
+			<data ID="attributeName" TYPE="text" PARAM="@mentorTraitTitle" FORMAT="FONT_BOLD_ACTIVE_LABEL||leading" WIDTH="540" HEIGHT="40" Y="300" UHLALPHA="75" HLALPHA="75">
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="140"/>
+			</data>
+			<data ID="attributeLabel" TYPE="text" PARAM="@mentorTraitDescription" FORMAT="FONT_BOLD_ACTIVE_LABEL||leading" WIDTH="540" HEIGHT="40" UHLALPHA="75" HLALPHA="75">
+				<align TARGET="attributeName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="25"/>
+				<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="140"/>
+			</data>
+			<data ID="heroHead" TYPE="asset" PATH="heads" PARAM="@playerHead" WIDTH="108" HEIGHT="108" IMMEDIATE_LOAD="FALSE">
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="-10"/>
+				<align TARGET="playerName" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" OFFSET="-20" />
+			</data>
+			<data ID="background" TYPE="rectangle" PARAM="COLOR_PURE_BLACK" UHLALPHA="60" HLALPHA="60" X="100" Y="270" WIDTH="650" HEIGHT="630" />
+			<data ID="attributeDetails" TYPE="component" PATH="game/components/playerGrowth/AttributeDetails.swf" X="140" Y="470" WIDTH="600" HEIGHT="200" DATAPROVIDERID="PlayerGrowthAttributesDP"/>
+		</tile>
+	</panel>
+</root>

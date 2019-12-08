@@ -1,0 +1,63 @@
+{
+	"name":"liveMessaging"
+	,"initial":
+	{
+		"targets":["liveMessagingDataRequest"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel",["futlivemessagingviewmodel"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel",["futlivemessagingviewmodel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"liveMessagingDataRequest"
+			,"transitions":
+			[
+				{
+					"event":"advanceRequest"
+					,"targets":["liveMessaging_ShowMessage"]
+				}
+			]
+		}
+		,{
+			"name":"liveMessaging_ShowMessage"
+			,"onEnter":
+			[
+				["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+				,["loadView",["overlay", "game/screens/online/OnlineLiveMessaging"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["overlay", "game/screens/online/OnlineLiveMessaging"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"GoToNewItems"
+					,"targets":["newItems"]
+				}
+			]
+		}
+		,{
+			"name":"newItems"
+			,"type":"external"
+			,"file":"/fut/futNewItemsFlow.nav"
+			,"outputs":
+			{
+				"back":"advance"
+			}
+		}
+	]
+	,"transitions":
+	[
+		{
+			"event":"advance"
+			,"targets":["advance"]
+		}
+	]
+}

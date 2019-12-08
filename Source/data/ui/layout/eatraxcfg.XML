@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="EaTraxHub">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="sgt" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <buttons>
+     <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="back" />
+     <button ID="OPTION_LEFT" HINT="TurnAllOnOff" ACTION="ACTION_BUTTON_X" DESTINATION="" />
+     <button ID="OPTION_TOP" HINT="Play_Song" ACTION="ACTION_BUTTON_Y" DESTINATION="" />
+  </buttons>
+  <panel_set>
+    <panel NAME="EATRAX_PANEL" LABEL="EATrax" IS_TAB="FALSE">
+        <layout NAME="MAIN_LIST" X="0" Y="0">
+            <tile NAME="EATRAX_LIST" X="116" Y="274" />
+            <tile NAME="EATRAX_DETAILS" X="968" Y="270" />
+        </layout>
+    </panel>
+    <panel NAME="EATRAX_DUMMY_PANEL" LABEL="MM_TAB_CUSTOMISE" IS_TAB="FALSE" />
+  </panel_set>
+  
+  <panel NAME="EATRAX_PANEL">
+	<variable_set>
+	    <variable id="highlightedAlbumArt" type="string" /> 
+	    <variable id="highlightedSongName" type="string" />
+	    <variable id="highlightedArtistName" type="string" />
+	    <variable id="playingAlbumArt" type="string" /> 
+	    <variable id="playingSongName" type="string" />
+	    <variable id="playingArtistName" type="string" />
+   	    <variable id="playingSongProgress" type="int" />
+   	    <variable id="playingSongTimeDisplay" type="string" />
+	    <variable id="playerVisible" type="bool" />
+    </variable_set>
+    
+    <tile NAME="EATRAX_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DATAPROVIDERID="GridControlDP" HIGHLIGHTABLE="TRUE">
+        <properties WIDTH="830" HEIGHT="630" />
+        <data ID="albumArt" TYPE="asset" PATH="eatrax_thumbs" X="88" Y="10" WIDTH="100" HEIGHT="100" />
+        <data ID="playable" TYPE="checkbox" WIDTH="20" HEIGHT="20" X="16" Y="12"/>
+        <data ID="songName" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" FORMAT="FONT_DESCRIPTION|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" X="12" Y="156" WIDTH="250" HEIGHT="30" TRANSLATE="FALSE"/>
+        <data ID="artist" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" FORMAT="FONT_DESCRIPTION|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" X="12" Y="180" WIDTH="250" HEIGHT="30" TRANSLATE="FALSE" />
+    </tile>
+    
+        
+    <tile NAME="EATRAX_DETAILS" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE">
+      <properties WIDTH="846" HEIGHT="630"/>
+      <data ID="albumArt" TYPE="asset" PARAM="@highlightedAlbumArt" PATH="eatrax" WIDTH="350" HEIGHT="350" X="250" Y="30" />
+      <data ID="songName" TYPE="text" PARAM="@highlightedSongName" FORMAT="FONT_DESCRIPTION_FHD" X="20" Y="390" WIDTH="803" TRANSLATE="FALSE"/>
+      <data ID="artist" TYPE="text" PARAM="@highlightedArtistName" FORMAT="FONT_BOLD_PREVIEW" X="20" Y="430" WIDTH="803" TRANSLATE="FALSE"/>
+
+      <!-- currently playing song -->
+      <data ID="playingAlbumArt" TYPE="asset" PARAM="@playingAlbumArt" PATH="eatrax" WIDTH="80" HEIGHT="80" X="20" Y="530" VISIBLE="@playerVisible" />
+      
+      <data ID="currentlyPlayingLabel" TYPE="text" PARAM="CurrentlyPlaying" FORMAT="FONT_SMALL" HEIGHT="20" WIDTH="600" VISIBLE="@playerVisible">
+        <align TARGET="playingAlbumArt" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="10" />
+        <align TARGET="playingAlbumArt" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="0" />
+      </data>
+      
+      <data ID="playingArtist" TYPE="text" PARAM="@playingArtistName" FORMAT="FONT_BOLD_TITLE" HEIGHT="20" TRANSLATE="FALSE" VISIBLE="@playerVisible">
+        <align TARGET="playingAlbumArt" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="10" />
+        <align TARGET="playingAlbumArt" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="24" />
+      </data>
+      
+      <data ID="playingSongName" TYPE="text" PARAM="@#Pattern(@playingSongName, - *)" FORMAT="FONT_REGULAR_TITLE" HEIGHT="30" TRANSLATE="FALSE" VISIBLE="@playerVisible">
+        <align TARGET="playingArtist" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="0" />
+        <align TARGET="playingArtist" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="0" />
+      </data>
+    
+      <data ID="sliderValue" TYPE="text" PARAM="@playingSongTimeDisplay" FORMAT="FONT_SMALL||right||||middle" WIDTH="50" HEIGHT="20" TRANSLATE="FALSE" VISIBLE="@playerVisible">
+        <align TARGET="playingAlbumArt" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="10" />
+        <align TARGET="playingAlbumArt" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-2" />
+      </data>
+      <data ID="slider" TYPE="component" PATH="game/components/FluxComponents/FluxSlider.swf" PARAM="@#Pattern(@playingSongProgress,1|1000|*|0|1)" FORMAT="|COLOR_SLIDER_PRIMARY||COLOR_SLIDER_PRIMARY" WIDTH="646" HEIGHT="14" VISIBLE="@playerVisible">
+        <align TARGET="sliderValue" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="10" />
+        <align TARGET="sliderValue" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-4" />
+      </data>
+      
+   </tile>
+    
+   </panel>
+  </root>

@@ -1,0 +1,50 @@
+{
+	"name":"bplUpdatPatchFlow"
+	,"onEnter":
+	[
+		["loadViewModel",["BplUpdateViewModel"]]
+	]
+  ,"onExit":
+	[
+		["unloadViewModel",["BplUpdateViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"checkBplUpdateSplashScreen"
+			,"onEnter":
+			[
+				["sendAction", ["condition", "bplUpdateFirstTimeSplash"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"true"
+					,"targets":["back"]
+				}
+				,{
+					"event":"false"
+					,"targets":["showBplUpdateFirstTimeSplash"]
+				}
+			]
+		}
+		,{
+			"name":"showBplUpdateFirstTimeSplash"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/bootflow/BplUpdate"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/bootflow/BplUpdate"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"success"
+					,"targets":["success"]
+				}
+			]
+		}
+	]
+}

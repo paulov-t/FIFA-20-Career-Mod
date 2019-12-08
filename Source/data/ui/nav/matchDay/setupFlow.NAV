@@ -1,0 +1,964 @@
+{
+	"name":"setupFlow"
+	, "initial":
+	{
+		"targets":["waitForFreeRoamState"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel",["MatchdaySetupViewModel"]]
+		,["loadViewModel",["KitSelectViewModel"]]
+		,["sendAction",["evt_hub_update_event", ".NavFIFAHubBackgroundType.MODE_HUB_BACKGROUND"]]
+		,["sendAction", ["evt_hub_show_event"]]
+	]
+	,"onExit":
+	[
+		["sendAction",["updateLocGender", "resetGender"]]
+		,["unloadViewModel", ["MatchdaySetupViewModel"]]
+		,["unloadViewModel",["KitSelectViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"waitForFreeRoamState"
+			,"onEnter":
+			[
+				["sendAction",["wait", "checkFreeRoamReady"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"freeRoamReady"
+					,"cond":["==", ".FIFA_PRESS", true]
+					,"targets":["sideSelect"]
+				}
+				,{
+					"event":"freeRoamReady"
+					,"targets":["installModeCondition"]
+				}
+			]				
+		}
+		,{
+			"name":"waitForFreeRoamStateTeamSelect"
+			,"onEnter":
+			[
+				["sendAction",["wait", "checkFreeRoamReady"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"freeRoamReady"
+					,"targets":["teamSelect"]
+					, "actions":[["sendAction", ["notify", "enterTeamSelect"]]]
+				}
+			]
+		}
+		,{
+			"name": "waitForTeamSideSwitch"
+			,"onEnter":
+			[
+				["sendAction",["wait", "switchTeamSides"]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+			]
+			,"transitions":
+			[
+				{	"event":"kickOffDataLoadSuccess", "targets":["nextFixtureTeamSelectCondition"]	}
+				,{	"event":"kickOffDataLoadFail", "targets":["kickOffSideSelect"]	}
+			]
+		}
+		,{
+			"name":"nextFixtureTeamSelectCondition"
+			,"onEnter":
+			[
+				["sendAction", ["condition","nextFixtureSelectTeams"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","targets":["waitForFreeRoamStateTeamSelect"]}
+				,{"event":"false","targets":["waitForFreeRoamStateNextFixture"]}
+			]
+		}
+		,{
+			"name":"waitForFreeRoamStateNextFixture"
+			,"onEnter":
+			[
+				["sendAction", ["setupNextFixture"]]
+				,["sendAction",["wait", "checkFreeRoamReady"]]
+			]
+			,"transitions":
+			[
+				{	"event":"freeRoamReady", "targets":["kitConfig"]	}
+			]
+		}
+		,{
+			"name":"waitForFreeRoamStateMatchTypeSelect"
+			,"onEnter":
+			[
+				["sendAction",["wait", "checkFreeRoamReady"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"freeRoamReady"
+					,"targets":["hasSideSwapOccurredCondition"]
+				}
+			]
+		}
+		,{
+			"name":"installModeCondition"
+			,"onEnter":
+			[
+				["sendAction", ["condition","installMode"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"install_mode_true"
+					,"targets":["sideSelect"]
+				}
+				,{
+					"event":"install_mode_false"
+					,"targets":["kickOffAccountUpsell"]
+				}
+			]
+		}
+		,{
+			"name":"kickOffAccountUpsell"
+			,"states":
+			[
+				{
+					"name":"kickOffAccountUpsellCondition"
+					,"onEnter":
+					[
+						["sendAction", ["condition","showAccountUpsell"]]
+					]
+					,"transitions":
+					[
+						{ "event":"false", "targets":["kickOffLoginFlow"]	}
+						,{ "event":"true", "targets":["kickOffAccountUpsellScreen"]	}
+					]
+					
+				}
+				,{
+					"name":"kickOffAccountUpsellScreen"
+					,"onEnter":
+					[
+						["loadViewModel",["KickOffUpsellViewModel"]]
+						,["loadViewModel",["FluxViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+						,["unloadViewModel", ["KickOffUpsellViewModel"]]
+						,["unloadView", ["background"]]
+					]
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["kickOffLoginFlow"] }
+					]
+				}
+			]
+		}
+		,{
+			"name":"kickOffLoginFlow"
+			,"onEnter":
+			[
+				["loadViewModel",["UserValidationViewModel", "chat=false,ugc=false"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["UserValidationViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"skipBootFlowCheck"
+					,"onEnter":
+					[
+						["if", [["==", ".skipBootflow", "true"]
+						,[
+							["invoke", ["skippedBootFlow"]]
+						]
+						,[
+							["invoke", ["noSkipBootFlow"]]
+						]]]							
+					]
+					,"transitions":
+					[
+						{"event":"skippedBootFlow","targets":["sideSelect"]}
+						,{"event":"noSkipBootFlow","cond":["==",".DEMO_KIOSK",true],"targets":["sideSelect"]}
+						,{"event":"noSkipBootFlow","targets":["checkLeadController"]}
+					]								
+				}
+				,{
+					"name":"checkLeadController"
+					,"onEnter":
+					[
+						["sendAction", ["condition","leadControllerValid"]]
+					]
+					,"transitions":
+					[
+						{"event":"true","targets":["kickOffLogin"]}
+						,{"event":"false","targets":["sideSelect"] }
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/online/onlineLoginFlow.nav"
+					,"inputs":
+					{
+						"kickOffLogin":"startLoginWithoutMultiplayerCheck"
+					}
+					,"outputs":
+					{
+						"loginSuccess":"sideSelect"
+						,"loginFail":"sideSelect"
+					}
+				}
+			]
+		}		
+		,{
+			"name":"sideSelect"
+			,"states":
+			[
+				{
+					"name":"sideSelectFeatureGate"
+					,"onEnter":
+					[
+						["sendAction", ["featureAccessible",".FeatureGates.KICKOFF_ADVANCED_FLOW"]]
+					]
+					,"transitions":
+					[
+						{"event":"true","cond":["==", ".KICKOFF2_ENABLED", false],"targets":["sideSelectplayNow"]}
+						,{"event":"true","targets":["kickOffSideSelect"]}
+						,{"event":"false","targets":["sideSelectplayNow"]}
+					]
+				}
+				,{
+					"name":"sideSelectplayNow"
+					,"onEnter":
+					[
+						["if", [["==", ".defaultLiveFixture", true]
+						,[
+							["sendAction", ["evt_set_matchDay_offline_fixture", "true" ]]
+						]
+						,[ 
+						]]]
+						,["loadViewModel",["SideSelectViewModel", ".direction"]]
+						,["loadView",["screen", "game/screens/playNow/SideSelect", "", ".direction"]]
+						,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/playNow/SideSelect"]]
+						,["unloadViewModel",["SideSelectViewModel"]]
+					]
+					,"transitions":
+					[
+						{	"event":"advance", "cond":["==", ".isChallenge", true], "targets":["quickSettingsChallenge"] }
+						,{	"event":"advance", "cond":["==", ".isNextMatch", true], "targets":["kitConfig"]	}
+						,{	"event":"advance", "targets":["matchTypeSelect"]	}
+						,{	"event":"back", "targets":["back"], "let":{ "direction":"back" }	}
+						,{	"event":"btnY", "targets":["controllerSetup"]	}
+					]				
+				}
+				,{
+					"name":"kickOffSideSelect"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["UxSetFlowSubState",".eSubState.CENTRAL"]]
+						,["loadViewModel",["KickOffSideSelectViewModel", ".direction"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["KickOffSideSelectViewModel", ".direction"]]
+					]
+					,"transitions":
+					[
+						{	"event":"advance", "targets":["matchTypeSelect"]	}
+						,{	"event":"back", "targets":["back"], "let":{ "direction":"back" }	}
+					]
+					,"states":
+					[
+						{
+							"name": "kickOffSideSelectLoad"
+							,"onEnter":
+							[
+								["sendAction",["wait", "reloadLeadUserFriendGroups"]]
+							]
+							,"transitions":
+							[
+								{	"event":"kickOffDataLoadSuccess", "targets":["kickOffSideSelectScreen"]	}
+								,{	"event":"kickOffDataLoadFail", "targets":["kickOffSideSelectScreen"]	}
+							]
+						}
+						,{
+							"name": "reloadedKickOffSideSelect"
+							,"onEnter":
+							[
+								["sendAction",["wait", "kickOffSideSelectCleanupStart"]]
+							]
+							,"transitions":
+							[
+								{	"event":"kickOffSideSelectCleanupCompleted", "targets":["kickOffSideSelectLoad"]	}
+							]
+						}
+						,{
+							"name": "kickOffSideSelectScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/playNow/KickOffSideSelect", "", ".direction"]]
+								,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/playNow/KickOffSideSelect"]]
+							]
+							,"transitions":
+							[
+								{	"event":"startSwitchLeadFlow", "targets":["startSwitchLeadFlow"]	}
+								,{	"event":"btnY", "targets":["controllerSetupKickOffNetworkLoad"]	}
+								,{	"event":"enterKickoffTutorial", "targets":["kickoffTutorialScreen"]	}
+							]
+						}
+						,{
+							"name":"controllerSetupKickOffNetworkLoad"
+							,"onEnter":
+							[
+								["loadView", ["popup","KickOffLoadPopup", "loading"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "KickOffLoadPopup"]]
+							]
+							,"transitions":
+							[
+								{ "event":"success", "targets":["controllerSetupKickOff"] }
+								,{ "event":"fail", "targets":["controllerSetupKickOff"] }
+							]
+						}
+						,{
+							"name":"controllerSetupKickOff"
+							,"onEnter":
+							[
+								["loadViewModel",["KickOffControllerSettingViewmodel", "UseSideSelectNetSettings"]]
+								,["loadView",["screen", "game/screens/settings/controllerAndGameSetup", "", ".direction"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/settings/controllerAndGameSetup"]]
+								,["unloadViewModel",["KickOffControllerSettingViewmodel", ".direction"]]
+							]
+							,"states":
+							[
+								{
+									"name":"controllerSetupKickOffIdle"
+									,"transitions":
+									[
+										{ "event":"back", "targets":["controllerSetupKickOffNetworkSave"] }
+									]
+								}
+								,{
+									"name":"controllerSetupKickOffNetworkSave"
+									,"onEnter":
+									[
+										["loadView", ["popup","KickOffLoadPopup", "loading"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "KickOffLoadPopup"]]
+									]
+									,"transitions":
+									[
+										{ "event":"success","targets":["kickOffSideSelectScreen"], "let":{ "direction":"back" }  }
+										,{ "event":"fail","targets":["kickOffSideSelectScreen"], "let":{ "direction":"back" }  }
+									]
+								}
+							]
+						}
+						,{
+							"name":"kickoffTutorialScreen"
+							,"onEnter":
+							[
+								["loadViewModel", ["KickOffTutorialViewModel", "optional"]]
+								,["loadViewModel",["FluxViewModel"]]
+								,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["unloadViewModel",["FluxViewModel"]]
+								,["unloadViewModel", ["KickOffTutorialViewModel"]]
+								,["unloadView", ["background"]]
+							]
+							,"transitions":
+							[
+								{
+									"event": "back"
+									,"targets":["kickOffSideSelectScreen"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"switchLeadFlow"
+					,"type":"external"
+					,"file":"/online/standardPreCheckFlow.nav"
+					,"inputs":
+					{
+						"startSwitchLeadFlow":"preCheckProfileCheckNoMultiplay"
+					}
+					,"outputs":
+					{
+						"preCheckSuccess":"reloadedKickOffSideSelect"
+						,"preCheckFail":"kickOffSideSelect"
+					}
+				}				
+			]
+		}
+		,{
+			"name":"controllerSetup"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/settings/controllerAndGameSetup", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/settings/controllerAndGameSetup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["sideSelect"]
+					,"let":{ "direction":"back" }
+				}
+			]
+		}
+		,{
+			"states":
+			[
+				{
+					"name":"matchTypeSelect"
+					,"onEnter":
+					[
+						["loadViewModel",["MatchTypeSelectViewModel", ".direction"]]
+						,["loadViewModel",["FluxViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+						,["sendAction",["evt_hub_update_event", ".NavFIFAHubBackgroundType.MODE_HUB_BACKGROUND"]]
+						,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.CENTRAL"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+						,["unloadViewModel", ["MatchTypeSelectViewModel"]]
+						,["unloadView", ["background"]]
+					]
+					,"transitions":
+					[
+						{"event":"advance", "targets":["needSideSwapCondition"], "actions":[["sendScreenEvent", ["UxSetFlowSubState",".eSubState.PREGAME"]]]}
+						,{"event":"back", "targets":["sideSelect"], "let":{ "direction":"back" }}
+                        ,{"event":"open_ko_leaderboard", "targets":["KickOffLeaderboard"] }
+					]
+					,"states":
+					[	
+						{
+							"name":"matchTypeSelectIdle"
+							,"transitions":
+							[
+								{"event":"openFirstToXOverlay", "targets":["firstToXOverlay"]	}
+							]
+						}
+						,{
+							"name":"firstToXOverlay"
+							,"onEnter":
+							[
+								["loadView", ["overlay", "game/screens/playNow/firstToXOverlay"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["overlay", "game/screens/playNow/firstToXOverlay"]]
+							]
+							,"transitions":
+							[
+								{"event":"back", "targets":["matchTypeSelectIdle"],"let":{ "direction":"back" }}
+							]
+						}
+					]
+				}
+				,{
+					"name":"needSideSwapCondition"
+					,"onEnter":
+					[
+						["sendAction", ["condition","needSideSwap"]]
+					]
+					,"transitions":
+					[
+						{"event":"true","targets":["rivalGroupPrematchSideSwitch"]}
+						,{"event":"false","targets":["showTeamSelectCondition"], "actions":[["sendAction", ["notify", "enterTeamSelect"]]] }
+					]
+				}
+                ,{
+                    "name":"KickOffLeaderboard"
+                    ,"onEnter":
+                    [
+                        ["loadViewModel",["KickOffLeaderboardViewmodel"]]
+                        ,["loadView",["screen", "game/screens/playNow/KickOffLeaderboard", "", ".direction"]]
+                    ]
+                    ,"onExit":
+                    [
+                        ["unloadView",["screen", "game/screens/playNow/KickOffLeaderboard"]]
+                        ,["unloadViewModel",["KickOffLeaderboardViewmodel"]]
+                        ,["unloadView", ["background"]]
+                    ]
+                    ,"transitions":
+                    [
+                        {"event":"back", "targets":["matchTypeSelectIdle"], "let":{ "direction":"back" }}
+                    ]
+                }
+				,{
+					"name": "rivalGroupPrematchSideSwitch"
+					,"onEnter":
+					[
+						["invoke", ["evt_controller_disconnect_flow_not_ready"]]
+						,["sendAction",["wait", "switchTeamSides"]]
+						,["sendScreenEvent", ["ShowBusyIndicator",""]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideBusyIndicator",""]]
+						,["invoke",["evt_controller_disconnect_flow_ready"]]
+					]
+					,"transitions":
+					[
+						{	"event":"kickOffDataLoadSuccess", "targets":["showTeamSelectCondition"], "actions":[["sendAction", ["notify", "enterTeamSelect"]]] }
+						,{	"event":"kickOffDataLoadFail", "targets":["kickOffSideSelect"]	}
+					]
+				}
+				,{
+					"name":"hasSideSwapOccurredCondition"
+					,"onEnter":
+					[
+						["sendAction", ["condition","hasSideSwapOccurred"]]
+					]
+					,"transitions":
+					[
+						{"event":"true","targets":["rivalGroupUndoSideSwitch"]}
+						,{"event":"false","targets":["matchTypeSelect"], "let":{ "direction":"back" } }
+					]
+				}
+				,{
+					"name": "rivalGroupUndoSideSwitch"
+					,"onEnter":
+					[
+						["invoke", ["evt_controller_disconnect_flow_not_ready"]]
+						,["sendAction",["wait", "switchTeamSides"]]
+						,["sendScreenEvent", ["ShowBusyIndicator",""]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideBusyIndicator",""]]
+						,["invoke",["evt_controller_disconnect_flow_ready"]]
+					]
+					,"transitions":
+					[
+						{	"event":"kickOffDataLoadSuccess", "targets":["matchTypeSelect"], "let":{ "direction":"back" } }
+						,{	"event":"kickOffDataLoadFail", "targets":["kickOffSideSelect"]	}
+					]
+				}
+				,{
+					"name":"showTeamSelectCondition"
+					,"onEnter":
+					[
+						["sendAction", ["condition","showTeamSelect"]]
+					]
+					,"transitions":
+					[
+						{"event":"true","targets":["teamSelect"]}
+						,{"event":"false","targets":["kitConfig"] ,"actions":[["sendAction",["notify", "skipTeamSelect"]]]}
+					]
+				}
+				,{
+					"name":"teamSelect"
+					,"onEnter":
+					[
+						["loadView",["screen", "game/screens/playNow/KickOffSelectTeam", "", ".direction"]]
+						,["loadViewModel",["TeamSetupViewModel"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/playNow/KickOffSelectTeam"]]
+						,["unloadViewModel",["TeamSetupViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"teamConfig"
+							,"onEnter":
+							[
+								["sendAction", ["evt_team_setup_state", ".NavTeamSetupState.STATE_TEAM"]]
+								,["sendAction",["evt_hub_update_event", ".NavFIFAHubBackgroundType.MODE_HUB_BACKGROUND"]]
+							]
+							, "initial":
+							{
+								"targets":["teamSelectDbVerificationFlow"]
+							}
+							,"states":
+							[
+								{
+									"name":"teamSelectDbVerificationFlow"
+									,"type":"external"
+									,"file":"/dbVerificationFlow.nav"
+									,"outputs":
+									{
+										"out_success":"teamSelectIdle"
+										,"out_fail":"quit"
+									}
+								}
+								,{
+									"transitions":
+									[
+										{	"event":"startLiveFixtureLogin", "targets":["teamSelectLogin"]	}
+										,{	"event":"openAdvantageSettings", "targets":["advantagesSettings"]	}
+									]
+									,"states":
+									[
+										{
+											"name":"teamSelectIdle"
+										}
+										,{
+											"name":"teamSelectLoginSuccess"
+											,"onEnter":
+											[
+												["sendScreenEvent",["DoLoginSuccessFlow"]]
+											]
+										}
+										,{
+											"name":"teamSelectLoginFail"
+											,"onEnter":
+											[
+												["sendScreenEvent",["DoLoginFailureFlow"]]
+											]
+										}
+										,{
+											"name":"advantagesSettings"
+											,"onEnter":
+											[
+												["loadView", ["overlay", "game/screens/playNow/AdvantageOverlay"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["overlay", "game/screens/playNow/AdvantageOverlay"]]
+											]
+											,"transitions":
+											[
+												{"event":"back", "targets":["teamSelectIdle"],"let":{ "direction":"back" },"actions":[["sendAction",["notify", "advantageSettingsClosed"]]]}
+											]
+										}
+									]
+								}
+								,{
+									"type":"external"
+									,"file":"/online/onlineLoginFlow.nav"
+									,"inputs":
+									{
+										"teamSelectLogin":"startLoginWithoutMultiplayerCheck"
+									}
+									,"outputs":
+									{
+										"loginSuccess":"teamSelectLoginSuccess"
+										,"loginFail":"teamSelectLoginFail"
+									}
+								}
+							]
+							,"transitions":
+							[
+								{	"event":"advance", "targets":["kitConfig"] }
+								,{	"event":"back", "targets":["hasSideSwapOccurredCondition"] }
+							]
+						}
+						,{
+							"name":"SSFStadiumSelectBackCondition"
+							,"onEnter":
+							[
+								["sendAction",["condition", "isSSFFlow"]]
+							]
+							,"onExit":[]
+							,"transitions":
+							[
+								{	"event":"isSSFFlow", "targets":["StadiumSelect"] }
+								,{	"event":"isNormalFlow", "targets":["kitConfig"] }
+							]
+						}
+						,{
+							"name":"kitConfig"
+							,"onEnter":
+							[
+								["sendAction", ["evt_team_setup_state", ".NavTeamSetupState.STATE_KIT"]]
+								,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MATCH_FLOW_PLAYERS_BACKGROUND"]]
+							]
+							,"transitions":
+							[
+								{	"event":"advance",	"targets":["WaitForKits"]	}
+								,{	"event":"back", "cond":["==", ".isNextMatch", true], "targets":["sideSelect"], "let":{ "direction":"back" }	}	
+								,{	"event":"back", "targets":["backoutWaitForKitsLoad"]}
+								,{	"event":"quit", "targets":["backMainMenu"], "let":{ "direction":"back" }	}
+							]
+						}
+						,{
+							"name":"WaitForKits"
+							,"onEnter":
+							[
+								["sendAction",["condition", "WaitForKitsLoad"]]
+							]
+							,"onExit":[]
+							,"transitions":
+							[
+								{	"event":"KitsLoadComplete", "targets":["SSFStadiumSelectCondition"] ,"actions":[["sendAction",["updateLocGender", "checkGender"]]] }
+							]
+						}
+						,{
+							"name":"SSFStadiumSelectCondition"
+							,"onEnter":
+							[
+								["sendAction",["condition", "isSSFFlow"]]
+							]
+							,"onExit":[]
+							,"transitions":
+							[
+								{	"event":"isSSFFlow", "targets":["StadiumSelect"] }
+								,{	"event":"isNormalFlow", "targets":["quickSettings"] }
+							]
+						}
+						,{
+							"name":"backoutWaitForKitsLoad"
+							,"onEnter":
+							[
+								["sendAction", ["condition","WaitForKitsLoad"]]
+							]
+							,"transitions":
+							[
+								{	"event":"KitsLoadComplete", "targets":["showTeamSelectBackCondition"] }
+							]
+						}
+						,{
+							"name":"showTeamSelectBackCondition"
+							,"onEnter":
+							[
+								["sendAction", ["condition","showTeamSelect"]]
+							]
+							,"transitions":
+							[
+								{"event":"true","targets":["teamConfig"], "let":{ "direction":"back" }	}
+								,{"event":"false","targets":["hasSideSwapOccurredCondition"] }
+							]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{ "event":"evt_notify_controller_disconnect", "targets":["sideSelect"] }
+			]
+		}
+		,{
+			"name":"StadiumSelect"
+			,"onEnter":
+			[
+				["loadViewModel",["FluxViewModel"]]
+				,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MATCH_FLOW_PLAYERS_BACKGROUND"]]
+				,["loadViewModel",["StadiumSelectViewModel"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub", ""]]
+			]
+			,"onExit":
+			[
+			[
+				"unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["StadiumSelectViewModel"]]
+				,["unloadViewModel",["FluxViewModel"]]
+			]
+			,"transitions":
+			[
+				{"event":"quickSettings", "targets":["quickSettings"]}
+				,{"event":"back", "targets":["kitConfig"]}
+			]	
+		}
+        ,{
+			"name":"quickSettings"
+			,"onEnter":
+			[
+				["sendAction", ["featureAccessible",".FeatureGates.KICKOFF_ADVANCED_FLOW"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","cond":["==", ".KICKOFF2_ENABLED", false],"targets":["kickOffHubSettings"]}
+				,{"event":"true","targets":["kickOffPreMatchSettings"]}
+				,{"event":"false","targets":["kickOffHubSettings"]}
+			]	
+		}
+		,{
+			"name":"quickSettingsChallenge"
+			,"onEnter":
+			[
+				["sendAction", ["featureAccessible",".FeatureGates.KICKOFF_ADVANCED_FLOW"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","cond":["==", ".KICKOFF2_ENABLED", false],"targets":["quickKickOffHubSettingsChallenge"]}
+				,{"event":"true","targets":["quickKickOffPreMatchSettingsChallenge"]}
+				,{"event":"false","targets":["quickKickOffHubSettingsChallenge"]}
+			]	
+		}
+        ,{
+			"name":"kickOffHubSettings"
+			,"type":"external"
+			,"file":"/kickOffHubFlow.nav"
+			,"outputs":
+			{
+				"advance":"transitionToPMA"
+				,"back":"kitConfig"
+			}
+		}
+		,{
+			"name":"quickKickOffHubSettingsChallenge"
+			,"type":"external"
+			,"file":"/kickOffHubFlow.nav"
+			,"outputs":
+			{
+				"advance":"transitionToPMA"
+				,"back":"sideSelect"
+			}
+		}
+		,{
+			"name":"kickOffPreMatchSettings"
+			,"type":"external"
+			,"file":"/kickOffPreMatchFlow.nav"
+			,"outputs":
+			{
+				"advance":"transitionToPMA"
+				,"back":"SSFStadiumSelectBackCondition"
+				,"controller_disconnect":"kickOffSideSelect"
+				,"returnToSideSelect":"kickOffSideSelect"
+			}
+		}
+		,{
+			"name":"quickKickOffPreMatchSettingsChallenge"
+			,"type":"external"
+			,"file":"/kickOffPreMatchFlow.nav"
+			,"outputs":
+			{
+				"advance":"transitionToPMA"
+				,"back":"kickOffSideSelect"
+				,"controller_disconnect":"kickOffSideSelect"
+				,"returnToSideSelect":"kickOffSideSelect"
+			}
+		}
+		,{
+			"name":"transitionToPMA"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["UxSetFlowSubState",".eSubState.TRANSITION_TO_PMA"]]
+			]
+			,"transitions":
+            [
+                {
+                    "event":"evt_transitionToPMADone"
+                    ,"targets":["gamePlay"]
+                }
+            ]
+		}
+		,{	
+			"name":"gamePlay"
+			, "initial":
+			{
+				"targets":["InGameFlow"]
+			}
+			,"onEnter":
+			[
+				["sendScreenEvent", ["UxSetFlowSubState",".eSubState.LOADING"]]
+			]
+			,"states":
+			[
+				{
+					"name":"InGameFlow"
+					,"type":"external"
+					,"file":"/pauseMenuFlow.nav"
+					,"outputs":
+					{
+						"quit":"returnFromMatch"
+						,"continue":"quit"
+						,"profileSignOut":"profileSignOut"
+					}
+				}
+				,{
+					"name":"returnFromMatch"
+					,"onEnter":
+					[
+						["sendAction",["wait", "statSubmission"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"kickOffStatsSubmitted"
+							,"actions":[["sendAction",["quitToHub"]]]
+						},
+						{
+							"event":"OfflineGotoMainMenu"
+							,"targets":["quit"]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"restartWithNewTeams"
+					,"actions":[["sendAction", ["evt_hub_show_event"]]]
+					,"targets":["waitForFreeRoamStateTeamSelect"]
+				}
+				,{
+					"event":"playNextFixture"
+					,"actions":[["sendAction", ["evt_hub_show_event"]]]
+					,"targets":["waitForTeamSideSwitch"]
+				}
+				,{
+					"event":"startNewMatchType"
+					,"actions":[["sendAction", ["evt_hub_show_event"]]]
+					,"targets":["waitForFreeRoamStateMatchTypeSelect"]
+				}
+				,{
+					"event":"quitToHub"
+					,"cond":["==", ".FIFA_PRESS", true]
+					,"targets":["quit"]
+				}
+				,{
+					"event":"quitToHub"
+					,"cond":["==", ".FIFA_CLOSEDBETA", true]
+					,"targets":["quitToHub"]
+				}
+				,{
+					"event":"quitToHub"
+					,"cond":["==", ".FIFA_CFE", true]
+					,"targets":["quitToHub"]
+				}
+				,{
+					"event":"quitToHub"
+					,"cond":["==", ".FIFA_DEMO", true]
+					,"targets":["quit"]
+				}
+				,{
+					"event":"quitToHub"
+					,"targets":["checkOffboarding"]
+				}
+			]
+        }        
+    ]
+}

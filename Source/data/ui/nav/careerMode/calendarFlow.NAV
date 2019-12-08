@@ -1,0 +1,132 @@
+{
+	"name":"CalendarFlow"
+	,"initial": { "targets":["Calendar"] }
+	,"states":
+	[
+		{
+			"name":"Calendar"
+			,"onEnter":
+			[
+				["unloadView", ["background"]]
+				,["executeCMAction", ["ClearTheme"]]
+				,["loadScreenController", ["Calendar"]]
+				,["loadView", ["screen", "game/screens/career/Calendar"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/Calendar"]]
+				,["unloadScreenController", ["Calendar"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"] 
+					,"actions":[ ["executeCMAction",["ReturnToHubFromCalendar"]] ]
+				}
+				,{
+					"event":"EnterMessages"
+					,"targets":["Inbox"] 
+					,"actions":[ ["executeCMAction",["UserInterruptSim"]], ["executeCMAction",["EnterMessages"]] ]
+				}
+				,{
+					"event":"CalendarSim"
+					,"actions":[ ["executeCMAction",["StartCalendarSim"]] ]
+				}
+				,{
+					"event":"CalendarSimNoEvents"
+					,"actions":[ ["executeCMAction",["StartCalendarSimNoEvents"]] ]
+				}
+				,{
+					"event":"CalendarEosInterruptSim"
+					,"targets":["Back"] 
+				}
+				,{
+					"event":"CalendarKOInterruptSim"
+					,"targets":["Back"] 
+				}
+				,{
+					"event":"CalendarInterruptSim"
+					,"actions":[ ["executeCMAction",["UserInterruptSim"]] ]
+				}
+				,{
+					"event":"EnterInbox"
+					,"targets":["Inbox"]
+				}
+				,{
+					"event":"ToggleSimPlayerGame"
+					,"actions":[ ["executeCMAction",["ToggleUserSim"]] ]
+				}
+				,{
+					"event":"CalendarNextMonth"
+					,"actions":[ ["executeCMAction",["NextCalendarMonth"]] ]
+				}
+				,{
+					"event":"CalendarPrevMonth"
+					,"actions":[ ["executeCMAction",["PreviousCalendarMonth"]] ]
+				}
+				,{
+					"event":"EnterSackedEmail"
+					,"targets":["Inbox"] 
+					,"actions":[ ["executeCMAction",["GenerateSackedMail"]] ]
+				}
+				,{
+					"event":"ViewFixturesByDay"
+					,"targets":["FixturesByDay"] 
+					,"let":{ "SquadHubAction":"FocusFixture" }
+					,"actions":[ ["loadView",["background", "BACKGROUND", "hub"]] ]
+				}
+				,{
+					"event":"EnterPAPMatchObjectives"
+					,"targets":["PAPMatchObjectives"] 
+					,"actions":[ ["executeCMAction",["EnterPAPMatchObjectives"]] ]
+				}
+				,{ 
+					"event":"MoveToNewClub", 
+					"targets":["PapMoveToNewClub"] 
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/careerMode/messagingHubFlow.nav"
+			,"inputs":
+			{
+				"Inbox":"MessagingHub"
+			}
+			,"outputs": 
+			{ 
+				"Back":"Calendar"
+			}
+		}
+		,{
+			"name":"FixturesByDay"
+			,"type":"external"
+			,"file":"/careerMode/statsFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"Calendar"
+			}	
+		}
+		,{
+			"name":"PAPMatchObjectives"
+			,"onEnter":
+			[
+				["loadScreenController", ["PAPMatchObjectives"]]
+				,["loadView", ["screen", "game/screens/career/playasplayer/PAPMatchObjectives"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/playasplayer/PAPMatchObjectives"]]
+				,["unloadScreenController", ["PAPMatchObjectives"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"] 
+				}
+			]
+		}
+	]
+}

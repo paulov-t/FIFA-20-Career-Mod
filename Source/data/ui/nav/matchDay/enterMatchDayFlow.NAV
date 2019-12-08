@@ -1,0 +1,34 @@
+{
+	"name":"enterMatchDayFlow"
+	,"initial":
+	{
+		"targets":["loadCinematicSublevel"]
+	}
+	,"states":
+	[
+		{
+			"name":"loadCinematicSublevel"
+			,"onEnter": 
+			[
+				["if", [["==", ".KICKOFF_CINEMATICS_ENABLED", true]
+				,[
+					["sendAction", ["fbStartFlowEvent", "LoadPreMatchCinematicsSublevel"]]
+				]
+				,[	
+					["invoke", ["ExitFlow"]]
+				]]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"PreMatchCinematicsSublevelLoaded"
+					,"targets":["out"] 
+				}
+				,{
+					"event":"ExitFlow"
+					,"targets":["out"] 
+				}
+			]
+		}
+	]
+}

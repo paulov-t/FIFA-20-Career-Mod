@@ -1,0 +1,204 @@
+{
+	"name":"Scene"
+	,"initial":
+	{
+		"targets":["FeInSceneRoot"]
+	}
+	,"states":
+	[
+		{
+			"name":"FeInScene"
+			,"states":
+			[
+				{
+					"name":"FeInSceneRoot"
+					,"onEnter":
+					[
+						["loadViewModel",["SubtitlesViewModel"]]
+						,["loadView", ["widget", "game/widgets/SubtitleWidget", "SUBTITLES_DP"]]
+						,["loadViewModel",["ContentOnDeviceViewModel"]]
+						,["loadView", ["widget", "game/widgets/ContentOnDeviceWidget", "CONTENT_ON_DEVICE_DP"]]
+						,["loadViewModel",["SupportingTextViewModel"]]
+						,["loadView", ["widget", "game/widgets/SupportingText", "SUPPORTING_TEXT_DP"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["SubtitlesViewModel"]]
+						,["unloadView", ["widget", "game/widgets/SubtitleWidget"]]
+						,["unloadViewModel",["ContentOnDeviceViewModel"]]
+						,["unloadView", ["widget", "game/widgets/ContentOnDeviceWidget"]]
+						,["unloadViewModel",["SupportingTextViewModel"]]
+						,["unloadView", ["widget", "game/widgets/SupportingText"]]
+					]
+					,"states":
+					[
+						{
+							"name":"ScenePlaying"
+							,"onEnter": 
+							[
+								["sendAction", ["fbStartFlowEvent", "EnableScenePauseWidget"]]
+							]
+							,"onExit": 	
+							[
+								["sendAction", ["fbStartFlowEvent", "DisableScenePauseWidget"]]							
+							]
+							,"transitions":
+							[
+								{
+									"event":"OIGOpened"
+									,"actions": [
+													["sendAction",["fbStartFlowEvent", "ForcePauseCurrent"]]
+													,["sendAction",["fbStartFlowEvent", "BlockPausing"]]
+													,["sendAction",["fbStartFlowEvent", "BlockSkipping"]]
+												]
+								}
+								,{
+									"event":"OIGClosed"
+									,"actions": [
+													["sendAction",["fbStartFlowEvent", "ResumeForcedPause"]]
+													,["sendAction",["fbStartFlowEvent", "AllowPausing"]]
+													,["sendAction",["fbStartFlowEvent", "AllowSkipping"]]
+												]
+								}
+								,{
+									/* Comes from schematics */
+									"event":"ShowTeamSelect"
+									,"targets":["TeamSelectFlow"]
+								}								
+								,{
+									/* Comes from schematics */									
+									"event":"ShowTeamInfo"
+									,"let":{"WorldTourTeamInfoFlowParam":"create"}
+									,"targets":["TeamInfoScreen"]
+								}
+								,{
+									/* Comes from schematics */
+									"event":"ShowPlayerRecruit"
+									,"targets":["PlayerRecruitScreen"]
+								}
+							]	
+						}
+						,{
+							"name":"TeamSelectFlow"
+							,"states":
+							[
+								{
+									"let":{"ConditionStateParam":"hasSelectedStoryOverrideComp"}
+									,"name":"CheckForPostMatchDestination"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/conditionState.nav"
+											,"outputs":
+											{
+												"out_true":"CompAlreadySelectedPopup"
+												,"out_false":"TeamSelectScreen"
+											}
+										}
+									]
+								}
+								,{
+									"name":"CompAlreadySelectedPopup"
+									,"onEnter":
+									[
+										["loadView", ["popup","COMP_ALREADY_SELECTED_POPUP", "SSF_TWIST_TEAM_SELECT_ALREADY_COMPLETED|Okay_abbr2|back"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "COMP_ALREADY_SELECTED_POPUP"]]
+										,["sendAction",["fbStartFlowEvent", "TeamSelectAdvance"]]
+									]
+									,"transitions":
+									[
+										{ "event":"back", "targets":["ScenePlaying"] }	
+									]
+								}
+								,{
+									"let":{"FluxScreenStateViewModelName":"WorldTourTeamSelectViewModel", "FluxScreenStateViewModelParam":""}
+									,"name":"TeamSelectScreen"
+									,"onExit":
+									[
+										["sendAction",["fbStartFlowEvent", "TeamSelectAdvance"]]
+									]
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/fluxScreenState.nav"
+											,"outputs":
+											{
+												"out_advance":"ScenePlaying"
+												,"out_back":"ScenePlaying"
+											}
+										}
+									]
+								}
+							]
+						}
+						,{
+							"name":"TeamInfoScreen"
+							,"onExit":
+							[
+								["sendAction",["fbStartFlowEvent", "TeamInfoAdvance"]]
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldTour/teamInfoFlow.nav"
+									,"outputs":
+									{
+										"out_advance":"ScenePlaying"
+										,"out_back":"ScenePlaying"
+									}
+								}
+							]
+						}
+						,{
+							"name":"PlayerRecruitScreen"
+							,"onExit":
+							[
+								["sendAction", ["notify", "fadeIn"]]
+								,["sendAction",["fbStartFlowEvent", "PlayerRecruitAdvance"]]
+							]
+							,"states":
+							[
+								{
+									"let":{"OnboardingInfoStateViewModelParam":"onboardPlayerRecruit"}
+									,"name":"PlayerRecruitOnboarding"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/worldTour/onboardingFlow.nav"
+											,"outputs":
+											{
+												"out_bypass":"PlayerRecruitFlow"
+												,"out_trigger":"PlayerRecruitFlow"
+											}
+										}
+									]
+								}
+								,{
+									"type":"external"
+									,"file":"/worldtour/worldTourPlayerRecruitFlow.nav"
+									,"inputs":
+									{
+										"PlayerRecruitFlow":"PlayerRecruitInSceneFlow"
+									}
+									,"outputs":
+									{
+										"out_back":"ScenePlaying"
+										,"out_success":"ScenePlaying"
+										,"out_fail":"ScenePlaying"
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

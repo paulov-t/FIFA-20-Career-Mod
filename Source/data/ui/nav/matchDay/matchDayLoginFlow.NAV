@@ -1,0 +1,37 @@
+{
+	"name":"matchDayLoginFlow"
+	,"onEnter":
+	[
+		["sendScreenEvent", ["MatchDayFlow",""]]
+	]
+	,"transitions":
+	[
+		{
+			"event":"advance"
+			,"targets":["out_MatchDayLoginFlowAdvance"]
+		}
+	]
+	,"states":
+	[
+		{
+			"type":"external"
+			,"file":"/online/onlineLoginFlow.nav"
+			,"inputs":
+			{
+				"in_StartMatchDayFlowLogin":"startLoginWithoutMultiplayerCheck"
+			}
+			,"outputs":
+			{
+				"loginSuccess":"out_MatchDayLoginFlowAdvance"
+				,"loginFail":"MatchDayLoginFlowFail"
+			}
+		}
+		,{
+			"name":"MatchDayLoginFlowFail"
+			,"onEnter":
+			[
+				["sendScreenEvent",["MatchDayLoginFailure"]]
+			]
+		}
+	]
+}

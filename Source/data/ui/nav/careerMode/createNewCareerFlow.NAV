@@ -1,0 +1,266 @@
+{
+	"name":"CreateNewCareerFlow"
+	,"initial": { "targets":["SquadDownloadCheckConn"] }
+	,"onEnter":
+	[
+		["loadViewModel",["CareerCreationViewModel"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel",["CareerCreationViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"SquadDownloadCheckConn"
+			,"states":
+			[
+				{
+					"onEnter":
+					[
+						["sendAction",["condition", "showDbSquadsSelect"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"true"
+							,"targets":["SquadDownloadShowScreen"]
+						}
+						,{
+							"event":"false"
+							,"targets":["SelectCareerType"]
+						}
+					]
+				}
+				,{
+					"name":"SquadDownloadShowScreen"
+					,"onEnter":
+					[
+						["loadViewModel", ["DbSquadSelectViewModel", ""]]
+						,["loadViewModel", ["FluxViewModel"]]
+						,["loadView", ["screen", "game/screens/fluxHub/FluxHub"]]		
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+						,["unloadViewModel", ["DbSquadSelectViewModel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"actions":[ ["invoke",["QuitMode"]] ]
+						}
+						,{
+							"event":"Advance"
+							,"targets":["SelectCareerType"] 
+						}
+						,{
+							"event":"AdvanceDLSquad"
+							,"targets":["SquadDownload"]
+						}
+						,{
+							"event":"AdvanceResetSquad"
+							,"actions":[ ["executeCMAction",["ResetDbSquads"]] ]
+							,"targets":["SelectCareerType"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"SquadDownload"
+			,"onEnter": 
+			[
+				["sendAction",["evt_sign_out_flow_not_ready"]]
+				,["loadScreenController", ["SquadDownload"]] 
+				,["loadView",["screen", "game/screens/liveDB/livedb_downloadLiveDB"]]
+			]
+			,"onExit": 
+			[	
+				["unloadView", ["screen", "game/screens/liveDB/livedb_downloadLiveDB"]]
+				,["unloadScreenController", ["SquadDownload"]]
+				,["sendAction",["evt_sign_out_flow_ready"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["SelectCareerType"] 
+				}
+				,{
+					"event":"Cancel"
+					,"targets":["SelectCareerType"] 
+				}
+			]
+		}
+		,{
+			"name":"SelectCareerType"
+			,"onEnter":
+			[
+				["loadScreenController", ["SelectCareerType"]]
+				,["loadViewModel",["CareerTypeViewModel"]]
+				,["loadViewModel",["FluxViewModel"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["FluxViewModel"]]
+				,["unloadViewModel",["CareerTypeViewModel"]]
+				,["unloadScreenController", ["SelectCareerType"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"actions":[ ["invoke",["QuitMode"]] ]
+				}
+				,{
+					"event":"AvatarPlayer"
+					,"targets":["CheckAvatarPlayerCareerBoosts"]
+					,"actions":[ ["executeCMAction",["LeaveSelectCareerTypeFromPlayer"]] ]
+				}
+				,{
+					"event":"AvatarManager"
+					,"targets":["CheckAvatarManagerCareerBoosts"]
+					,"actions":[ ["executeCMAction",["LeaveSelectCareerTypeFromManager"]] ]
+				}
+			]
+		}
+		,{
+			"let":{"ConditionStateParam":"hasBoosts"}
+			,"name":"CheckAvatarPlayerCareerBoosts"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/conditionState.nav"
+					,"outputs":
+					{
+						"out_true":"ChooseAvatarPlayerCareerBoosts"
+						,"out_false":"CreateNewAvatarPlayerCareer"
+					}
+				}
+			]
+		}
+		,{
+			"let":{"ConditionStateParam":"hasBoosts"}
+			,"name":"CheckAvatarPlayerCareerBoostsBack"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/conditionState.nav"
+					,"outputs":
+					{
+						"out_true":"ChooseAvatarPlayerCareerBoosts"
+						,"out_false":"SelectCareerType"
+					}
+				}
+			]
+		}
+		,{
+			"name":"ChooseAvatarPlayerCareerBoosts"
+			,"onEnter":
+			[
+				["loadScreenController", ["BoostOptions"]]
+				,["loadView", ["screen", "game/screens/career/UpgradeBoostOptions"]]
+				,["sendAction", ["setCareerType", "isPlayerCareer"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/UpgradeBoostOptions"]]
+				,["unloadScreenController", ["BoostOptions"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["CreateNewAvatarPlayerCareer"]
+				}
+				,{
+					"event":"back"
+					,"targets":["SelectCareerType"] 
+				}
+			]
+		}
+		,{
+			"name":"CreateNewAvatarPlayerCareer"
+			,"type":"external"
+			,"file":"/careerMode/createNewAvatarPlayerCareerFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"CheckAvatarPlayerCareerBoostsBack"
+				,"profileSignOut":"profileSignOut"
+			}	
+		}
+		,{
+			"let":{"ConditionStateParam":"hasBoosts"}
+			,"name":"CheckAvatarManagerCareerBoosts"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/conditionState.nav"
+					,"outputs":
+					{
+						"out_true":"ChooseAvatarManagerCareerBoosts"
+						,"out_false":"CreateNewAvatarManagerCareer"
+					}
+				}
+			]
+		}
+		,{
+			"let":{"ConditionStateParam":"hasBoosts"}
+			,"name":"CheckAvatarManagerCareerBoostsBack"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/conditionState.nav"
+					,"outputs":
+					{
+						"out_true":"ChooseAvatarManagerCareerBoosts"
+						,"out_false":"SelectCareerType"
+					}
+				}
+			]
+		}
+		,{
+			"name":"ChooseAvatarManagerCareerBoosts"
+			,"onEnter":
+			[
+				["loadScreenController", ["BoostOptions"]]
+				,["loadView", ["screen", "game/screens/career/UpgradeBoostOptions"]]
+				,["sendAction", ["setCareerType", "isManagerCareer"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/UpgradeBoostOptions"]]
+				,["unloadScreenController", ["BoostOptions"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["CreateNewAvatarManagerCareer"]
+				}
+				,{
+					"event":"back"
+					,"targets":["SelectCareerType"] 
+				}
+			]
+		}
+		,{
+			"name":"CreateNewAvatarManagerCareer"
+			,"type":"external"
+			,"file":"/careerMode/createNewAvatarManagerCareerFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"CheckAvatarManagerCareerBoostsBack"
+			}	
+		}
+	]
+}

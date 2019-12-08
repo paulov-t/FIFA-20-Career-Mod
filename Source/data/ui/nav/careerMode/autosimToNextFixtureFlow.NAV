@@ -1,0 +1,31 @@
+{
+	"name":"AutoSimToNextFixture"
+	,"onEnter":
+	[
+		["loadView", ["popup", "Popup_AutoSimToNextFixture", "TXT_AutoSimToNextFixture"]]
+		,["sendScreenEvent", ["ShowNetIndicator",""]]
+		,["executeCMAction",["SimToNextUserFixture"]]
+	]
+	,"onExit":
+	[
+		["sendScreenEvent", ["HideNetIndicator",""]]
+	]
+	,"transitions":
+	[
+		{
+			"event":"AutoSimComplete"
+			,"targets":["Back"] 
+			,"actions":
+			[ 
+				["unloadView", ["popup", "Popup_AutoSimToNextFixture"]]
+			]
+		}
+		,{
+			"event":"AutoSimRepeat"
+			,"actions":
+			[ 
+				["executeCMAction", ["SimToNextUserFixture"]]
+			]
+		}
+	]
+}

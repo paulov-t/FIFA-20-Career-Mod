@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="SkillGamesHub">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="sgt" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="SKILLGAMES_CATEGORY_PANEL" LABEL="SGT_TAB_SKILL_HUB" IS_TAB="FALSE" />
+    <buttons>
+      <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="back" />
+    </buttons>
+    <panel NAME="SKILLGAMES_DUMMY_PANEL" LABEL="SGT_TAB_SGT" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="SKILLGAMES_CATEGORY_PANEL">
+    <tile NAME="SKILLGAMES_SELECT_CATEGORY_1" TYPE="TILE" DESTINATION="selectCat">
+      <properties WIDTH="324" HEIGHT="616" X="113" Y="285" />
+	  <data ID="TITLE" TYPE="text" PARAM="SGT_MAIN_CAT_BASICS" FORMAT="HS|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|THS|THSU" Y="8" WIDTH="324" />
+      <data ID="DCIMAGE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/sgt/01Basics.dds" WIDTH="324" HEIGHT="616" X="0" Y="0" />
+      <data ID="PROGRESSCIRC" VISIBLE="TRUE" TYPE="component" PARAM="0" PATH="game/components/FluxComponents/ProgressCircle.swf" X="162" Y="500" WIDTH="120" HEIGHT="180" DATAPROVIDERID="SkillCatCompleteDP" />
+    </tile>
+    <tile NAME="SKILLGAMES_SELECT_CATEGORY_2" TYPE="TILE" DESTINATION="selectCat">
+      <properties WIDTH="324" HEIGHT="616" X="455" Y="285" />
+	  <data ID="TITLE" TYPE="text" PARAM="SGT_MAIN_CAT_PASSING" FORMAT="HS|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|THS|THSU" Y="8" WIDTH="324" />
+      <data ID="DCIMAGE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/sgt/02Passing.dds" WIDTH="324" HEIGHT="616" X="0" Y="0" />
+      <data ID="PROGRESSCIRC" VISIBLE="TRUE" TYPE="component" PARAM="1" PATH="game/components/FluxComponents/ProgressCircle.swf" X="162" Y="500" WIDTH="120" HEIGHT="180" DATAPROVIDERID="SkillCatCompleteDP" />
+    </tile>
+    <tile NAME="SKILLGAMES_SELECT_CATEGORY_3" TYPE="TILE" DESTINATION="selectCat">
+      <properties WIDTH="324" HEIGHT="616" X="797" Y="285" />
+	  <data ID="TITLE" TYPE="text" PARAM="SGT_MAIN_CAT_DRIBBLING" FORMAT="HS|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|THS|THSU" Y="8" WIDTH="324" />
+      <data ID="DCIMAGE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/sgt/03Dribbling.dds" WIDTH="324" HEIGHT="616" X="0" Y="0" />
+      <data ID="PROGRESSCIRC" VISIBLE="TRUE" TYPE="component" PARAM="2" PATH="game/components/FluxComponents/ProgressCircle.swf" X="162" Y="500" WIDTH="120" HEIGHT="180" DATAPROVIDERID="SkillCatCompleteDP" />
+     
+    </tile>
+    <tile NAME="SKILLGAMES_SELECT_CATEGORY_4" TYPE="TILE" DESTINATION="selectCat">
+      <properties WIDTH="324" HEIGHT="616" X="1139" Y="285" />
+	  <data ID="TITLE" TYPE="text" PARAM="SGT_MAIN_CAT_DEFENDING" FORMAT="HS|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|THS|THSU" Y="8" WIDTH="324" />
+      <data ID="DCIMAGE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/sgt/04Defending.dds" WIDTH="324" HEIGHT="616" X="0" Y="0" />
+      <data ID="PROGRESSCIRC" VISIBLE="TRUE" TYPE="component" PARAM="3" PATH="game/components/FluxComponents/ProgressCircle.swf" X="162" Y="500" WIDTH="120" HEIGHT="180" DATAPROVIDERID="SkillCatCompleteDP" />
+    </tile>
+    <tile NAME="SKILLGAMES_SELECT_CATEGORY_5" TYPE="TILE" DESTINATION="selectCat">
+      <properties WIDTH="324" HEIGHT="616" X="1481" Y="285" />
+	  <data ID="TITLE" TYPE="text" PARAM="SGT_MAIN_CAT_SHOOTING" FORMAT="HS|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|THS|THSU" Y="8" WIDTH="324" />
+      <data ID="DCIMAGE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tiles/sgt/05Shooting.dds" WIDTH="324" HEIGHT="616" X="0" Y="0" />
+      <data ID="PROGRESSCIRC" VISIBLE="TRUE" TYPE="component" PARAM="4" PATH="game/components/FluxComponents/ProgressCircle.swf" X="162" Y="500" WIDTH="120" HEIGHT="180" DATAPROVIDERID="SkillCatCompleteDP" />
+    </tile>
+  </panel>
+</root>

@@ -1,0 +1,28 @@
+{
+	"name":"ActionPopupFlow"
+	,"initial": { "targets":["ActionPopup"] }
+	,"states":
+	[
+		{
+			"name":"ActionPopup"
+			,"onEnter": 
+			[ 
+				["loadScreenController", ["YouthActionPopup"]] 
+				, ["loadView",["overlay", "game/screens/career/PlayerActions"]]
+			]
+			,"onExit": 
+			[			
+				["unloadView",["overlay", "game/screens/career/PlayerActions"]]
+				, ["unloadScreenController", ["YouthActionPopup"]]			
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["BackFromPopup"] 	
+					,"let":{ "direction":"exit" }		
+				}
+			]
+		}
+	]
+}

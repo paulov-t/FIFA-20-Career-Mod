@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryGameOver" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <buttons>
+    <button ID="BACK" HINT="Exit" ACTION="ACTION_BACKOUT" />
+  </buttons>
+  <panel_set>
+    <panel NAME="GAME_OVER" IS_TAB="FALSE">
+      <layout NAME="POPUP" X="640" Y="270">
+        <tile NAME="MESSAGE" X="0" Y="0" />
+        <tile NAME="RESTART_LIST" X="0" Y="210" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="GAME_OVER">
+    <tile NAME="MESSAGE" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE">
+      <properties WIDTH="640" HEIGHT="200" />
+      <data ID="title" TYPE="text" PARAM="SM_GAME_OVER_TITLE" FORMAT="FONT_BOLD_FHD|||COLOR_TEXT_LABEL">
+          <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="LEFT" />
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="18" />
+	  </data>
+      <data ID="description" TYPE="text" PARAM="SM_GAME_OVER_DESC" FORMAT="FONT_MEDIUM_DESCRIPTION|||COLOR_TEXT_LABEL" >
+          <align TARGET="title" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+          <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	  </data>
+    </tile>
+    <tile NAME="RESTART_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DATAPROVIDERID="GridControlDP" >
+      <properties WIDTH="640" HEIGHT="330" />
+      <data ID="description" TYPE="title" FORMAT="||||||middle" TRANSLATE="FALSE">
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+    </tile>
+  </panel>
+ </root>

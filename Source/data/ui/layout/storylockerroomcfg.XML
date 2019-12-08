@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryLockerRoom" HUB_VERSION="3">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <variable_set>
+	  <variable id="cupId" type="int"/>
+	  <variable id="showCupCrest" type="bool"/>
+	  <variable id="homeTeamId" type="int"/>
+	  <variable id="resultsHomeTeamId" type="int"/>
+	  <variable id="awayTeamId" type="int"/>
+	  <variable id="resultsAwayTeamId" type="int"/>
+	  <variable id="teamColors" type="int"/>
+	  <variable id="rectAlphas" type="int"/>
+	  <variable id="rowAlphas" type="int"/>
+	  <variable id="rowFormats" type="string"/>
+	  <variable id="teamNameFormats" type="string"/>
+	  <variable id="teamRanks" type="string"/>
+	  <variable id="teamIds" type="int"/>
+	  <variable id="teamNames" type="string"/>
+	  <variable id="gamesPlayed" type="int"/>
+	  <variable id="points" type="int"/>
+	  <variable id="titlePlayer" type="string"/>
+	  <variable id="titleMentor" type="string"/>
+	  <variable id="mentorStarVisible" type="bool"/>
+	  <variable id="partnerStarVisible" type="bool"/>
+    <variable id="competitionId" type="int"/>
+    <variable id="lastPlayedMatchScore" type="string"/>
+  </variable_set>
+  <components>
+    <component PATH="game/fluxHelpers/StoryHubLibrary.swf" X="0" Y="0" />
+  </components>
+  <panel_set>
+    <panel NAME="STORY_LOCKER_PRE_MATCH_PANEL" LABEL="SM_LOCKER_MATCH_TAB" IS_TAB="TRUE" >
+      <buttons>
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_BACKOUT" />
+      </buttons>
+      <layout NAME="STORY_LOCKER_PRE_MATCH" X="671" Y="167">
+        <tile NAME="STORY_LOCKER_PRE_MATCH_INFO" X="0" Y="0" />
+        <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_TEAM" X="0" Y="567" />
+        <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_PLAYER" X="391" Y="567" />
+        <tile NAME="STORY_LOCKER_PRE_MATCH_SELECT_MULTI" X="782" Y="567" />
+      </layout>
+      <layout NAME="STORY_LOCKER_PRE_MATCH_MENTOR" EXTEND="STORY_LOCKER_PRE_MATCH" X="671" Y="167">
+        <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_TEAM" X="0" Y="567" WIDTH="284" />
+        <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_PLAYER" X="294" Y="567" WIDTH="284" />
+        <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_MENTORGROUP" X="588" Y="567" WIDTH="284" />
+        <tile NAME="STORY_LOCKER_PRE_MATCH_SELECT_MULTI" X="882" Y="567" WIDTH="284" />
+      </layout>
+      <layout NAME="STORY_LOCKER_PRE_MATCH_MULTIPLAYER_SELECT" EXTEND="STORY_LOCKER_PRE_MATCH" REMOVE="STORY_LOCKER_PRE_MATCH_ADVANCE_TEAM|STORY_LOCKER_PRE_MATCH_ADVANCE_PLAYER|STORY_LOCKER_PRE_MATCH_ADVANCE_MENTORGROUP|STORY_LOCKER_PRE_MATCH_SELECT_MULTI">
+        <tile NAME="STORY_LOCKER_PRE_MATCH_INFO" HEIGHT="746" HIGHLIGHTABLE="TRUE" />
+      </layout>
+      <layout NAME="STORY_LOCKER_PRE_MATCH_MULTIPLAYER_ADVANCE" EXTEND="STORY_LOCKER_PRE_MATCH" REMOVE="STORY_LOCKER_PRE_MATCH_ADVANCE_TEAM|STORY_LOCKER_PRE_MATCH_ADVANCE_PLAYER|STORY_LOCKER_PRE_MATCH_ADVANCE_MENTORGROUP|STORY_LOCKER_PRE_MATCH_SELECT_MULTI">
+        <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_MULTI" X="0" Y="567" />
+      </layout>
+      <layout NAME="STORY_LOCKER_PRE_MATCH_SIM" EXTEND="STORY_LOCKER_PRE_MATCH" REMOVE="STORY_LOCKER_PRE_MATCH_ADVANCE_TEAM|STORY_LOCKER_PRE_MATCH_ADVANCE_PLAYER|STORY_LOCKER_PRE_MATCH_ADVANCE_MENTORGROUP|STORY_LOCKER_PRE_MATCH_SELECT_MULTI">
+        <tile NAME="STORY_LOCKER_SIMULATE_MATCH" X="0" Y="567" />
+      </layout>
+    </panel>
+	  <panel NAME="STORY_LOCKER_LEAGUE_PANEL" LABEL="SM_LEAGUE_TAB" IS_TAB="FALSE" >
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+      </buttons>
+      <layout NAME="STORY_LOCKER_LEAGUE" X="965" Y="167">
+        <tile NAME="STORY_LOCKER_LEAGUE_STANDINGS" X="0" Y="0" WIDTH="873" HEIGHT="746" TILE_STATE="EXPANDED" ALWAYS_ACTIVE="TRUE" SELECTABLE="FALSE"/>
+      </layout>
+    </panel>   
+    <panel NAME="STORY_LOCKER_POST_MATCH_PANEL" LABEL="STORY_TAB_LOCKER" IS_TAB="FALSE" >
+	  <buttons>
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_BACKOUT" />
+      </buttons>
+      <layout NAME="STORY_LOCKER_POST_MATCH" X="671" Y="167">
+        <tile NAME="STORY_LOCKER_POST_MATCH_INFO" X="0" Y="0" />
+        <tile NAME="STORY_LOCKER_POST_MATCH_ADVANCE" X="0" Y="567" />
+        <tile NAME="STORY_LOCKER_PLAYER_GROWTH" X="391" Y="567"/>
+		<tile NAME="STORY_LOCKER_LEAGUE_STANDINGS" X="783" Y="567" />
+      </layout>
+      <layout NAME="STORY_LOCKER_POST_MATCH_NO_PLAYER_GROWTH" X="671" Y="167">
+        <tile NAME="STORY_LOCKER_POST_MATCH_INFO" X="0" Y="0" />
+        <tile NAME="STORY_LOCKER_POST_MATCH_ADVANCE" X="0" Y="567" WIDTH="573"/>
+	<tile NAME="STORY_LOCKER_LEAGUE_STANDINGS_LARGE" X="583" Y="567" WIDTH="573" />
+      </layout>
+      <layout NAME="STORY_LOCKER_POST_MATCH_NO_MANAGER_RATING"  EXTEND="STORY_LOCKER_POST_MATCH">
+        <tile NAME="STORY_LOCKER_POST_MATCH_INFO" HEIGHT="401" />
+        <tile NAME="STORY_LOCKER_POST_MATCH_ADVANCE" Y="411" />
+        <tile NAME="STORY_LOCKER_PLAYER_GROWTH" Y="411"/>
+		<tile NAME="STORY_LOCKER_LEAGUE_STANDINGS" Y="411" />
+      </layout>
+      <layout NAME="STORY_LOCKER_POST_MATCH_PRESEASON" X="671" Y="167">
+        <tile NAME="STORY_LOCKER_POST_MATCH_INFO" X="0" Y="0" />
+        <tile NAME="STORY_LOCKER_POST_MATCH_ADVANCE_LARGE" X="0" Y="567"/>
+      </layout>
+      <layout NAME="STORY_LOCKER_POST_MATCH_PRESEASON_NO_MANAGER_RATING" EXTEND="STORY_LOCKER_POST_MATCH_PRESEASON">
+        <tile NAME="STORY_LOCKER_POST_MATCH_INFO" HEIGHT="401" />
+        <tile NAME="STORY_LOCKER_POST_MATCH_ADVANCE_LARGE" Y="411"/>
+      </layout>
+	  <layout NAME="STORY_LOCKER_EXPANDED_STANDINGS" 		X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_LEAGUE_STANDINGS" 	X="0" 		Y="0" 		HEIGHT="746" 	WIDTH="873"		TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE"/>
+      </layout>
+      <layout NAME="STORY_LOCKER_EXPANDED_CUP_STANDINGS" 	X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_CUP_STANDINGS" 		X="0" 		Y="0" 		HEIGHT="746"	WIDTH="873"  	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE" />
+      </layout>
+	  <layout NAME="STORY_LOCKER_CHAMPIONS_LEAGUE_STANDINGS" 		X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_CHAMPIONS_LEAGUE_STANDINGS" X="0" 	Y="0" 		HEIGHT="746"	WIDTH="873"  	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE"/>
+      </layout>
+      <layout NAME="STORY_LOCKER_CHAMPIONS_LEAGUE_CUP" 		X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_CHAMPIONS_LEAGUE_CUP" X="0" 	Y="0" 		HEIGHT="746"	WIDTH="873"  	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE"/>
+      </layout>
+	  <layout NAME="STORY_LOCKER_EXPANDED_FIXTURES" X="965" 	Y="167">
+		<tile NAME="STORY_LOCKER_FIXTURES" 		X="0" 		Y="0" 		HEIGHT="746"	WIDTH="873"  	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE" />
+	  </layout>
+    </panel> 	  
+	<panel 	NAME="STORY_LOCKER_LEAGUE_PANEL_ALTERNATIVE" 	LABEL="SM_LEAGUE_TAB_ALTERNATIVE" 	IS_TAB="FALSE" >
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+      </buttons>
+      <layout NAME="STORY_LOCKER_CHAMPIONS_LEAGUE_ALTERNATIVE_STANDINGS" 		X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_ALTERNATIVE_CHAMPIONS_LEAGUE_STANDINGS" X="0" 	Y="0" 		HEIGHT="746"	WIDTH="873"  	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE"/>
+      </layout>
+      <layout NAME="STORY_LOCKER_CHAMPIONS_LEAGUE_ALTERNATIVE_CUP" 		X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_ALTERNATIVE_CHAMPIONS_LEAGUE_CUP" X="0" 	Y="0" 		HEIGHT="746"	WIDTH="873"  	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE"/>
+      </layout>
+      <layout NAME="STORY_LOCKER_LEAGUE_EXPANDED_ALTERNATIVE_STANDINGS" 		X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_ALTERNATIVE_LEAGUE_STANDINGS" 	X="0" 		Y="0" 		HEIGHT="746" 	WIDTH="873"		TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE"/>
+      </layout>
+      <layout NAME="STORY_LOCKER_EXPANDED_CUP_ALTERNATIVE_STANDINGS" 	X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_ALTERNATIVE_CUP_STANDINGS" 		X="0" 		Y="0" 		HEIGHT="746"	WIDTH="873"  	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE" />
+      </layout>
+    </panel>  
+	<panel NAME="STORY_LOCKER_CUP_PANEL" 	LABEL="SM_CUP_TAB" IS_TAB="FALSE" >
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+      </buttons>
+      <layout NAME="STORY_LOCKER_CUP" 						X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_CUP_STANDINGS" 			X="0" 		Y="0" 		HEIGHT="746"	WIDTH="873"  	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE"/>
+      </layout>
+    </panel>
+	 <panel NAME="STORY_LOCKER_LEAGUE_FIXTURES_PANEL" LABEL="SM_FIXTURES_TAB" IS_TAB="FALSE" >
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+      </buttons>
+      <layout NAME="STORY_LOCKER_LEAGUE_FIXTURES" 			X="965" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_LEAGUE_FIXTURES_LIST" 	X="0" 		Y="0" 		HEIGHT="746"	WIDTH="873" 	TILE_STATE="EXPANDED" 	SELECTABLE="FALSE"	ALWAYS_ACTIVE="TRUE" ANIMATE_ON_HIGHLIGHT="FALSE"/>
+      </layout>
+    </panel> 
+	<panel NAME="STORY_LOCKER_SETTINGS_PANEL" LABEL="SM_SETTINGS_TAB" IS_TAB="TRUE" >
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_FLUX_TAB_CHANGED" DESTINATION="STORY_LOCKER_PRE_MATCH_PANEL" />
+      </buttons>
+      <layout NAME="STORY_LOCKER_SETTINGS" X="671" Y="167">
+        <tile NAME="STORY_LOCKER_GAME_SETTINGS" X="0" Y="0" />
+        <tile NAME="STORY_LOCKER_CONTROLLER_SETTINGS" X="0" Y="189" />
+        <tile NAME="STORY_LOCKER_BASIC_CONTROLS" X="588" Y="0" />
+        <tile NAME="STORY_LOCKER_ACCESSIBILITY" X="588" Y="189" />
+      </layout>
+    </panel>  
+	<panel NAME="STORY_LOCKER_DEBUG_PANEL" LABEL="Debug" IS_TAB="TRUE" >
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_FLUX_TAB_CHANGED" DESTINATION="STORY_LOCKER_PRE_MATCH_PANEL" />
+      </buttons>
+      <layout NAME="STORY_LOCKER_DEBUG" 	X="672" 	Y="167"	>
+        <tile NAME="STORY_LOCKER_SAVE" 		X="0" 		Y="0" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="STORY_LOCKER_PRE_MATCH_PANEL">
+    <tile NAME="STORY_LOCKER_PRE_MATCH_INFO" TYPE="EXPANDABLE_TILE" DATAPROVIDERID="STORY_PRE_LOCKER_ROOM_TILE_DP" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="1166" HEIGHT="557"  />
+	  <data ID="background" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_PREVIEW" UHLALPHA="75" HLALPHA="75" WIDTH="1166" HEIGHT="557" />
+	  <data ID="competitionBacking" TYPE="asset" PATH="tiles/story" FORMAT="STRETCH" PARAM="locker_backing_CL" VISIBLE="FALSE" WIDTH="1166" HEIGHT="557" />
+      <data ID="homeCrest" TYPE="asset" PATH="crest/locker" FORMAT="STRETCH" WIDTH="124" HEIGHT="124" X="25" Y="20" />
+	  <data ID="homeName" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" FORMAT="FONT_TILE_SXL|COLOR_TEXT_HIGHLIGHT_FLUX|left" TRANSLATE="FALSE" WIDTH="228" HEIGHT="40" X="175" Y="32" />
+      <data ID="homeStars" TYPE="component" PATH="game/components/FluxComponents/Stars.swf" WIDTH="130" HEIGHT="25" X="175" Y="80" />
+      <data ID="homeTitle" TYPE="text" PARAM="HOME" TRANSLATE="TRUE" FORMAT="SS|COLOR_TEXT_HIGHLIGHT_FLUX|left" UHLALPHA="25" HLALPHA="25" WIDTH="150" HEIGHT="25" X="175" Y="108" />
+      <data ID="homeRank" TYPE="component" PATH="game/components/FluxComponents/RankText.swf" FORMAT="FONT_TILE_SS|COLOR_TEXT_HIGHLIGHT_FLUX|left" UHLALPHA="80" HLALPHA="80" WIDTH="120" HEIGHT="30" X="175" Y="135"/>
+      <data ID="league" TYPE="asset" PATH="league512x128/dark" FORMAT="STRETCH" WIDTH="200" HEIGHT="50" X="482" Y="24" />
+      <data ID="matchInfo" TYPE="text" FORMAT="FONT_TILE_TSMU|COLOR_TEXT_PREVIEW|center" VISIBLE="FALSE" WIDTH="360" HEIGHT="110" X="400" Y="79" TRANSLATE="FALSE" UHLALPHA="60" HLALPHA="60" />
+      <data ID="matchInfoPreseason" TYPE="text" FORMAT="FONT_TILE_TSMU|COLOR_TEXT_PREVIEW|center" VISIBLE="FALSE" WIDTH="360" HEIGHT="110" X="400" Y="52" TRANSLATE="FALSE" UHLALPHA="60" HLALPHA="60" />
+      <data ID="aggregateScore" TYPE="text" FORMAT="FONT_TILE_TSMU||center" VISIBLE="FALSE" WIDTH="360" HEIGHT="50" X="400" Y="135" TRANSLATE="FALSE" />
+      <data ID="awayName" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" FORMAT="FONT_TILE_SXL|COLOR_TEXT_HIGHLIGHT_FLUX|right" TRANSLATE="FALSE" WIDTH="228" HEIGHT="40" X="762" Y="32" />
+      <data ID="awayStars" TYPE="component" PATH="game/components/FluxComponents/Stars.swf" WIDTH="130" HEIGHT="25" X="861" Y="80" />
+	  <data ID="awayTitle" TYPE="text" PARAM="AWAY" TRANSLATE="TRUE" FORMAT="SS|COLOR_TEXT_HIGHLIGHT_FLUX|right" UHLALPHA="25" HLALPHA="25" WIDTH="150" HEIGHT="25" X="840" Y="108" />
+      <data ID="awayRank" TYPE="component" PATH="game/components/FluxComponents/RankText.swf" FORMAT="FONT_TILE_SS|COLOR_TEXT_HIGHLIGHT_FLUX|right" UHLALPHA="80" HLALPHA="80" WIDTH="120" HEIGHT="30" X="865" Y="135"/>
+      <data ID="awayCrest" TYPE="asset" PATH="crest/locker" FORMAT="STRETCH" WIDTH="124" HEIGHT="124" X="1017" Y="20" />
+      <data ID="heroMatchStatusHomeIcon" TYPE="asset" PATH="heads" VISIBLE="FALSE" WIDTH="128" HEIGHT="128" X="20" Y="151" />
+      <data ID="heroMatchStatusHome" TYPE="component" FORMAT="FONT_BOLD_TITLE||center" PATH="game/components/FluxComponents/ColoredRoundTextBox.swf" WIDTH="128" VISIBLE="FALSE" X="20" Y="279" />
+      <data ID="heroMatchStatusAwayIcon" TYPE="asset" PATH="heads" VISIBLE="FALSE" WIDTH="128" HEIGHT="128" X="1017" Y="151" />
+      <data ID="heroMatchStatusAway" TYPE="component" FORMAT="FONT_BOLD_TITLE||center" PATH="game/components/FluxComponents/ColoredRoundTextBox.swf" WIDTH="128" VISIBLE="FALSE" X="1017" Y="279" />
+      <data ID="pitch" TYPE="component" PATH="game/screens/storyMode/lockerRoomTiles/PreMatchTile.swf" VISIBLE="TRUE" WIDTH="1166" HEIGHT="370" X="148" Y="190" DATAPROVIDERID="MultiplayerPitchSelectDP" />
+    </tile>
+    <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_TEAM" TYPE="EXPANDABLE_TILE" DESTINATION="advance" DATAPROVIDERID="STORY_PRE_LOCKER_ROOM_TILE_DP" BG_ICON="LockerAdvanceTeam||PTF|">
+      <properties WIDTH="381" HEIGHT="179"  />
+      <data ID="titleTeam" TYPE="title" PARAM="SM_LOCKER_ADVANCE_TEAM" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||TSLU" />
+      <data ID="titleIcon" TYPE="icon" PARAM="ADVANCE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="32" HEIGHT="32" HLALPHA="100" UHLALPHA="0" REL_TARGET="titleTeam" REL_X="0" Y="17" />
+    </tile>
+    <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_PLAYER" TYPE="EXPANDABLE_TILE" DESTINATION="advance" NEEDS_PUBLISH="1" DATAPROVIDERID="STORY_PRE_LOCKER_ROOM_TILE_DP" BG_ICON="LockerAdvancePlayer||PTF|">
+      <properties WIDTH="381" HEIGHT="179"  />
+      <data ID="titlePlayer" TYPE="title" PARAM="@titlePlayer" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||TSLU" TRANSLATE="FALSE" />
+      <data ID="titleIcon" TYPE="icon" PARAM="ADVANCE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="32" HEIGHT="32" HLALPHA="100" UHLALPHA="0" REL_TARGET="titlePlayer" REL_X="0" Y="17" />
+    </tile>
+	 <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_MENTORGROUP" TYPE="EXPANDABLE_TILE" DESTINATION="advance" DATAPROVIDERID="STORY_PRE_LOCKER_ROOM_TILE_DP" BG_ICON="LockerAdvanceTeam||PTF|">
+      <properties WIDTH="381" HEIGHT="179"  />
+      <data ID="mentorDot" TYPE="asset" PATH="story" PARAM="Icon_Dot_Mentor_Active" WIDTH="11" HEIGHT="11" X="185" Y="83"/>
+      <data ID="mentorStar" TYPE="asset" PATH="story" PARAM="Icon_Star_Mentor" WIDTH="17" HEIGHT="17" X="238" Y="78"/>
+      <data ID="titleMentor" TYPE="title" PARAM="@titleMentor" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||TSLU" TRANSLATE="FALSE" />
+      <data ID="titleIcon" TYPE="icon" PARAM="ADVANCE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="32" HEIGHT="32" HLALPHA="100" UHLALPHA="0" REL_TARGET="titleMentor" REL_X="0" Y="17" />
+    </tile>
+	 <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_PARTNER" TYPE="EXPANDABLE_TILE" DESTINATION="advance" DATAPROVIDERID="STORY_PRE_LOCKER_ROOM_TILE_DP" BG_ICON="LockerAdvancePartner||PTF|">
+      <properties WIDTH="381" HEIGHT="179"  />
+      <data ID="mentorDot" TYPE="asset" PATH="story" PARAM="Icon_Dot_Mentor_Active" WIDTH="11" HEIGHT="11" X="212" Y="78"/>
+      <data ID="mentorStar" TYPE="asset" PATH="story" PARAM="Icon_Star_Mentor" WIDTH="17" HEIGHT="17" X="238" Y="78"/>
+      <data ID="titleMentor" TYPE="title" PARAM="@titleMentor" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||TSLU" TRANSLATE="FALSE" />
+      <data ID="titleIcon" TYPE="icon" PARAM="ADVANCE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="32" HEIGHT="32" HLALPHA="100" UHLALPHA="0" REL_TARGET="titleMentor" REL_X="0" Y="17" />
+    </tile>
+    <tile NAME="STORY_LOCKER_PRE_MATCH_SELECT_MULTI" TYPE="EXPANDABLE_TILE" DATAPROVIDERID="STORY_PRE_LOCKER_ROOM_TILE_DP" BG_ICON="LockerAdvanceMultiplayer||PTF|">
+      <properties WIDTH="381" HEIGHT="179"  />
+      <data ID="titleMulti" TYPE="title" PARAM="SM_LOCKER_ADVANCE_MULTI" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||TSLU" />
+      <data ID="titleIcon" TYPE="icon" PARAM="ADVANCE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="32" HEIGHT="32" HLALPHA="100" UHLALPHA="0" REL_TARGET="titleMulti" REL_X="0" Y="17" />
+    </tile>
+    <tile NAME="STORY_LOCKER_PRE_MATCH_ADVANCE_MULTI" TYPE="EXPANDABLE_TILE" DESTINATION="advance">
+      <properties WIDTH="1166" HEIGHT="179"  />
+      <data ID="title" TYPE="text" PARAM="SM_LOCKER_ADVANCE" FORMAT="HL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE||HLU" WIDTH="1166" HEIGHT="79" X="0" Y="50" />
+    </tile>
+    <tile NAME="STORY_LOCKER_SIMULATE_MATCH" TYPE="EXPANDABLE_TILE" DESTINATION="advance">
+      <properties WIDTH="1166" HEIGHT="179"  />
+      <data ID="title" TYPE="title" PARAM="SM_LOCKER_ADVANCE_SIM" />
+      <data ID="titleIcon" TYPE="icon" PARAM="ADVANCE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="32" HEIGHT="32" HLALPHA="100" UHLALPHA="0" REL_TARGET="title" REL_X="0" Y="17" />
+      <data ID="simIcon" TYPE="image" PATH="imgAssets/tiles/story/SimIcon.dds" FORMAT="|COLOR_FILL_HIGHLIGHT_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST" WIDTH="77" HEIGHT="88" X="540" Y="35" /> 
+    </tile>
+  </panel>
+  <panel NAME="STORY_LOCKER_POST_MATCH_PANEL">
+  	<variable_set>
+		  <variable id="CupBackground" type="string"/>
+	</variable_set>
+    <tile NAME="STORY_LOCKER_POST_MATCH_INFO" TYPE="EXPANDABLE_TILE" DATAPROVIDERID="STORY_POST_MATCH_ADVANCE_TILE_DP" HIGHLIGHTABLE="FALSE">
+      <properties WIDTH="1166" HEIGHT="557"  />
+	  <data ID="competitionBacking" TYPE="asset" PATH="tiles/story" FORMAT="STRETCH" PARAM="locker_backing_CL" VISIBLE="FALSE" WIDTH="1166" HEIGHT="557" />
+      <data ID="scoreGraphic" TYPE="asset" PATH="story" PARAM="GFX_circle" WIDTH="417" HEIGHT="410" X="371" Y="0" />
+      <data ID="homeRank" TYPE="component" PATH="game/components/FluxComponents/RankText.swf" FORMAT="FONT_TILE_SS|COLOR_TEXT_BLUE_NAVY|center" UHLALPHA="60" HLALPHA="60" WIDTH="200" HEIGHT="60" X="137" Y="40" />
+      <data ID="homeName" TYPE="text" FORMAT="HXS||center" TRANSLATE="FALSE" WIDTH="474" HEIGHT="40" X="0" Y="65" />
+      <data ID="homeCrest" TYPE="asset" PATH="crest/locker" FORMAT="STRETCH" WIDTH="200" HEIGHT="200" X="137" Y="130" />
+      <data ID="homeStars" TYPE="component" PATH="game/components/FluxComponents/Stars.swf" WIDTH="185" HEIGHT="34" X="144" Y="340" />
+      <data ID="awayRank" TYPE="component" PATH="game/components/FluxComponents/RankText.swf" FORMAT="FONT_TILE_SS|COLOR_TEXT_BLUE_NAVY|center" UHLALPHA="60" HLALPHA="60" WIDTH="200" HEIGHT="60" X="829" Y="40" />
+      <data ID="awayName" TYPE="text" FORMAT="HXS||center" TRANSLATE="FALSE" WIDTH="476" HEIGHT="40" X="692" Y="65" />
+      <data ID="awayCrest" TYPE="asset" PATH="crest/locker" FORMAT="STRETCH" WIDTH="200" HEIGHT="200" X="829" Y="130" />
+      <data ID="awayStars" TYPE="component" PATH="game/components/FluxComponents/Stars.swf" WIDTH="185" HEIGHT="34" X="836" Y="340" />
+      <data ID="homeScore" TYPE="text" TRANSLATE="FALSE" FORMAT="FONT_TILE_HXL||right" WIDTH="100" HEIGHT="200" X="423" Y="150"/>
+      <data ID="scoreDash" TYPE="text" PARAM="-" TRANSLATE="FALSE" FORMAT="FONT_TILE_HXL||center" WIDTH="100" HEIGHT="*0" X="533" Y="150"/>
+      <data ID="awayScore" TYPE="text" TRANSLATE="FALSE" FORMAT="FONT_TILE_HXL||left" WIDTH="100" HEIGHT="200" X="643" Y="150"/>
+      <data ID="pensAggScore1" TYPE="text" TRANSLATE="FALSE" FORMAT="FONT_TILE_TI||center" WIDTH="100" HEIGHT="30" X="533" Y="250" />
+      <data ID="pensAggScore2" TYPE="text" TRANSLATE="FALSE" FORMAT="FONT_TILE_TI||center" WIDTH="100" HEIGHT="30" X="533" Y="280" />
+      <data ID="leagueCrest" TYPE="asset" PATH="league512x128/dark" FORMAT="STRETCH" WIDTH="300" HEIGHT="75" X="430" Y="70" />
+      <data ID="ratingSpacer" TYPE="component" PATH="game/components/FluxComponents/TextSpacer.swf" PARAM="SM_MANAGER_RATING|FONT_TILE_IS|" WIDTH="1166" HEIGHT="40" X="0" Y="412" />
+      <data ID="rating" TYPE="component" PATH="game/components/ManagerRating.swf" DATAPROVIDERID="ManagerRatingDP" WIDTH="892" HEIGHT="45" X="137" Y="455" />
+    </tile>
+    <tile NAME="STORY_LOCKER_POST_MATCH_ADVANCE" TYPE="EXPANDABLE_TILE" BG_ICON="Home" DESTINATION="advance">
+      <properties WIDTH="382" HEIGHT="179"  />
+      <data ID="title" TYPE="title" PARAM="SM_LOCKER_ADVANCE" />
+      <data ID="titleIcon" TYPE="icon" PARAM="ADVANCE"  FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="32" HEIGHT="32" HLALPHA="100" UHLALPHA="0" REL_TARGET="title" REL_X="0" Y="17" />
+    </tile>
+    <tile NAME="STORY_LOCKER_PLAYER_GROWTH" TYPE="EXPANDABLE_TILE" DESTINATION="playerGrowth" DATAPROVIDERID="STORY_PLAYER_GROWTH_TILE_DP">
+      <properties WIDTH="382" HEIGHT="179" />
+      <data ID="title" TYPE="title" PARAM="SM_PLAYER_GROWTH" />
+      <data ID="overall" TYPE="text" FORMAT="HS||center" TRANSLATE="FALSE" WIDTH="110" HEIGHT="110" X="14" Y="78" />
+      <data ID="overallLabel" TYPE="text"  PARAM="Overall_abbr3" FORMAT="TSMU|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" WIDTH="110" HEIGHT="25" X="13" Y="124" />
+      <data ID="ringChart" TYPE="component" PATH="game/components/RingChart.swf" WIDTH="95" HEIGHT="95" X="20" Y="68" />
+      <data ID="skillPoints" TYPE="asset" PATH="playerGrowth/points" WIDTH="36" HEIGHT="36" Y="12">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-20" />		  
+	  </data>
+	  <data ID="attributeBarBackdrop" TYPE="rectangle" PARAM="COLOR_TEXT_ALT_PREVIEW" WIDTH="234" HEIGHT="10" X="127" Y="113" HLALPHA="50" UHLALPHA="50"/>
+	  <data ID="attributeBarSpacer" TYPE="rectangle" PARAM="COLOR_FILL_VALUE" WIDTH="5" HEIGHT="20" Y="108">
+		  <align TARGET="attributeBarBackdrop" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+	  </data>
+	  <data ID="finisherCompletionBar" PARAM="0" TYPE="bar" FORMAT="|COLOR_FILL_VALUE|right|COLOR_FILL_VALUE" X="127" Y="113" WIDTH="114" HEIGHT="10"/>
+	  <data ID="creatorCompletionBar" PARAM="0" TYPE="bar" FORMAT="|COLOR_FILL_VALUE|left|COLOR_FILL_VALUE" X="244" Y="113" WIDTH="114" HEIGHT="10"/>
+	  <data ID="finisherIcon" TYPE="asset" PATH="playerGrowth/icons" FORMAT="STRETCH|COLOR_FILL_VALUE||COLOR_FILL_VALUE" PARAM="icon_finisher" WIDTH="45" HEIGHT="45" X="124" Y="60" />
+	  <data ID="creatorIcon" TYPE="asset" PATH="playerGrowth/icons" FORMAT="STRETCH|COLOR_FILL_VALUE||COLOR_FILL_VALUE" PARAM="icon_creator" WIDTH="45" HEIGHT="45" X="318" Y="60" />
+	  <data ID="finisherLabel" TYPE="text" PARAM="SM_PG_FINISHER" FORMAT="IXS|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" TRANSLATE="TRUE" WIDTH="200" HEIGHT="50" X="127" Y="130" />
+      <data ID="creatorLabel" TYPE="text" PARAM="SM_PG_CREATOR" FORMAT="IXS|COLOR_TEXT_HIGHLIGHT_FLUX|right|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" TRANSLATE="TRUE" WIDTH="110" HEIGHT="50" X="252" Y="130" />
+    </tile>
+	  
+    <tile NAME="STORY_LOCKER_TARGET_MAN" TYPE="EXPANDABLE_TILE" DESTINATION="playerGrowth" DATAPROVIDERID="STORY_PLAYER_GROWTH_TILE_DP">
+      <properties HEIGHT="179"	WIDTH="382" />
+      <data ID="title" TYPE="title" PARAM="SM_HOME_PLAYER_GROWTH" />
+      <data ID="overall" TYPE="text" FORMAT="HS|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" TRANSLATE="FALSE" WIDTH="110" HEIGHT="110" >
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="13" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="45" />
+	  </data>
+      <data ID="overallLabel" TYPE="text"  PARAM="Overall_abbr3" FORMAT="TSMU|COLOR_TEXT_DESCRIPTION|center" WIDTH="110" HEIGHT="25" >
+		    <align TARGET="overall" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-15" />
+		    <align TARGET="overall" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"  />
+	  </data>
+		
+      <data ID="ringChart" TYPE="component" PATH="game/components/RingChart.swf" WIDTH="95" HEIGHT="95" >
+		    <align TARGET="overall" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="-10" />
+		    <align TARGET="overall" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"  />
+	  </data>
+      <data ID="skillPoints" TYPE="asset" PATH="playerGrowth/points" WIDTH="36" HEIGHT="36">
+		    <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-10" />
+		    <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10" />
+	  </data>
+	  <data ID="attributeBarBackdrop" TYPE="rectangle" PARAM="COLOR_FILL_EMPTY" WIDTH="234" HEIGHT="10" >
+		    <align TARGET="ringChart" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20" />
+		    <align TARGET="ringChart" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	  <data ID="targetManBar" PARAM="0" TYPE="bar" FORMAT="|COLOR_TEXT_SELECTED||COLOR_TEXT_SELECTED" WIDTH="234" HEIGHT="10">
+		    <align TARGET="attributeBarBackdrop" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+		    <align TARGET="ringChart" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	  <data ID="attributeBarSpacer" TYPE="rectangle" PARAM="COLOR_FILL_VALUE" WIDTH="3" HEIGHT="20" X="241" Y="108">
+			<align TARGET="targetManBar" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+	  </data>
+	  <data ID="targetManIcon" TYPE="asset" PATH="playerGrowth/icons" FORMAT="STRETCH|COLOR_FILL_VALUE||COLOR_FILL_VALUE" PARAM="icon_targetMan" WIDTH="45" HEIGHT="45">
+		    <align TARGET="attributeBarBackdrop" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+		    <align TARGET="attributeBarBackdrop" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="TOP" OFFSET="-5" />
+	 </data>
+	  <data ID="targetManLabel" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" PARAM="SM_PG_TARGET_MAN|3" FORMAT="DEMO_SELL_SHEET_DESC_FONT||right" WIDTH="110" HEIGHT="50" >	
+		    <align TARGET="attributeBarBackdrop" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+		    <align TARGET="attributeBarBackdrop" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="5" />
+	  </data>
+    </tile>
+	<tile NAME="STORY_LOCKER_PLAYER_MENTOR" TYPE="EXPANDABLE_TILE" DESTINATION="playerGrowth" DATAPROVIDERID="STORY_PLAYER_GROWTH_TILE_DP">
+			<properties HEIGHT="179" WIDTH="382"/>
+			<data ID="title" TYPE="title" PARAM="SM_MENTOR_TITLE"/>
+			<data ID="personalityIcon" TYPE="asset" PATH="personality" WIDTH="36" HEIGHT="36" X="336" Y="15"/>
+			<data ID="partnershipRatingComponent" TYPE="component" PATH="game/components/PartnershipRating.swf" DATAPROVIDERID="PartnershipRatingDP" FORMAT="|COLOR_TEXT_LABEL||COLOR_TEXT_DESCRIPTION" PARAM="tile" WIDTH="342" HEIGHT="30" X="20" Y="140"/>
+	</tile>
+	<tile NAME="STORY_LOCKER_LEAGUE_STANDINGS" TYPE="EXPANDABLE_TILE" ANIMATE_ON_SELECT="FALSE" >
+      <properties HEIGHT="179" 	WIDTH="382" />
+      <data ID="title" TYPE="title" PARAM="SM_HOME_STANDINGS" SHOW_IN_STATE="ENABLED" />
+	  <data ID="leagueStandings" TYPE="component" PATH="game/components/FluxComponents/story/StandingsLarge.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="SMStandingsLargeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+	  <data ID="gpLabel" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" PARAM="GamesPlayed_abbr3|3" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION||center" UHLALPHA="30" HLALPHA="30" WIDTH="38" HEIGHT="24" X="284" Y="26" SHOW_IN_STATE="ENABLED" />
+	  <data ID="ptsLabel" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" PARAM="PTS|3" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION||center" UHLALPHA="30" HLALPHA="30" WIDTH="38" HEIGHT="24" X="325" Y="26" SHOW_IN_STATE="ENABLED" />
+    
+      <data ID="rect0" TYPE="rectangle" PARAM="@teamColors[0]" HLALPHA="@rectAlphas[0]" UHLALPHA="@rectAlphas[0]" WIDTH="4" HEIGHT="36" X="0" Y="65" SHOW_IN_STATE="ENABLED" />
+      <data ID="rank0" TYPE="component" PATH="game/components/FluxComponents/RankText.swf" PARAM="@teamRanks[0]" FORMAT="@rowFormats[0]" HLALPHA="@rowAlphas[0]" UHLALPHA="@rowAlphas[0]" TRANSLATE="FALSE" WIDTH="40" HEIGHT="36" REL_TARGET="rect0" REL_Y="-35" X="5" SHOW_IN_STATE="ENABLED"/>
+      <data ID="crest0" TYPE="asset" PATH="crest50x50" PARAM="@teamIds[0]" WIDTH="24" HEIGHT="24" REL_TARGET="rect0" X="52" REL_Y="-31" SHOW_IN_STATE="ENABLED"/>
+      <data ID="team0" TYPE="text" PARAM="@teamNames[0]" FORMAT="@teamNameFormats[0]" HLALPHA="@rowAlphas[0]" UHLALPHA="@rowAlphas[0]" TRANSLATE="FALSE" WIDTH="160" HEIGHT="36" REL_TARGET="rect0" X="84" REL_Y="-35" SHOW_IN_STATE="ENABLED" />
+      <data ID="gp0" TYPE="text" PARAM="@gamesPlayed[0]" FORMAT="@rowFormats[0]" HLALPHA="@rowAlphas[0]" UHLALPHA="@rowAlphas[0]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="36" REL_TARGET="rect0" X="284" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="pts0" TYPE="text" PARAM="@points[0]" FORMAT="@rowFormats[0]" HLALPHA="@rowAlphas[0]" UHLALPHA="@rowAlphas[0]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="36" REL_TARGET="rect0" X="325" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="hspacer0" TYPE="hspacer" WIDTH="382" HEIGHT="1" REL_TARGET="rect0" X="0" REL_Y="0" HLALPHA="8" UHLALPHA="8" SHOW_IN_STATE="ENABLED" />
+
+      <data ID="rect1" TYPE="rectangle" PARAM="@teamColors[1]" HLALPHA="@rectAlphas[1]" UHLALPHA="@rectAlphas[1]" WIDTH="4" HEIGHT="36" REL_TARGET="rect0" X="0" REL_Y="1" SHOW_IN_STATE="ENABLED"/>
+	  <data ID="rank1" TYPE="component" PATH="game/components/FluxComponents/RankText.swf" PARAM="@teamRanks[1]" FORMAT="@rowFormats[1]" HLALPHA="@rowAlphas[1]" UHLALPHA="@rowAlphas[1]" TRANSLATE="FALSE" WIDTH="40" HEIGHT="36" REL_TARGET="rect1" REL_Y="-35" X="5" SHOW_IN_STATE="ENABLED"/>
+      <data ID="crest1" TYPE="asset" PATH="crest50x50" PARAM="@teamIds[1]" WIDTH="24" HEIGHT="24" REL_TARGET="rect1" X="52" REL_Y="-31" SHOW_IN_STATE="ENABLED"/>
+      <data ID="team1" TYPE="text" PARAM="@teamNames[1]" FORMAT="@teamNameFormats[1]" HLALPHA="@rowAlphas[1]" UHLALPHA="@rowAlphas[1]" TRANSLATE="FALSE" WIDTH="160" HEIGHT="24" REL_TARGET="rect1" X="84" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="gp1" TYPE="text" PARAM="@gamesPlayed[1]" FORMAT="@rowFormats[1]" HLALPHA="@rowAlphas[1]" UHLALPHA="@rowAlphas[1]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="24" REL_TARGET="rect1" X="284" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="pts1" TYPE="text" PARAM="@points[1]" FORMAT="@rowFormats[1]" HLALPHA="@rowAlphas[1]" UHLALPHA="@rowAlphas[1]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="24" REL_TARGET="rect1" X="325" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="hspacer1" TYPE="hspacer" WIDTH="382" HEIGHT="1" REL_TARGET="rect1" X="0" REL_Y="0" HLALPHA="8" UHLALPHA="8" SHOW_IN_STATE="ENABLED" />
+
+      <data ID="rect2" TYPE="rectangle" PARAM="@teamColors[2]" HLALPHA="@rectAlphas[2]" UHLALPHA="@rectAlphas[2]" WIDTH="4" HEIGHT="36" REL_TARGET="rect1" X="0" REL_Y="1" SHOW_IN_STATE="ENABLED"/>
+	  <data ID="rank2" TYPE="component" PATH="game/components/FluxComponents/RankText.swf"  PARAM="@teamRanks[2]" FORMAT="@rowFormats[2]" HLALPHA="@rowAlphas[2]" UHLALPHA="@rowAlphas[2]" TRANSLATE="FALSE" WIDTH="40" HEIGHT="36" REL_TARGET="rect2" REL_Y="-35" X="5" SHOW_IN_STATE="ENABLED"/>
+      <data ID="crest2" TYPE="asset" PATH="crest50x50" PARAM="@teamIds[2]" WIDTH="24" HEIGHT="24" REL_TARGET="rect2" X="52" REL_Y="-31" SHOW_IN_STATE="ENABLED"/>
+      <data ID="team2" TYPE="text" PARAM="@teamNames[2]" FORMAT="@teamNameFormats[2]" HLALPHA="@rowAlphas[2]" UHLALPHA="@rowAlphas[2]" TRANSLATE="FALSE" WIDTH="160" HEIGHT="24" REL_TARGET="rect2" X="84" REL_Y="-35" SHOW_IN_STATE="ENABLED" />
+      <data ID="gp2" TYPE="text" PARAM="@gamesPlayed[2]" FORMAT="@rowFormats[2]" HLALPHA="@rowAlphas[2]" UHLALPHA="@rowAlphas[2]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="24" REL_TARGET="rect2" X="284" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="pts2" TYPE="text" PARAM="@points[2]" FORMAT="@rowFormats[2]" HLALPHA="@rowAlphas[2]" UHLALPHA="@rowAlphas[2]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="24" REL_TARGET="rect2" X="325" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="hspacer2" TYPE="hspacer" WIDTH="382" HEIGHT="1" REL_TARGET="rect2" X="0" REL_Y="0" HLALPHA="8" UHLALPHA="8" SHOW_IN_STATE="ENABLED" />
+    </tile>
+	<tile NAME="STORY_LOCKER_LEAGUE_STANDINGS_LARGE" TYPE="EXPANDABLE_TILE" ANIMATE_ON_SELECT="FALSE" >
+      <properties HEIGHT="179" 	WIDTH="382" />
+      <data ID="title" TYPE="title" PARAM="SM_HOME_STANDINGS" SHOW_IN_STATE="ENABLED" />
+	  <data ID="leagueStandings" TYPE="component" PATH="game/components/FluxComponents/story/StandingsLarge.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="SMStandingsLargeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+	  <data ID="gpLabel" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" PARAM="GamesPlayed_abbr3|3" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION||center" UHLALPHA="30" HLALPHA="30" WIDTH="38" HEIGHT="24" X="475" Y="26" SHOW_IN_STATE="ENABLED" />
+	  <data ID="ptsLabel" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" PARAM="PTS|3" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION||center" UHLALPHA="30" HLALPHA="30" WIDTH="38" HEIGHT="24" X="516" Y="26" SHOW_IN_STATE="ENABLED" />
+    
+      <data ID="rect0" TYPE="rectangle" PARAM="@teamColors[0]" HLALPHA="@rectAlphas[0]" UHLALPHA="@rectAlphas[0]" WIDTH="4" HEIGHT="36" X="0" Y="65" SHOW_IN_STATE="ENABLED" />
+      <data ID="rank0" TYPE="component" PATH="game/components/FluxComponents/RankText.swf" PARAM="@teamRanks[0]" FORMAT="@rowFormats[0]" HLALPHA="@rowAlphas[0]" UHLALPHA="@rowAlphas[0]" TRANSLATE="FALSE" WIDTH="40" HEIGHT="36" REL_TARGET="rect0" REL_Y="-35" X="5" SHOW_IN_STATE="ENABLED"/>
+      <data ID="crest0" TYPE="asset" PATH="crest50x50" PARAM="@teamIds[0]" WIDTH="24" HEIGHT="24" REL_TARGET="rect0" X="52" REL_Y="-31" SHOW_IN_STATE="ENABLED"/>
+      <data ID="team0" TYPE="text" PARAM="@teamNames[0]" FORMAT="@teamNameFormats[0]" HLALPHA="@rowAlphas[0]" UHLALPHA="@rowAlphas[0]" TRANSLATE="FALSE" WIDTH="160" HEIGHT="36" REL_TARGET="rect0" X="84" REL_Y="-35" SHOW_IN_STATE="ENABLED" />
+      <data ID="gp0" TYPE="text" PARAM="@gamesPlayed[0]" FORMAT="@rowFormats[0]" HLALPHA="@rowAlphas[0]" UHLALPHA="@rowAlphas[0]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="36" REL_TARGET="rect0" X="475" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="pts0" TYPE="text" PARAM="@points[0]" FORMAT="@rowFormats[0]" HLALPHA="@rowAlphas[0]" UHLALPHA="@rowAlphas[0]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="36" REL_TARGET="rect0" X="516" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="hspacer0" TYPE="hspacer" WIDTH="382" HEIGHT="1" REL_TARGET="rect0" X="0" REL_Y="0" HLALPHA="8" UHLALPHA="8" SHOW_IN_STATE="ENABLED" />
+
+      <data ID="rect1" TYPE="rectangle" PARAM="@teamColors[1]" HLALPHA="@rectAlphas[1]" UHLALPHA="@rectAlphas[1]" WIDTH="4" HEIGHT="36" REL_TARGET="rect0" X="0" REL_Y="1" SHOW_IN_STATE="ENABLED"/>
+	  <data ID="rank1" TYPE="component" PATH="game/components/FluxComponents/RankText.swf" PARAM="@teamRanks[1]" FORMAT="@rowFormats[1]" HLALPHA="@rowAlphas[1]" UHLALPHA="@rowAlphas[1]" TRANSLATE="FALSE" WIDTH="40" HEIGHT="36" REL_TARGET="rect1" REL_Y="-35" X="5" SHOW_IN_STATE="ENABLED"/>
+      <data ID="crest1" TYPE="asset" PATH="crest50x50" PARAM="@teamIds[1]" WIDTH="24" HEIGHT="24" REL_TARGET="rect1" X="52" REL_Y="-31" SHOW_IN_STATE="ENABLED"/>
+      <data ID="team1" TYPE="text" PARAM="@teamNames[1]" FORMAT="@teamNameFormats[1]" HLALPHA="@rowAlphas[1]" UHLALPHA="@rowAlphas[1]" TRANSLATE="FALSE" WIDTH="160" HEIGHT="24" REL_TARGET="rect1" X="84" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="gp1" TYPE="text" PARAM="@gamesPlayed[1]" FORMAT="@rowFormats[1]" HLALPHA="@rowAlphas[1]" UHLALPHA="@rowAlphas[1]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="24" REL_TARGET="rect1" X="475" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="pts1" TYPE="text" PARAM="@points[1]" FORMAT="@rowFormats[1]" HLALPHA="@rowAlphas[1]" UHLALPHA="@rowAlphas[1]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="24" REL_TARGET="rect1" X="516" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="hspacer1" TYPE="hspacer" WIDTH="382" HEIGHT="1" REL_TARGET="rect1" X="0" REL_Y="0" HLALPHA="8" UHLALPHA="8" SHOW_IN_STATE="ENABLED" />
+
+      <data ID="rect2" TYPE="rectangle" PARAM="@teamColors[2]" HLALPHA="@rectAlphas[2]" UHLALPHA="@rectAlphas[2]" WIDTH="4" HEIGHT="36" REL_TARGET="rect1" X="0" REL_Y="1" SHOW_IN_STATE="ENABLED"/>
+	  <data ID="rank2" TYPE="component" PATH="game/components/FluxComponents/RankText.swf"  PARAM="@teamRanks[2]" FORMAT="@rowFormats[2]" HLALPHA="@rowAlphas[2]" UHLALPHA="@rowAlphas[2]" TRANSLATE="FALSE" WIDTH="40" HEIGHT="36" REL_TARGET="rect2" REL_Y="-35" X="5" SHOW_IN_STATE="ENABLED"/>
+      <data ID="crest2" TYPE="asset" PATH="crest50x50" PARAM="@teamIds[2]" WIDTH="24" HEIGHT="24" REL_TARGET="rect2" X="52" REL_Y="-31" SHOW_IN_STATE="ENABLED"/>
+      <data ID="team2" TYPE="text" PARAM="@teamNames[2]" FORMAT="@teamNameFormats[2]" HLALPHA="@rowAlphas[2]" UHLALPHA="@rowAlphas[2]" TRANSLATE="FALSE" WIDTH="160" HEIGHT="24" REL_TARGET="rect2" X="84" REL_Y="-35" SHOW_IN_STATE="ENABLED" />
+      <data ID="gp2" TYPE="text" PARAM="@gamesPlayed[2]" FORMAT="@rowFormats[2]" HLALPHA="@rowAlphas[2]" UHLALPHA="@rowAlphas[2]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="24" REL_TARGET="rect2" X="475" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="pts2" TYPE="text" PARAM="@points[2]" FORMAT="@rowFormats[2]" HLALPHA="@rowAlphas[2]" UHLALPHA="@rowAlphas[2]" TRANSLATE="FALSE" WIDTH="45" HEIGHT="24" REL_TARGET="rect2" X="516" REL_Y="-35" SHOW_IN_STATE="ENABLED"/>
+      <data ID="hspacer2" TYPE="hspacer" WIDTH="382" HEIGHT="1" REL_TARGET="rect2" X="0" REL_Y="0" HLALPHA="8" UHLALPHA="8" SHOW_IN_STATE="ENABLED" />
+    </tile>
+    <tile NAME="STORY_LOCKER_CUP_STANDINGS" TYPE="EXPANDABLE_TILE" ANIMATE_ON_SELECT="FALSE">
+      <properties HEIGHT="179" 	WIDTH="382" />
+      <data ID="title" TYPE="title" PARAM="SM_HOME_CUP" SHOW_IN_STATE="ENABLED" />
+      <data ID="cupStandings" TYPE="component" PATH="game/components/FluxComponents/story/TournamentTree.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="TournamentTreeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+      <data ID="cupCrest" TYPE="asset" PARAM="@cupId" VISIBLE="@showCupCrest" PATH="league512x128" FORMAT="||RIGHT||||MIDDLE" WIDTH="256" HEIGHT="64" X="248" Y="25" SHOW_IN_STATE="ENABLED">
+        <align TARGET="parent" TARGET_ATTRIBUTE="RIGHT" ELEMENT_ATTRIBUTE="RIGHT" OFFSET="70"/>
+        <align TARGET="parent" TARGET_ATTRIBUTE="TOP" ELEMENT_ATTRIBUTE="TOP" OFFSET="20"/>
+      </data>
+      <data ID="vsImage" TYPE="asset" PATH="story/matchday" PARAM="VS_Backing_Small" FORMAT="STRETCH" WIDTH="87" HEIGHT="85" X="146" Y="85" SHOW_IN_STATE="ENABLED">
+        <align TARGET="parent" TARGET_ATTRIBUTE="CENTER" ELEMENT_ATTRIBUTE="CENTER" />
+      </data>
+      <data ID="vsText" TYPE="text" FORMAT="FONT_REGULAR_FHD||center" PARAM="Versus_abbr" TRANSLATE="TRUE" WIDTH="382" HEIGHT="30" Y="110" SHOW_IN_STATE="ENABLED">
+        <align TARGET="parent" TARGET_ATTRIBUTE="CENTER" ELEMENT_ATTRIBUTE="CENTER" />
+      </data>
+      <data ID="homeCrest" TYPE="asset" PATH="crest" PARAM="@homeTeamId" FORMAT="STRETCH" WIDTH="75" HEIGHT="75" Y="87" X="60" KEEP_SCALE="True" SHOW_IN_STATE="ENABLED" >
+        <align TARGET="vsText" TARGET_ATTRIBUTE="LEFT" ELEMENT_ATTRIBUTE="RIGHT" OFFSET="-40"/>
+      </data>
+      <data ID="awayCrest" TYPE="asset" PATH="crest" PARAM="@awayTeamId" FORMAT="STRETCH" WIDTH="75" HEIGHT="75"  Y="87" X="240"  KEEP_SCALE="True" SHOW_IN_STATE="ENABLED" >
+        <align TARGET="vsText" TARGET_ATTRIBUTE="RIGHT" ELEMENT_ATTRIBUTE="LEFT" OFFSET="40"/>
+      </data>
+    </tile>
+    <tile NAME="STORY_LOCKER_POST_MATCH_ADVANCE_LARGE" TYPE="EXPANDABLE_TILE" DESTINATION="advance">	
+      <properties WIDTH="1166" HEIGHT="179"  />
+	  <data ID="title" TYPE="text" FORMAT="FONT_FLUX_TITLE_HIGHLIGHT_HL|COLOR_FILL_WARNING|center|COLOR_FILL_UNHIGHLIGHT_ACTIVE_FLUX_TAB||FONT_FLUX_TITLE_UNHIGHLIGHT_HL|middle" PARAM="Advance_upper"/>
+    </tile>
+	<tile NAME="STORY_LOCKER_FIXTURES" TYPE="EXPANDABLE_TILE" ANIMATE_ON_SELECT="FALSE">
+		<properties HEIGHT="358" 	WIDTH="382" />
+      <data ID="title" TYPE="title" PARAM="SM_FIXTURES" SHOW_IN_STATE="ENABLED">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="15"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT"/>
+      </data>
+      <data ID="score" TYPE="text" PARAM="@lastPlayedMatchScore" TRANSLATE="FALSE" WIDTH="300" HEIGHT="300" FORMAT="SL||center||||bottom" SHOW_IN_STATE="ENABLED">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-30"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+      </data>
+      <data ID="competitionCrest" TYPE="asset" PARAM="@competitionId" PATH="league512x128" FORMAT="CENTER" WIDTH="128" HEIGHT="32" X="248" Y="25"  SHOW_IN_STATE="ENABLED"/>
+      <data ID="homeCrest" TYPE="asset" PATH="crest" PARAM="@resultsHomeTeamId" KEEP_SCALE="TRUE" WIDTH="75" HEIGHT="75" Y="87" X="60" SHOW_IN_STATE="ENABLED" />
+      <data ID="awayCrest" TYPE="asset" PATH="crest" PARAM="@resultsAwayTeamId" KEEP_SCALE="TRUE" WIDTH="75" HEIGHT="75"  Y="87" X="240" SHOW_IN_STATE="ENABLED" />
+		<data ID="leagueFixtures" TYPE="component" PATH="game/components/FluxComponents/story/FixtureList.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="FixtureListDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+	</tile>
+    <tile NAME="STORY_LOCKER_CHAMPIONS_LEAGUE_STANDINGS" TYPE="EXPANDABLE_TILE" DESTINATION="expand" ANIMATE_ON_SELECT="FALSE">
+      <properties WIDTH="336" HEIGHT="200" />
+	  <data ID="background" TYPE="asset" PATH="tiles/story" FORMAT="STRETCH" PARAM="standings_backing_CL_group_stage" SHOW_IN_STATE="EXPANDED" VISIBLE="TRUE" WIDTH="872" HEIGHT="746" />
+      <data ID="leagueStandings" TYPE="component" PATH="game/components/FluxComponents/story/StandingsLarge.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX" DATAPROVIDERID="SMStandingsLargeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+    </tile>
+    <tile NAME="STORY_LOCKER_CHAMPIONS_LEAGUE_CUP" TYPE="EXPANDABLE_TILE" DESTINATION="expand" ANIMATE_ON_SELECT="FALSE">
+      <properties WIDTH="336" HEIGHT="200" />
+	  <data ID="background" TYPE="asset" PATH="tiles/story" FORMAT="STRETCH" PARAM="@CupBackground" SHOW_IN_STATE="EXPANDED" VISIBLE="TRUE" WIDTH="872" HEIGHT="746" />
+      <data ID="cupStandings" TYPE="component" PATH="game/components/FluxComponents/story/TournamentTree.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX" DATAPROVIDERID="TournamentTreeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+    </tile>
+  </panel>
+  <panel NAME="STORY_LOCKER_CUP_PANEL">
+    <tile NAME="LOCKER_CUP_STANDINGS" TYPE="EXPANDABLE_TILE" DESTINATION="expand">
+      <properties WIDTH="336" HEIGHT="200" />
+      <data ID="cupStandings" TYPE="component" PATH="game/components/FluxComponents/story/TournamentTree.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="TournamentTreeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+    </tile>
+    <tile NAME="STORY_LOCKER_CUP_TRAIN" TYPE="EXPANDABLE_TILE">
+      <properties WIDTH="526" HEIGHT="326" />
+    </tile>
+  </panel>
+  <panel NAME="STORY_LOCKER_LEAGUE_PANEL">
+    <tile NAME="LOCKER_LEAGUE_STANDINGS" TYPE="EXPANDABLE_TILE" DESTINATION="expand">
+      <properties WIDTH="336" HEIGHT="200" />
+      <data ID="leagueStandings" TYPE="component" PATH="game/components/FluxComponents/story/StandingsLarge.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="SMStandingsLargeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+    </tile>
+    <tile NAME="STORY_LOCKER_LEAGUE_TRAIN" TYPE="EXPANDABLE_TILE">
+      <properties WIDTH="526" HEIGHT="326" />
+  </tile>
+  </panel>
+
+    <panel NAME="STORY_LOCKER_SETTINGS_PANEL">
+    <tile NAME="STORY_LOCKER_GAME_SETTINGS" TYPE="EXPANDABLE_TILE" DESTINATION="gameSettings" BG_ICON="Settings_Small">
+      <properties WIDTH="578" HEIGHT="179" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_GAME_SETTINGS" />
+    </tile>
+    <tile NAME="STORY_LOCKER_CONTROLLER_SETTINGS" TYPE="EXPANDABLE_TILE" DESTINATION="controllerSettings" BG_ICON="ControllerSettings_Small||PTF|">
+      <properties WIDTH="578" HEIGHT="179" />
+      <data ID="TITLE" TYPE="title" PARAM="PM_SETTINGS_CONTROLLER" />
+    </tile>
+    <tile NAME="STORY_LOCKER_BASIC_CONTROLS" TYPE="EXPANDABLE_TILE" DESTINATION="basicControls" BG_ICON="BasicControls_Small||PTF|">
+      <properties WIDTH="578" HEIGHT="179" />
+      <data ID="TITLE" TYPE="title" PARAM="PM_SETTINGS_BASIC_CONTROLS" />
+    </tile>
+    <tile NAME="STORY_LOCKER_ACCESSIBILITY" TYPE="EXPANDABLE_TILE" DESTINATION="accessibility" BG_ICON="Accessibility_Small">
+      <properties WIDTH="578" HEIGHT="179" />
+      <data ID="TITLE" TYPE="title" PARAM="MM_ACCESSIBILITY_SETTINGS" />
+    </tile>
+  </panel>
+  <panel NAME="STORY_LOCKER_DEBUG_PANEL">
+    <tile NAME="STORY_LOCKER_SAVE" TYPE="EXPANDABLE_TILE" DESTINATION="save">
+      <properties WIDTH="570" HEIGHT="179" />
+      <data ID="TITLE" TYPE="title" PARAM="Debug Save" />
+    </tile>
+  </panel>
+  
+  <panel NAME="STORY_LOCKER_LEAGUE_FIXTURES_PANEL">
+    <tile NAME="STORY_LOCKER_LEAGUE_FIXTURES_LIST" TYPE="EXPANDABLE_TILE" DESTINATION="expand">
+      <properties WIDTH="336" HEIGHT="200" />
+      <data ID="leagueFixtures" TYPE="component" PATH="game/components/FluxComponents/story/FixtureList.swf" SHOW_IN_STATE="EXPANDED"  FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="FixtureListDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+    </tile>
+  </panel>
+  
+  <panel NAME="STORY_LOCKER_LEAGUE_PANEL_ALTERNATIVE">
+  <variable_set>
+	  <variable id="CupBackground" type="string"/>
+  </variable_set>
+    <tile NAME="STORY_LOCKER_ALTERNATIVE_CUP_STANDINGS" TYPE="EXPANDABLE_TILE" ANIMATE_ON_SELECT="FALSE" >
+      <properties HEIGHT="358" 	WIDTH="382" />
+      <data ID="title" TYPE="title" PARAM="SM_HOME_CUP" SHOW_IN_STATE="ENABLED" />
+      <data ID="cupStandings" TYPE="component" PATH="game/components/FluxComponents/story/TournamentTree.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="TournamentTreeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+      <data ID="vsImage" TYPE="asset" PATH="tiles/story" PARAM="Matchday_VS_backing_Active" FORMAT="STRETCH" WIDTH="56" HEIGHT="54" SHOW_IN_STATE="ENABLED" HLALPHA="100" UHLALPHA="100">
+	  		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	  </data>
+	  <data ID="vsImageUL" TYPE="asset" PATH="tiles/story" PARAM="Matchday_VS_backing_NonActive" FORMAT="|||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="56" HEIGHT="54" SHOW_IN_STATE="ENABLED" HLALPHA="100" UHLALPHA="100">
+		  	<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	  </data>
+	  <data ID="aggrScore" TYPE="text" PARAM="@aggrScore" FORMAT="IS" X="150" VISIBLE="@showAggrScore">
+			<align TARGET="vsImage" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="30" />		  
+	  </data>
+	  <data ID="cupCrest" TYPE="asset" PARAM="@cupId" VISIBLE="@showCupCrest" PATH="league512x128" FORMAT="CENTER" WIDTH="128" HEIGHT="32" SHOW_IN_STATE="ENABLED">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+			<align TARGET="vsImage" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="80" />
+	  </data>
+      <data ID="homeCrest" TYPE="asset" PATH="crest" PARAM="@homeTeamId" FORMAT="STRETCH" WIDTH="100" HEIGHT="100" SHOW_IN_STATE="ENABLED" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="40" />
+	  </data>
+      <data ID="awayCrest" TYPE="asset" PATH="crest" PARAM="@awayTeamId" FORMAT="STRETCH" WIDTH="100" HEIGHT="100" SHOW_IN_STATE="ENABLED" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="240" />
+	  </data>
+      <data ID="nextMatch" TYPE="text" PARAM="@nextMatchDate" VISIBLE="@nextMatchDateVisibility" FORMAT="IS" TRANSLATE="FALSE" UHLALPHA="50" HLALPHA="50" WIDTH="300" HEIGHT="40" SHOW_IN_STATE="ENABLED" >
+			<align TARGET="homeCrest" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="TOP" OFFSET="-20" />
+	  </data>		
+    </tile>
+	<tile NAME="STORY_LOCKER_ALTERNATIVE_LEAGUE_STANDINGS" TYPE="EXPANDABLE_TILE" ANIMATE_ON_SELECT="FALSE" >
+      <properties HEIGHT="368" 	WIDTH="382" />
+	  <data ID="leagueStandings" TYPE="component" PATH="game/components/FluxComponents/story/StandingsLarge.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX" DATAPROVIDERID="SMStandingsLargeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+	</tile>
+    <tile NAME="STORY_LOCKER_ALTERNATIVE_CHAMPIONS_LEAGUE_STANDINGS" TYPE="EXPANDABLE_TILE" DESTINATION="expand" ANIMATE_ON_SELECT="FALSE">
+      <properties WIDTH="336" HEIGHT="200" />
+	  <data ID="background" TYPE="asset" PATH="tiles/story" FORMAT="STRETCH" PARAM="standings_backing_CL_group_stage" SHOW_IN_STATE="EXPANDED" VISIBLE="TRUE" WIDTH="872" HEIGHT="746" />
+      <data ID="leagueStandings" TYPE="component" PATH="game/components/FluxComponents/story/StandingsLarge.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX" DATAPROVIDERID="SMStandingsLargeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+    </tile>
+    <tile NAME="STORY_LOCKER_ALTERNATIVE_CHAMPIONS_LEAGUE_CUP" TYPE="EXPANDABLE_TILE" DESTINATION="expand" ANIMATE_ON_SELECT="FALSE">
+      <properties WIDTH="336" HEIGHT="200" />
+	  <data ID="background" TYPE="asset" PATH="tiles/story" FORMAT="STRETCH" PARAM="@CupBackground" SHOW_IN_STATE="EXPANDED" VISIBLE="TRUE" WIDTH="872" HEIGHT="746" />
+      <data ID="cupStandings" TYPE="component" PATH="game/components/FluxComponents/story/TournamentTree.swf" SHOW_IN_STATE="EXPANDED" FORMAT="FONT_REGULAR_SELECTED_FHD|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX" DATAPROVIDERID="TournamentTreeDP" WIDTH="872" HEIGHT="746" X="0" Y="0" />
+    </tile>
+  </panel>
+</root>

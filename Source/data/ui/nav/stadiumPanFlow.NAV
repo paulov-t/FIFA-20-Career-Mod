@@ -1,0 +1,20 @@
+{
+	"name":"StadiumPanFlow"
+	,"onEnter":
+	[	
+		["loadViewModel",["StadiumPanViewModel"]]
+		,["loadView",["screen", "game/screens/misc/StadiumPan", "", ".direction"]]
+		,["sendAction",["evt_menu_fade_out"]]
+	]
+	,"onExit":
+	[
+		["sendAction",["evt_menu_fade_in"]]
+		,["unloadView", ["screen", "game/screens/misc/StadiumPan", ".direction"]]
+		,["unloadViewModel",["StadiumPanViewModel"]]
+	]
+	,"transitions":
+	[
+		{ "event":"evt_input_event", "targets":["out_back"], "let":{ "direction":"back" } }
+	]
+	
+}

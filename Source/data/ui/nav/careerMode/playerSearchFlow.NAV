@@ -1,0 +1,124 @@
+{
+	"name":"PlayerSearchFlow"
+	,"initial": { "targets":["PlayerSearch"] }
+	,"states":
+	[
+		{
+			"name":"PlayerSearch"
+			,"onEnter":
+			[
+				["loadScreenController", ["PlayerSearch"]]	/* PlayerSearchViewModel loaded last since it relies on an async blocking 'PlayerSearch loadScreenController' in its constructor */
+				,["loadView", ["screen", "game/screens/career/transfers/TransferPlayerSearch"]]
+				,["loadViewModel",["PlayerSearchViewModel"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["PlayerSearchViewModel"]]
+				,["unloadView", ["screen", "game/screens/career/transfers/TransferPlayerSearch"]]
+				,["unloadScreenController", ["PlayerSearch"]]
+			]
+			,"states":
+			[
+				{
+					"name":"idleOnScreen"
+					,"transitions":
+					[
+						{
+							"event":"popupShow"
+							,"targets":["playerSearchKeyboard"]
+						}
+						,{
+							"event":"Back"
+							,"targets":["Back"]
+						}
+						,{
+							"event":"EnterGTNScoutReportFromPlayerSearch"
+							,"targets":["GTNScoutReportFromPlayerSearch"]
+							,"actions":[ ["executeCMAction",["EnterGTNScoutReportFromPlayerSearch"]] ]
+						}
+						,{
+							"event":"EnterNationality"
+							,"targets":["SelectNationality"] 
+							,"actions":[ ["executeCMAction",["EnterSelectNationalityFromPlayerSearch"]] ]
+						}
+					]
+				}
+				,{
+					"name":"playerSearchKeyboard"
+					,"onEnter":
+					[
+						["loadView",["overlay", "game/screens/career/PlayerSearchKeyboard"]]	
+					]
+					,"onExit":
+					[
+						["unloadView",["overlay", "game/screens/career/PlayerSearchKeyboard"]]			
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["idleOnScreen"]
+							,"let":{ "direction":"exit" }
+						}	
+					]
+				}
+			]
+			,"transitions": 
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"]
+				}
+				,{
+					"event":"EnterGTNScoutReportFromPlayerSearch"
+					,"targets":["GTNScoutReportFromPlayerSearch"]
+					,"actions":[ ["executeCMAction",["EnterGTNScoutReportFromPlayerSearch"]] ]
+				}
+				,{
+					"event":"EnterNationality"
+					,"targets":["SelectNationality"] 
+					,"actions":[ ["executeCMAction",["EnterSelectNationalityFromPlayerSearch"]] ]
+				}
+			]	
+		}
+		,{	
+			"onEnter":
+			[
+				["set", ["FromContext", ".FromContext" ]]
+			]
+			,"states":
+			[
+				{
+					"name":"GTNScoutReportFromPlayerSearch"
+					,"type":"external"
+					,"file":"/careerMode/gtnScoutReportFlow.nav"
+					,"outputs": 
+					{ 
+						"Back":"PlayerSearch"
+					}	
+				}
+			]
+		}
+		,{
+			"name":"SelectNationality"
+			,"onEnter": 
+			[
+				["loadScreenController", ["SelectNationality"]]
+				,["loadView", ["screen", "game/screens/career/Nationality"]]
+			]
+			,"onExit": 
+			[
+				["unloadView", ["screen", "game/screens/career/Nationality"]]
+				,["unloadScreenController", ["SelectNationality"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["PlayerSearch"] 
+					,"actions":[ ["executeCMAction",["EnterPlayerSearchFromSelectNationality"]] ]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,54 @@
+{
+	"name":"ContractFlow"
+	,"initial": { "targets":["Contract"] }
+	,"states":
+	[
+		{
+			"name":"Contract"
+			,"onEnter":
+			[
+				["loadScreenController", ["Contract"]]
+				,["loadView", ["screen", "game/screens/career/Contract"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/Contract"]]
+				,["unloadScreenController", ["Contract"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"BackToStart"
+					,"actions":[ ["invoke", ["GotoStartMenu"]] ]					
+				}
+				,{
+					"event":"Advance"
+					,"targets":["InitNewSeason"] 
+					,"actions":[ ["executeCMAction",["InitJob"]] ]
+				}
+				,{
+					"event":"EosAdvance"
+					,"targets":["InitNewSeason"] 
+					,"actions":[ ["executeCMAction",["InitJob"]] ]
+				}
+				,{
+					"event":"SackAdvance"
+					,"targets":["out_JobOffers"] 
+					,"actions":[ ["executeCMAction",["Sacked"]] ]
+				}
+				,{
+					"event":"BackJobListing"
+					,"targets":["out_Back"]
+				}
+			]
+		}	
+		,{
+			"name":"InitNewSeason"
+			,"type":"external"
+			,"file":"/careerMode/initNewSeasonFlow.nav"
+			,"outputs": 
+			{ 
+			}	
+		}
+	]
+}

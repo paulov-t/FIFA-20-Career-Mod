@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryContractSelectionHub" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <variable_set>
+	  <variable id="teamIdList" type="int"/>
+  </variable_set>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" X="167" Y="95" WIDTH="1535" DATAPROVIDERID="FLUX_HEADER_DP" />
+  </components>
+  <buttons>
+	<button ID="OPTION_TOP" HINT="SM_CONTRACT_PLAY_VO" ACTION="ACTION_BUTTON_Y"/>
+  </buttons>
+  <panel_set>
+    <panel NAME="STORY_CONTRACT_SELECTION" LABEL="" IS_TAB="FALSE">
+      <layout NAME="CONTRACT_SELECTION" X="167" Y="234">
+        <tile NAME="CONTRACT_LIST" X="0" Y="0" />
+        <tile NAME="CONTRACT_INFO_SUMMARY" X="0" Y="84" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="STORY_CONTRACT_SELECTION">
+    <tile NAME="CONTRACT_LIST" TYPE="TILE_LIST">
+      <properties WIDTH="1480" HEIGHT="74"/>
+      <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="74" ITEM_WIDTH="74" />
+      <data ID="teamCrest" TYPE="asset" PATH="crest" PARAM="@teamIdList[i]" X="10" Y="10" WIDTH="54" HEIGHT="54" />
+    </tile>
+    <tile NAME="CONTRACT_INFO_SUMMARY" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="1585" HEIGHT="578"  />
+      <data ID="background" TYPE="rectangle" PARAM="0xFFFFFF" UHLALPHA="10" HLALPHA="10" WIDTH="1585" HEIGHT="578" />
+      <data ID="clubInfoPanel" TYPE="component" PATH="game/components/ClubInfoPanel.swf" FORMAT="|COLOR_TEXT_LABEL||COLOR_TEXT_LABEL" WIDTH="1086" HEIGHT="578" DATAPROVIDERID="STORY_CONTRACT_DETAILS_DP"/>
+    </tile>
+  </panel>
+ </root>

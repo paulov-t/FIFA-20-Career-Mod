@@ -353,6 +353,31 @@
 										,{ "event":"evt_notify_controller_disconnect", "targets":["PreMatchFlow"] }
 									]
 								}
+								,{
+									"name":"KickOffLeaderboard"
+									,"onEnter":
+									[
+										["loadViewModel",["KickOffLeaderboardViewmodel"]]
+										,["loadView",["screen", "game/screens/playNow/KickOffLeaderboard", "", ".direction"]]
+									]
+									,"onExit":
+									[
+										["unloadView",["screen", "game/screens/playNow/KickOffLeaderboard"]]
+										,["unloadViewModel",["KickOffLeaderboardViewmodel"]]
+										,["unloadView", ["background"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"Back"
+											,"targets":["KickOffHub"] 
+										}
+										,{
+											"event":"Advance"
+											,"targets":["KickOffHub"] 
+										}
+									]
+								}		
 							]
 						}
 					]

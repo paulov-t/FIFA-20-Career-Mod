@@ -1,0 +1,121 @@
+{
+	"name":"downloadLiveFlow"
+	, "initial":
+	{
+		"targets":["checkRosterVersionDataAvailable"]
+	}
+	,"states":
+	[
+		{
+			"onEnter":
+			[
+				["loadView",["screen", "game/screens/liveDB/livedb_downloadLiveDB"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/liveDB/livedb_downloadLiveDB"]]
+			]
+			,"states":
+			[
+				{
+					"name":"downloadLiveDB"
+					,"transitions":
+					[
+						{
+							"event":"evt_online_disconnected"
+							,"targets":["out_disconnected"]
+						}
+						,{
+							"event":"evt_livedb_dld_finished"
+							,"targets":["downloadFinished"]
+						}
+					]
+				}
+				,{
+					"name":"downloadFinished"
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]
+		}
+		,{
+			"name":"checkRosterVersionDataAvailable"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["CheckIsDownloadingRosterVersionData"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["checkNewRostersAvailable"]
+				}
+			]
+		}
+		,{
+			"name":"checkNewRostersAvailable"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["IsNewRostersAvailable"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"success"
+					,"targets":["newRostersAvailable"]
+				}
+				,{
+					"event":"fail"
+					,"targets":["newRostersUnavailable"]
+				}
+			]
+		}
+		,{
+			"name":"newRostersAvailable"
+			,"onEnter":
+			[
+				["loadView", ["popup","RostersLDPopup", "DownloadUpdates_confirmation|Yes|advance|No|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "RostersLDPopup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+				,{
+					"event":"advance"
+					,"actions":[ ["sendScreenEvent", ["SetLiveDbDownloadState", "3"]] ]
+					,"targets":["downloadLiveDB"]
+				}	
+			]
+		}
+		,{
+			"name":"newRostersUnavailable"
+			,"onEnter":
+			[
+				["loadView", ["popup","RostersUnavailableLDPopup", "New_Updates_Unavailable|Ok|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "RostersUnavailableLDPopup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+			]
+		}
+		
+	]
+}

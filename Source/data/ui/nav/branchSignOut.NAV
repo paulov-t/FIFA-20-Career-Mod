@@ -1,0 +1,273 @@
+{
+	"name":"BranchSignOut"
+	,"initial": 
+	{
+		"targets":["FlowReady"]
+	}
+	,"states":
+	[
+		{
+			"name":"FlowReady"
+			,"transitions":
+			[
+				{ "event":"evt_sign_out", "cond":["==",".DEMO_KIOSK",true], "targets":["NotifySignOutKiosk"] }
+				,{ "event":"evt_online_disconnected", "cond":["==",".FIFA_CLOSEDBETA",true], "targets":["NotifySignOutBeta"] }
+				,{ "event":"evt_online_disconnected", "cond":["==",".FIFA_CFE",true], "targets":["NotifySignOutBeta"] }
+				,{ "event":"evt_sign_out", "cond":["==", ".EA_PLATFORM_CAPILANO", true], "targets":["SignOutPopup"] }
+				,{ "event":"evt_sign_out", "cond":["==", ".EA_PLATFORM_KETTLE", true], "targets":["NotifySignOut"] }
+				,{ "event":"evt_bypass_sign_out_flow", "targets":["BypassFlow"] }
+				,{ "event":"evt_sign_out_flow_not_ready", "targets":["FlowNotReady"] }
+				,{ "event":"evt_sl_operation_started", "targets":["FlowReady_SLBlocked"], "actions":[ ["invoke",["evt_branch_flow_blocked"]] ] }
+				,{ "event":"evt_ea_access_trial_mismatch", "cond":["==", ".EA_PLATFORM_KETTLE", true], "targets":["NotifySignOutEAAccess"] }
+			]
+		}
+		,{
+			"name":"FlowReady_SLBlocked"
+			,"transitions":
+			[
+				{ "event":"evt_sign_out", "targets":["FlowReady_WaitForSL"]  }
+				,{ "event":"evt_sign_out_flow_not_ready", "targets":["FlowNotReady_SLBlocked"] }
+				,{ "event":"evt_sl_operation_complete", "targets":["FlowReady"], "actions":[ ["invoke",["evt_branch_flow_recovered"]] ] }
+				,{ "event":"evt_bypass_sign_out_flow", "targets":["BypassFlow_SLBlocked"] }
+			]
+		}
+		,{
+			"name":"FlowNotReady"
+			,"transitions":
+			[
+				{ "event":"evt_sign_out", "targets":["WaitForFlowReady"], "actions":[ ["invoke",["evt_branch_flow_blocked"]] ] }
+				,{ "event":"evt_sign_out_flow_ready", "targets":["FlowReady"] }
+				,{ "event":"evt_sl_operation_started", "targets":["FlowNotReady_SLBlocked"], "actions":[ ["invoke",["evt_branch_flow_blocked"]] ] }
+			]
+		}
+		,{
+			"name":"FlowNotReady_SLBlocked"
+			,"transitions":
+			[
+				{ "event":"evt_sign_out", "targets":["FlowNotReady_WaitForSL"] }
+				,{ "event":"evt_sign_out_flow_ready", "targets":["FlowReady_SLBlocked"] }
+				,{ "event":"evt_sl_operation_complete", "targets":["FlowNotReady"], "actions":[ ["invoke",["evt_branch_flow_recovered"]] ] }
+			]
+		}
+		,{
+			"name":"WaitForFlowReady"
+			,"transitions":
+			[
+				{ "event":"evt_sign_out_flow_ready", "cond":["==",".DEMO_KIOSK",true], "targets":["NotifySignOutKiosk"] }
+				,{ "event":"evt_sign_out_flow_ready", "cond":["==",".FIFA_CLOSEDBETA",true], "targets":["NotifySignOutBeta"] }
+				,{ "event":"evt_sign_out_flow_ready", "cond":["==",".FIFA_CFE",true], "targets":["NotifySignOutBeta"] }
+				,{ "event":"evt_sign_out_flow_ready", "cond":["==", ".EA_PLATFORM_CAPILANO", true], "targets":["SignOutPopup"] }
+				,{ "event":"evt_lead_profile_recovered", "cond":["==", ".EA_PLATFORM_CAPILANO", true], "targets":["LeadProfileCheck_FlowNotReady"] }
+				,{ "event":"evt_sign_out_flow_ready", "cond":["==", ".EA_PLATFORM_KETTLE", true], "targets":["NotifySignOut"] }
+				,{ "event":"evt_sl_operation_started", "targets":["FlowNotReady_WaitForSL"] }
+			]
+		}
+		,{
+			"name":"FlowReady_WaitForSL"
+			,"transitions":
+			[
+				{ "event":"evt_sl_operation_complete", "cond":["==", ".EA_PLATFORM_CAPILANO", true], "targets":["SignOutPopup"] }
+				,{ "event":"evt_sl_operation_complete", "cond":["==", ".EA_PLATFORM_KETTLE", true], "targets":["NotifySignOut"] }
+				,{ "event":"evt_sign_out_flow_not_ready", "targets":["FlowNotReady_WaitForSL"] }
+			]
+		}
+		,{
+			"name":"FlowNotReady_WaitForSL"
+			,"transitions":
+			[
+				{ "event":"evt_sl_operation_complete", "targets":["WaitForFlowReady"] }
+				,{ "event":"evt_sign_out_flow_ready", "targets":["FlowReady_WaitForSL"] }
+			]
+		}
+		,{
+			"name":"BypassFlow_SLBlocked"
+			,"transitions":
+			[
+				{ "event":"evt_sign_out", "targets":["BypassFlow_WaitForSL"] }
+				,{ "event":"evt_sign_out_flow_ready", "targets":["FlowReady_SLBlocked"] }
+				,{ "event":"evt_sl_operation_complete", "targets":["BypassFlow"], "actions":[ ["invoke",["evt_branch_flow_recovered"]] ] }
+			]
+		}
+		,{
+			"name":"BypassFlow_WaitForSL"
+			,"transitions":
+			[
+				{ "event":"evt_sl_operation_complete", "targets":["FlowReady"] ,"actions":[["sendAction", ["notifySignOut"]], ["invoke",["profileSignOut"]], ["sendAction", ["notifySignOutTitleScreen"]], ["sendAction",["triggerSignOut"]], ["invoke",["evt_branch_flow_not_recovered"]], ["invoke",["profileSignOutComplete"]]] }
+			]
+		}
+		,{
+			"name":"BypassFlow"
+			,"transitions":
+			[
+				{ "event":"evt_sign_out", "targets":["FlowReady"] ,"actions":[["sendAction", ["notifySignOut"]], ["invoke",["profileSignOut"]], ["sendAction", ["notifySignOutTitleScreen"]], ["sendAction",["triggerSignOut"]], ["invoke",["evt_branch_flow_not_recovered"]], ["invoke",["profileSignOutComplete"]]] }
+				,{ "event":"evt_sign_out_flow_ready", "targets":["FlowReady"] }
+				,{ "event":"evt_sl_operation_started", "targets":["BypassFlow_SLBlocked"], "actions":[ ["invoke",["evt_branch_flow_blocked"]] ] }
+			]
+		}
+		,{
+			"name":"NotifySignOut"
+			,"onEnter":
+			[
+				["sendAction", ["notifySignOut"]]
+				,["invoke",["evt_branch_flow_blocked"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"notifySignOutReady"
+					,"targets":["SignOutTitleScreenPopup"]
+				}
+			]
+		}
+		,{
+			"name":"NotifySignOutKiosk"
+			,"onEnter":
+			[
+				["sendAction", ["notifySignOut"]]
+				,["invoke",["evt_branch_flow_blocked"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"notifySignOutReady"
+					,"targets":["FlowReady"]
+					,"actions":
+					[
+						["invoke",["profileSignOut"]]
+						,["sendAction", ["notifySignOutTitleScreen"]]
+						,["sendAction",["triggerSignOut"]]
+						,["invoke",["evt_branch_flow_not_recovered"]]
+						,["invoke",["profileSignOutComplete"]]
+					]
+				}
+			]
+		}
+		,{
+			"name":"NotifySignOutBeta"
+			,"onEnter":
+			[
+				["sendAction", ["notifySignOut"]]
+				,["invoke",["evt_branch_flow_blocked"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"notifySignOutReady"
+					,"targets":["FlowReady"]
+					,"actions":
+					[
+						["invoke",["profileSignOut"]]
+						,["sendAction", ["notifySignOutTitleScreen"]]
+						,["invoke",["evt_branch_flow_not_recovered"]]
+						,["invoke",["profileSignOutComplete"]]
+					]
+				}
+			]
+		}
+		,{
+			"name":"NotifySignOutEAAccess"
+			,"onEnter":
+			[
+				["sendAction", ["notifySignOut"]]
+				,["invoke",["evt_branch_flow_blocked"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"notifySignOutReady"
+					,"targets":["FlowReady"]
+					,"actions":
+					[
+						["invoke",["profileSignOut"]]
+						,["sendAction", ["notifySignOutTitleScreen"]]
+						,["invoke",["evt_branch_flow_not_recovered"]]
+						,["invoke",["profileSignOutComplete"]]
+					]
+				}
+			]
+		}
+		,{
+			"name":"SignOutTitleScreenPopup"
+			,"onEnter":
+			[
+				["invoke",["profileSignOut"]]
+				,["sendAction", ["notifySignOutTitleScreen"]]
+				,["sendAction", ["showSignOutTitleScreenPopup"]]
+				,["sendAction", ["triggerSignOut"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_dismiss_sign_out_popup"
+					,"targets":["FlowReady"]
+					,"actions":
+					[
+						["invoke",["evt_branch_flow_not_recovered"]]
+						,["invoke",["profileSignOutComplete"]]
+					]
+				}
+			]
+		}
+		,{
+			"name":"SignOutPopup"
+			,"onEnter":
+			[
+				["sendAction", ["notifySignOut"]]
+				,["sendAction", ["showSignOutPopup"]]
+				,["invoke",["evt_branch_flow_blocked"]]
+			]
+			,"transitions":
+			[
+				{ "event":"evt_show_account_picker", "targets":["SignOutPopup"] }
+				,{ "event":"evt_dismiss_sign_out_popup", "targets":["LeadProfileCheck"] }
+				,{ "event":"evt_lead_profile_recovered", "targets":["LeadProfileCheck"] }
+			]
+		}
+		,{
+			"name":"LeadProfileCheck"
+			,"onEnter":
+			[
+				["sendAction", ["checkLeadProfilePairing"]]
+				,["sendAction", ["checkProfileEulaAccepted"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_lead_profile_paired"
+					,"targets":["FlowReady"]
+					,"actions":[ ["invoke",["evt_branch_flow_recovered"]] ]
+				}
+				,{
+					"event":"evt_lead_profile_controller_changed"
+					,"targets":["FlowReady"]
+					,"actions":[ ["invoke",["evt_notify_lead_controller_changed", "evt_branch_flow_recovered"]] ]
+				}
+				,{
+					"event":"evt_lead_profile_unpaired"
+					,"targets":["SignOutTitleScreenPopup"]
+					,"actions":[ ["sendScreenEvent", ["SetInputForSigninRecovery", "0"]] ]
+				}
+			]
+		}
+		,{
+			"name":"LeadProfileCheck_FlowNotReady"
+			,"onEnter":
+			[
+				["sendAction", ["checkLeadProfilePairing"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_lead_profile_paired"
+					,"targets":["FlowNotReady"]
+					,"actions":[ ["invoke",["evt_branch_flow_recovered"]] ]
+				}
+				,{
+					"event":"evt_lead_profile_controller_changed"
+					,"targets":["FlowNotReady"]
+					,"actions":[ ["invoke",["evt_notify_lead_controller_changed", "evt_branch_flow_recovered"]] ]
+				}
+			]
+		}
+	]
+}

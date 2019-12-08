@@ -1,0 +1,431 @@
+{
+	"name":"debugFlow"
+	,"states":
+	[	
+		{
+			"name":"in_conversationWheelTest"
+			,"onEnter":
+			[
+				["loadViewModel", ["ConversationViewModel", "debug"]]
+				,["loadViewModel", ["FluxViewModel"]]
+				,["loadView", ["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+				,["sendAction", ["nav", "smConversation"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["FluxViewModel"]]
+				,["unloadViewModel", ["ConversationViewModel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		},
+		{
+			"name":"in_CareerModeDebugSceneSelect"
+			,"onEnter":
+			[
+				["loadViewModel", ["CareerModeSceneSelectViewModel", "debug"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel", ["CareerModeSceneSelectViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"in_CareerModeDebugSceneSelectWaitState"
+					,"transitions":
+					[
+						{
+							"event":"CareerModeSublevelLoaded"
+							,"targets":["in_CareerModeDebugSceneSelectLoadScreen"]
+						}
+					]
+				},
+				{
+					"name":"in_CareerModeDebugSceneSelectLoadScreen"
+					,"onEnter":
+					[
+						["loadView",["screen", "game/screens/storyMode/DebugStartPointSetup.swf"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/storyMode/DebugStartPointSetup.swf"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"CareerModeDebugSceneSelected","targets":["in_CareerModeDebugScenePlaying"]
+						}
+					]					
+				},
+				{
+					"name":"in_CareerModeDebugScenePlaying"
+					,"onEnter":
+					[
+						["unloadView", ["screen", "game/screens/storyMode/DebugStartPointSetup.swf"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"CareerModeDebugSceneFinished"
+							,"targets":["in_CareerModeDebugSceneSelectLoadScreen"]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		},
+		{
+			"name":"in_overlayTest"
+			,"onEnter":
+			[
+				["sendAction", ["feRenderInGame","true"]]
+				,["loadViewModel",["testscreenviewmodel"]]
+				,["loadView",["screen", "game/screens/debug/OverlayTest"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["feRenderInGame","false"]]
+				,["unloadView",["screen", "game/screens/debug/OverlayTest"]]
+				,["unloadViewModel",["testscreenviewmodel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		},
+		{
+			"name":"in_testScreen"
+			,"onEnter":
+			[
+				["loadViewModel",["testscreenviewmodel"]]
+				,["loadView",["screen", "game/screens/debug/TestScreen"]]				
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/debug/TestScreen"]]
+				,["unloadViewModel",["testscreenviewmodel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		},
+		{
+			"name":"in_testFlux"
+			,"onEnter":
+			[
+			
+				["loadView",["background", "BACKGROUND", "hub"]]
+				,["loadViewModel", ["TestFluxViewModel", "debug/TestFluxHubCfg"]]
+				,["loadViewModel", ["FluxViewModel"]]
+				,["loadView", ["screen", "game/screens/fluxHub/FluxHub"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["FluxViewModel"]]
+				,["unloadViewModel", ["TestFluxViewModel"]]
+				,["unloadView",["background"]]
+			]
+			,"states":
+			[
+				{
+					"name":"debugFluxScreen"
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["out_back"]
+						}
+						,{
+							"event":"showDebugPopUp"
+							,"targets":["debugPopUp"]
+						}
+					]
+				}
+				,{
+					"name":"debugPopUp"
+					,"onEnter":
+					[
+						["loadView", ["popup", "DebugPopUp", "Debug Test PopUp|Option 1|advance|Option 2|advance|Option 3|advance|Option 4|advance"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "DebugPopUp"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["debugFluxScreen"]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name":"in_playerHeadsTest"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/debug/TestPlayerHeads"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/debug/TestPlayerHeads"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		},
+		{
+			"name":"in_crestsTest"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/debug/TestCrests"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/debug/TestCrests"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		}
+		,{
+			"name":"in_fontCalibrator"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/debug/FontCalibrator"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/debug/FontCalibrator"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		}
+		,{
+			"name":"in_backgroundTest"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/debug/TestImage"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/debug/TestImage"]]
+			]
+			,"states":
+			[
+				{
+					"name":"withBackground"
+					,"onEnter":
+					[
+						["loadView", ["background", "FIFA", "2"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["background"]]
+					]
+					,"transitions":
+					[
+						{"event":"back","targets":["out_back"]}
+						,{"event":"advance","targets":["withoutBackground"]}
+					]
+				}
+				,{
+					"name":"withoutBackground"
+					,"transitions":
+					[
+						{"event":"back","targets":["withBackground"]}
+						,{"event":"advance","targets":["withBackground"]}
+					]
+				}
+			]
+		}
+        ,{
+			"name":"in_backgroundAnimTest"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/debug/TestImage"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/debug/TestImage"]]
+			]
+			,"states":
+			[
+				{
+					"name":"withBackground1"
+					,"onEnter":
+					[
+						["loadView", ["background", "ANIMATION", "1"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["background"]]
+					]
+					,"transitions":
+					[
+						{"event":"back","targets":["out_back"]}
+						,{"event":"advance","targets":["withBackground2"]}
+					]
+				}
+                ,{
+					"name":"withBackground2"
+					,"onEnter":
+					[
+						["loadView", ["background", "ANIMATION", "2"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["background"]]
+					]
+					,"transitions":
+					[
+						{"event":"back","targets":["out_back"]}
+						,{"event":"advance","targets":["withBackground1"]}
+					]
+				}
+			]
+		}
+		,{
+			"name":"futDebugPackOpening"
+			,"type":"external"
+			,"file":"/fut/debug/futDebugPackOpening.nav"
+			,"outputs":
+			{
+				"back":"out_back"
+			}
+		}
+		,{
+			"name":"moviePlayerTest"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/debug/MoviePlayerTest"]]				
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/debug/MoviePlayerTest"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		}
+		,{
+			"name":"SavedInput"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/savedInputMatchFlow.nav"
+					,"inputs":
+					{
+						"loadSavedInput":"LoadSavedInput"
+						,"enterSavedMatch":"EnterSavedMatch"
+					}
+					,"outputs":
+					{
+						"loadSuccess":"enterSavedMatch"
+						,"back":"out_back"
+						,"quit":"out_back"
+					}
+				}	
+			]
+		}
+		,{
+			"name":"playSampleScene"
+			,"initial":
+			{
+				"targets":["WaitForSublevelLoad"]
+			}
+			,"let":
+			{
+				"cinematicName":"SC_Airlock_ToGameplay"
+			}
+			,"onEnter":
+			[
+				["sendAction", ["fbStartFlowEvent", "StartSampleCinematic"]]
+			]
+			,"states":
+			[
+				{
+					"name":"WaitForSublevelLoad"
+					,"transitions":
+					[
+						{
+							"event":"GameModesSublevelReady"
+							,"targets":["CinematicControlFlow"]
+						}
+					]
+				},
+				{
+					"name":"CinematicControlFlow",
+					"type":"external"
+					,"file":"/cinematicControlFlow.nav"
+					,"outputs":
+					{
+						"out_CinematicFinished":"out_back"
+					}
+				}	
+			]
+		}
+		,{
+			"name":"customizePlayer"
+			,"onEnter":
+			[
+				["loadViewModel",["FluxViewModel"]]
+				,["loadViewModel", ["CustomizePlayerViewModel", "debug"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["FluxViewModel"]]
+				,["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				, ["unloadViewModel", ["CustomizePlayerViewModel", "debug"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		}
+	]
+}

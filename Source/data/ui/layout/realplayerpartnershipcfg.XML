@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="RealPlayerPartnershipHub" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" PARAM="SM_SELECT_PARTNER_TITLE|SM_SELECT_PARTNER_DESC" X="109" Y="95" WIDTH="1700" />
+  </components>
+  <panel_set>
+    <panel NAME="REAL_PLAYER_PARTNERSHIP_GROUP_SELECT" LABEL="" IS_TAB="FALSE">
+      <layout NAME="REAL_PLAYER_PARTNERSHIP_SELECT_GROUP" X="0" Y="0">
+        <tile NAME="REAL_PLAYER_PARTNERSHIP_SELECT" X="109" Y="278" />
+      </layout>	
+    </panel>
+  </panel_set>
+  <panel NAME="REAL_PLAYER_PARTNERSHIP_GROUP_SELECT">
+	<tile NAME="REAL_PLAYER_PARTNERSHIP_SELECT" TYPE="TILE_LIST" DATAPROVIDERID="GridControlDP">
+	<properties WIDTH="1700" HEIGHT="632" />
+      <data ID="playerImage" TYPE="asset" PATH="storyRealPlayerPartnership/playerSelect" WIDTH="561" HEIGHT="632"/>
+	  <data ID="position" TYPE="text" FORMAT="FONT_TILE_THSU|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|right|COLOR_TEXT_UNHIGHLIGHT_FLUX" HEIGHT="0" WIDTH="100" X="442" Y="5" TRANSLATE="FALSE"/>
+	  <data ID="style" TYPE="text" FORMAT="FONT_REGULAR_INACTIVE_LABEL_DESCRIPTION|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" HEIGHT="16" WIDTH="100" X="17" Y="237" TRANSLATE="FALSE"/>
+	  <data ID="styleValue" TYPE="text" FORMAT="FONT_BOLD_FHD|||COLOR_SOLAR_PURPLE" HEIGHT="25" WIDTH="250" X="17" Y="265" TRANSLATE="FALSE"/>
+	  <data ID="overall" TYPE="text" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_UNHIGHLIGHT_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_TITLE" HEIGHT="42" WIDTH="77" X="1" Y="503" TRANSLATE="FALSE"/>
+	  <data ID="overallValue" TYPE="text" FORMAT="FONT_TILE_HM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" HEIGHT="0" WIDTH="77" X="2" Y="446" TRANSLATE="FALSE"/>
+	  <data ID="attribute_1" TYPE="text" FORMAT="FONT_KEYBOARD_UNHIGHLIGHT||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="20" WIDTH="84" X="69" Y="453" TRANSLATE="FALSE"/>
+	  <data ID="attribute_1_underscore" TYPE="rectangle" PARAM="COLOR_FILL_HIGHLIGHT_CONTRAST" X="93" Y="487" WIDTH="36" HEIGHT="1" />
+	  <data ID="attribute_1_value" TYPE="text" FORMAT="FONT_TILE_THSU||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="84" X="69" Y="484" TRANSLATE="FALSE"/>
+	  <data ID="attribute_2" TYPE="text" FORMAT="FONT_KEYBOARD_UNHIGHLIGHT||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="20" WIDTH="84" X="151" Y="453" TRANSLATE="FALSE"/>
+	   <data ID="attribute_2_underscore" TYPE="rectangle" PARAM="COLOR_FILL_HIGHLIGHT_CONTRAST" X="175" Y="487" WIDTH="35" HEIGHT="1" />
+	  <data ID="attribute_2_value" TYPE="text" FORMAT="FONT_TILE_THSU||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="84" X="151" Y="484" TRANSLATE="FALSE"/>
+	  <data ID="attribute_3" TYPE="text" FORMAT="FONT_KEYBOARD_UNHIGHLIGHT||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="20" WIDTH="84" X="231" Y="453" TRANSLATE="FALSE"/>
+	   <data ID="attribute_3_underscore" TYPE="rectangle" PARAM="COLOR_FILL_HIGHLIGHT_CONTRAST" X="255" Y="487" WIDTH="35" HEIGHT="1" />
+	  <data ID="attribute_3_value" TYPE="text" FORMAT="FONT_TILE_THSU||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="84" X="231" Y="484" TRANSLATE="FALSE"/>
+	  <data ID="attribute_4" TYPE="text" FORMAT="FONT_KEYBOARD_UNHIGHLIGHT||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="20" WIDTH="84" X="315" Y="453" TRANSLATE="FALSE"/>
+	   <data ID="attribute_4_underscore" TYPE="rectangle" PARAM="COLOR_FILL_HIGHLIGHT_CONTRAST" X="340" Y="487" WIDTH="35" HEIGHT="1" />
+	  <data ID="attribute_4_value" TYPE="text" FORMAT="FONT_TILE_THSU||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="84" X="315" Y="484" TRANSLATE="FALSE"/>
+	  <data ID="attribute_5" TYPE="text" FORMAT="FONT_KEYBOARD_UNHIGHLIGHT||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="20" WIDTH="84" X="397" Y="453" TRANSLATE="FALSE"/>
+	   <data ID="attribute_5_underscore" TYPE="rectangle" PARAM="COLOR_FILL_HIGHLIGHT_CONTRAST" X="421" Y="487" WIDTH="34" HEIGHT="1" />
+	  <data ID="attribute_5_value" TYPE="text" FORMAT="FONT_TILE_THSU||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="84" X="397" Y="484" TRANSLATE="FALSE"/>
+	  <data ID="attribute_6" TYPE="text" FORMAT="FONT_KEYBOARD_UNHIGHLIGHT||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="20" WIDTH="84" X="478" Y="453" TRANSLATE="FALSE"/>
+	   <data ID="attribute_6_underscore" TYPE="rectangle" PARAM="COLOR_FILL_HIGHLIGHT_CONTRAST" X="502" Y="487" WIDTH="35" HEIGHT="1" />
+	  <data ID="attribute_6_value" TYPE="text" FORMAT="FONT_TILE_THSU||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="40" WIDTH="84" X="478" Y="484" TRANSLATE="FALSE"/>
+	  <data ID="objectiveIconText" TYPE="component" PARAM="SM_SELECT_PARTNER_OBJECTIVE||Objective|25" FORMAT="FONT_TILE_TI|COLOR_TEXT_UNHIGHLIGHT_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_TITLE" PATH="game/components/FluxComponents/IconText.swf" WIDTH="561" HEIGHT="40" Y="540" />
+	  <data ID="objectiveDesc" TYPE="text" FORMAT="FONT_REGULAR_FHD||center|COLOR_TEXT_HIGHLIGHT_FLUX" HEIGHT="25" WIDTH="561" X="0" Y="575" TRANSLATE="FALSE"/>
+    </tile>
+  </panel>
+</root>

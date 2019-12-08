@@ -1,0 +1,115 @@
+{
+	"name":"InitNewSeasonFlow"
+	,"initial": { "targets":["InitNewSeason"] }
+	,"states":
+	[
+		{
+			"onEnter": 
+			[ 
+				["loadScreenController", ["InitNewSeason"]] 
+				, ["loadView",["screen", "game/screens/career/Scheduling"]]
+			]
+			,"onExit": 
+			[	
+				["unloadView",["screen", "game/screens/career/Scheduling"]]
+				, ["unloadScreenController", ["InitNewSeason"]]
+			]
+			,"states":
+			[
+				{
+					"name":"InitNewSeasonIdle"
+				}
+				,{
+					"type":"external"
+					,"file":"/reloadfestadiumflow.nav"
+					,"inputs":
+					{
+						"InitNewSeason":"TriggerReloadNoWait"
+					}
+					,"outputs":
+					{
+						"LoadStarted":"InitNewSeasonIdle"
+						,"ReloadReady":"InitNewSeasonIdle"
+					}
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"InterruptSeasonCreate"
+					,"actions":[ ["executeCMAction",["InterruptNewSeason"]] ]
+				}
+				,{
+					"event":"StartInit"
+					,"actions":[ ["executeCMAction",["StartNewSeason"]] ]
+				}
+				,{
+					"event":"StartedNewSeason"
+					,"actions":[ ["executeCMAction",["ReceivedStartedNewSeason"]] ]
+				}				
+				,{
+					"event":"Advance"
+					,"targets":["WaitForStadiumComplete"]
+					,"actions":[ ["executeCMAction",["EnterHubFirstTime"]] ]
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/reloadfestadiumflow.nav"
+			,"inputs":
+			{
+				"WaitForStadiumComplete":"WaitForLoad"
+			}
+			,"outputs":
+			{
+				"ReloadReady":"StadiumLoaded"
+				,"LoadStarted":"StadiumLoaded"
+			}
+		}
+		,{
+			"name":"StadiumLoaded"
+			,"onEnter":
+			[
+				["executeCMAction",["VerifyPlayerSigningScene"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"SkipPlayerSignInScene"
+					,"targets":["PlayerSignInSceneCompleted"]
+				}
+				,{
+					"event":"StartPlayerSignInScene"
+					,"targets":["PlayerSignInScene"]
+				}
+			]
+		}
+		,{
+			"name":"PlayerSignInScene"
+			,"let":
+			{ 
+				"cutSceneName":"gmSignCutScene"
+				,"cutSceneSubLevel":"gmLoadCutScenesSublevel"
+			}
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/CutSceneFlow.nav"
+					,"outputs": 
+					{ 
+						"BackFromCutScene":"PlayerSignInSceneCompleted"
+					}
+				}
+			]
+		}
+		,{
+			"name":"PlayerSignInSceneCompleted"
+			,"onEnter":
+			[
+				["invoke", ["GotoPreSeasonTourFlow"]]
+			]
+		}
+	]
+}

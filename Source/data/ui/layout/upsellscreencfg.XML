@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="23/02/2018 11:50:00" VERSION="1">
+  <hub_settings NAME="UpsellScreen" HUB_VERSION="4">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_Nested_Exported" TILE_NAME="TILE_NESTED" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="DYNAMIC_UPSELL_CONTENT_PANEL" IS_TAB="FALSE" >
+      <layout NAME="DYNAMIC_CONTENT_UPSELL_BASE">
+        <tile NAME="STATIC_TILE_BACKGROUND" X="-1" Y="-1"/>
+        <tile NAME="DYNAMIC_CONTENT_UPSELL_TILE" X="0" Y="0"/>
+        <tile NAME="DYNAMIC_CONTENT_UPSELL_TILE_ONE" X="124" Y="665"/>
+      </layout>
+	  <layout NAME="DYNAMIC_CONTENT_UPSELL" EXTEND="DYNAMIC_CONTENT_UPSELL_BASE" >
+        <tile NAME="DYNAMIC_CONTENT_UPSELL_TILE_TWO" X="490" Y="665"/>
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="DYNAMIC_UPSELL_CONTENT_PANEL">
+    <tile NAME="STATIC_TILE_BACKGROUND" TYPE="TILE" HIGHLIGHTABLE="FALSE" ALWAYS_ACTIVE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+        <properties WIDTH="1921" HEIGHT="1081" />
+        <data ID="BGRECT" TYPE="rectangle" VISIBLE="TRUE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" WIDTH="1921" HEIGHT="1081" X="0" Y="0"/>
+    </tile>
+    <tile NAME="DYNAMIC_CONTENT_UPSELL_TILE" TYPE="TILE_NESTED" DATAPROVIDERID="ONLINE_LIVE_CONTENT_DP" HIGHLIGHTABLE="FALSE">
+      <properties WIDTH="1920" HEIGHT="1080" />
+      <subtile NAME="DYNAMIC_CONTENT_UPSELL_SUBTILE" SUBTILE_TYPE="TILE" ALWAYS_ACTIVE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+       </subtile>
+    </tile>
+	<tile NAME="DYNAMIC_CONTENT_UPSELL_TILE_ONE" TYPE="TILE_NESTED" DATAPROVIDERID="ONLINE_LIVE_CONTENT_TILE_1_DP" >
+      <properties WIDTH="356" HEIGHT="193" />
+      <subtile NAME="DYNAMIC_CONTENT_UPSELL_SUBTILE_ONE" SUBTILE_TYPE="TILE" >
+      </subtile>
+    </tile>
+	<tile NAME="DYNAMIC_CONTENT_UPSELL_TILE_TWO" TYPE="TILE_NESTED" DATAPROVIDERID="ONLINE_LIVE_CONTENT_TILE_2_DP" >
+      <properties WIDTH="356" HEIGHT="193" />
+      <subtile NAME="DYNAMIC_CONTENT_UPSELL_SUBTILE_TWO" SUBTILE_TYPE="TILE" >
+      </subtile>
+    </tile>
+  </panel>
+</root>

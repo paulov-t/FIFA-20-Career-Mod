@@ -1,0 +1,145 @@
+{
+	"name":"futFriendliesKickoffHubFlow"
+	,"onEnter":
+	[
+		["loadViewModel",["OnlineKickOffHubViewModel"]]
+		,["sendAction", ["enterMode", "SyncDataForFUT"] ]
+		,["loadView",["widget", "external/ion_fut/screens/onlineFlow/FutFriendlyLauncherWidget"]]
+		,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MATCH_FLOW_BACKGROUND"]]
+	]
+	,"onExit":
+	[
+		["unloadView",["widget", "external/ion_fut/screens/onlineFlow/FutFriendlyLauncherWidget"]]
+		,["unloadViewModel",["OnlineKickOffHubViewModel"]]
+	]
+	, "initial":
+	{
+		"targets":["WaitForKits"]
+	}
+	,"states":
+	[
+		{
+			"name":"OnlineKickoffHub_Wrapper"
+			,"onEnter":
+			[
+				["loadViewModel",["KitSelectViewModel"]]
+				/*,["loadView", ["screen", "game/screens/online/KickOffHub"]]*/
+			]
+			,"onExit":
+			[
+				/*["unloadView", ["screen", "game/screens/online/KickOffHub"]]
+				,*/["unloadViewModel",["KitSelectViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"OnlineKickoffHub"
+					,"transitions":
+					[
+						{ 
+							"event":"back",
+							"targets":["back"] 
+						}
+						,{
+							"event":"advance"
+							,"targets":["WaitForKits"]
+						}
+						,{ 
+							"event":"TeamManagement" ,"let":{"tmMode":"onlinePreMatchFut"} 
+							,"targets":["TeamManagementFlow"] 
+						}
+						,{ 
+							"event":"ControllerAndGameSetup", 
+							"targets":["ControllerAndGameSetupHub"] 
+						}
+					]
+				}
+				,{
+					"name":"WaitForKits"
+					,"onEnter":
+					[
+						["sendAction",["condition", "WaitForKitsLoad"]]
+					]
+					,"transitions":
+					[
+						{	
+							"event":"KitsLoadComplete", 
+							"targets":["WaitForSession"]
+						}
+					]
+				}
+				,{
+					"name":"WaitForSession"
+					,"transitions":
+					[
+						{ 
+							"event":"goBackToOnlineKickoffHub",
+							"targets":["advance"] 
+						}
+						,{ 
+							"event":"back",
+							"targets":["back"] 
+						}
+						,{
+							"event":"GotoGameHub"
+							,"targets":["gamehub"]
+						}						
+					]
+				}
+			]
+		}
+		,{
+			"name":"TeamManagementFlow"
+			,"initial": { "targets":["TeamManagementFlowChild"] }
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/teamsheets/TeamSheetEditor"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/teamsheets/TeamSheetEditor"]]
+			]
+			,"states":
+			[
+				{
+					"name":"TeamManagementFlowChild"
+					,"type":"external"
+					,"file":"/online/onlineEditTeamSheetFlow.nav"
+					,"outputs":
+					{
+						"quit":"OnlineKickoffHub"
+						,"back":"BackToKickOffHub"
+					}
+				}
+				,{
+					"name":"BackToKickOffHub"
+					,"onEnter":
+					[
+						["sendAction", ["updateScreen", "updateLocalTeamSheet"]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["OnlineKickoffHub"] }
+					]
+				}
+			]
+		}
+		,{
+			"name":"ControllerAndGameSetupHub"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/settings/controllerAndGameSetup"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/settings/controllerAndGameSetup"]]
+			]
+			,"transitions":
+			[
+				{ "event":"back", "targets":["OnlineKickoffHub"] }
+				,{ "event":"goBackToOnlineKickoffHub", "targets":["OnlineKickoffHub"] }
+			]
+		}
+	]
+}

@@ -1,0 +1,114 @@
+{
+	"name":"TournamentSelectTeamsFlow"
+	,"onEnter":
+	[
+		["sendAction", ["pushTheme", "UEFA_CHAMPIONS_LEAGUE"]]
+		,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.UCL_BACKGROUND"]] 
+		,["loadViewModel", ["GroupInfoConfigViewModel", ""]]
+		,["loadView", ["screen", "game/screens/career/GroupsInfo", "", ".direction"]]
+		
+	]
+	,"onExit":
+	[
+		["unloadView", ["screen", "game/screens/career/GroupsInfo"]]
+		,["unloadViewModel", ["GroupInfoConfigViewModel", ""]]
+	]
+	,"transitions":
+	[
+		{ "event":"goToInviteFlow", "targets":["out_inviteAccepted"], "actions":[ ["unloadView", ["background"]], ["sendAction", ["popTheme"]] ] }
+		,{ "event":"profileSignOut", "targets":["out_profileSignOut"], "actions":[ ["unloadView", ["background"]], ["sendAction", ["popTheme"]] ] }
+	]
+	,"states":
+	[
+		{
+			"name":"idleOnScreen"
+			,"transitions":
+			[
+				 {"event":"advance","targets":["out_advance"]}
+				,{"event":"advanceNoUserTeam","targets":["noUserTeamPopup"]}
+				,{"event":"PrepareTournament","actions":[ ["executeCMAction",["PrepareTournaments"]] ]}
+				,{
+					"event":"back",
+					"targets":["out_back"],
+					"let":{ "direction":"back" },
+					"actions":
+					[
+						["sendAction", ["popTheme"]]
+					]
+				}
+				,{"event":"select","targets":["selectFavoriteTeam"]}
+				,{"event":"popupSwapInvalidSameNationSameGroup","targets":["popupSwapInvalidSameNationSameGroup"]}
+				,{"event":"popupReplaceInvalidBreaksNationLimit","targets":["popupReplaceInvalidBreaksNationLimit"]}
+			]
+		}
+		,{
+			"name":"selectFavoriteTeam"
+			,"onEnter":
+			[
+				["loadView", ["overlay", "game/screens/misc/SelectFavoriteTeam"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["overlay", "game/screens/misc/SelectFavoriteTeam"]]
+			]
+			,"transitions":
+			[
+				{"event":"back","targets":["idleOnScreen"]}
+			]
+		}
+		,{
+			"name": "noUserTeamPopup",
+			"onEnter":
+			[
+				["loadView", ["popup", "NO_USER_TEAM_POPUP", "tourny_NotEnoughTeams|Ok|Advance"]]
+			],
+			"onExit":
+			[
+				["unloadView", ["popup", "NO_USER_TEAM_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["idleOnScreen"] 
+				}
+			]
+		}
+		,{
+			"name":"popupSwapInvalidSameNationSameGroup"
+			,"onEnter":
+			[
+				["loadView", ["popup","INVALID_SWAP_POPUP", "CM_Europe_First_Season_Invalid_Swap|Ok|Advance"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "INVALID_SWAP_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["idleOnScreen"] 
+				}
+			]
+		}
+		,{
+			"name":"popupReplaceInvalidBreaksNationLimit"
+			,"onEnter":
+			[
+				["loadView", ["popup","INVALID_REPLACE_POPUP", "CM_Europe_First_Season_League_Limit|Ok|Advance"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "INVALID_REPLACE_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["idleOnScreen"] 
+				}
+			]
+		}
+	]
+}

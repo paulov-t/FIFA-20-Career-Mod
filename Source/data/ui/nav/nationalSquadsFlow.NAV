@@ -1,0 +1,52 @@
+{
+	"name":"nationalSquadsFlow"
+	, "initial":
+	{
+			"targets":["selectFavoriteTeam"]
+	}
+	,"states":
+	[
+		{
+			"name":"selectFavoriteTeam"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["SetSelectTeamForInternationalScreen",""]]
+				,["loadView",["screen", "game/screens/misc/SelectFavoriteTeam"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/misc/SelectFavoriteTeam"]]
+				,["sendScreenEvent", ["ResetSelectTeamContext",""]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["internationalSelections"]
+				}
+				,{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]				
+		}
+		,{
+			"name":"internationalSelections"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/teamManagement/46_internationalSelections"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/teamManagement/46_internationalSelections"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["selectFavoriteTeam"]
+				}
+			]
+		}
+	]
+}

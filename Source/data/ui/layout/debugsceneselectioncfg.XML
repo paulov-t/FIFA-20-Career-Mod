@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="DebugSceneSelect" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <variable_set>
+	  <variable id="descriptionParamList" type="string"/>
+	  <variable id="sceneList" type="string"/>
+	  <variable id="toggleParamList" type="string"/>
+	  <variable id="numberOfScenes" type="int"/>
+	  <variable id="queuedSceneName" type="string"/>
+  </variable_set>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" PARAM="DEBUG_SCENE_SELECT|DEBUG_SCENE_SELECT_SUBTITLE" X="209" Y="95" WIDTH="1535" />
+  </components>
+  <panel_set>
+    <panel NAME="DEBUG_SCENE_SELECT" >
+	  <buttons>
+		<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+	  </buttons>
+      <layout NAME="SELECT_SCENE" X="209" Y="292">
+		<tile NAME="SCENE_LIST" X="300" Y="-80" />
+  		<tile NAME="INFO_DESC" X="-100" Y="-80" />
+		<tile NAME="OPTIONS_LIST" X="-100" Y="50" />
+		<tile NAME="PLAY_QUEUED_SCENE" X="-100" Y="510" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="DEBUG_SCENE_SELECT">
+  	<tile NAME="SCENE_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE" >	
+      <properties WIDTH="1500" HEIGHT="700"/>
+		<listProperties LIST_TYPE="GRID" ITEM_HEIGHT="100" ITEM_WIDTH="450"/>
+		<data ID="desc" TYPE="text" PARAM="@sceneList[i]" FORMAT="|COLOR_FILL_WARNING||COLOR_FILL_UNHIGHLIGHT_ACTIVE_FLUX_TAB||FONT_FLUX_TITLE_UNHIGHLIGHT_HS" TRANSLATE="TRUE" >
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	</tile>
+	<tile NAME="INFO_DESC" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" >	
+      <properties WIDTH="380" HEIGHT="120"/>
+      <data ID="desc" TYPE="text" PARAM="FILTER - Use Filters Below to query all Storymode Scenes" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|center|||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="TRUE" WIDTH="380" HEIGHT="120" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+	  </data>
+	</tile>
+	 <tile NAME="OPTIONS_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE">
+      <properties WIDTH="380" HEIGHT="450" />
+      <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="150" ROWS="3" />
+      <data ID="description" TYPE="text" PARAM="@descriptionParamList[i]" FORMAT="|COLOR_FILL_WARNING||COLOR_FILL_UNHIGHLIGHT_ACTIVE_FLUX_TAB||FONT_FLUX_TITLE_UNHIGHLIGHT_HS" TRANSLATE="TRUE" >
+          <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+	  <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="25" />
+	  </data>
+	   <data ID="toggle" TYPE="component" PARAM="@toggleParamList[i]" PATH="game/components/FluxComponents/FluxToggleComponent.swf" WIDTH="375" HEIGHT="50">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="CENTER" />
+        <align TARGET="description" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10"/>
+      </data>
+    </tile>
+	<tile NAME="PLAY_QUEUED_SCENE" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="TRUE" SELECTABLE="TRUE" >	
+      <properties WIDTH="380" HEIGHT="120"/>
+      <data ID="desc" TYPE="text" PARAM="Play Queued Scenes" TRANSLATE="FALSE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|center|||COLOR_TEXT_HIGHLIGHT_FLUX|middle" WIDTH="380" HEIGHT="120" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+	  </data>
+	</tile>
+</panel>
+</root>

@@ -1,0 +1,6 @@
+[
+	"harel.lua",
+	"hareltableparser.lua",
+	"tableutil.lua",
+	"cps.lua"
+]

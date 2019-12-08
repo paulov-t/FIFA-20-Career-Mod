@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryStats" HUB_VERSION="3">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+	<component PATH="game/fluxHelpers/StoryHubLibrary.swf" X="0" Y="0"/>
+    <component PATH="game/components/FluxComponents/FluxHubHeader.swf" X="167" Y="95" WIDTH="1535" DATAPROVIDERID="FLUX_HEADER_DP"/>
+  </components>
+  <buttons>
+    <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+  </buttons>
+  <panel_set>
+    <panel NAME="STORY_REAL_PLAYER_PARTNERSHIP" LABEL="SM_REAL_PLAYER_PARTNERSHIP_TAB" IS_TAB="TRUE">
+      <layout NAME="STORY_REAL_PLAYER_PARTNERSHIP_SUMMARY" X="167" Y="323">
+        <tile NAME="STORY_REAL_PLAYER_PARTNERSHIP_SUMMARY" X="0" Y="0" HIGHLIGHTABLE="TRUE" SELECTABLE="FALSE" />
+      </layout>
+    </panel>
+    <panel NAME="STORY_PLAYER_VALUE" LABEL="SM_PLAYER_VALUE_TAB" IS_TAB="TRUE">
+      <layout NAME="PLAYER_VALUE_SUMMARY" X="167" Y="323">
+        <tile NAME="PLAYER_VALUE_SUMMARY" X="0" Y="0" HIGHLIGHTABLE="TRUE" SELECTABLE="FALSE" />
+      </layout>
+    </panel>
+    <panel NAME="STORY_CURRENT_CONTRACT" LABEL="SM_ACTIVE_CONTRACT_TAB" IS_TAB="TRUE">
+      <layout NAME="CONTRACT_SUMMARY" X="167" Y="323">
+        <tile NAME="CONTRACT_SUMMARY" X="0" Y="0" HIGHLIGHTABLE="TRUE" SELECTABLE="FALSE" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="STORY_REAL_PLAYER_PARTNERSHIP">
+	<variable_set>
+		<variable id="realPlayerPartnershipRatingDpId" type="int"/>	  
+		<variable id="heroPositionLabel" type="string"/>
+		<variable id="heroOverallLabel" type="string"/>
+		<variable id="partnerOverallLabel" type="string"/>
+		<variable id="partnerPositionLabel" type="string"/>
+		<variable id="heroFirstNameLabel" type="string"/>
+		<variable id="heroLastNameLabel" type="string"/>
+		<variable id="partnerImage" type="string"/>
+		<variable id="heroImage" type="string"/>
+		<variable id="partnerFirstNameLabel" type="string"/>
+		<variable id="partnerLastNameLabel" type="string"/>
+		<variable id="appearanceRingChart" type="string"/>
+		<variable id="heroAppearancesValue" type="string"/>
+		<variable id="partnerAppearancesValue" type="string"/>
+		<variable id="goalsRingChart" type="string"/>
+		<variable id="heroGoalsValue" type="string"/>
+		<variable id="partnerGoalsValue" type="string"/>
+		<variable id="assistsRingChart" type="string"/>
+		<variable id="heroAssistsValue" type="string"/>
+		<variable id="partnerAssistsValue" type="string"/>
+		<variable id="assistsToPartnerRingChart" type="string"/>
+		<variable id="heroAssistsToPartnerValue" type="string"/>
+		<variable id="partnerAssistsToPartnerValue" type="string"/>
+		<variable id="crestId" type="int"/>
+	</variable_set>
+    <tile NAME="STORY_REAL_PLAYER_PARTNERSHIP_SUMMARY" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" SELECTABLE="FALSE">
+      <properties WIDTH="1586" HEIGHT="578"  />
+      <data ID="background" TYPE="rectangle" PARAM="0xFFFFFF" UHLALPHA="10" HLALPHA="10" WIDTH="1586" HEIGHT="578" />
+      <data ID="heroSpacer" TYPE="rectangle" PARAM="COLOR_FILL_VALUE" X="339" Y="50" WIDTH="5" HEIGHT="102" />
+     <data ID="heroFirstNameLabel" TYPE="text" PARAM="@heroFirstNameLabel" FORMAT="FONT_TILE_HMU|COLOR_TEXT_ASH_GREY|left|COLOR_TEXT_ASH_GREY" TRANSLATE="FALSE" REL_TARGET="heroSpacer" REL_X="15" Y="35" WIDTH="300" />
+      <data ID="heroLastNameLabel" TYPE="text" PARAM="@heroLastNameLabel" FORMAT="FONT_TILE_HM|COLOR_TEXT_HIGHLIGHT_CONTRAST|left" TRANSLATE="FALSE" REL_TARGET="heroSpacer" REL_X="15" Y="93" WIDTH="300" />
+      <data ID="heroPositionLabel" TYPE="text" PARAM="@heroPositionLabel" X="240" WIDTH="54" HEIGHT="30" FORMAT="FONT_TILE_SXLU||center" REL_TARGET="heroSpacer" REL_X="-80" Y="40" TRANSLATE="FALSE"/>
+      <data ID="heroOverallLabel" TYPE="text" PARAM="@heroOverallLabel" WIDTH="60" HEIGHT="54" FORMAT="FONT_TILE_HLU|COLOR_TEXT_HIGHLIGHT_CONTRAST|center" TRANSLATE="FALSE" REL_TARGET="heroSpacer" REL_X="-80" Y="83" />
+      <data ID="partnerSpacer" TYPE="rectangle" PARAM="COLOR_FILL_LABEL" X="1200" Y="50" WIDTH="5" HEIGHT="102" />
+      <data ID="partnerFirstNameLabel" TYPE="text" PARAM="@partnerFirstNameLabel" FORMAT="FONT_TILE_HMU|COLOR_TEXT_ASH_GREY|right|COLOR_TEXT_ASH_GREY" TRANSLATE="FALSE" REL_TARGET="partnerSpacer" REL_X="-315" Y="35" WIDTH="300" />
+      <data ID="partnerLastNameLabel" TYPE="text" PARAM="@partnerLastNameLabel" FORMAT="FONT_TILE_HM|COLOR_TEXT_HIGHLIGHT_CONTRAST|right" TRANSLATE="FALSE" REL_TARGET="partnerSpacer" REL_X="-315" Y="93" WIDTH="300" />
+      <data ID="partnerPositionLabel" TYPE="text" PARAM="@partnerPositionLabel" WIDTH="60" HEIGHT="30" FORMAT="FONT_TILE_SXLU||center" REL_TARGET="partnerSpacer" REL_X="15" Y="40" TRANSLATE="FALSE"/>
+      <data ID="partnerOverallLabel" TYPE="text" PARAM="@partnerOverallLabel" WIDTH="60" HEIGHT="54" TRANSLATE="FALSE" FORMAT="FONT_TILE_HLU|COLOR_TEXT_HIGHLIGHT_CONTRAST|center" REL_TARGET="partnerSpacer" REL_X="15" Y="83" />
+      <data ID="crest" TYPE="asset" PATH="crest/dark" PARAM="@crestId" WIDTH="128" HEIGHT="128"> 
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+		<align TARGET="heroFirstNameLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+	  </data>
+      <data ID="partnershipStatusSpacer" TYPE="component" PATH="game/components/FluxComponents/TextSpacer.swf" PARAM="SM_PARTNERSHIP_STATUS" FORMAT="FONT_TILE_IS" TRANSLATE="TRUE" WIDTH="1586" HEIGHT="40" X="0" Y="202" />
+      <data ID="partnershipRatingComponent" TYPE="component" PATH="game/components/PartnershipRating.swf" DATAPROVIDERID="@realPlayerPartnershipRatingDpId" WIDTH="675" HEIGHT="40" X="450" Y="283" />
+      <data ID="comparisonStatsSpacer" TYPE="component" PATH="game/components/FluxComponents/TextSpacer.swf" PARAM="SM_COMPARISON_STATS" FORMAT="FONT_TILE_IS" TRANSLATE="TRUE" WIDTH="1586" HEIGHT="40" X="0" Y="383" />
+      <data ID="appearanceRingChart" TYPE="component" PATH="game/components/RingChart.swf" PARAM="@appearanceRingChart" WIDTH="100" HEIGHT="100" X="410" Y="418" />
+      <data ID="appearanceRingTextSpacer" TYPE="vspacer" WIDTH="1" HEIGHT="40" X="460" Y="447" />
+      <data ID="heroAppearancesValue" TYPE="text" PARAM="@heroAppearancesValue" FORMAT="TSLU|COLOR_FILL_VALUE|right" TRANSLATE="FALSE" REL_TARGET="appearanceRingTextSpacer" WIDTH="50" REL_X="-55" REL_Y="-43" />
+      <data ID="partnerAppearancesValue" TYPE="text" PARAM="@partnerAppearancesValue" FORMAT="TSLU|COLOR_FILL_LABEL|left" TRANSLATE="FALSE" REL_TARGET="appearanceRingTextSpacer" WIDTH="50" REL_X="5" REL_Y="-43" />
+      <data ID="appearanceText" TYPE="text" FORMAT="TSMU|COLOR_TEXT_HIGHLIGHT_CONTRAST|center" WIDTH="222" PARAM="SM_APPEARANCES" TRANSLATE="TRUE" X="349" Y="533" />
+      <data ID="goalsRingChart" TYPE="component" PATH="game/components/RingChart.swf" PARAM="@goalsRingChart" WIDTH="100" HEIGHT="100" X="634" Y="418" />
+      <data ID="goalsRingTextSpacer" TYPE="vspacer" WIDTH="1" HEIGHT="40" X="683" Y="447" />
+      <data ID="heroGoalsValue" TYPE="text" PARAM="@heroGoalsValue" FORMAT="TSLU|COLOR_FILL_VALUE|right" TRANSLATE="FALSE" REL_TARGET="goalsRingTextSpacer" WIDTH="50" REL_X="-55" REL_Y="-43" />
+      <data ID="partnerGoalsValue" TYPE="text" PARAM="@partnerGoalsValue" FORMAT="TSLU|COLOR_FILL_LABEL|left" TRANSLATE="FALSE" REL_TARGET="goalsRingTextSpacer" WIDTH="50" REL_X="5" REL_Y="-43" />
+      <data ID="goalsText" TYPE="text" FORMAT="TSMU|COLOR_TEXT_HIGHLIGHT_CONTRAST|center" PARAM="SM_GOALS" TRANSLATE="TRUE" WIDTH="222" X="573" Y="533" />
+      <data ID="assistsRingChart" TYPE="component" PATH="game/components/RingChart.swf" PARAM="@assistsRingChart" WIDTH="100" HEIGHT="100" X="855" Y="418" />
+      <data ID="assistsRingTextSpacer" TYPE="vspacer" WIDTH="1" HEIGHT="40" X="904" Y="447" />
+      <data ID="heroAssistsValue" TYPE="text" PARAM="@heroAssistsValue" FORMAT="TSLU|COLOR_FILL_VALUE|right" TRANSLATE="FALSE" REL_TARGET="assistsRingTextSpacer" WIDTH="50" REL_X="-55" REL_Y="-43" />
+      <data ID="partnerAssistsValue" TYPE="text" PARAM="@partnerAssistsValue" FORMAT="TSLU|COLOR_FILL_LABEL|left" TRANSLATE="FALSE" REL_TARGET="assistsRingTextSpacer" WIDTH="50" REL_X="5" REL_Y="-43" />
+      <data ID="assistsText" TYPE="text" FORMAT="TSMU|COLOR_TEXT_HIGHLIGHT_CONTRAST|center" PARAM="SM_ASSISTS" TRANSLATE="TRUE" WIDTH="222" X="797" Y="533" />
+      <data ID="assistsToPartnerRingChart" TYPE="component" PATH="game/components/RingChart.swf" PARAM="@assistsToPartnerRingChart" WIDTH="100" HEIGHT="100" X="1076" Y="418" />
+      <data ID="assistsToPartnerRingTextSpacer" TYPE="vspacer" WIDTH="1" HEIGHT="40" X="1125" Y="447" />
+      <data ID="heroAssistsToPartnerValue" TYPE="text" PARAM="@heroAssistsToPartnerValue" FORMAT="TSLU|COLOR_FILL_VALUE|right" TRANSLATE="FALSE" REL_TARGET="assistsToPartnerRingTextSpacer" WIDTH="50" REL_X="-55" REL_Y="-43" />
+      <data ID="partnerAssistsToPartnerValue" TYPE="text" PARAM="@partnerAssistsToPartnerValue" FORMAT="TSLU|COLOR_FILL_LABEL|left" TRANSLATE="FALSE" REL_TARGET="assistsToPartnerRingTextSpacer" WIDTH="50" REL_X="5" REL_Y="-43" />
+      <data ID="assistsToPartnerText" TYPE="text" FORMAT="TSMU|COLOR_TEXT_HIGHLIGHT_CONTRAST|center" PARAM="SM_ASSISTS_TO_PARTNER" TRANSLATE="TRUE" WIDTH="222" X="1015" Y="533" />
+      <data ID="heroImage" TYPE="asset" PATH="storyRealPlayerPartnership/partnerHub" PARAM="@heroImage" KEEP_SCALE="TRUE" FORMAT="||left||||bottom" />
+      <data ID="partnerImage" TYPE="asset" PATH="storyRealPlayerPartnership/partnerHub" PARAM="@partnerImage" KEEP_SCALE="TRUE" FORMAT="||right||||bottom"/>
+    </tile>
+  </panel>
+  <panel NAME="STORY_PLAYER_VALUE">
+	<variable_set>
+		<variable id="playerValueSummaryDpId" type="int"/>
+	</variable_set>
+    <tile NAME="PLAYER_VALUE_SUMMARY" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" SELECTABLE="FALSE">
+      <properties WIDTH="1586" HEIGHT="578"  />
+      <data ID="background" TYPE="rectangle" PARAM="0xFFFFFF" UHLALPHA="10" HLALPHA="10" WIDTH="1586" HEIGHT="578" />
+      <data ID="playerValuePanel" TYPE="component" PATH="game/components/PlayerValuePanel.swf" DATAPROVIDERID="@playerValueSummaryDpId" WIDTH="1586" HEIGHT="578" />
+    </tile>
+  </panel>
+  <panel NAME="STORY_CURRENT_CONTRACT">
+	<variable_set>
+		<variable id="contractSummaryDpId" type="int"/>
+	</variable_set>
+    <tile NAME="CONTRACT_SUMMARY" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" SELECTABLE="FALSE">
+      <properties WIDTH="1586" HEIGHT="578"  />
+      <data ID="background" TYPE="rectangle" PARAM="0xFFFFFF" UHLALPHA="10" HLALPHA="10" WIDTH="1586" HEIGHT="578" />
+      <data ID="contractPanel" TYPE="component" PATH="game/components/ClubInfoPanel.swf" DATAPROVIDERID="@contractSummaryDpId" WIDTH="1586" HEIGHT="578" />
+    </tile>
+  </panel>
+</root>

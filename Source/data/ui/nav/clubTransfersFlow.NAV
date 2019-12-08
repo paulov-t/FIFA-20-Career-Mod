@@ -1,0 +1,52 @@
+{
+	"name":"clubTransfersFlow"
+	, "initial":
+	{
+			"targets":["selectFavoriteTeam"]
+	}
+	,"states":
+	[
+		{
+			"name":"selectFavoriteTeam"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["SetSelectTeamForClubTransferScreen",""]]
+				,["loadView",["screen", "game/screens/misc/SelectFavoriteTeam"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/misc/SelectFavoriteTeam"]]
+				,["sendScreenEvent", ["ResetSelectTeamContext",""]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["clubTransfers"]
+				}
+				,{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]				
+		}
+		,{
+			"name":"clubTransfers"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/teamManagement/45_clubTransfers"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/teamManagement/45_clubTransfers"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["selectFavoriteTeam"]
+				}
+			]
+		}
+	]
+}

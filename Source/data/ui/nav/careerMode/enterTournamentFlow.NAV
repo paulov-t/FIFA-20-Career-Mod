@@ -1,0 +1,38 @@
+{
+	"name":"enterTournamentFlow"
+	,"initial":
+	{
+		"targets":["loadSublevel"]
+	}
+	,"states":
+	[
+		{
+			"name":"loadSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["fbStartFlowEvent", "LoadCareerModeSublevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"CareerModeSublevelLoaded"
+					,"targets":["loadNewsCinematicsSublevel"]
+				}
+			]
+		}		
+		,{
+			"name":"loadNewsCinematicsSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["fbStartFlowEvent", "LoadNewsCinematicsSublevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"NewsCinematicsSublevelLoaded"
+					,"targets":["out"] 
+				}
+			]
+		}
+	]
+}

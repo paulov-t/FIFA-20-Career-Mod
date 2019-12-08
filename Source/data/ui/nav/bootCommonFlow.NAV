@@ -1,0 +1,726 @@
+{
+	"name":"bootCommonFlow"
+	,"initial": 
+	{
+		"targets":["esrbCheck"]
+	}
+	,"transitions":
+	[
+		{ "event":"profileSignOut", "targets":["bootProfileSignOutWait"] }
+	]
+	,"states":
+	[
+		{
+			"name":"bootProfileSignOutWait"
+			,"transitions":
+			[
+				{
+					"event":"profileSignOutComplete"
+					,"targets":["WaitForStadiumLoadBeforeIdlePressStart"]
+				}
+			]
+		}
+		,{
+			"name":"esrbCheck"
+			,"onEnter":
+			[
+				["sendAction", ["condition","esrbRequired"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","targets":["esrb"]}
+				,{"event":"false","targets":["ceroCheck"]}
+			]
+		}		
+		,{
+			"name":"esrb"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/bootflow/EsrbRating", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/bootflow/EsrbRating", ".direction"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["DisclaimerCheck"]}
+			]
+		}
+		,{
+			"name":"ceroCheck"
+			,"onEnter":
+			[
+				["sendAction", ["condition","ceroRequired"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","targets":["cero"]}
+				,{"event":"false","targets":["DisclaimerCheck"]}
+			]
+		}
+		,{
+			"name":"cero"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/bootflow/CeroRating", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/bootflow/CeroRating", ".direction"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["DisclaimerCheck"]}
+			]
+		}
+		,{
+			"name":"DisclaimerCheck"
+			,"onEnter":
+			[
+				["sendAction", ["condition","DisclaimerRequired"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","targets":["Disclaimer"]}
+				,{"event":"false","targets":["legal"]}
+			]
+		}		
+		,{
+			"name":"Disclaimer"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/bootflow/Disclaimer", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/bootflow/Disclaimer", ".direction"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["legal"]}
+			]
+		}
+		,{
+			"name":"legal"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/bootflow/Legal"]]
+				,["sendAction", ["bootflowStarted"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","cond":["==",".FIFA_PRESS",true],"actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["pressSkipIntroVideo"]}
+				,{"event":"advance","actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["introVideo"]}
+			]
+		}
+		,{
+			"name":"introVideo"
+			,"onEnter":
+			[
+				["loadView", ["video", "INTRO"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["video", "INTRO"]]
+			]
+			,"states":
+			[
+				{
+					"name":"videoLoading"
+					,"transitions":
+					[
+						{"event":"videoStarted","targets":["videoPlaying"]}
+						,{"event":"videoStopped","targets":["pressStart"]}
+					]
+				}
+				,{
+					"name":"videoPlaying"
+					,"onEnter":
+					[
+						["loadView",["screen", "game/screens/bootflow/PressStart"]]
+					]
+					,"transitions":
+					[
+						{"event":"videoStopped","targets":["pressStart"]}
+					]
+				}
+			]
+		}
+		,{
+			"name":"pressSkipIntroVideo"
+			,"onEnter":
+			[
+				["sendAction", ["videoStarted", "INTRO"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["pressSkipSendIntroFinished"]}
+			]
+		}
+		,{
+			"name":"pressSkipSendIntroFinished"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/bootflow/PressStart"]]
+				,["sendAction", ["videoStopped", "INTRO"]]
+			]
+			,"transitions":
+			[
+				{"event":"videoStopped","targets":["pressStart"]}
+				
+			]
+					
+		}
+		,{
+			"name":"pressStart"
+			,"initial": 
+			{
+				"targets":["initialPressStart"]
+			}
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/bootflow/PressStart", "true"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/bootflow/PressStart"]]
+			]
+			,"transitions":
+			[
+				{"event":"assetUpdate","targets":["assetUpdate"]}
+				,{"event":"pranUpload","targets":["pranUpload"]}
+				,{"event":"bootflowSaveLoadFailed","cond":["==",".FIFA_CLOSEDBETA",true],"targets":["eaAccessSaveLoadFailedFlow"]}
+				,{"event":"bootflowSaveLoadFailed","cond":["==",".FIFA_CFE",true],"targets":["eaAccessSaveLoadFailedFlow"]}
+				,{"event":"bootflowSaveLoadFailed","targets":["bootflowSaveLoadFailEula"]}
+				,{"event":"advance","cond":["==", ".DEMO_KIOSK", true],"targets":["exitBootFlow"]}
+				,{"event":"advance","cond":["==", ".FIFA_DEMO", true],"targets":["eulaBootflow"]}
+				,{"event":"advance","cond":["==", ".FIFA_PRESS", true],"targets":["exitBootFlow"]}
+				,{"event":"advance","targets":["skillLevel"]}
+				,{"event":"nonLeadProfileCreation","cond":["==",".FIFA_CLOSEDBETA",true],"targets":["welcomePranFail"]}
+				,{"event":"nonLeadProfileCreation","cond":["==",".FIFA_CFE",true],"targets":["welcomePranFail"]}
+			  ,{"event":"nonLeadProfileCreation","targets":["welcomeEulaFail"]}
+				,{"event":"profileSignOut","targets":["idlePressStart"]}
+				,{"event":"demoPressStartReselected","cond":["==",".FIFA_DEMO",true],"actions":[["unloadView",["background"]]] ,"targets":["mainFeFlow"]}
+			]
+			,"states":
+			[
+				{
+					"name":"initialPressStart"
+					,"transitions":
+					[
+						{"event":"advance","targets":["idlePressStart"]}
+					]
+				}				
+				,{
+					"name":"attractVideo"
+					,"onEnter":
+					[
+						["loadView", ["video", "ATTRACT"]]
+					]
+					,"transitions":
+					[
+						{"event":"videoStopped","targets":["idlePressStart"]}
+					]
+				}
+				,{
+					"name":"idlePressStart"
+					,"onEnter":
+					[
+						["invoke", ["evt_invite_flow_not_ready"]] /* no evt_invite_flow_ready in onExit as all of bootflow is gated until we enter the mainHub */
+					]
+					,"transitions":
+					[
+						{"event":"timeout","cond":["==",".FIFA_CLOSEDBETA",true]}
+						,{"event":"timeout","cond":["==",".FIFA_CFE",true]}
+						,{"event":"timeout","cond":["==",".FIFA_DEMO",true]}
+						,{"event":"timeout","targets":["attractVideo"]}
+					]
+					,"initial": 
+					{
+						"targets":["pressStartDbVerificationFlow"]
+					}
+					,"states":
+					[
+						{
+							"name":"pressStartDbVerificationFlow"
+							,"type":"external"
+							,"file":"/dbVerificationFlow.nav"
+							,"outputs":
+							{
+								"out_success":"checkForInstallMode"
+								,"out_fail":"checkForInstallMode"
+							}
+						}
+						,{
+							"name":"checkForInstallMode"
+							,"onEnter":
+							[
+								["invoke", ["evt_bypass_sign_out_flow"]] /* No sign-out recovery during bootflow (ie. profile creation) */
+								,["sendAction", ["condition","installMode"]]
+							]
+							,"transitions":
+							[
+								{"event":"install_mode_true","targets":["checkForIntroMatchLoaded"]/* Check if intro match assets are loaded*/}
+								,{"event":"install_mode_false","targets":["initialIdlePressStart"]/* Proceed to regular flow */}
+							]
+						}
+						,{
+							"states":
+							[
+								{
+									"name":"checkForIntroMatchLoaded"
+									,"onEnter":
+									[
+										["sendAction", ["fbStartFlowEvent", "gmLoadIntroFlowPrematch"]]
+										,["sendAction", ["condition","introMatchLoaded"]]
+									]
+									,"transitions":
+									[
+										{"event":"true","targets":["initialIdlePressStart"]/* Start loading cutscene*/}
+										,{"event":"false","targets":["idlePressStartWaitForAssets"]/* We're loading the intro assets. Wait for asset load */}
+									]
+								}
+								,{
+									"name":"idlePressStartWaitForAssets"
+									,"transitions":
+									[
+										{"event":"introMatchLoaded","targets":["initialIdlePressStart"]/*Intro match is done loading, start loading cutscene */}
+									]
+								}
+							]
+						}
+						,{
+							"name":"preLoadIntroMatch"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["ShowLoadingIcon", ""]]
+								,["sendAction", ["activateGameModeIntro"]]
+							]
+							,"onExit":
+							[
+								["sendScreenEvent", ["HideLoadingIcon", ""]]
+							]
+							,"transitions":
+							[
+								{"event":"advance","targets":["IntroFlow"]}
+							]
+						}
+						,{
+							"name":"initialIdlePressStart"
+							,"onEnter":
+							[
+								["sendAction", ["showPressStart"]]
+								,["invoke", ["evt_controller_disconnect_flow_not_ready"]] /* Block controller disconnect flow until we are in the intro match */
+							]
+							,"transitions":
+							[
+								{"event":"evt_load_personal_settings","targets":["loadPersonalSettings"]}
+								,{"event":"startIntroFlow","cond":["==",".FIFA_CLOSEDBETA",true],"targets":["exitBootFlow"]}
+								,{"event":"startIntroFlow","cond":["==",".FIFA_CFE",true],"targets":["exitBootFlow"]}
+								,{"event":"startIntroFlow","targets":["preLoadIntroMatch"]}
+							]
+							,"initial": 
+							{
+								"targets":["prePressStartCondition"]
+							}
+							,"states":
+							[
+								{
+									"name":"prePressStartCondition"
+									,"transitions":
+									[
+										{"event":"leaveBootFlow","targets":["pressStartCondition"]}
+									]
+								}
+								,{
+									"name":"pressStartCondition"
+									,"onEnter":
+									[
+										["sendAction", ["condition","installMode"]] /* Check if we're in Install mode, we need to exit if we are */
+									]
+									,"transitions":
+									[
+										{"event":"install_mode_true","targets":["IntroFlow"]/* We're in Install mode, we need to exit */}
+										,{"event":"install_mode_false","targets":["prePressStartCondition"]/* We're in the normal flow, return to the pre condition state */}
+									]
+								}
+							]
+						}
+						,{
+							"name":"loadPersonalSettings"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["SaveloadBootflow"]]
+								,["invoke", ["evt_controller_disconnect_flow_ready"]] /* Skipping intro match so restore to default */
+							]
+							,"transitions":
+							[
+								{
+									"event":"evt_settings_load_complete" /* this only takes care of a succesful profile load */
+									,"targets":["silentSignIn"]
+								}
+								,{
+									"event":"pranDownload" /* this means we want a new profile - the profile we want to check in either has no save file, or it's save file is corrupted */
+									,"targets":["silentSignInNewLead"]
+								}
+							]
+							,"states":
+							[
+								{
+									"name":"loadPersonalSettingsIdle" /* On PC, wait here for the boot load event */
+									,"transitions":
+									[
+										{
+											"event":"evt_sl_operation_boot_load"
+											,"targets":["BootLoadPersonalSettings"]
+										}
+									]
+								}
+								,{
+									"name":"BootLoadPersonalSettings"
+									,"onEnter":
+									[
+										["loadView", ["screen", "game/screens/saveload_pc/bootload"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["screen", "game/screens/saveload_pc/bootload"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"quit"
+											,"targets":["silentSignIn"]
+										}
+									]
+								}
+							]
+						}
+						,{
+							"type":"external"
+							,"file":"/online/onlineLoginFlow.nav"
+							,"inputs":
+							{
+								"silentSignIn":"in_startSilentSignIn"
+							}
+							,"outputs":
+							{
+								"loginSuccess":"pranUpload"
+								,"loginFail":"assetUpdate"
+							}
+						}
+						,{
+							"type":"external"
+							,"file":"/online/onlineLoginFlow.nav"
+							,"inputs":
+							{
+								"silentSignInNewLead":"in_startSilentSignIn"
+							}
+							,"outputs":
+							{
+								"loginSuccess":"trialCheck"
+								,"loginFail":"welcomeEulaFail"
+							}
+						}
+						,{
+							"name":"trialCheck"
+							,"onEnter":
+							[
+								["sendAction", ["condition", "isTrial"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"true"
+									,"targets":["TrialWelcomeScreen"]
+								}
+								,{
+									"event":"false"
+									,"cond":["==", ".FIFA_PRESS", true]
+									,"targets":["assetUpdate"]
+								}
+								,{
+									"event":"false"
+									,"targets":["pranDownload"]
+								}
+							]
+						}
+						,{
+							"name":"TrialWelcomeScreen"
+							,"onEnter":
+							[
+								/*Had to change this to overlay when integrating from FIFA 17 into FIFA 18, this screen will be broken*/
+								/*["loadView",["overlay", "game/screens/Upsell/TrialWelcomeScreen"] ]*/
+								/* Skipping this screen */
+								["sendAction", ["advance"]]
+							]
+							,"onExit":
+							[
+								/*["unloadView",["overlay", "game/screens/Upsell/TrialWelcomeScreen"] ]*/
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["pranDownload"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"IntroFlow" /* here you should have the intro match assets loaded and ready to start the intro match movie */
+					,"onEnter":
+					[
+						["sendScreenEvent", ["BootflowFinished"]]
+						,["sendAction", ["fbStartFlowEvent", "gmIntroFlowPreMatchVideo"]]
+						,["sendAction", ["startIntroMatch"]]
+					]
+					,"transitions":
+					[
+						{"event":"videoStarted","targets":["IntroFlowVideoPlaying"]}
+						,{"event":"videoStopped","actions":[["unloadView",["background"]],["unloadView",["screen", "game/screens/bootflow/PressStart"]]],"targets":["exitIntroBootFlow"]}
+					]
+				}
+				,{
+					"name":"IntroFlowVideoPlaying"
+					,"onEnter":
+					[
+						["loadViewModel",["SubtitlesViewModel"]]
+						,["loadView", ["widget", "game/widgets/SubtitleWidget", "SUBTITLES_DP"]]
+						,["unloadView",["background"]]
+						,["unloadView",["screen", "game/screens/bootflow/PressStart"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["SubtitlesViewModel"]]
+						,["unloadView", ["widget", "game/widgets/SubtitleWidget"]]
+					]
+					,"transitions":
+					[
+						{"event":"profileSignOut","targets":["exitIntroMatch"]}
+						,{"event":"videoStopped","targets":["exitIntroBootFlow"]}
+					]
+				}
+			]
+		}
+		,{
+			"onExit":
+			[
+				["loadView", ["background", "BOOTFLOW"]]
+			]
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/reloadfestadiumflow.nav"
+					,"inputs":
+					{
+						"WaitForStadiumLoadBeforeIdlePressStart":"WaitForLoadPopup"
+					}		
+					,"outputs":
+					{
+						"ReloadReady":"idlePressStart"
+						,"LoadStarted":"idlePressStart"
+					}
+				}
+			]
+		}
+		,{
+			"name":"eaAccessRegularFlow"
+			,"type":"external"
+			,"file":"/online/eaAccessBootflowCheckFlow.nav"
+			,"outputs":
+			{
+				"eaAccessTrialMismatch":"idlePressStart"
+				,"eaAccessFlowSuccess":"upgradeRewardsIntro"
+			}
+		}
+		,{
+			"name":"eaAccessSaveLoadFailedFlow"
+			,"type":"external"
+			,"file":"/online/eaAccessBootflowCheckFlow.nav"
+			,"outputs":
+			{
+				"eaAccessTrialMismatch":"idlePressStart"
+				,"eaAccessFlowSuccess":"WaitForStadiumLoad"
+			}
+		}
+		,{
+			"name":"upgradeRewardsIntro"		
+			,"states":
+			[
+				{
+					"name":"upgradeRewardsCondition"
+					,"onEnter":
+					[
+						["sendAction",["condition", "unlockUpgrades"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"true"
+							,"targets":["upgradeRewards"]
+						}
+						,{
+							"event":"false"
+							,"targets":["WaitForStadiumLoad"]
+						}
+					]
+				}
+				,{
+					"name":"upgradeRewards"
+		            ,"onEnter":
+		            [
+		                ["loadViewModel",["HospitalityUpgradeViewModel"]]
+		                ,["loadViewModel",["FluxViewModel"]]
+		                ,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+		            ]
+		            ,"onExit":
+		            [
+		                ["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+		                ,["unloadViewModel",["FluxViewModel"]]
+		                ,["unloadViewModel",["HospitalityUpgradeViewModel"]]
+		            ]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["WaitForStadiumLoad"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"exitIntroMatch"
+			,"onEnter":
+			[
+				["sendAction", ["fbStartFlowEvent", "gmIntroFlowPreMatchVideoAbort"]]
+				,["sendAction", ["transitionManager", ".NavTransitionManager.TO_FE_QUICK"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["abortIntroMatch"]]
+			]
+			,"transitions":
+			[
+				{"event":"profileSignOutComplete","targets":["WaitForStadiumLoadBeforeIdlePressStart"]}
+			]
+		}
+		,{
+			"name":"exitBootFlow"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["BootflowFinished"]]
+				,["sendAction", ["transitionManager", ".NavTransitionManager.TO_FE_QUICK"]]
+			]
+			,"transitions":
+			[
+				{"event":"bootflowFinished","targets":["mainFeFlow"]}
+			]
+		}
+		,{
+			"name":"exitIntroBootFlow"
+			,"onEnter":
+			[
+				["invoke", ["bootflowFinished"]]
+				,["invoke", ["evt_controller_disconnect_flow_ready"]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["SetIntroMatchState"]]					
+			]
+			,"transitions":
+			[
+				{"event":"bootflowFinished","targets":["out_pauseIntroFlow"]}
+			]
+		}
+		,{
+			"name":"assetUpdate"
+			,"type":"external"
+			,"file":"/assetUpdateFlow.nav"
+			,"outputs":
+			{
+	 			"advance":"fixturesDownload"
+			}
+		}
+		,{
+			"name":"fixturesDownload"
+			,"type":"external"
+			,"file":"/fixturesDownloadFlow.nav"
+			,"outputs":
+			{
+	 			"advance":"eulaBootflow"
+			}
+		}
+		,{
+			"type":"external"
+			,"file":"/eulaFlow.nav"
+			,"inputs":
+			{
+				"welcomeEulaSuccess":"welcomeEulaSuccess"
+				,"welcomeEulaFail":"welcomeEulaFail"
+				,"bootflowSaveLoadFailEula":"bootflowSaveLoadFailEula"
+				,"eulaBootflow":"eulaBootflow"
+			}
+			,"outputs":
+			{
+				"success":"welcomePranSuccess"
+				,"fail":"welcomePranFail"
+				,"exit":"eaAccessSaveLoadFailedFlow"
+				,"continue":"eaAccessRegularFlow"
+			}
+		}
+		,{
+			"type":"external"
+			,"file":"/profileFlow.nav"
+			,"inputs":
+			{
+				"welcomePranSuccess":"welcomePranSuccess"
+				,"welcomePranFail":"welcomePranFail"
+				,"skillLevel":"skillLevel"
+			}
+			,"outputs":
+			{
+				"assetUpdate":"assetUpdate"
+				,"pranUpload":"pranUpload"
+				,"bootflowSaveLoadFailed":"bootflowSaveLoadFailEula"
+			}
+		}
+		,{
+			"type":"external"
+			,"file":"/pranFlow.nav"
+			,"inputs":
+			{
+				"pranUpload":"pranUpload"
+				,"pranDownload":"pranDownload"
+			}
+			,"outputs":
+			{
+				"back":"assetUpdate"
+				,"successClosedBeta":"welcomePranSuccess"
+				,"successCFE":"welcomePranSuccess"
+				,"success":"welcomeEulaSuccess"
+				,"failClosedBeta":"welcomePranFail"
+				,"failCFE":"welcomePranFail"
+				,"fail":"welcomeEulaFail"
+			}
+		}
+		,{
+			
+			"type":"external"
+			,"file":"/reloadfestadiumflow.nav"
+			,"inputs":
+			{
+				"WaitForStadiumLoad":"WaitForLoadBootflow"
+			}
+			,"outputs":
+			{
+				"ReloadReady":"exitBootFlow"
+				,"LoadStarted":"exitBootFlow"
+			}
+		}
+	]
+}

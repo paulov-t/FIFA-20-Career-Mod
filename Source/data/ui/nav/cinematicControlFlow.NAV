@@ -1,0 +1,58 @@
+{
+	"name":"CinematicControlFlow"
+	,"initial":
+	{
+		"targets":["CinematicLoad"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel", ["CinematicControlViewModel"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel", ["CinematicControlViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"CinematicLoad"
+			,"onEnter":
+			[	
+				["sendAction", ["gmCinematicLoad", ".cinematicName"]]
+			]
+			,"transitions":
+			[
+				{"event":"gmCinematicLoaded", "targets":["CinematicStart"]}
+			]
+		}
+		,{
+			"name":"CinematicStart"
+			,"onEnter":
+			[	
+				["sendAction", ["gmCinematicStart", ".cinematicName"]]
+			]
+			,"transitions":
+			[
+				{"event":"gmCinematicStarted", "targets":["CinematicPlaying"]}
+			]
+		}
+		,{
+			"name":"CinematicPlaying"
+			,"transitions":
+			[
+				{"event":"gmCinematicEnded", "targets":["CinematicUnload"]}
+			]
+		}
+		,{
+			"name":"CinematicUnload"
+			,"onEnter":
+			[	
+				["sendAction", ["gmCinematicUnload", ".cinematicName"]]
+			]
+			,"transitions":
+			[
+				{"event":"gmCinematicUnloaded", "targets":["out_CinematicFinished"]}
+			]
+		}
+	]
+}

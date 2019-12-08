@@ -1,0 +1,46 @@
+{
+	"name":"JobOffersFlow"
+	,"initial": { "targets":["JobOffers"] }
+	,"states":
+	[
+		{
+			"name":"JobOffers"
+			,"onEnter":
+			[
+				["loadScreenController", ["JobOffers"]]
+				,["loadView", ["screen", "game/screens/career/JobOffers"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/JobOffers"]]
+				,["unloadScreenController", ["JobOffers"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"FlapOfferAccepted"
+					,"actions":[ ["executeCMAction",["FLAPAcceptJobOffer"]] ]
+				}
+				,{
+					"event":"EosAdvance"
+					,"targets":["Contract"] 
+					,"actions":[ ["executeCMAction",["EnterContract"]] ]
+				}
+				,{
+					"event":"Back"
+					,"targets":["Back"] 
+				}
+			]
+		}	
+		,{
+			"name":"Contract"
+			,"type":"external"
+			,"file":"/careerMode/contractFlow.nav"
+			,"outputs": 
+			{ 
+				"out_JobOffers":"JobOffers"
+				,"out_Back":"JobOffers"
+			}	
+		}
+	]
+}

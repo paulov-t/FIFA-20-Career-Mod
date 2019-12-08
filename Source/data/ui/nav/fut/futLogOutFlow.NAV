@@ -1,0 +1,35 @@
+{
+	"name":"futLogoutFlow"
+	,"initial":
+	{
+		"targets":["futlogout"]
+	}
+	,"states":
+	[
+		{
+			"name":"futlogout"
+			,"onEnter":
+			[
+				["loadView",["screen", "external/ion_fut/screens/fcc_logout"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "external/ion_fut/screens/fcc_logout"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["gamehub"]
+				}
+				,{
+					"event":"success"
+					,"targets":["logoutSuccess"]
+				}
+				,{
+					"event":"goToInviteFlow"
+				}
+			]
+		}
+	]
+}

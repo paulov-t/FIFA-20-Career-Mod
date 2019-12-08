@@ -1,0 +1,101 @@
+{
+	"name":"downloadFlow"
+	, "initial":
+	{
+			"targets":["matchDayDownload"]
+	}
+	,"states":
+	[
+		{
+			"name":"matchDayDownload"
+			,"onEnter":
+			[
+				["loadViewModel",["MatchdayDownloadViewModel"]]
+				,["sendScreenEvent", ["ShowLoadingIcon",""]]
+				,["invoke", ["evt_invite_flow_not_ready"]]
+
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["MatchdayDownloadViewModel"]]
+				,["invoke", ["evt_invite_flow_ready"]]
+				,["sendScreenEvent", ["HideLoadingIcon",""]]
+			]
+			,"states":
+			[
+				{
+					"name":"matchDayTeamDownload"
+					,"transitions":
+					[
+						{
+							"event":"true"
+							,"targets":["viewTeamForm"]
+						}
+					]
+				}
+				,{
+					"name":"matchDayPlayersDownload"
+					,"transitions":
+					[
+						{
+							"event":"true"
+							,"targets":["viewPlayerForm"]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+					,"let":{ "direction":"back" }
+				}
+				,{
+					"event":"false"
+					,"targets":["advance"]
+				}
+			]
+		}
+		,{
+			"name":"matchDaySplash"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/playNow/DBUpdate", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["MatchdayFormViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"viewTeamForm"
+					,"onEnter":
+					[
+						["loadViewModel",["MatchdayFormViewModel", "0"]]
+					]
+				}
+				,{
+					"name":"viewPlayerForm"
+					,"onEnter":
+					[
+						["loadViewModel",["MatchdayFormViewModel", "1"]]
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["advance"]
+				}
+				,{
+					"event":"back"
+					,"targets":["back"]
+					,"let":{ "direction":"back" }
+				}
+			]				
+		}
+	]
+}

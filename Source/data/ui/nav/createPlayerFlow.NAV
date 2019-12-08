@@ -1,0 +1,188 @@
+{
+	"name":"createPlayerFlow"
+	, "initial":
+	{
+		"targets":["createPlayerInitial"]
+	}
+	,"onEnter":
+	[
+		["sendScreenEvent", ["UxSetFlowState",".eState.CREATE_PLAYER"]]
+	]
+	,"onExit":
+	[
+		["sendScreenEvent", ["UxExitGameFlow"]]
+		,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+	]
+	,"states":
+	[
+		{
+			"name":"createPlayerInitial"
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}
+				,{
+					"event":"create"
+					,"targets":["createPlayerTimer"]
+				}
+				,{
+					"event":"delete"
+					,"targets":["deletePlayer"]
+				}
+				,{
+					"event":"edit"
+					,"targets":["editPlayerTimer"]
+				}
+			]				
+		}
+		,{
+			"name":"createPlayerTimer"
+			,"onEnter":
+			[
+				["loadViewModel", ["CountdownTimerViewModel", "1500"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel", ["CountdownTimerViewModel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_countdown_done"
+					,"targets":["createPlayer"] 
+				}
+			]
+		}
+		,{
+			"name":"deletePlayer"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/CreatePlayer/DeletePlayer"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/CreatePlayer/DeletePlayer"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]				
+		}
+		,{
+			"name":"editPlayerTimer"
+			,"onEnter":
+			[
+				["loadViewModel", ["CountdownTimerViewModel", "1500"]]
+			]
+			,"onExit":
+			[
+					["unloadViewModel", ["CountdownTimerViewModel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_countdown_done"
+					,"targets":["editPlayer"] 
+				}
+			]			
+		}
+		,{
+			"name":"editPlayer"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/CreatePlayer/69a_editPlayer"]]
+				,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_PRE_CREATEPLAYER"] ]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/CreatePlayer/69a_editPlayer"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["createPlayerFromEdit"]
+				}
+				,{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]				
+		}
+		,{
+			"onEnter":
+			[
+				["loadViewModel",["CreatePlayerViewModel"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["CreatePlayerViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"EditPlayerProfileSignOutWait"
+					,"transitions":
+					[
+						{
+							"event":"profileSignOutComplete"
+							,"targets":["profileSignOut"]
+						}
+					]
+				}
+				,{
+					"transitions":
+					[
+						{ "event":"profileSignOut", "targets":["EditPlayerProfileSignOutWait"] }
+					]
+					,"states":
+					[
+						{
+							"name":"createPlayer"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/CreatePlayer/CreatePlayerHub"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/CreatePlayer/CreatePlayerHub"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["back"]
+								}
+							]	
+						}
+						,{
+							"name":"createPlayerFromEdit"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/CreatePlayer/CreatePlayerHub"]]
+								,["sendAction",["updateLocGender", "checkGender"]]
+							]
+							,"onExit":
+							[
+								["sendAction",["updateLocGender", "resetGender"]]
+								,["unloadView",["screen", "game/screens/CreatePlayer/CreatePlayerHub"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"back"
+									,"targets":["editPlayer"]
+								}
+							]				
+						}
+					]
+				}
+			]
+		}
+	]
+}

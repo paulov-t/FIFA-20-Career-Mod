@@ -1,0 +1,107 @@
+{
+	"name":"ActionPopupFlow"
+	,"initial": { "targets":["ActionPopup"] }
+	,"states":
+	[
+		{
+			"name":"ActionPopup"
+			,"onEnter": 
+			[ 
+				["loadScreenController", ["ActionPopup"]] 
+				, ["loadView",["overlay", "game/screens/career/PlayerActions"]]
+				, ["sendAction", ["suppressPOWWidget"]]
+			]
+			,"onExit": 
+			[			
+				["sendAction", ["unsuppressPOWWidget"]]
+				, ["unloadView",["overlay", "game/screens/career/PlayerActions"]]
+				, ["unloadScreenController", ["ActionPopup"]]			
+			]
+			,"transitions":
+			[
+				{
+					"event":"AdvanceTransferHub"
+					,"cond":["==", ".FromContext", "TransferHub"]
+					,"actions":[ ["invoke",["GoBackToTransferHub"]] ]
+				}
+				,{
+					"event":"AdvanceTransferHub"
+					,"targets":["TransferHub"] 
+				}
+				,{
+					"event":"EnterSquadHub"
+					,"targets":["SquadHub"] 
+				}
+				,{
+					"event":"EnterJobOfferSign"
+					,"targets":["JobOfferSign"] 
+					,"actions":[ ["executeCMAction",["JobOfferSignFromHub"]] ]
+				}
+				,{
+					"event":"EnterPlayerRetireState"
+					,"targets":["BackFromPopup"]
+					,"let":{ "direction":"exit" }
+					,"actions":
+					[
+						["executeCMAction",["EnterPlayerRetireStateFromActionPopup"]]
+					]
+				}
+				,{
+					"event":"Back"
+					,"targets":["BackFromPopup"] 	
+					,"let":{ "direction":"exit" }		
+				}
+			]
+		}
+		,{
+			"let":{"FromContext":"ActionPopup"}
+			,"states":
+			[
+				{
+					"name":"TransferHub"
+					,"type":"external"
+					,"file":"/careerMode/transferhubflow.nav"
+					,"outputs": 
+					{ 
+						"Back":"BackFromScreenWithoutPopup"
+					}
+				}
+			]
+		}
+		,{
+			"name":"SquadHub"
+			,"type":"external"
+			,"file":"/careerMode/squadHubFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"BackFromScreen"
+				,"PapRetire":"PAPRetire"
+				,"PapMove":"PAPMove"
+			}
+		}
+		,{
+			"name":"JobOfferSign"
+			,"type":"external"
+			,"file":"/careerMode/jobOfferSignFlow.nav"
+			,"outputs":
+			{	
+				 "Back":"BackFromScreen"
+				 ,"PAPMoveToNewClub":"PAPMove"
+			}			
+		}
+		,{
+			"name":"PAPMove"
+			,"onEnter":
+			[
+				["invoke", ["GotoPapMoveToNewClub"]]
+			]
+		}
+		,{
+			"name":"PAPRetire"
+			,"onEnter":
+			[
+				["invoke", ["GotoPapRetire"]]
+			]
+		}
+	]
+}

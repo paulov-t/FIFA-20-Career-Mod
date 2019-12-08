@@ -1,0 +1,221 @@
+{
+	"name":"QuickSettingsFlow"
+	,"initial":
+	{
+		"targets":["liveFixtureDownload"]
+	}
+	,"states":
+	[
+		{
+			"name":"liveFixtureDownload"
+			,"onEnter":
+			[
+				["sendAction",["attempt", "liveFixtureDownload"]]
+			]
+			,"onExit":[]
+			,"transitions":
+			[
+				{	"event":"success", "targets":["QuickSettings"]	}
+				,{	"event":"fail", "targets":["downloadFailedPopup"]	}
+			]
+		}
+		,{
+			"name":"downloadFailedPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup", "LIVE_FIXTURE_DOWNLOAD", "download_customdatafile_error|Cancel|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "LIVE_FIXTURE_DOWNLOAD"]]
+			]
+			,"transitions":
+			[
+				{	"event":"back", "targets":["back"]	}
+				,{ "event":"evt_notify_controller_disconnect", "targets":["sideSelect"] }
+			]		
+		}
+		,{
+			"onEnter":
+			[
+				["loadViewModel",["KickOffHubViewModel"]]
+				,["sendAction", ["notify", "telemetryEnterGameModeHub", ".GameMode"] ]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["KickOffHubViewModel"]]
+			]
+			,"states":
+			[
+				{	
+					"name":"QuickSettings"
+					,"onEnter":
+					[
+						["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+						,["loadView",["screen", "game/screens/playNow/KickOffHub", "", ".direction"]]
+						,["if", [["==", ".FIFA_PRESS", true]
+						,[
+							["sendAction", ["pushTheme", "UEFA_CHAMPIONS_LEAGUE"]]
+						]
+						,[	/*Don't do anything on else */
+						]]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/playNow/KickOffHub"]]
+						,["if", [["==", ".FIFA_PRESS", true]
+						,[
+							["sendAction", ["popTheme"]]
+						]
+						,[	/*Don't do anything on else */
+						]]]
+					]
+					,"transitions":
+					[
+						{	"event":"back", "targets":["back"], "let":{ "direction":"back" }	}
+						,{	"event":"TeamManagement", "let":{"tmMode":"offlinePreMatchKickoff"}, "targets":["TeamManagementFlow"]	}
+						,{	"event":"SideSelect", "targets":["sideSelect"]	}
+						,{	"event":"SettingsController", "targets":["SettingsController"]	}
+						,{	"event":"SettingsGame", "targets":["SettingsGame"]	}
+						,{	"event":"HelpKinect", "targets":["HelpKinect"]	}
+					]
+					,"states":
+					[
+						{
+							"name":"QuickSettingsIdle"
+							,"transitions":
+							[
+								{	"event":"evt_popup_enter", "targets":["QuickSettingsNoScreenSaverWithPopup"]}
+								,{	"event":"advance", "targets":["WaitForKits"]}
+								,{	"event":"adaptiveDifficultyDisable", "targets":["WaitForKits"]}
+							]
+						}
+						,{
+							"name":"QuickSettingsNoScreenSaverWithPopup"
+							,"transitions":
+							[
+								{ "event":"evt_popup_exit", "targets":["QuickSettingsIdle"]}
+							]
+						}
+						,{
+							"name":"WaitForKits"
+							,"onEnter":
+							[
+								["sendAction",["condition", "WaitForKitsLoad"]]
+							]
+							,"onExit":[]
+							,"transitions":
+							[
+								{	"event":"KitsLoadComplete", "targets":["advance"]}
+							]
+						}
+					]
+				}
+				,{
+					"states":					
+					[
+						{
+							"name":"TeamManagementFlow"
+							,"type":"external"
+							,"file":"/editTeamSheetFlow.nav"
+							,"outputs":
+							{
+								"back":"GoToQuickSettings"
+							}
+						}
+						,{
+							"name":"GoToQuickSettings"
+							,"onEnter":
+							[
+								["sendAction",["updateScreen", "updateLocalTeamSheet"]]	
+								,["invoke", ["evt_nav_to_quick_settings"]]
+							]
+							,"transitions":
+							[
+								{ "event":"evt_nav_to_quick_settings", "targets":["QuickSettings"]}
+							]
+						}
+
+					]
+				}
+				,{
+					"onExit":
+					[
+						["sendAction", ["notify", "ExitSettings"] ]
+					]
+					,"states":					
+					[
+						{
+							"type":"external"
+							,"file":"/settingsFlow.nav"
+							,"inputs":
+							{
+								"SettingsController":"SettingsController"
+								,"SettingsGame":"SettingsGame"
+							}
+							,"outputs":
+							{
+								"back":"QuickSettings"
+								,"out_notify_controller_disconnect":"sideSelect"
+							}
+						}
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/helpFlow.nav"
+					,"inputs":
+					{
+						"HelpKinect":"HelpKinect"
+					}
+					,"outputs":
+					{
+						"back":"QuickSettings"
+					}
+				}
+			]
+		}
+		,{
+			"name":"sideSelect"
+			,"onEnter":
+			[
+				["loadViewModel",["SideSelectViewModel", ".direction"]]				
+				,["loadView",["screen", "game/screens/playNow/SideSelect", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["SideSelectViewModel"]]
+				,["unloadView",["screen", "game/screens/playNow/SideSelect"]]
+			]
+			,"transitions":
+			[
+				{	"event":"advance", "targets":["QuickSettings"]	}
+				,{	"event":"back", "targets":["QuickSettings"], "let":{ "direction":"back" }	}
+				,{	"event":"btnY", "targets":["controllerSetup"]	}
+			]				
+		}
+		,{
+			"name":"controllerSetup"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/settings/controllerAndGameSetup", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/settings/controllerAndGameSetup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["sideSelect"]
+					,"let":{ "direction":"back" }
+				}
+			]
+		}
+	]
+	,"transitions":
+	[
+		{ "event":"evt_notify_controller_disconnect", "targets":["sideSelect"] }
+	]
+}

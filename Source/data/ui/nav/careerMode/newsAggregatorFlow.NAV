@@ -1,0 +1,95 @@
+{
+	"name":"NewsAggregator"
+	,"initial": { "targets":["NewsAggregatorScreen"] }
+	,"states":
+	[
+		{
+			"name":"NewsAggregatorScreen"
+			,"onEnter": 
+			[ 
+				["loadScreenController", ["NewsAggregator"]] 
+				, ["loadView",["screen", "game/screens/career/news/NewsAggregator"]]
+			]
+			,"onExit": 
+			[	
+				["unloadView",["screen", "game/screens/career/news/NewsAggregator"]]
+				, ["unloadScreenController", ["NewsAggregator"]]
+			]
+			,"states":
+			[
+				{
+					"name":"idleOnScreen"
+					,"onEnter": 
+					[ 					
+						/* When coming back from Action Popup, since screen is already loaded, need to inform screen controller screen is loaded. */
+						/* This call does not have effect when coming into the screen for the first time. */
+						["executeCMAction", ["NotifyScreenLoadedAndRefresh"]]	
+					]
+					,"transitions":
+					[
+						{
+							"event":"EnterPlayerActionFromNewsAggregator"
+							,"targets":["ActionPopup"] 
+						}
+						,{
+							"event":"Back"
+							,"targets":["Back"] 
+						}
+						,{
+							"event":"Retire"
+							,"targets":["JobOffers"] 
+							,"actions":[ ["executeCMAction",["Retire"]] ]
+						}
+					]
+				}
+				,{
+					"name":"screenWithPopup"
+					,"onEnter": 
+					[ 
+						["executeCMAction", ["SendReadyOnLoadComplete"]]						
+						, ["loadView",["screen", "game/screens/career/news/NewsAggregator"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Ready"
+							,"targets":["ActionPopup"] 
+						}
+					]
+				}				
+				,{
+					"name":"ActionPopup"
+					,"type":"external"
+					,"file":"/careerMode/actionPopupFlow.nav"
+					,"outputs": 
+					{ 
+						"BackFromPopup":"idleOnScreen"
+						,"BackFromScreen":"screenWithPopup"
+						,"BackFromScreenWithoutPopup":"screenWithPopup"
+					}	
+				}				
+			]							
+			,"transitions": 
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"]
+				}
+				,{
+					"event":"Retire"
+					,"targets":["JobOffers"] 
+					,"actions":[ ["executeCMAction",["Retire"]] ]
+				}
+			]
+		}
+		,{
+			"name":"JobOffers"
+			,"type":"external"
+			,"file":"/careerMode/jobOffersFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"NewsAggregatorScreen"
+			}	
+		}
+	]	
+}

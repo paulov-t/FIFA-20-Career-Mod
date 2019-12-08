@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="2/12/2014 14:23:25" VERSION="2">
+  <hub_settings NAME="OnlineProClubsHub">
+    <artasset_paths DEFAULT_TAB_ICONPATH="artAssets/MainMenu/GameHubTab/GameHubTab_%s.swf" DEFAULT_TILES_ASSETTYPE="clubHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.ProClubsHubFluxHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <components>
+    <component PATH="game/components/FluxComponents/online/ProClubsHubWidget.swf" X="120" Y="35" />
+  </components>
+  <panel_set>
+    <panel NAME="ONLINE_CLUB_MYPRO_PANEL" LABEL="TXT_ONLINE_CLUB_MYPRO_PANEL_TITLE" IS_TAB="TRUE" />
+    <panel NAME="ONLINE_CLUB_PLAY_PANEL" LABEL="TXT_ONLINE_CLUB_CLUB_PANEL_TITLE" IS_TAB="TRUE" />
+    <panel NAME="ONLINE_CLUB_JOIN_PANEL" LABEL="TXT_ONLINE_CLUB_CLUB_PANEL_TITLE" IS_TAB="TRUE" />
+    <panel NAME="ONLINE_CLUB_MANAGE_PANEL" LABEL="TXT_ONLINE_PROCLUBS_MANAGE_PANEL_TITLE" IS_TAB="TRUE" />
+    <panel NAME="ONLINE_CLUB_WORLD_PANEL" LABEL="TXT_ONLINE_PROCLUBS_WORLD_PANEL_TITLE" IS_TAB="TRUE" />
+    <panel NAME="ONLINE_CLUBS_INSPECT_CLUB_PANEL" LABEL="TXT_ONLINE_PRO_CLUBS_INSPECT_CLUB" IS_TAB="TRUE" />
+  </panel_set>
+  <panel NAME="ONLINE_CLUB_MYPRO_PANEL">
+    <tile NAME="DROPIN_MATCH" TYPE="TILE" DESTINATION="dropinmatch" BACKGROUND="DropInMatch_Med" DATAPROVIDERID="CLUB_DROP_IN_MATCH_DP" NARRATION_HIGHLIGHT="ACC_DROPIN_HIGHLIGHTED" NARRATION_SELECT="ACC_DROPIN_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
+      <data ID="title" TYPE="title" FORMAT="HS" WIDTH="470" HEIGHT="75" />
+      <data ID="playingOnline_icon" TYPE="image" PATH="imgAssets/online/Globe.dds" WIDTH="32" HEIGHT="32" X="22" REL_TARGET="title" REL_Y="10" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+      <data ID="playingOnline" TYPE="text" FORMAT="I" WIDTH="364" HEIGHT="75" X="65" REL_TARGET="title" REL_Y="10" />
+    </tile>
+    <tile NAME="MY_CLUB_PLAYER" TYPE="TILE" DESTINATION="player" DATAPROVIDERID="KEY_VALUE_VPRO_PLAYER" NARRATION_HIGHLIGHT="ACC_MYPRO_HIGHLIGHTED" NARRATION_SELECT="ACC_MYPRO_SELECTED">
+      <properties WIDTH="419" HEIGHT="632" X="965" Y="278" />
+	  <data ID="title" TYPE="title" FORMAT="HL" WIDTH="364" HEIGHT="75" />
+      <data ID="customRenderObject" TYPE="component" PATH="game/components/FluxComponents/online/CustomRenderObject.swf" WIDTH="395" HEIGHT="48" X="0" Y="0" />
+      <data ID="ringChart" TYPE="component" PATH="game/components/RingChart.swf" WIDTH="300" HEIGHT="300" X="60" Y="232" />
+      <data ID="txtMostUsedPos" TYPE="text" FORMAT="SM||center" WIDTH="419" HEIGHT="32" X="0" Y="345" />
+      <data ID="txtMostUsedPosPct" TYPE="text" FORMAT="SL||center" WIDTH="419" HEIGHT="32" X="0" Y="370" />
+      <data ID="txtPosFwd" TYPE="text" FORMAT="SS" WIDTH="55" HEIGHT="32" X="87" Y="488" />
+      <data ID="txtPosMid" TYPE="text" FORMAT="SS" WIDTH="50" HEIGHT="32" X="162" Y="488" />
+      <data ID="txtPosDef" TYPE="text" FORMAT="SS" WIDTH="60" HEIGHT="32" X="237" Y="488" />
+      <data ID="txtPosGk" TYPE="text" FORMAT="SS" WIDTH="50" HEIGHT="32" X="312" Y="488" />
+      <data ID="ringChartIndicatorFwd" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="72" Y="497" />
+      <data ID="ringChartIndicatorMid" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="147" Y="497" />
+      <data ID="ringChartIndicatorDef" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="222" Y="497" />
+      <data ID="ringChartIndicatorGk" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="297" Y="497" />
+      <data ID="txtOverallLabel" TYPE="text" FORMAT="SM||center" WIDTH="420" HEIGHT="30" UHLALPHA="60" X="-130" Y="536" />
+      <data ID="txtHeightLabel" TYPE="text" FORMAT="SM||center" WIDTH="420" HEIGHT="30" UHLALPHA="60" X="-20" Y="536" />
+      <data ID="txtWeightLabel" TYPE="text" FORMAT="SM||center" WIDTH="420" HEIGHT="30" UHLALPHA="60" X="120" Y="536" />
+      <data ID="txtOverall" TYPE="text" FORMAT="HS||center" WIDTH="420" HEIGHT="32" UHLALPHA="90" X="-130" Y="552" />
+      <data ID="txtHeight" TYPE="text" FORMAT="HS||center" WIDTH="420" HEIGHT="32" UHLALPHA="90" X="-20" Y="552" />
+      <data ID="txtWeight" TYPE="text" FORMAT="HS||center" WIDTH="420" HEIGHT="32" UHLALPHA="90" X="120" Y="552" />
+      <data ID="number" TYPE="text" FORMAT="VPRO_BIG_NUMBER||center|COLOR_TEXT_REGULAR|COLOR_TEXT_HIGHLIGHT_FLUX" WIDTH="150" HEIGHT="109" HLALPHA="100" UHLALPHA="30" X="140" Y="145" />
+      <data ID="position" TYPE="text" FORMAT="SL||left" WIDTH="98" HEIGHT="40" X="192" Y="235" />
+      <data ID="playstyle" TYPE="text" FORMAT="SL||center" WIDTH="420" HEIGHT="40" X="0" Y="240" />
+      <data ID="positionIndicator" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="16" HEIGHT="16" X="170" Y="249" />
+    </tile>
+    <tile NAME="MY_CLUB_STATISTICS" TYPE="TILE" DESTINATION="statistics" DATAPROVIDERID="LIST_VPRO_STATISTICS" NARRATION_HIGHLIGHT="ACC_MYPRO_STATS_HIGHLIGHTED" NARRATION_SELECT="ACC_MYPRO_STATS_SELECTED">
+      <properties WIDTH="418" HEIGHT="418" X="109" Y="492" />
+      <data ID="title" TYPE="title" ALIGN="leading" FORMAT="HS" WIDTH="420" HEIGHT="75"/>
+      <data ID="LIGHT_ROWS" TYPE="panel" VISIBLE="FALSE" WIDTH="418" HEIGHT="305" X="0" Y="88" />
+      <data ID="component0" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="88" />
+      <data ID="component1" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="139" />
+      <data ID="component2" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="190" />
+      <data ID="component3" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="241" />
+      <data ID="component4" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="292" />
+      <data ID="component5" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="343" />
+    </tile>
+    <tile NAME="MY_CLUB_ATTRIBUTES" TYPE="TILE" DESTINATION="attributes" DATAPROVIDERID="LIST_VPRO_ATTRIBUTES" NARRATION_HIGHLIGHT="ACC_MYPRO_ATTRS_HIGHLIGHTED" NARRATION_SELECT="ACC_MYPRO_ATTRS_SELECTED">
+      <properties WIDTH="418" HEIGHT="418" X="537" Y="492" />
+      <data ID="title" TYPE="title" ALIGN="leading" FORMAT="HS" WIDTH="420" HEIGHT="75" />
+      <data ID="skillPoints" TYPE="image" ALIGN="trailing" PATH="imgAssets/playerGrowth/points/points0.dds" WIDTH="36" HEIGHT="36" Y="20" FORMAT="|COLOR_FILL_UNHIGHLIGHT||COLOR_FILL_UNHIGHLIGHT_CONTRAST">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-20" />  
+	  </data>
+      <data ID="component0" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="70" />
+      <data ID="component1" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="116" />
+      <data ID="component2" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="162" />
+      <data ID="component3" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="208" />
+      <data ID="component4" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="254" />
+      <data ID="component5" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="300" />
+      <data ID="component6" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="346" />
+    </tile>
+  </panel>
+  <panel NAME="ONLINE_CLUB_PLAY_PANEL">
+    <tile NAME="MY_CLUB_PLAY_MATCH" TYPE="TILE" DESTINATION="playmatch" BACKGROUND="PlayMatch_Med" DATAPROVIDERID="CLUB_PLAY_MATCH_DP" NARRATION_HIGHLIGHT="ACC_CLUB_PLAY_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_PLAY_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
+      <data ID="title" TYPE="title" FORMAT="HS" WIDTH="450" HEIGHT="75" />
+      <data ID="onlineIcon" TYPE="image" PATH="imgAssets/online/ProClubs.dds" WIDTH="40" HEIGHT="40" X="23" Y="80" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+      <data ID="friendsOnline" TYPE="text" FORMAT="I" WIDTH="320" HEIGHT="75" X="70" Y="83" />
+    </tile>
+    <tile NAME="MY_CLUB_PLAY_CUP" TYPE="TILE" DESTINATION="playcupmatch" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="CLUB_CUP_MATCH_DP" NARRATION_HIGHLIGHT="ACC_CLUB_PLAY_CUP_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_PLAY_CUP_SELECTED">
+		<properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
+		<data ID="title1" TYPE="title" PATH="12" FORMAT="HS" WIDTH="420" HEIGHT="75" TRANSLATE="FALSE" />
+		<data ID="imgCup1" TYPE="image" WIDTH="145" HEIGHT="145" X="310" Y="57" HLALPHA="40" UHLALPHA="40" />
+		<data ID="tagBannerShadow" TYPE="image" PATH="imgAssets/online/mainHub/TagBanner_nonhl.dds" WIDTH="243" HEIGHT="37" X="0" Y="78" HLALPHA="100" UHLALPHA="0" /> 
+		<data ID="tagBannerEdgeShadow" TYPE="image" PATH="imgAssets/online/mainHub/TagBannerEdge.dds" WIDTH="31" HLALPHA="100" UHLALPHA="0" >
+			<align TARGET="tagBannerShadow" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+			<align TARGET="tagBannerShadow" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+			<align TARGET="tagBannerShadow" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+		</data>
+		<data ID="tagBanner" TYPE="image" PATH="imgAssets/online/mainHub/TagBanner_nonhl.dds" WIDTH="242" HEIGHT="37" X="0" Y="76" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_LABEL_CONTRAST" /> 
+		<data ID="tagBannerEdge" TYPE="image" PATH="imgAssets/online/mainHub/TagBannerEdge.dds" WIDTH="31" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_LABEL_CONTRAST" >
+			<align TARGET="tagBanner" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" />
+			<align TARGET="tagBanner" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+			<align TARGET="tagBanner" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+		</data>
+		<data ID="txtCupEndsIn1" TYPE="text" FORMAT="I|COLOR_TEXT_REGULAR|left|COLOR_TEXT_CONTRAST" WIDTH="500" HEIGHT="0" X="12" Y="80" TRANSLATE="FALSE" />
+		<data ID="txtRound1" TYPE="text" FORMAT="I||left" WIDTH="500" HEIGHT="0" X="12" Y="166" TRANSLATE="FALSE" />
+		<data ID="imgSeparatorLine" TYPE="image" PATH="imgAssets/online/mainHub/VDividerLine.dds" WIDTH="2" HEIGHT="140" X="460" Y="30" FORMAT="|COLOR_FILL_UNHIGHLIGHT||COLOR_TEXT_UNHIGHLIGHT_FLUX" HLALPHA="75" UHLALPHA="50" />
+		<data ID="imgCup2" TYPE="image" WIDTH="145" HEIGHT="145" X="685" Y="57" HLALPHA="40" UHLALPHA="40" />
+		<data ID="title2" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|left|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" X="480" Y="12" WIDTH="356" HEIGHT="75" TRANSLATE="FALSE" />
+		<data ID="txtCupEndsIn2" TYPE="text" FORMAT="I||left" X="480" Y="142" WIDTH="500" HEIGHT="75" TRANSLATE="FALSE" />
+		<data ID="txtCupEndsInValue2" TYPE="text" FORMAT="I||left" X="480" Y="166" WIDTH="500" HEIGHT="75" TRANSLATE="FALSE" />
+		<data ID="txtNoCupAvailable" TYPE="text" FORMAT="I||left" PARAM="CLUBS_CUP_DATA_UNAVAILABLE" X="180" Y="100" WIDTH="500" HEIGHT="75" TRANSLATE="TRUE" VISIBLE="FALSE" />
+    </tile>
+    <tile NAME="MY_CLUB_HISTORY" TYPE="TILE" DESTINATION="history" BACKGROUND="History_Lrg" DATAPROVIDERID="CLUB_HISTORY_DP" NARRATION_HIGHLIGHT="ACC_CLUB_HISTORY_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_HISTORY_SELECTED">
+      <properties WIDTH="846" HEIGHT="418" X="965" Y="492" />
+      <data ID="title" TYPE="title" PATH="12" FORMAT="HL" WIDTH="335" HEIGHT="75" />
+	  <data ID="txtOverall" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="350" HEIGHT="51" X="20" Y="95"/>
+      <data ID="txtSeasonNumber" TYPE="text" FORMAT="SL" WIDTH="220" HEIGHT="30" X="20" Y="132" />
+      <data ID="mcUpArrow" TYPE="component" PATH="game/components/FluxComponents/Arrow.swf" WIDTH="15" HEIGHT="15" X="24" Y="265"/>
+      <data ID="mcDownArrow" TYPE="component" PATH="game/components/FluxComponents/Arrow.swf" WIDTH="15" HEIGHT="15" X="80" Y="250" />
+      <data ID="trophy_icon" TYPE="image" PATH="imgAssets/online/Trophy.dds" WIDTH="64" HEIGHT="64" X="210" Y="227" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+	  <data ID="txtTrophy" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="80" HEIGHT="75" X="280" Y="215"/>
+	  <data ID="txtUpArrow" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="120" HEIGHT="44" X="100" Y="200"/>
+      <data ID="txtDownArrow" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf"  WIDTH="120" HEIGHT="44" X="100" Y="258"/>
+      <data ID="mcStars" TYPE="component" PATH="game/components/FluxComponents/Stars.swf" WIDTH="253" HEIGHT="44" X="25" Y="340" />
+    </tile>
+    <tile NAME="MY_CLUB_SEASON" TYPE="TILE" DESTINATION="season" DATAPROVIDERID="CLUB_STATS_TILE_DP" NARRATION_HIGHLIGHT="ACC_CLUB_SEASON_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_SEASON_SELECTED">
+      <properties WIDTH="846" HEIGHT="418" X="109" Y="492" />
+      <data ID="TITLE" TYPE="title" PARAM="TXT_ONLINE_SEASONS_CURRENT_SEASON_TILE_TITLE" ALIGN="leading" FORMAT="HL" WIDTH="846" HEIGHT="65" />
+      <data ID="FORMRECT0" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+	  </data>
+      <data ID="FORM0" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="21" />
+	  </data>
+      <data ID="FORMRECT1" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		   <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="58" />
+	  </data>
+      <data ID="FORM1" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="59" Y="98">
+		   <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="59" />
+	  </data>
+      <data ID="FORMRECT2" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="96" />
+	  </data>
+      <data ID="FORM2" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="97" />
+	  </data>
+      <data ID="FORMRECT3" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="134" />
+	  </data>
+      <data ID="FORM3" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="135" />
+	  </data>
+      <data ID="FORMRECT4" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="172" />
+	  </data>
+      <data ID="FORM4" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="173" />
+	  </data>
+      <data ID="FORMRECT5" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="210" />
+	  </data>
+      <data ID="FORM5" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="211" />
+	  </data>
+      <data ID="FORMRECT6" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="248" />
+	  </data>
+      <data ID="FORM6" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="248" />
+	  </data>
+      <data ID="FORMRECT7" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="286" />
+	  </data>
+      <data ID="FORM7" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="286" />
+	  </data>
+      <data ID="FORMRECT8" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="324" />
+	  </data>
+      <data ID="FORM8" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="324" />
+	  </data>
+      <data ID="FORMRECT9" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="362" />
+	  </data>
+      <data ID="FORM9" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="362" />
+	  </data>
+      <data ID="RECORD_LABEL" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40"  Y="144" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+	  </data>
+      <data ID="RECORD_VALUE" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="144" VISIBLE="FALSE" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="300" />
+	  </data>
+      <data ID="REMAINING_LABEL" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="174" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+	  </data>
+      <data ID="REMAINING_VALUE" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="174" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="300" />
+	  </data>
+      <data ID="PROJECTED_LABEL" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="204" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+	  </data>
+      <data ID="PROJECTED_VALUE" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="204" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="300" />
+	  </data>
+	  <data ID="progressBarBacking" TYPE="text" PARAM="Points_abbr3" ALIGN="left" FORMAT="FONT_TILE_MASSIVE|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX|||middle" HLALPHA="15" UHLALPHA="15" WIDTH="350" HEIGHT="25" TRANSLATE="TRUE">
+ 			<align TARGET="PROGRESSION_GRAPH" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			<align TARGET="PROGRESSION_GRAPH" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT"/>
+	  </data>					
+	  <data ID="PROGRESSION_GRAPH" TYPE="component" PATH="game/components/SeasonsProgressBar.swf" WIDTH="822" HEIGHT="116" Y="253" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="12" />
+	  </data>
+	  <data ID="DIVISION_REFERENCE" TYPE="null" WIDTH="751" />
+      <data ID="DIVISION" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" WIDTH="110" HEIGHT="110" Y="55" VISIBLE="FALSE" >
+		  <align TARGET="DIVISION_REFERENCE" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="645" />
+	  </data>
+    </tile>
+  </panel>
+  <panel NAME="ONLINE_CLUB_JOIN_PANEL">
+    <tile NAME="MY_CLUB_JOIN" TYPE="TILE" DESTINATION="joinclub" BACKGROUND="JoinAClub_Half" NARRATION_HIGHLIGHT="ACC_CLUB_JOIN_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_JOIN_SELECTED">
+      <properties WIDTH="846" HEIGHT="632" X="109" Y="278" />
+      <data ID="title" TYPE="title" PARAM="TXT_ONLINE_CLUB_JOIN_A_CLUB_TILE_TITLE" PATH="12" FORMAT="HL" WIDTH="450" HEIGHT="75" />
+    </tile>
+    <tile NAME="MY_CLUB_CREATE" TYPE="TILE" DESTINATION="createclub" BACKGROUND="CreateAClub_Half" DATAPROVIDERID="SCREEN_CONTEXT" NARRATION_HIGHLIGHT="ACC_CLUB_CREATE_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_CREATE_SELECTED">
+      <properties WIDTH="846" HEIGHT="632" X="965" Y="278" />
+      <data ID="title" TYPE="title" ALIGN="left" PARAM="TXT_ONLINE_CLUB_CREATE_A_CLUB_TILE_TITLE" PATH="12" FORMAT="HL" WIDTH="846" HEIGHT="75" />
+    </tile>
+  </panel>
+  <panel NAME="ONLINE_CLUB_MANAGE_PANEL">
+    <tile NAME="MY_CLUB_TRANSFERS" TYPE="TILE" DESTINATION="transfers" BACKGROUND="Transfers_Med" DATAPROVIDERID="CLUB_MANAGE_TRANSFERS_TILE_DP" NARRATION_HIGHLIGHT="ACC_CLUB_TRANSFERS_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_TRANSFERS_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
+      <data ID="title" TYPE="title" PARAM="TXT_CLUBS_TRANSFERS" PATH="12" FORMAT="HS" WIDTH="450" HEIGHT="75" />
+      <data ID="component0" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" FORMAT="SL" TRANSLATE="FALSE" WIDTH="48" HEIGHT="48" X="795" Y="156" />
+    </tile>
+    <tile NAME="MY_CLUB_TRANSFERS_LARGE" TYPE="TILE" DESTINATION="transfers" BACKGROUND="Transfers_Full" DATAPROVIDERID="CLUB_MANAGE_TRANSFERS_TILE_DP" NARRATION_HIGHLIGHT="ACC_CLUB_TRANSFERS_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_TRANSFERS_SELECTED">
+      <properties WIDTH="1702" HEIGHT="632" X="109" Y="278" />
+      <data ID="title" TYPE="title" PARAM="TXT_CLUBS_TRANSFERS" PATH="12" FORMAT="HL" WIDTH="450" HEIGHT="75" />
+      <data ID="component0" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" FORMAT="SL" TRANSLATE="FALSE" WIDTH="48" HEIGHT="48" Y="575">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-20" />
+	  </data>
+    </tile>
+    <tile NAME="MY_CLUB_LEAVE" TYPE="TILE" DESTINATION="leaveclub" BACKGROUND="LeaveClub_Med" NARRATION_HIGHLIGHT="ACC_CLUB_LEAVE_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_LEAVE_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="965" Y="706" />
+      <data ID="title" TYPE="title" PARAM="TXT_CLUBS_LEAVE" PATH="12" FORMAT="HS" WIDTH="450" HEIGHT="75" />
+    </tile>
+    <tile NAME="MY_CLUB_LEAVE_LARGE" TYPE="TILE" DESTINATION="leaveclub" BACKGROUND="LeaveClub_Lrg" NARRATION_HIGHLIGHT="ACC_CLUB_LEAVE_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_LEAVE_SELECTED">
+      <properties WIDTH="846" HEIGHT="418" X="965" Y="492" />
+      <data ID="title" TYPE="title" PARAM="TXT_CLUBS_LEAVE" PATH="12" FORMAT="HS" WIDTH="450" HEIGHT="75" />
+    </tile>
+    <tile NAME="MY_CLUB_MESSAGES" TYPE="TILE" DESTINATION="messages" BACKGROUND="Messages_Med" NARRATION_HIGHLIGHT="ACC_CLUB_MESSAGES_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_MESSAGES_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
+      <data ID="title" TYPE="title" PARAM="TXT_CLUBS_MESSAGES" PATH="12" FORMAT="HS" WIDTH="450" HEIGHT="75" />
+    </tile>
+    <tile NAME="MY_CLUB_SQUAD" TYPE="TILE" DESTINATION="squad" BACKGROUND="Squad_Lrg" DATAPROVIDERID="CLUB_MANAGE_SQUAD_TILE_DP" NARRATION_HIGHLIGHT="ACC_CLUB_SQUAD_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_SQUAD_SELECTED">
+      <properties WIDTH="846" HEIGHT="418" X="109" Y="492" />
+      <data ID="title" TYPE="title" PARAM="TXT_CLUBS_SQUAD" PATH="12" FORMAT="HL" WIDTH="450" HEIGHT="75" />
+      <data ID="subtitle" TYPE="text" PARAM="TXT_CLUBS_TOTAL_MEMBERS" FORMAT="SXLU" WIDTH="600" X="18" Y="93" />
+      <data ID="info" TYPE="text" FORMAT="HS" WIDTH="234" X="18" Y="128" />
+    </tile>
+    <tile NAME="MY_CLUB_MANAGER_PANEL_SETTINGS" TYPE="TILE" DESTINATION="settings" BACKGROUND="ClubSettings_Med" NARRATION_HIGHLIGHT="ACC_CLUB_MANAGER_PANEL_SETTINGS_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_MANAGER_PANEL_SETTINGS_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
+      <data ID="title" TYPE="title" PARAM="TXT_CLUBS_SETTINGS" PATH="12" FORMAT="HS" WIDTH="450" HEIGHT="75" />
+    </tile>
+    <tile NAME="MY_CLUB_MANAGER_PANEL_CUSTOMIZE_KIT" TYPE="TILE" DESTINATION="customizeclub"  DATAPROVIDERID="CLUB_CUSTOMIZE_TILE_DP" BACKGROUND="invalid_path_activates_shards" NARRATION_HIGHLIGHT="ACC_CLUB_MANAGER_PANEL_CUSTOMIZE_KIT_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_MANAGER_PANEL_CUSTOMIZE_KIT_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
+   	  <data ID="clubCrest" TYPE="image" WIDTH="125" HEIGHT="125" HLALPHA="0" UHLALPHA="100" X="680" Y="40" />
+	  <data ID="clubCrestDark" TYPE="image" WIDTH="125" HEIGHT="125" HLALPHA="100" UHLALPHA="0" X="680" Y="40" />
+      <data ID="clubKit" TYPE="component" PARAM="8" PATH="game/components/online/CustomKit.swf"  WIDTH="50" HEIGHT="50" HLALPHA="100" UHLALPHA="100" X="500" Y="20" />
+      <data ID="title" TYPE="title" PARAM="TXT_CLUB_CUSTOMIZE" PATH="12" FORMAT="HS" WIDTH="500" HEIGHT="75"/>
+    </tile>
+    <tile NAME="MY_CLUB_MANAGER_PANEL_TRANSFERS" TYPE="TILE" DESTINATION="transfers" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="CLUB_MANAGE_TRANSFERS_TILE_DP" BG_ICON="Transfers_Small" NARRATION_HIGHLIGHT="ACC_CLUB_MANAGER_PANEL_TRANSFERS_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_MANAGER_PANEL_TRANSFERS_SELECTED">
+      <properties WIDTH="418" HEIGHT="204" X="1393" Y="492" />
+      <data ID="title" TYPE="title" ALIGN="leading" PARAM="TXT_CLUBS_TRANSFERS" PATH="12" FORMAT="HS" WIDTH="418" HEIGHT="75" />
+      <data ID="component0" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" FORMAT="SL" TRANSLATE="FALSE" WIDTH="48" HEIGHT="48" X="367" Y="156" />
+    </tile>
+    <tile NAME="MY_CLUB_MANAGER_PANEL_MESSAGES" TYPE="TILE" DESTINATION="messages" BACKGROUND="invalid_path_activates_shards" BG_ICON="MessageBoards_Small" NARRATION_HIGHLIGHT="ACC_CLUB_MANAGER_PANEL_MESSAGES_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_MANAGER_PANEL_MESSAGES_SELECTED">
+      <properties WIDTH="418" HEIGHT="204" X="965" Y="492" />
+      <data ID="title" TYPE="title" ALIGN="leading" PARAM="TXT_CLUBS_MESSAGES" PATH="12" FORMAT="HS" WIDTH="418" HEIGHT="75" />
+    </tile>
+  </panel>
+  <panel NAME="ONLINE_CLUB_WORLD_PANEL">
+    <tile NAME="MY_CLUB_WORLD" TYPE="TILE" DESTINATION="worldtable" BACKGROUND="ClubWorldTable_Lrg" DATAPROVIDERID="CLUB_WORLD_TABLE_TILE_DP" NARRATION_HIGHLIGHT="ACC_CLUB_WORLD_TABLE_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_WORLD_TABLE_SELECTED">
+      <properties WIDTH="846" HEIGHT="418" X="109" Y="278" />
+      <data ID="TITLE" TYPE="title" PARAM="TXT_ONLINE_PRO_CLUBS_WORLD_TABLE_TITLE" FORMAT="HL" WIDTH="788" HEIGHT="75" />
+      <data ID="DIVISION" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" WIDTH="120" HEIGHT="120" X="30" Y="120" VISIBLE="FALSE" />
+    </tile>
+    <tile NAME="MY_CLUB_LEADERBOARD" TYPE="TILE" DESTINATION="leaderboard" BACKGROUND="ProLeaderboards_Half" NARRATION_HIGHLIGHT="ACC_CLUB_LEADERBOARDS_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_LEADERBOARDS_SELECTED">
+      <properties WIDTH="846" HEIGHT="632" X="965" Y="278" />
+      <data ID="TITLE" TYPE="title" ALIGN="left" PARAM="TXT_ONLINE_PROCLUBS_LEADERBOARD_TILE_TITLE" FORMAT="HL" WIDTH="846" HEIGHT="60" />
+    </tile>
+    <tile NAME="MY_CLUB_SEARCH" TYPE="TILE" DESTINATION="searchclubs" BG_ICON="SearchClubs_Med" NARRATION_HIGHLIGHT="ACC_CLUB_SEARCH_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_SEARCH_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="706" />
+      <data ID="TITLE" TYPE="title" PARAM="TXT_ONLINE_PROCLUBS_SEARCH_CLUBS_TILE_TITLE" FORMAT="HS" WIDTH="600" HEIGHT="60" />
+    </tile>
+  </panel>
+  <panel NAME="ONLINE_CLUBS_INSPECT_CLUB_PANEL">
+    <tile NAME="MY_CLUB_REQUEST_TRANSFER" TYPE="TILE" DESTINATION="requestTransfer" BACKGROUND="RequestTransfer_Med" DATAPROVIDERID="CLUB_INSPECT_REQUESTTRANSFER_TILE_DP" NARRATION_HIGHLIGHT="ACC_CLUB_REQ_TRANSFER_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_REQ_TRANSFER_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
+      <data ID="requestTitle" TYPE="title" PARAM="TXT_ONLINE_PROCLUBS_REQUESTTRANSFER_TILE_TITLE" FORMAT="HS" WIDTH="600" HEIGHT="75" />
+      <data ID="requestInfo" TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="400" HEIGHT="45" X="18" Y="122" />
+    </tile>
+    <tile NAME="MY_CLUB_POSITIONS_WANTED" TYPE="TILE" DESTINATION="squad" BACKGROUND="ClubInfo_Med" DATAPROVIDERID="CLUB_INSPECT_CLUBINFO_TILE_DP" NARRATION_HIGHLIGHT="ACC_CLUB_POS_WANTED_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_POS_WANTED_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
+      <data ID="clubInfoTitle" TYPE="title" PARAM="SearchClub_ClubInfo" FORMAT="HS" WIDTH="600" HEIGHT="75" />
+      <data ID="clubInfoRegion" TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="339" HEIGHT="45" X="18" Y="79" />
+      <data ID="clubInfoMembers" TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="339" HEIGHT="45" X="18" Y="115" />
+      <data ID="clubInfoPosition" TYPE="text" FORMAT="SS" TRANSLATE="FALSE" WIDTH="339" HEIGHT="45" X="18" Y="151" />
+    </tile>
+    <tile NAME="MY_CLUB_SEASONS_STATS" TYPE="TILE" DESTINATION="season" DATAPROVIDERID="CLUB_STATS_TILE_DP" NARRATION_HIGHLIGHT="ACC_CLUB_SEASON_STATS_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_SEASON_STATS_SELECTED">
+      <properties WIDTH="846" HEIGHT="418" X="109" Y="492" />
+      <data ID="TITLE" TYPE="title" PARAM="TXT_ONLINE_SEASONS_CURRENT_SEASON_TILE_TITLE" ALIGN="leading" FORMAT="HL" WIDTH="846" HEIGHT="65" />
+      <data ID="FORMRECT0" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+	  </data>
+      <data ID="FORM0" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="21" />
+	  </data>
+      <data ID="FORMRECT1" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="58" />
+	  </data>
+      <data ID="FORM1" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="59" />
+	  </data>
+      <data ID="FORMRECT2" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="96" />
+	  </data>
+      <data ID="FORM2" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="97" />
+	  </data>
+      <data ID="FORMRECT3" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="134" />
+	  </data>
+      <data ID="FORM3" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="135" />
+	  </data>
+      <data ID="FORMRECT4" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="172" />
+	  </data>
+      <data ID="FORM4" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="173" />
+	  </data>
+      <data ID="FORMRECT5" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="210" />
+	  </data>
+      <data ID="FORM5" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="211" />
+	  </data>
+      <data ID="FORMRECT6" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="248" />
+	  </data>
+      <data ID="FORM6" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="248" />
+	  </data>
+      <data ID="FORMRECT7" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="286" />
+	  </data>
+      <data ID="FORM7" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="286" />
+	  </data>
+      <data ID="FORMRECT8" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="324" />
+	  </data>
+      <data ID="FORM8" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="324" />
+	  </data>
+      <data ID="FORMRECT9" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" Y="96" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="362" />
+	  </data>
+      <data ID="FORM9" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" Y="98" >		
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="362" />
+	  </data>
+      <data ID="RECORD_LABEL" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="144" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+	  </data>
+      <data ID="RECORD_VALUE" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="144" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="300" />
+	  </data>
+      <data ID="REMAINING_LABEL" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="174" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+	  </data>
+      <data ID="REMAINING_VALUE" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="174" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="300" />
+	  </data>
+      <data ID="PROJECTED_LABEL" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="204" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="20" />
+	  </data>
+      <data ID="PROJECTED_VALUE" TYPE="text" PARAM="" ALIGN="leading" FORMAT="I" WIDTH="350" HEIGHT="40" Y="204" VISIBLE="FALSE" >
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="300" />
+	  </data>
+	  <data ID="progressBarBacking" TYPE="text" PARAM="Points_abbr3" FORMAT="FONT_TILE_MASSIVE|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|||middle" HLALPHA="15" UHLALPHA="15" WIDTH="350" HEIGHT="25" TRANSLATE="TRUE">
+ 			<align TARGET="PROGRESSION_GRAPH" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			<align TARGET="PROGRESSION_GRAPH" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT"/>
+	  </data>		
+      <data ID="PROGRESSION_GRAPH" TYPE="component" PATH="game/components/SeasonsProgressBar.swf" WIDTH="822" HEIGHT="116" X="12" Y="253" VISIBLE="FALSE" />
+	  <data ID="DIVISION_REFERENCE" TYPE="null" WIDTH="771" />
+      <data ID="DIVISION" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" WIDTH="110" HEIGHT="110" Y="55" VISIBLE="FALSE" >
+		  <align TARGET="DIVISION_REFERENCE" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="645" />
+	  </data>
+    </tile>
+    <tile NAME="MY_CLUB_INSPECT_HISTORY" TYPE="TILE" DESTINATION="history" BACKGROUND="History_Lrg" DATAPROVIDERID="CLUB_HISTORY_DP" NARRATION_HIGHLIGHT="ACC_CLUB_INSPECT_HISTORY_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUB_INSPECT_HISTORY_SELECTED">
+      <properties WIDTH="846" HEIGHT="418" X="965" Y="492" />
+      <data ID="title" TYPE="title" PATH="12" FORMAT="HL" WIDTH="335" HEIGHT="75" />
+	  <data ID="txtOverall" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="350" HEIGHT="51" X="20" Y="95"/>
+      <data ID="txtSeasonNumber" TYPE="text" FORMAT="SL" WIDTH="220" HEIGHT="30" X="20" Y="132" />
+      <data ID="mcUpArrow" TYPE="component" PATH="game/components/FluxComponents/Arrow.swf" WIDTH="15" HEIGHT="15" X="24" Y="265" />
+      <data ID="mcDownArrow" TYPE="component" PATH="game/components/FluxComponents/Arrow.swf" WIDTH="15" HEIGHT="15" X="80" Y="250" />
+      <data ID="trophy_icon" TYPE="image" PATH="imgAssets/online/Trophy.dds" WIDTH="64" HEIGHT="64" X="210" Y="227" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" />
+	  <data ID="txtTrophy" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="80" HEIGHT="75" X="280" Y="215"/>
+	  <data ID="txtUpArrow" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="120" HEIGHT="44" X="100" Y="200"/>
+      <data ID="txtDownArrow" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="120" HEIGHT="44" X="100" Y="258"/>
+      <data ID="mcStars" TYPE="component" PATH="game/components/FluxComponents/Stars.swf" WIDTH="253" HEIGHT="44" X="25" Y="340" />
+    </tile>
+  </panel>
+</root>

@@ -1,0 +1,151 @@
+{
+	"name":"GTNHubFlow"
+	,"initial": { "targets":["GTNHub"] }
+	,"states":
+	[
+		{
+			"name":"GTNHub"
+			,"onEnter":
+			[
+				["loadScreenController", ["GTNHub"]]
+				,["loadView", ["screen", "game/screens/career/gtn/GTNHub"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/gtn/GTNHub"]]
+				,["unloadScreenController", ["GTNHub"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"] 					
+				}
+				,{
+					"event":"EnterHireScoutFromTransfers"
+					,"targets":["HireScout"]
+					,"actions":[ ["executeCMAction",["EnterHireScoutFromTransfers"]] ]					
+				}
+				,{
+					"event":"EnterMapOfWorldFromGTN"
+					,"targets":["ScoutNetworkFromGTN"]
+					,"actions":[ ["executeCMAction",["EnterMapOfWorldFromGTN"]] ]					
+				}
+				,{
+					"event":"EnterGTNScoutReportFromGTNHub"
+					,"targets":["GTNScoutReport"]
+					,"actions":[ ["executeCMAction",["EnterGTNScoutReportFromGTNHub"]] ]
+				}
+				,{
+					"event":"EnterShoppingList"
+					,"targets":["ShoppingList"]
+				}
+			]
+		}
+		,{
+			"name":"HireScout"
+			,"onEnter":
+			[
+				["loadScreenController", ["HireScout"]]
+				,["loadView", ["screen", "game/screens/career/YouthScout/HireScout"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/YouthScout/HireScout"]]
+				,["unloadScreenController", ["HireScout"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["GTNHub"] 
+				}
+			]
+		}
+		,{
+			"name":"ScoutNetworkFromGTN"
+			,"onEnter":
+			[
+				["loadScreenController", ["ScoutNetwork"]]
+				,["loadView", ["screen", "game/screens/career/YouthScout/ScoutNetwork"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/YouthScout/ScoutNetwork"]]
+				,["unloadScreenController", ["ScoutNetwork"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["GTNHub"] 
+				}
+			]	
+		}
+		,{	
+			"onEnter":
+			[
+				["set", ["FromContext", ".FromContext" ]]
+			]
+			,"states":
+			[
+				{
+					"name":"GTNScoutReport"
+					,"type":"external"
+					,"file":"/careerMode/gtnScoutReportFlow.nav"
+					,"outputs": 
+					{ 
+						"Back":"GTNHub"
+					}	
+				}
+			]
+		}
+		,{
+			"name":"ShoppingList"
+			,"onEnter":
+			[
+				["loadScreenController", ["ShoppingList"]]
+				,["loadView", ["screen", "game/screens/career/gtn/ScoutInstructions"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/gtn/ScoutInstructions"]]
+				,["unloadScreenController", ["ShoppingList"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"]					
+				}
+				,{
+					"event":"EnterGTNHub"
+					,"targets":["GTNHub"] 
+				}
+				,{
+					"event":"EnterGTNScoutReportFromShoppingList"
+					,"targets":["GTNScoutReportFromShoppingList"]
+					,"actions":[ ["executeCMAction",["EnterGTNScoutReportFromShoppingList"]] ]					
+				}
+			]
+		}
+		,{	
+			"onEnter":
+			[
+				["set", ["FromContext", ".FromContext" ]]
+			]
+			,"states":
+			[
+				{
+					"name":"GTNScoutReportFromShoppingList"
+					,"type":"external"
+					,"file":"/careerMode/gtnScoutReportFlow.nav"
+					,"outputs": 
+					{ 
+						"Back":"ShoppingList"
+					}	
+				}
+			]
+		}
+	]
+}

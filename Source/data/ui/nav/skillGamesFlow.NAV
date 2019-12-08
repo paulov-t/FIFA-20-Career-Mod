@@ -1,0 +1,323 @@
+{
+	"name":"skillGamesFlow"
+	, "initial":
+	{
+		"targets":["PerformProfileCheck"]
+	}
+	,"transitions":
+	[
+		{ "event":"goToInviteFlow", "actions":[["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]],["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]]], "targets":["out_goToInviteFlow"]}
+		,{ "event":"profileSignOut", "actions":[["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]],["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]]], "targets":["profileSignOut"]}
+	]
+	,"states":
+	[
+		{
+			"name":"PerformProfileCheck"
+			,"type":"external"
+			,"file":"/performProfileCheckFlow.nav"
+			,"outputs":
+			{
+				"success":"modeInitializationSkillHub"
+				,"fail":"back"
+			}
+		}
+		,{
+			"name":"modeInitializationSkillHub"
+			,"onEnter": 
+			[ 
+				["sendScreenEvent", ["UXSaveGMTrackerInfo", ".GameModeRecordID.GM_SKILL_GAMES"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["postSaveModeInitializationSkillHub"] 
+				}
+			]
+		}
+		,{
+			"onEnter":
+			[
+				["loadView", ["popup","SkillGamesLoading", "Loading"]]
+			]
+			, "onExit":
+			[
+				["unloadView", ["popup", "SkillGamesLoading"]]
+			]
+			,"states":
+			[
+				{
+					"name":"StadiumLoading"
+					,"type":"external"
+					,"file":"/reloadfestadiumflow.nav"
+					,"inputs":
+					{
+						"postSaveModeInitializationSkillHub":"WaitForLoad"
+					}
+					,"outputs":
+					{
+						"ReloadReady":"LoadSkillGames"
+						,"LoadStarted":"LoadSkillGames"
+					}
+				}
+				,{
+					"name":"LoadSkillGames"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["UxSetFlowState",".eState.TRAINING_HUB"]]
+						,["sendScreenEvent", ["ShowLoadingIcon"]]
+						,["sendAction", ["evt_invite_flow_not_ready"]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideLoadingIcon"]]
+						,["sendAction", ["evt_invite_flow_ready"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"cond":["==",".skillGameFlowType","drill"]
+							,"targets":["instructionsOverlay"]
+						},
+						{
+							"event":"advance"
+							,"cond":["==",".skillGameFlowType","subCategory"]
+							,"targets":["skillHub"]
+						},
+						{
+							"event":"advance"
+							,"targets":["skillCategorySelectHub"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"onEnter":
+			[
+				["loadViewModel",["SkillCatSelectViewModel"]]
+				,["sendAction",["updateLocGender", "checkGender"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["SkillCatSelectViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"skillCategorySelectHub"
+					,"onEnter":
+					[
+						["loadViewModel",["FluxViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+						,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+					]
+					,"transitions":
+					[
+						{"event":"selectCat","targets":["skillHub"]}
+						,{"event":"back","targets":["waitToLeave"],"let":{ "direction":"back" }}
+					]
+				}
+				,{
+					"name":"waitToLeave"
+					,"onEnter":
+					[
+						["sendAction",["wait", "leaveMode"]]
+						,["sendScreenEvent", ["ShowLoadingIcon"]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideLoadingIcon"]]
+					]					
+					,"transitions":
+					[
+						{
+							"event":"leaveModeReady"
+							,"targets":["back"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"skillHub"
+			,"onEnter":
+			[
+				["loadViewModel",["SkillHubViewModel"]]
+				,["loadView",["screen", "game/screens/training/SkillGamesHub", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/training/SkillGamesHub", "", ".direction"]]
+				,["unloadViewModel",["SkillHubViewModel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"cond":["==",".skillGameFlowType","subCategory"]
+					,"targets":["back"]
+				}
+				,{"event":"showInstructions","targets":["instructionsOverlay"]}
+				,{"event":"back","targets":["skillCategorySelectHub"]}
+			]
+		}
+		,{
+			"name":"instructionsOverlay"
+			, "initial":
+			{
+				"targets":["readyToAdvance"]
+			}
+			,"onEnter":
+			[
+				["loadViewModel",["SkillInstructionsViewModel"]]
+				,["loadView",["screen", "game/screens/skillGames/SkillGamePause", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/skillGames/SkillGamePause"]]
+				,["unloadViewModel",["SkillInstructionsViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"readyToAdvance"
+					,"onEnter":
+					[	
+						["sendAction", ["advanceRequest"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"resume"
+							,"targets":["gamePlay"]
+						}
+						,{
+							"event":"back"
+							,"cond":["==",".skillGameFlowType","drill"]
+							,"targets":["back"]
+						}
+						,{
+							"event":"back"
+							,"targets":["skillHub"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"gamePlay"
+			, "initial":
+			{
+				"targets":["gameActive"]
+			}
+			,"onEnter":
+			[
+				["loadViewModel",["SkillGamePlayViewModel"]]
+				,["loadViewModel", ["InGameOverlayViewModel"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["SkillGamePlayViewModel"]]
+				,["unloadViewModel", ["InGameOverlayViewModel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_quit_to_training_hub"
+					,"targets":["skillHub"]
+					,"let":{ "direction":"back" }
+				}
+			]
+			,"states":
+			[
+				{
+					"name":"gameActive"
+					,"onEnter":
+					[
+						["sendAction", ["transitionManager", ".NavTransitionManager.TO_GAME"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["transitionManager", ".NavTransitionManager.TO_FE"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"pause"
+							,"targets":["gamePaused"]
+						}
+						,{
+							"event":"showResults"
+							,"targets":["resultsOverlay"]
+						}
+						,{
+							"event":"evt_sign_out"
+							,"targets":["gamePaused"]
+						}
+					]
+				}
+				,{
+					"name":"gamePaused"
+					,"onEnter":
+					[
+						["loadViewModel",["SkillGamePauseViewModel"]]
+						,["loadView",["screen", "game/screens/skillGames/SkillGamePause", "", ".direction"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/skillGames/SkillGamePause"]]
+						,["unloadViewModel",["SkillGamePauseViewModel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"resume"
+							,"targets":["gameActive"]
+						}
+						,{
+							"event":"restart"
+							,"targets":["gameActive"]
+						}
+						,{
+							"event":"back"
+							,"targets":["gameActive"]
+						}
+					]
+				}
+				,{
+					"name":"resultsOverlay"
+					,"onEnter":
+					[
+						["loadViewModel",["SkillGameResultsViewModel"]]
+						,["loadViewModel",["SkillGamesLeaderboardViewModel"]]
+						,["loadView",["screen", "game/screens/skillGames/SkillGameResults", "", ".direction"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/skillGames/SkillGameResults"]]
+						,["unloadViewModel",["SkillGamesLeaderboardViewModel"]]
+						,["unloadViewModel",["SkillGameResultsViewModel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"restart"
+							,"targets":["gameActive"]
+						}
+						,{
+							"event":"showInstructions"
+							,"targets":["instructionsOverlay"]
+						}
+					]
+				}
+			]
+		}
+	]
+}

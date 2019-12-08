@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="23/01/2019" VERSION="4">
+  <hub_settings NAME="HospitalityUpgradeHub">   
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="sgt" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_Nested_Exported" TILE_NAME="TILE_NESTED" />
+  </hub_settings>
+  <buttons>
+     <button ID="ADVANCE" HINT="Advance" ACTION="ACTION_ADVANCE"/>
+  </buttons>
+   <panel_set>
+    <panel NAME="HOSPITALITY_REWARDS_PANEL" LABEL="TXT_REWARDS_EASFC_VIEW_REWARDS" IS_TAB="FALSE">
+        <layout NAME="HOSPITALITY_REWARDS_LAYOUT" X="0" Y="0">
+            <tile NAME="HOSPITALITY_REWARDS_BG" X="363" Y="140" />
+            <tile NAME="HOSPITALITY_REWARDS_TILE" X="370" Y="140" />
+            <tile NAME="HOSPITALITY_REWARDS_OVERLAY" X="650" Y="870" />
+        </layout>
+    </panel>
+  </panel_set>
+  
+  <panel NAME="HOSPITALITY_REWARDS_PANEL">
+    
+    <variable_set>
+	    <variable id="careerHeader1" type="string" />
+	    <variable id="careerHeader2" type="string" />
+	    <variable id="careerHeader3" type="string" />
+	    <variable id="seasonsText" type="string" />
+	    <variable id="seasonsOldDivision" type="string" />
+	    <variable id="seasonsNewDivision" type="string" />
+        <variable id="proBadgeStatus" type="string" />
+        <variable id="hintVisible" type="bool" />
+    </variable_set>
+    
+     <tile NAME="HOSPITALITY_REWARDS_BG" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE">
+        <properties WIDTH="1194" HEIGHT="785" />
+        <data ID="TILE_BG" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_PREVIEW" X="0" Y="0" WIDTH="1194" HEIGHT="785" />
+    </tile>
+    
+    <tile NAME="HOSPITALITY_REWARDS_OVERLAY" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+        <properties WIDTH="640" HEIGHT="120" />
+        <data ID="INTRO_LABEL" PARAM="TXT_REWARDS_EASFC_VIEW_REWARDS" TYPE="text" FORMAT="FONT_BOLD_ACTIVE_LABEL||center|" X="0" Y="0" WIDTH="630" HEIGHT="44" VISIBLE="@hintVisible"/> 
+        <data ID="INTRO_ARROW" TYPE="asset" PATH="upgradeUnlock" PARAM="BulletsArrow" X="400" Y="23" WIDTH="221" HEIGHT="80" VISIBLE="@hintVisible"/>
+    </tile>
+    
+    <tile NAME="HOSPITALITY_REWARDS_TILE" TYPE="TILE_NESTED" SELECTABLE="TRUE" HIGHLIGHTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+        <properties WIDTH="1180" HEIGHT="780" ENABLE_CYCLING="FALSE" />
+        
+        <!-- EASFC Rewards -->
+        <subtile SUBTILE_TYPE="TILE" NAME="HOSPITALITY_REWARDS_SUBTILE_EASFC" DECORATORS_RANGE="NO_BACKGROUND">
+            <data ID="EASFC_TITLE"       PARAM="TXT_REWARDS_EASFC_HEADER" TYPE="text" FORMAT="FONT_TILE_THS||center|" X="0" Y="12" WIDTH="1180" HEIGHT="68"/> 
+            <data ID="EASFC_DESCRIPTION" PARAM="TXT_REWARDS_EASFC_HEADER_DESC" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="196" Y="90" WIDTH="788" HEIGHT="68" /> 
+            
+            <data ID="EASFC_IMG" TYPE="asset" PATH="upgradeUnlock" PARAM="0" WIDTH="416" HEIGHT="325">
+                <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+                <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-40"/>
+            </data>
+            <data ID="EASFC_SUBTITLE"       PARAM="TXT_REWARDS_EASFC_HEADER_TWO" TYPE="text" FORMAT="FONT_BOLD_FHD||center|" X="238" Y="554" WIDTH="704" HEIGHT="48"/> 
+            <data ID="EASFC_SUBDESCRIPTION" PARAM="TXT_REWARDS_EASFC_HEADER_TWO_DESC" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="238" Y="614" WIDTH="704" HEIGHT="94" /> 
+        </subtile>
+        
+        <!-- FUT Rewards -->
+        <subtile SUBTILE_TYPE="TILE" NAME="HOSPITALITY_REWARDS_SUBTILE_FUT" DECORATORS_RANGE="NO_BACKGROUND">
+            <data ID="FUT_TITLE"       PARAM="TXT_REWARDS_FUT_HEADER" TYPE="text" FORMAT="FONT_TILE_THS||center|" X="0" Y="12" WIDTH="1180" HEIGHT="68"/> 
+            <data ID="DESCRIPTION" PARAM="TXT_REWARDS_FUT_HEADER_DESC" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="196" Y="90" WIDTH="788" HEIGHT="68" /> 
+            
+            <data ID="FUT_IMG" TYPE="asset" VISIBLE="TRUE" PATH="upgradeUnlock" PARAM="1" WIDTH="858" HEIGHT="515">
+                <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+                <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-40"/>
+            </data>
+            <data ID="FUT_SUBTITLE"       PARAM="TXT_REWARDS_FUT_HEADER_TWO" TYPE="text" FORMAT="FONT_BOLD_FHD||center|" X="238" Y="554" WIDTH="704" HEIGHT="48"/> 
+            <data ID="FUT_SUBDESCRIPTION" PARAM="TXT_REWARDS_FUT_HEADER_TWO_DESC" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="238" Y="614" WIDTH="704" HEIGHT="94" /> 
+        </subtile>
+        
+       <!-- Career Rewards -->
+        <subtile SUBTILE_TYPE="TILE" NAME="HOSPITALITY_REWARDS_SUBTILE_CAREER" DECORATORS_RANGE="NO_BACKGROUND">
+            <data ID="CAREER_TITLE"       PARAM="TXT_REWARDS_CAREER_HEADER" TYPE="text" FORMAT="FONT_TILE_THS||center|" X="0" Y="12" WIDTH="1180" HEIGHT="68"/> 
+            <data ID="CAREER_DESCRIPTION" PARAM="TXT_REWARDS_CAREER_HEADER_DESC" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="196" Y="90" WIDTH="788" HEIGHT="68" /> 
+            
+            <data ID="CAREER_IMG_1" TYPE="asset" PATH="upgradeUnlock" PARAM="2-0" X="40" Y="245" WIDTH="293" HEIGHT="231" /> 
+            <data ID="CAREER_SUBTITLE_1"       PARAM="@careerHeader1" TYPE="text" FORMAT="FONT_BOLD_FHD||center|" X="29" Y="540" WIDTH="350" HEIGHT="48" TRANSLATE="FALSE"/> 
+            <data ID="CAREER_SUBDESCRIPTION_1" PARAM="TXT_REWARDS_CAREER_HEADER_TWO_DESC_LEFT" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="29" Y="600" WIDTH="350" HEIGHT="94" /> 
+            
+            <data ID="CAREER_IMG_2" TYPE="asset" PATH="upgradeUnlock" PARAM="2-1" X="457" Y="246" WIDTH="262" HEIGHT="229" /> 
+            <data ID="CAREER_SUBTITLE_2"         PARAM="@careerHeader2" TYPE="text" FORMAT="FONT_BOLD_FHD||center|" X="412" Y="540" WIDTH="350" HEIGHT="48" TRANSLATE="FALSE"/> 
+            <data ID="CAREER_SUBDESCRIPTION_2"   PARAM="TXT_REWARDS_CAREER_HEADER_TWO_DESC_MIDDLE" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="412" Y="600" WIDTH="350" HEIGHT="94" /> 
+            
+            <data ID="CAREER_IMG_3" TYPE="asset" PATH="upgradeUnlock" PARAM="2-2" X="848" Y="249" WIDTH="253" HEIGHT="224" />
+            <data ID="CAREER_SUBTITLE_3"         PARAM="@careerHeader3" TYPE="text" FORMAT="FONT_BOLD_FHD||center|" X="800" Y="540" WIDTH="350" HEIGHT="48" TRANSLATE="FALSE"/> 
+            <data ID="CAREER_SUBDESCRIPTION_3"   PARAM="TXT_REWARDS_CAREER_HEADER_TWO_DESC_RIGHT" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="800" Y="600" WIDTH="350" HEIGHT="94" /> 
+        </subtile>
+        
+        <!-- Seasons Rewards -->
+        <subtile SUBTILE_TYPE="TILE" NAME="HOSPITALITY_REWARDS_SUBTILE_SEASONS" DECORATORS_RANGE="NO_BACKGROUND">
+            <data ID="SEASONS_TITLE"       PARAM="TXT_REWARDS_SEASONS_HEADER" TYPE="text" FORMAT="FONT_TILE_THS||center|" X="0" Y="12" WIDTH="1180" HEIGHT="68"/> 
+            <data ID="SEASONS_DESCRIPTION" PARAM="TXT_REWARDS_SEASONS_HEADER_DESC" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="196" Y="90" WIDTH="788" HEIGHT="68" /> 
+
+            <data ID="SEASONS_DIV_OLD" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" X="80" Y="300" WIDTH="150" HEIGHT="150" PARAM="2|DIV" />
+            <data ID="SEASONS_DIV_NEW" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" X="297" Y="240" WIDTH="200" HEIGHT="200" PARAM="3|DIV"/>
+            
+            <data ID="SEASONS_FIF_OLD" TYPE="asset" PATH="upgradeUnlock" PARAM="Fifa19Old" X="275" Y="395" WIDTH="64" HEIGHT="64"/>
+            <data ID="SEASONS_FIF_NEW" TYPE="asset" PATH="upgradeUnlock" PARAM="Fifa20" X="533" Y="406" WIDTH="98" HEIGHT="98"/>
+            
+            <data ID="SEASONS_IMG" TYPE="asset" PATH="upgradeUnlock" PARAM="3-0" X="642" Y="238" WIDTH="445" HEIGHT="284" />
+            
+            <data ID="SEASONS_SUBTITLE_1"       PARAM="TXT_REWARDS_SEASONS_HEADER_TWO_LEFT" TYPE="text" FORMAT="FONT_BOLD_FHD||center|" X="69" Y="570" WIDTH="500" HEIGHT="48"/> 
+            <data ID="SEASONS_SUBDESCRIPTION_1" PARAM="@seasonsText" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="69" Y="630" WIDTH="500" HEIGHT="94" TRANSLATE="FALSE" /> 
+            <data ID="SEASONS_SUBTITLE_2"       PARAM="TXT_REWARDS_SEASONS_HEADER_TWO_RIGHT" TYPE="text" FORMAT="FONT_BOLD_FHD||center|" X="614" Y="570" WIDTH="500" HEIGHT="48"/> 
+            <data ID="SEASONS_SUBDESCRIPTION_2" PARAM="TXT_REWARDS_SEASONS_HEADER_TWO_DESC_RIGHT" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="614" Y="630" WIDTH="500" HEIGHT="94" /> 
+        </subtile>
+        
+        <!-- ProClubs Rewards -->
+        <subtile SUBTILE_TYPE="TILE" NAME="HOSPITALITY_REWARDS_SUBTILE_PROCLUBS" DECORATORS_RANGE="NO_BACKGROUND">
+            <data ID="PROCLUBS_TITLE"       PARAM="TXT_REWARDS_PRO_CLUBS_HEADER" TYPE="text" FORMAT="FONT_TILE_THS||center|" X="0" Y="12" WIDTH="1180" HEIGHT="68"/> 
+            <data ID="PROCLUBS_DESCRIPTION" PARAM="TXT_REWARDS_PRO_CLUBS_HEADER_DESC" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="196" Y="90" WIDTH="788" HEIGHT="68" /> 
+            
+            <data ID="PROCLUBS_IMG_1" TYPE="asset" PATH="upgradeUnlock" PARAM="4-0" X="377" Y="227" WIDTH="376" HEIGHT="306" /> 
+            <data ID="PROCLUBS_SUBTITLE_1"       PARAM="TXT_REWARDS_PRO_CLUBS_HEADER_TWO_LEFT" TYPE="text" FORMAT="FONT_BOLD_FHD||center|" X="340" Y="554" WIDTH="500" HEIGHT="48"/> 
+            <data ID="PROCLUBS_SUBDESCRIPTION_1" PARAM="TXT_REWARDS_PRO_CLUBS_HEADER_TWO_DESC_LEFT" TYPE="text" FORMAT="FONT_TILE_TSM||center|" X="340" Y="614" WIDTH="500" HEIGHT="94" />
+        </subtile>
+    </tile>
+    
+   
+   </panel>
+  </root>

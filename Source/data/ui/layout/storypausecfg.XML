@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryPause">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="STORY_PAUSE_PANEL" LABEL="STORY_TAB_PAUSE" IS_TAB="TRUE" >
+      <buttons>
+        <button ID="BACK" HINT="help_resume_btn" ACTION="ACTION_BACKOUT" />
+      </buttons>
+	</panel>
+  </panel_set>
+  <panel NAME="STORY_PAUSE_PANEL">
+    <tile NAME="STORY_PAUSE_RESUME" TYPE="TILE" DESTINATION="back">
+      <properties WIDTH="868" HEIGHT="468" X="109" Y="278" />
+      <data ID="title" TYPE="title" PARAM="STORY_PAUSE_TILE_ADVANCE" />
+    </tile>
+    <tile NAME="STORY_PAUSE_SETTINGS" TYPE="TILE" DESTINATION="settings">
+      <properties WIDTH="430" HEIGHT="288" X="109" Y="754" />
+      <data ID="title" TYPE="title" PARAM="STORY_PAUSE_TILE_SETTINGS" />
+    </tile>
+    <tile NAME="STORY_PAUSE_REPLAY" TYPE="TILE" DESTINATION="replay">
+      <properties WIDTH="430" HEIGHT="140" X="547" Y="754" />
+      <data ID="title" TYPE="title" PARAM="STORY_PAUSE_TILE_TEAM" />
+    </tile>
+    <tile NAME="STORY_PAUSE_QUIT" TYPE="TILE" DESTINATION="advance">
+      <properties WIDTH="430" HEIGHT="140" X="547" Y="902" />
+      <data ID="title" TYPE="title" PARAM="STORY_PAUSE_TILE_QUIT" />
+    </tile>
+  </panel>
+</root>

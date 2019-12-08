@@ -1,0 +1,5 @@
+[
+	"harel.lua",
+	"hareltableparser.lua",
+	"autonav.lua"
+]

@@ -1,0 +1,125 @@
+{
+	"name":"editTeamManagementFlow"
+	, "initial":
+	{
+			"targets":["teamAndSheetSelection"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel",["TeamSheetSelectionViewModel", ".tmMode"]]
+	]
+	,"onExit":
+	[
+		["sendAction", ["updateLocGender", "resetGender"]]
+		,["unloadViewModel",["TeamSheetSelectionViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"teamAndSheetSelection"
+			, "initial":
+			{
+				"targets":["teamSelect"]
+			}
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/teamsheets/TeamSheetSelection"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/teamsheets/TeamSheetSelection"]]
+			]
+			,"states":
+			[
+				{
+					"name":"teamSelect"
+					,"onEnter":
+					[
+						["sendAction", ["updateScreen","enterTeamSelect"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["updateLocGender", "checkGender"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["sheetSelectForChosenTeam"]
+						}
+						,{
+							"event":"success"
+							,"targets":["back"]
+						}
+					]
+				}
+				,{
+					"name":"sheetSelectForChosenTeam"
+					,"type":"external"
+					,"file":"/teamSheetFlow/teamSheetSelect.nav"
+					,"outputs":
+					{
+						"teamSheetEditor":"teamSheetEditorForChosenTeam",
+						"back":"teamSelect"
+					}
+				}
+			]
+		}
+		,{
+			"name":"teamSheetEditorForChosenTeam"
+			,"type":"external"
+			,"file":"/editTeamSheetFlow.nav"
+			,"outputs":
+			{
+				"back":"sheetSelectForChosenTeam"
+			}
+		}
+		,{
+			"onEnter":
+			[
+				["sendAction", ["updateScreen","selectCurrentTeam"]]
+			]
+			,"states":
+			[
+				{
+					"name":"teamSheetSelection"
+					, "initial":
+					{
+						"targets":["sheetSelect"]
+					}
+					,"onEnter":
+					[
+						["loadView",["screen", "game/screens/teamsheets/TeamSheetSelection"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/teamsheets/TeamSheetSelection"]]
+					]
+					,"states":
+					[
+						{
+							"name":"sheetSelect"
+							,"type":"external"
+							,"file":"/teamSheetFlow/teamSheetSelect.nav"
+							,"outputs":
+							{
+								"teamSheetEditor":"teamSheetEditor",
+								"back":"back"
+							}
+						}
+					]
+				}
+				,{
+					"name":"teamSheetEditor"
+					,"type":"external"
+					,"file":"/editTeamSheetFlow.nav"
+					,"outputs":
+					{
+						"back":"teamSheetSelection"
+					}
+				}
+			]
+		}
+
+	]
+}

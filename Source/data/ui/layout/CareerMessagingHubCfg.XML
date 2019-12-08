@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="CareerMessagingHub" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <components>
+		<component PATH="game/components/FluxComponents/FluxScreenDimmer.swf" PARAM="true|90" X="0" Y="0" WIDTH="4000" HEIGHT="4000" />
+  </components>
+  <buttons>
+    <button ID="ADVANCE" HINT="" ACTION="ACTION_ADVANCE" />
+	<button ID="START" HINT="Advance" ACTION="ACTION_BUTTON_START" />
+    <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+    <button ID="OPTION_LEFT" HINT="CM_Email_Delete_Email" ACTION="ACTION_BUTTON_X" />
+    <button ID="OPTION_TOP" HINT="CM_Email_To_archive" ACTION="ACTION_BUTTON_Y" />
+	
+	<button ID="R1" HINT="" ACTION="ACTION_PREVIOUS_TAB" />
+	<button ID="L1" HINT="" ACTION="ACTION_NEXT_TAB" />
+  </buttons>
+  <panel_set>
+    <panel NAME="MES_HUB_INBOX" LABEL="CM_Inbox_Title" IS_TAB="TRUE">
+      <layout NAME="MES_HUB_INBOX_LAYOUT" X="109" Y="200">
+		<tile NAME="HUB_INBOX_CAT_TOGGLE" X="20" Y="0" />
+		<tile NAME="HUB_INBOX_NODATA" X="20" Y="41" />
+        <tile NAME="HUB_INBOX_CAT_LIST" X="20" Y="40" />
+		<tile NAME="HUB_INBOX_EMAIL_LIST" X="620" Y="50" />
+		<tile NAME="HUB_INBOX_DUMMY_TILE" X="20" Y="42" />
+      </layout>
+    </panel>
+	<panel NAME="MES_HUB_PLAYER_CONV" LABEL="CM_Player_Chat_Title" IS_TAB="TRUE">
+	  <layout NAME="MES_HUB_PLAYER_CONV_EMPTY" X="109" Y="200">
+		<tile NAME="HUB_CONV_NODATA" X="20" Y="0" />
+      </layout>
+      <layout NAME="MES_HUB_PLAYER_CONV_LAYOUT" X="109" Y="200">
+	    <tile NAME="HUB_CONV_DIMMER" X="19" Y="-1" />
+        <tile NAME="HUB_CONV_PLAYER_LIST" X="20" Y="0" />
+		<tile NAME="HUB_CONV_MESSAGES" X="620" Y="120" />
+		<tile NAME="HUB_CONV_PLAYER_STATUS" X="620" Y="0" />
+		<tile NAME="HUB_CONV_DUMMY_TILE" X="21" Y="1" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="MES_HUB_PLAYER_CONV">
+	<variable_set>
+      <variable id="playerList" type="string"/>
+      <variable id="messageList" type="string"/>
+      <variable id="messageDate" type="string"/>
+      <variable id="assetId" type="string"/>
+      <variable id="notificationVisibility" type="bool"/>
+      <variable id="visibility" type="bool"/>
+	  <variable id="isFocused" type="bool" />
+      <!-- STATUS TILE VARIABLES -->
+	  <variable id="focusedAssetId" type="string"/>
+      <variable id="ovrValue" type="int"/>
+      <variable id="firstName" type="string"/>
+      <variable id="secondName" type="string"/>
+      <variable id="position" type="string"/>
+      <variable id="pitchArea" type="string"/>
+      <variable id="role" type="string"/>
+      <variable id="moraleComponentData" type="string"/>
+	  <variable id="moraleValue" type="string"/>
+	  <variable id="moraleVisibility" type="string"/>
+	  <variable id="moraleTrend" type="int" />	  
+    </variable_set>
+	
+	<tile NAME="HUB_CONV_NODATA" TYPE="TILE" SELECTABLE="FALSE" DESTINATION="" DECORATORS_RANGE="NO_BACKGROUND" >
+	 <properties WIDTH="1650" HEIGHT="670" />
+	 <data ID="noData" TYPE="rectangle" FORMAT="|COLOR_TEXT_SELECTED||COLOR_TEXT_SELECTED" WIDTH="1920" HEIGHT="1080" HLALPHA="20" UHLALPHA="20" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+	 </data>
+	 <data ID="noDataText" TYPE="text" PARAM="CM_No_Conversations_upper" FORMAT="FONT_TILE_HS|COLOR_TEXT_PREVIEW|center|COLOR_TEXT_PREVIEW" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="300" />
+	 </data>
+	</tile>
+	
+	<tile NAME="HUB_CONV_DIMMER" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DESTINATION="" DECORATORS_RANGE="NO_BACKGROUND" >
+	 <properties WIDTH="578" HEIGHT="670" />
+	 <data ID="dimmer" TYPE="rectangle" FORMAT="|COLOR_TEXT_SELECTED||COLOR_TEXT_SELECTED" WIDTH="578" HEIGHT="670" HLALPHA="0" UHLALPHA="10" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+	 </data>
+	</tile>
+	<tile NAME="HUB_CONV_PLAYER_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DESTINATION="" DECORATORS_RANGE="NO_BACKGROUND" >
+	  <properties WIDTH="602" />
+	  <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="85" ITEM_WIDTH="577" ROWS="3"  LIST_HEIGHT="" />
+	  <data ID="secHighlight" TYPE="rectangle" VISIBLE="@visibility[i]" FORMAT="|COLOR_TEXT_HIGHLIGHT||COLOR_TEXT_HIGHLIGHT" WIDTH="577" HEIGHT="85" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+	  </data>
+	  <data ID="newIcon" TYPE="asset" PATH="eventIcon" PARAM="Icon_Reply" VISIBLE="@notificationVisibility[i]" WIDTH="32" HEIGHT="32" FORMAT="@#IfElse(@visibility[i],|||COLOR_TEXT_HIGHLIGHT_FLUX_ALTERNATE:|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST)">
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="30" />
+	  </data>
+	  <data ID="playerHead" TYPE="asset" PATH="heads" PARAM="@assetId[i]" WIDTH="84" HEIGHT="84">
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="1"/>
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="60" />
+	  </data>
+      <data ID="playerName" TYPE="text" TRANSLATE="FALSE" PARAM="@playerList[i]" FORMAT="@#IfElse(@visibility[i],FONT_TILE_TSM|||COLOR_TEXT_SELECTED:FONT_TILE_TSM|COLOR_TEXT_SELECTED||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE)" >
+          <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="15" />
+		  <align TARGET="playerHead" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="30" />
+      </data>
+	  <data ID="message" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" TRANSLATE="FALSE" PARAM="@#Pattern(@messageList[i],*|0)" FORMAT="FONT_TILE_TSM|COLOR_TEXT_PREVIEW|left|COLOR_TEXT_PREVIEW" HEIGHT="40" WIDTH="300" X="170" Y="45" />
+	  <data ID="date" TYPE="text" TRANSLATE="FALSE" PARAM="@messageDate[i]" FORMAT="FONT_TILE_TSM|COLOR_TEXT_PREVIEW|right|COLOR_TEXT_PREVIEW" >
+          <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="28" />
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-25" />
+      </data>
+	</tile>
+	
+	<tile NAME="HUB_CONV_MESSAGES" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DESTINATION="" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="975" HEIGHT="550" />
+      <data ID="PLAYERCONV" TYPE="component" PATH="game/components/FluxComponents/FluxPlayerConversation.swf" PARAM="@isFocused" WIDTH="975" HEIGHT="550" X="0" Y="0" DATAPROVIDERID="CMPlayerConversationDP" GLOBAL_INPUT="TRUE" />
+    </tile>
+	
+	<tile NAME="HUB_CONV_PLAYER_STATUS" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DESTINATION="NONE" DECORATORS_RANGE="NO_BACKGROUND" >
+	  <properties WIDTH="975" HEIGHT="120" />
+	  <data ID="line" TYPE="rectangle" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" WIDTH="2" HEIGHT="670" HLALPHA="20" UHLALPHA="20" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="-2" />
+	  </data>
+	  <data ID="background" TYPE="rectangle" PARAM="COLOR_TEXT_SELECTED" WIDTH="975" HEIGHT="120" HLALPHA="0" UHLALPHA="5" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+	  </data>
+	  <data ID="ovrLabel" TYPE="text" PARAM="Overall_abbr3" FORMAT="FONT_TILE_TSMU|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" >
+          <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="16" />
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="48" />
+      </data>
+	  <data ID="ovrValue" TYPE="text" PARAM="@ovrValue" TRANSLATE="FALSE" FORMAT="FONT_TILE_HXLU|COLOR_TEXT_NEW||COLOR_TEXT_NEW" >
+          <align TARGET="ovrLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-22" />
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="30" />
+      </data>
+	  <data ID="statusPortrait" TYPE="asset" PATH="heads" PARAM="@focusedAssetId" WIDTH="120" HEIGHT="120">
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="0"/>
+		  <align TARGET="ovrValue" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="24" />
+	  </data>
+      <data ID="firstName" TYPE="text" TRANSLATE="FALSE" PARAM="@firstName" FORMAT="FONT_TILE_TSMU|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" >
+          <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="14" />
+		  <align TARGET="statusPortrait" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20" />
+      </data>
+	  <data ID="secondName" TYPE="text" PARAM="@secondName" TRANSLATE="FALSE" FORMAT="FONT_REGULAR_LARGE|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" >
+          <align TARGET="firstName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-5" />
+		  <align TARGET="statusPortrait" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20" />
+      </data>
+	  <data ID="POS" TYPE="component" PATH="game/components/FluxComponents/Position.swf" PARAM="@position" WIDTH="15" HEIGHT="15" X="265" Y="93" />
+	  <data ID="positionLabel" TYPE="text" PARAM="@pitchArea" TRANSLATE="FALSE" FORMAT="FONT_TILE_TSMU|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" >
+          <align TARGET="secondName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-2" />
+		  <align TARGET="POS" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="10" />
+      </data>
+	  <data ID="pipe" TYPE="text" PARAM="|" TRANSLATE="FALSE" FORMAT="FONT_TILE_TSMU|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" >
+          <align TARGET="secondName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-2" />
+		  <align TARGET="positionLabel" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="7" />
+      </data>
+	  <data ID="roleLabel" TYPE="text" TRANSLATE="FALSE" PARAM="@role" FORMAT="FONT_TILE_TSMU|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" >
+          <align TARGET="secondName" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-2" />
+		  <align TARGET="pipe" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="7" />
+      </data>
+	  <data ID="ANIMSLIDER" TYPE="component" PATH="game/components/FluxComponents/PlayerMoraleSlider.swf" PARAM="@#Pattern(@moraleComponentData,*|1000)" WIDTH="230" HEIGHT="38" X="650" VISIBLE="@moraleVisibility">
+	      <align TARGET="background" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+	  </data>
+	  <data ID="MORALE_TREND_DOWN" TYPE="asset" PATH="eventIcon32x32" PARAM="FormDown" WIDTH="32" HEIGHT="32" VISIBLE="@#Equal(@moraleTrend,1)">
+	    <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	    <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="15"/>
+	  </data>	  
+	  <data ID="MORALE_TREND_CONST" TYPE="asset" PATH="eventIcon32x32" PARAM="LongDash" WIDTH="32" HEIGHT="32" VISIBLE="@#Equal(@moraleTrend,2)">
+	    <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	    <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="15"/>
+	  </data>
+	  <data ID="MORALE_TREND_UP" TYPE="asset" PATH="eventIcon32x32" PARAM="FormUp" WIDTH="32" HEIGHT="32" VISIBLE="@#Equal(@moraleTrend,3)">
+	    <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	    <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="15"/>
+	  </data>
+	  <data ID="moraleLabel" TYPE="text" PARAM="Morale_upper" WIDTH="420" HEIGHT="28" FORMAT="FONT_TILE_TSMU|COLOR_TEXT_PREVIEW|center|COLOR_TEXT_PREVIEW" VISIBLE="@moraleVisibility">
+          <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+		  <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="TOP" OFFSET="-2"/>
+      </data>
+	  <data ID="moraleValue" TYPE="text" PARAM="@moraleValue" TRANSLATE="FALSE" WIDTH="260" HEIGHT="28" FORMAT="IS|COLOR_TEXT_PREVIEW|center|COLOR_TEXT_PREVIEW" VISIBLE="@moraleVisibility">
+          <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+		  <align TARGET="ANIMSLIDER" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="2"/>
+      </data>
+    </tile>
+	<tile NAME="HUB_CONV_DUMMY_TILE" TYPE="TILE" HIGHLIGHTABLE="FALSE" TILE_STATE="DISABLED" DECORATORS_RANGE="NO_BACKGROUND" >
+	  <properties WIDTH="577" HEIGHT="670" />
+	</tile>
+  </panel>
+  
+  <panel NAME="MES_HUB_INBOX">
+	<variable_set>
+	  <variable id="subHeaderData" type="string" />
+	  <variable id="replyVisibility" type="bool" />
+      <variable id="readVisibility" type="bool" />
+      <variable id="panelVisibility" type="bool" />
+      <variable id="emailSender" type="string"/>
+      <variable id="emailSubject" type="string"/>
+      <variable id="emailDate" type="string"/>
+      <variable id="emailLink" type="string"/>
+      <variable id="emailBody" type="string"/>
+	</variable_set>
+	<tile NAME="HUB_INBOX_CAT_TOGGLE" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" >
+	  <properties WIDTH="577" HEIGHT="40" />
+	  <data ID="SubheaderPanel" TYPE="rectangle" FORMAT="|COLOR_FILL_PANEL_TITLEBAR||COLOR_FILL_PANEL_TITLEBAR" WIDTH="577" HEIGHT="40"/>
+	  <data ID="SUBHEADER" TYPE="component" PATH="game/components/FluxComponents/FluxSubHeaderToggle.swf" PARAM="@subHeaderData" X="10" Y="5" />
+	</tile>
+	<tile NAME="HUB_INBOX_NODATA" TYPE="TILE" SELECTABLE="FALSE" DESTINATION="NONE" DECORATORS_RANGE="NO_BACKGROUND" >
+	 <properties WIDTH="600" HEIGHT="660" />
+	 <data ID="inboxNoData" TYPE="rectangle" FORMAT="|COLOR_TEXT_SELECTED||COLOR_TEXT_SELECTED" WIDTH="577" HEIGHT="660" HLALPHA="20" UHLALPHA="20" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+	 </data>
+	 <data ID="noDataNotif" TYPE="text" PARAM="CM_Inbox_No_Emails" FORMAT="FONT_TILE_HS|COLOR_TEXT_PREVIEW|center|COLOR_TEXT_PREVIEW" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="300" />
+	 </data>
+	</tile>
+    <tile NAME="HUB_INBOX_CAT_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="602" HEIGHT="670" />
+	  <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="85" ITEM_WIDTH="577" LIST_Y="0" />
+	  <data ID="unread" TYPE="asset" PATH="eventIcon" PARAM="Icon_Reply" VISIBLE="@replyVisibility[i]" WIDTH="32" HEIGHT="32" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_UNHIGHLIGHT_CONTRAST">
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="30" />
+	  </data>
+	  <data ID="read" TYPE="asset" PATH="eventIcon" PARAM="32x32/CheckmarkActive" VISIBLE="@readVisibility[i]" WIDTH="32" HEIGHT="32">
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="30" />
+	  </data>
+      <data ID="sender" TYPE="text" TRANSLATE="FALSE" PARAM="@emailSender[i]" FORMAT="FONT_TILE_TMI|COLOR_TEXT_SELECTED||COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" >
+          <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="15" />
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="80" />
+      </data>
+	  <data ID="subject" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" TRANSLATE="FALSE" PARAM="@emailSubject[i]" FORMAT="FONT_TILE_TMI|COLOR_TEXT_PREVIEW|left|COLOR_TEXT_PREVIEW" HEIGHT="40" WIDTH="300" X="80" Y="45" />
+	  <data ID="date" TYPE="text" TRANSLATE="FALSE" PARAM="@emailDate[i]" FORMAT="FONT_TILE_TMI|COLOR_TEXT_PREVIEW|right|COLOR_TEXT_PREVIEW" >
+          <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="28" />
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-25" />
+      </data>
+	  <data ID="panels" TYPE="rectangle" VISIBLE="@panelVisibility[i]" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" WIDTH="577" HEIGHT="85" HLALPHA="5" UHLALPHA="5" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" />
+	  </data>
+    </tile>
+	<tile NAME="HUB_INBOX_EMAIL_LIST" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DESTINATION="NONE" DECORATORS_RANGE="NO_BACKGROUND" >
+	  <properties WIDTH="1040" HEIGHT="670" />
+	  <data ID="bodyLine" TYPE="rectangle" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" WIDTH="2" HEIGHT="670" HLALPHA="20" UHLALPHA="20" >
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="0" />
+	  </data>
+	  <data ID="emailBody" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" PARAM="@emailBody" TRANSLATE="FALSE" FORMAT="FONT_TILE_TMI|COLOR_TEXT_PREVIEW|left|COLOR_TEXT_PREVIEW" WIDTH="960" HEIGHT="500" GLOBAL_INPUT="TRUE" >
+          <align TARGET="PARENT" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+      </data>
+	  <data ID="link" TYPE="component" TRANSLATE="FALSE" PATH="game/components/FluxComponents/TileActionableIndicator.swf" PARAM="@emailLink" FORMAT="FONT_TILE_TMI|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW">
+		  <align TARGET="emailBody" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="100" />
+		  <align TARGET="PARENT" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+	  </data>
+    </tile>
+	<tile NAME="HUB_INBOX_DUMMY_TILE" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DESTINATION="NONE" DECORATORS_RANGE="NO_BACKGROUND" >
+	 <properties WIDTH="600" HEIGHT="660" />
+	</tile>
+  </panel>
+ </root>

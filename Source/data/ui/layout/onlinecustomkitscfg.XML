@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="2/13/2014 19:24:32" VERSION="2">
+  <hub_settings NAME="OnlineCustomKitsHub">
+    <helper_class_name CLASSNAME="game.fluxHelpers.CustomKitsFluxHelper" />
+    <tile_path TILE_PATH="game/components/FluxTiles/online/GridControlList.swf" TILE_NAME="TILE_GRID_CONTROL_LIST" />
+	<tile_path TILE_PATH="game/components/FluxTiles/online/ChangeColourTile.swf" TILE_NAME="TILE_CHANGE_COLOR" />
+	<tile_path TILE_PATH="game/components/FluxTIles/online/ChangeShapeTile.swf" TILE_NAME="TILE_SHAPE_SELECT" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <panel_set>
+	<panel NAME="ONL_CUSTOM_HOME_KIT_PANEL" LABEL="TXT_HOME_CUSTOM_KIT" IS_TAB="FALSE" />
+    <panel NAME="ONL_CUSTOM_AWAY_KIT_PANEL" LABEL="TXT_AWAY_CUSTOM_KIT" IS_TAB="FALSE" />
+	<panel NAME="ONL_CUSTOM_CREST_PANEL" LABEL="TXT_CUSTOM_CREST" IS_TAB="FALSE" />
+	<panel NAME="CUSTOMKITS_DUMMY_PANEL" LABEL="TXT_CLUB_CUSTOMIZE" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="ONL_CUSTOM_HOME_KIT_PANEL">
+    <tile NAME="PRIMARY_HOME_KIT_COLOR" PARAM="10" TYPE="TILE_CHANGE_COLOR" DATAPROVIDERID="CLUB_PRIMARY_HOME_COLOR_TILE_DP" DESTINATION="editPrimaryKitColor">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="278"/>
+    </tile>
+	<tile NAME="SECONDARY_HOME_KIT_COLOR" PARAM="10" TYPE="TILE_CHANGE_COLOR" DATAPROVIDERID="CLUB_SECONDARY_HOME_COLOR_TILE_DP" DESTINATION="editSecondaryKitColor">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="492"/>
+    </tile>
+	<tile NAME="TERTIARY_HOME_KIT_COLOR" PARAM="10" TYPE="TILE_CHANGE_COLOR" DATAPROVIDERID="CLUB_TERTIARY_HOME_COLOR_TILE_DP" DESTINATION="editTertiaryKitColor">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="706"/>
+    </tile>
+    <tile NAME="CUSTOM_HOME_KIT_SELECT" TYPE="TILE_GRID_CONTROL_LIST" DATAPROVIDERID="CustomKitSelectDP">
+      <properties WIDTH="846" HEIGHT="632" X="537" Y="278"/>
+    </tile>
+  </panel>	
+    <panel NAME="ONL_CUSTOM_AWAY_KIT_PANEL">
+    <tile NAME="PRIMARY_AWAY_KIT_COLOR" PARAM="10" TYPE="TILE_CHANGE_COLOR" DATAPROVIDERID="CLUB_PRIMARY_AWAY_COLOR_TILE_DP" DESTINATION="editPrimaryKitColor">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="278"/>
+    </tile>
+	<tile NAME="SECONDARY_AWAY_KIT_COLOR" PARAM="10" TYPE="TILE_CHANGE_COLOR" DATAPROVIDERID="CLUB_SECONDARY_AWAY_COLOR_TILE_DP" DESTINATION="editSecondaryKitColor">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="492"/>
+    </tile>
+	<tile NAME="TERTIARY_AWAY_KIT_COLOR" PARAM="10" TYPE="TILE_CHANGE_COLOR" DATAPROVIDERID="CLUB_TERTIARY_AWAY_COLOR_TILE_DP" DESTINATION="editTertiaryKitColor">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="706"/>
+    </tile>
+    <tile NAME="CUSTOM_AWAY_KIT_SELECT" TYPE="TILE_GRID_CONTROL_LIST" DATAPROVIDERID="CustomKitSelectDP">
+      <properties WIDTH="846" HEIGHT="632" X="537" Y="278"/>
+    </tile>
+  </panel>
+  <panel NAME="ONL_CUSTOM_CREST_PANEL">
+    <tile NAME="CREST_SHAPE_SELECT" PARAM="10" TYPE="TILE_SHAPE_SELECT" DATAPROVIDERID="ClubShapeDP" DESTINATION="selectCrestShape">
+      <properties WIDTH="418" HEIGHT="418" X="109" Y="278"/>
+    </tile>
+	<tile NAME="CREST_COLOR_SELECT" PARAM="10" TYPE="TILE_CHANGE_COLOR" DATAPROVIDERID="CLUB_CREST_COLOR_TILE_DP" DESTINATION="editCrestColor">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="706"/>
+    </tile>
+    <tile NAME="CUSTOM_CREST_SELECT" TYPE="TILE_GRID_CONTROL_LIST" DATAPROVIDERID="CustomKitSelectDP">
+      <properties WIDTH="846" HEIGHT="632" X="537" Y="278"/>
+    </tile>
+  </panel>
+</root>

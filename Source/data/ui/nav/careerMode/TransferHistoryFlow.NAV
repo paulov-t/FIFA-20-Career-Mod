@@ -1,0 +1,89 @@
+{
+	"name":"TransferHistoryFlow"
+	,"initial": { "targets":["StateTransferHistory"] }
+	,"states":
+	[
+		{
+			"name":"StateTransferHistory"
+			,"onEnter": 
+			[ 
+				["loadScreenController", ["TransferHistory"]]
+				,["loadView", ["screen", "game/screens/career/transfers/TransferHistory"]]
+			]
+			,"onExit": 
+			[ 
+				["unloadView", ["screen", "game/screens/career/transfers/TransferHistory"]]
+				,["unloadScreenController", ["TransferHistory"]]
+			]
+			,"states":
+			[
+				{
+					"name":"idleOnScreen"
+					,"onEnter": 
+					[ 
+						["executeCMAction", ["NotifyScreenLoadedAndRefresh"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"EnterPlayerAction"
+							,"targets":["ActionPopup"] 
+						}
+						,{
+							"event":"Back"
+							,"targets":["Back"] 
+						}
+					]
+				}
+				,{
+					"onEnter": 
+					[ 
+						["executeCMAction", ["SendReadyOnLoadComplete"]]
+						, ["loadView",["screen", "game/screens/career/transfers/TransferHistory"]]
+					]
+					,"states":
+					[
+						{
+							"name":"screenWithPopup"
+							,"transitions":
+							[
+								{
+									"event":"Ready"
+									,"targets":["ActionPopup"] 
+								}
+							]
+						}	
+						,{
+							"name":"screenWithoutPopup"
+							,"transitions":
+							[
+								{
+									"event":"Ready"
+									,"targets":["idleOnScreen"] 
+								}
+							]
+						}		
+					]
+				}
+				,{
+					"name":"ActionPopup"
+					,"type":"external"
+					,"file":"/careerMode/actionPopupFlow.nav"
+					,"outputs": 
+					{ 
+						"BackFromPopup":"idleOnScreen"
+						,"BackFromScreen":"screenWithPopup"
+						,"BackFromScreenWithoutPopup":"screenWithoutPopup"
+					}	
+				}
+			]
+			,"transitions": 
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"]
+				}
+			]
+		}
+	]
+}

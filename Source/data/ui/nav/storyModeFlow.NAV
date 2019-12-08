@@ -1,0 +1,472 @@
+{
+	"name":"storyModeFlow"
+	, "initial":
+	{
+		"targets":["mainStoryModeFlow"]
+	}
+	,"states":
+	[
+		{
+			"name":"in_pressBuild"
+			,"onEnter":
+			[
+				["invoke", ["enterMainFlow"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterMainFlow"
+					,"targets":["StoryModeMain"]
+					,"let":{ "storyParam":"press" }
+				}
+			]
+		}
+		,{
+			"name":"in_demo"
+			,"onEnter":
+			[
+				["invoke", ["enterMainFlow"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterMainFlow"
+					,"targets":["StoryModeMain"]
+					,"let":{ "storyParam":"demo" }
+				}
+			]
+		}
+		,{
+			"name":"in_test"
+			,"onEnter":
+			[
+				["invoke", ["enterMainFlow"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterMainFlow"
+					,"targets":["mainStoryModeFlow"]
+					,"let":{ "storyParam":"test" }
+				}
+			]
+		}
+		,{
+			"name":"in_coreX"
+			,"onEnter":
+			[
+				["invoke", ["enterMainFlow"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterMainFlow"
+					,"targets":["mainStoryModeFlow"]
+					,"let":{ "storyParam":"coreX" }
+				}
+			]
+		}
+		,{
+			"name":"in_load"
+			,"onEnter":
+			[
+				["invoke", ["enterMainFlow"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterMainFlow"
+					,"targets":["mainStoryModeFlow"]
+					,"let":{ "storyParam":"load" }
+				}
+			]
+		}
+		,{
+			"name":"in_continue"
+			,"onEnter":
+			[
+				["invoke", ["enterMainFlow"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterMainFlow"
+					,"targets":["mainStoryModeFlow"]
+					,"let":{ "storyParam":"continue" }
+				}
+			]
+		}
+		,{
+			"name":"in_saveCreator"
+			,"onEnter":
+			[
+				["invoke", ["enterSaveCreator"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterSaveCreator"
+					,"targets":["StorySaveCreator"]
+					,"let":{ "storyParam":"saveCreator" }
+				}
+			]
+		}
+		,{
+			"name":"in_sceneSelector"
+			,"onEnter":
+			[
+				["invoke", ["enterMainFlow"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterMainFlow"
+					,"targets":["StoryModeMain"]
+					,"let":{ "storyParam":"sceneSelector" }
+				}
+			]
+		}
+		,{
+			"let":{"GameMode":"storyMode"}
+			,"name":"mainStoryModeFlow"
+			,"initial":{ "targets":["StoryModeMain"] }
+			,"onEnter":
+			[
+				["sendScreenEvent", ["UxEnterGameFlow", "StoryModeInProgress"]]
+				,["sendScreenEvent", ["UxSetFlowState", ".eState.STORY"]]						
+				,["sendScreenEvent", ["UxSetFlowSubState", ".eSubState.SETUP"]]
+				,["loadViewModel", ["StoryModeViewModel", ".storyParam"]]
+				,["sendAction", ["notify", "telemetryNewGameMode", ".GameMode"]]
+				,["sendAction", ["suppressPOWWidget"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["unsuppressPOWWidget"]]
+				,["sendAction", ["notify", "telemetryExitGameMode", ".GameMode"]]
+				,["unloadViewModel", ["StoryModeViewModel"]]
+				,["sendScreenEvent", ["UxExitGameFlow"]]
+				,["sendScreenEvent", ["QuitStoryMode"]]
+			]
+			,"states":
+			[	
+				{
+					"name":"StoryModeMain"
+					, "initial":
+					{
+						"targets":["StoryModeFrontEnd"]
+					}
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_back"]
+						}
+						,{
+							"event":"profileSignOut"
+							,"targets":["StoryModeSignOutWait"]
+						}
+						,{
+							"event":"goToInviteFlow"
+							,"targets":["StoryModeInviteAccepted"]
+						}
+						,{
+							"event":"goToFUT"
+							,"targets":["StoryModeGoToFUT"]
+						}
+						,{
+							"event":"goToKickOff"
+							,"targets":["StoryModeGoToKickOff"]
+						}
+						,{
+							"event":"goToCareer"
+							,"targets":["StoryModeGoToCareer"]
+						}
+						,{
+							"event":"goToWomenTournament"
+							,"targets":["StoryModeGoToWomenTournament"]
+						}
+						,{
+							"event":"goToTrialUpsell"
+							,"targets":["StoryModeGoToTrialUpsell"]
+						}
+						,{
+							"event":"goToDemoBuyNow"
+							,"targets":["StoryModeGoToDemoBuyNow"]
+						}
+					]
+					,"states":
+					[
+						{
+							"name":"StoryModeFrontEnd"
+							,"transitions":
+							[
+								{
+									"event":"enterUxNavStoryModeGamePlay"
+									,"targets":["StoryModeGamePlay"]
+								}
+							]
+						}
+						,{	
+							"name":"StoryModeGamePlay"
+							, "initial":
+							{
+								"targets":["InGameFlow"]
+							}
+							,"states":
+							[
+								{
+									"name":"InGameFlow"
+									,"type":"external"
+									,"file":"/pauseMenuFlow.nav"
+									,"outputs":
+									{
+										"quit":"StoryModeQuitMatch"
+										,"continue":"WaitForStateNav"
+										,"profileSignOut":"StoryModeSignOutWait"
+									}
+								}
+								,{
+									"name":"WaitForStateNav"
+									,"onEnter":
+									[
+										["sendAction", ["nav", "exitStateNavPauseMenuFlow"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"exitUxNavStoryModeGamePlay"
+											,"targets":["StoryModeFrontEnd"]
+										}
+									]
+								}
+							]
+							,"transitions":
+							[
+								{
+									"event":"GoToTitleScreen"
+									,"targets":["StoryModeWaitForcedExit"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeQuitMatch"
+					,"onEnter":
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_back"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeSignOutWait"
+					,"transitions":
+					[
+						{
+							"event":"profileSignOutComplete"
+							,"targets":["StoryModeWaitForcedExit"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeWaitForcedExit"
+					,"onEnter":
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_profileSignOut"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeInviteAccepted"
+					,"onEnter": 
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_goToInviteFlow"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeGoToFUT"
+					,"onEnter":
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_goToFUT"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeGoToKickOff"
+					,"onEnter":
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_goToKickOff"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeGoToCareer"
+					,"onEnter":
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_goToCareer"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeGoToWomenTournament"
+					,"onEnter":
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_goToWomenTournament"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeGoToTrialUpsell"
+					,"onEnter":
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"targets":["out_goToTrialUpsell"]
+						}
+					]
+				}
+				,{
+					"name":"StoryModeGoToDemoBuyNow"
+					,"onEnter":
+					[
+						["sendAction", ["nav", "forceStoryModeExit"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"exitStoryMode"
+							,"actions":[["sendAction", ["evt_hub_show_event"]]]
+							,"targets":["out_goToDemoBuyNow"]
+						}
+					]
+				}
+				,{
+					"name":"StorySaveCreator"
+					,"onEnter":
+					[
+						["loadViewModel", ["StorySaveCreatorViewModel", ""]]
+						,["loadView", ["popup","StorySaveCreatorPopup", "Creating save file. Please wait."]]
+						,["sendScreenEvent", ["ShowBusyIndicator",""]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideBusyIndicator",""]]
+						,["unloadView", ["popup","StorySaveCreatorPopup"]]
+						,["unloadViewModel", ["StorySaveCreatorViewModel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["SaveCreateSuccessPopup"]
+						}
+						,{
+							"event":"back"
+							,"targets":["SaveCreateFailPopup"]
+						}
+						,{
+							"event":"StoryModeSaved"
+							,"actions":[ ["sendAction", ["success", ""]] ]
+						}
+						,{
+							"event":"evt_sl_operation_complete"
+							,"actions":[ ["sendAction", ["success", ""]] ]
+						}
+						,{
+							"event":"forceStoryModeExit"
+							,"actions":[ ["sendAction", ["fail", ""]] ]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"SaveCreateSuccessPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","SaveCreationSuccessPopup", "Successfully created save file|Advance|advance|Back|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup","SaveCreationSuccessPopup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"actions":[ ["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]], ["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]] ]
+					,"targets":["in_continue"]
+				}
+				,{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		}
+		,{
+			"name":"SaveCreateFailPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","SaveCreationFailurePopup", "Could not create save file or end condition could not be reached|Back|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup","SaveCreationFailurePopup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_back"]
+				}
+			]
+		}
+	]
+}

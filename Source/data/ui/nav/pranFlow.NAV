@@ -1,0 +1,114 @@
+{
+	"name":"pranFlow"
+	,"onEnter":
+	[
+		["loadViewModel",["PranViewModel"]]
+	]
+    ,"onExit":
+	[
+		["unloadViewModel",["PranViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"pranSettings"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/pran/PranSettings"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/pran/PranSettings"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["pranUpload"]
+				}
+				,{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]				
+		}
+		,{
+			"name":"pranSync"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/pran/PranSyncScreen"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/pran/PranSyncScreen"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]
+		}
+		,{
+			"name":"pranUpload"
+			,"onEnter":
+			[
+				["sendAction", ["featureAccessible",".FeatureGates.HOSPITALITY"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","targets":["attemptUpload"]}
+				,{"event":"false","targets":["back"]}
+			]
+		}
+		,{
+			"name":"attemptUpload"
+			,"onEnter":
+			[
+				["loadView", ["popup", "PRAN_UPLOAD_POPUP", "PRAN_PROFILE_UPLOAD_IN_PROGRESS"]]
+				,["sendAction",["attempt", "pranUpload"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "PRAN_UPLOAD_POPUP"]]
+			]
+			,"transitions":
+			[
+				{"event":"success","targets":["back"]}
+				,{"event":"fail","targets":["pranSync"]}
+			]
+		}
+		,{
+			"name":"pranDownload"
+			,"onEnter":
+			[
+				["sendAction", ["featureAccessible",".FeatureGates.HOSPITALITY"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","targets":["attemptDownload"]}
+				,{"event":"false","cond":["==",".FIFA_CLOSEDBETA",true],"targets":["successClosedBeta"]}
+				,{"event":"false","cond":["==",".FIFA_CFE",true],"targets":["successCFE"]}
+				,{"event":"false","targets":["success"]}
+			]
+		}
+		,{
+			"name":"attemptDownload"
+			,"onEnter":
+			[
+				["loadView", ["popup", "PRAN_UPLOAD_POPUP", "PRAN_PROFILE_UPLOAD_IN_PROGRESS"]]
+				,["sendAction",["attempt", "pranDownload"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "PRAN_UPLOAD_POPUP"]]
+			]
+			,"transitions":
+			[
+				{"event":"success","targets":["success"]}
+				,{"event":"fail","targets":["fail"]}
+			]
+		}
+	]
+}

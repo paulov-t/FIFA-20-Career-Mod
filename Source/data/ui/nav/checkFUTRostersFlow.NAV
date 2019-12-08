@@ -1,0 +1,220 @@
+{
+	"name":"checkFUTRostersFlow"
+	, "initial":
+	{
+			"targets":["LoadFUTDatabase"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel",["FIFAFutLoginViewModel"]]
+		,["invoke", ["evt_sign_out_flow_not_ready"]]
+		,["invoke", ["evt_invite_flow_not_ready"]]
+		,[ "sendAction", [ "futProfilerStart", "EnterFut"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel",["FIFAFutLoginViewModel"]]
+		,["invoke", ["evt_sign_out_flow_ready"]]		
+		,["invoke", ["evt_invite_flow_ready"]]
+	]
+	,"states":
+	[
+		{
+			"name":"LoadFUTDatabase"
+			,"onEnter":
+			[
+				["sendAction",["condition", "loadFUTDatabase"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"cond":["==",".FIFA_DEMO",true]
+					,"actions":[ ["sendScreenEvent", ["EnterFUT",""]] ]
+					,"targets":["advance"]
+				}
+				,{
+					"event":"advance"
+					,"targets":["LoadFUTSquad"]
+				}
+				,{
+					"event":"back"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+			]
+		}
+		,{
+			"name":"LoadFUTSquad"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["AutoLoadFUTSquad"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["CheckFUTRosterUpdateXML"]
+				}
+				,{
+					"event":"back"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+			]
+		}
+		,{
+			"name":"CheckFUTRosterUpdateXML"
+			,"onEnter":
+			[
+				["sendAction",["condition", "isFUTRosterXMLAvailable"]]
+				,["sendScreenEvent", ["ShowLoadingIcon"]]
+			]
+			, "onExit":
+			[
+				["sendScreenEvent", ["HideLoadingIcon"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["CheckFUTSquadBinFile"]
+				}
+				,{
+					"event":"back"
+					,"targets":["FailFUTRosterXMLDownloadPopup"]
+				}
+				,{
+					"event":"evt_online_disconnected"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+				,{
+					"event":"evt_invite_accepted"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}				
+			]
+		}
+		,{
+			"name":"FailFUTRosterXMLDownloadPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup", "FUT_SQUAD_DOWNLOAD_FAIL_POPUP", "FUT_SQUAD_DOWNLOAD_FAIL|Ok|advance"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "FUT_SQUAD_DOWNLOAD_FAIL"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+				,{
+					"event":"evt_online_disconnected"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+				,{
+					"event":"evt_invite_accepted"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}	
+			]
+		}
+		,{
+			"name":"CheckFUTSquadBinFile"
+			,"onEnter":
+			[
+				["sendAction",["condition", "isFUTSquadAvailable"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"true"
+					,"actions":[ ["sendScreenEvent", ["SetLiveDbDownloadState", "4"]] ]
+					,"targets":["FUTLiveDBPopup"]
+				}
+				,{
+					"event":"false"
+					,"actions":[ ["sendScreenEvent", ["EnterFUT",""]] ]
+					,"targets":["advance"]
+				}
+			]
+		}
+		,{
+			"name":"FUTLiveDBPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup", "FUT_LIVEDB_AVAILABLE_POPUP", "FUT_Squad_Update_Available|Ok|advance"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "FUT_LIVEDB_AVAILABLE_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+				,{
+					"event":"evt_online_disconnected"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+				,{
+					"event":"advance"
+					,"targets":["downloadLiveDB"]
+				}
+				,{
+					"event":"evt_invite_accepted"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}	
+			]
+		}
+		,{
+			"name":"downloadLiveDB"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/liveDB/livedb_downloadLiveDB"]]
+				,[ "sendAction", [ "futProfilerStop", "EnterFutAbort"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/liveDB/livedb_downloadLiveDB"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+				,{
+					"event":"evt_online_disconnected"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}
+				,{
+					"event":"advance"
+					,"actions":[ ["sendScreenEvent", ["EnterFUT",""]] ]
+					,"targets":["advance"]
+				}
+				,{
+					"event":"evt_invite_accepted"
+					,"targets":["unloadFUTDatabaseOnFail"]
+				}	
+			]
+		}
+		,{
+			"name":"unloadFUTDatabaseOnFail"
+			,"onEnter":
+			[
+				["sendAction",["updateScreen", "unloadFUTDatabase"]]
+				,[ "sendAction", [ "futProfilerStop", "EnterFutAbort"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["back"]
+				}
+			]
+		}
+	]
+}
+

@@ -1,0 +1,84 @@
+{
+	"name":"futPlayerStatsFlow"
+	, "initial":
+	{
+		"targets":["futPlayerStats"]
+	}
+	,"states":
+	[
+		{
+			"name": "futPlayerStats"
+			,"onEnter":
+			[
+				["loadViewModel",["futplayerstatsviewmodel"]]
+				,["loadView",["screen", "external/ion_fut/screens/futPlayerStats"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "external/ion_fut/screens/futPlayerStats"]]
+				,["unloadViewModel",["futplayerstatsviewmodel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}
+				,{
+					"event":"searchFailedPopup"
+					,"targets":["searchFailedPopup"]
+				}
+			]
+		},
+		{
+			"name": "searchFailedPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","PlayerStatsPopup", "FUT_FAILED_RETRIEVE_PLAYER_STATS|ok|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup","PlayerStatsPopup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+			]
+		}
+	]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

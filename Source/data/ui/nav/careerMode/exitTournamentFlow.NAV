@@ -1,0 +1,127 @@
+{
+	"name":"exitTournamentFlow"
+	,"onEnter":
+	[	
+		["invoke", ["evt_sign_out_flow_not_ready"]]
+	]
+	,"onExit":
+	[
+		["invoke", ["evt_sign_out_flow_ready"]]
+	]
+	,"initial":
+	{
+		"targets":["unloadScenes"]
+	}
+	,"states":
+	[
+		{
+			"name":"unloadScenes"
+			,"onEnter": 
+			[
+				["sendAction",["condition", "areScenesUnloaded"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"scenesUnloaded",
+					"targets":["checkNewsCinematicsSublevel"]
+				}
+				,{
+					"event":"scenesNotUnloaded",
+					"targets":["waitForScenesUnload"]
+				}			
+			]
+		}
+		,{
+			"name":"waitForScenesUnload"
+			,"transitions":
+			[
+				{
+					"event":"scenesUnloaded",
+					"targets":["checkNewsCinematicsSublevel"]
+				}			
+			]
+		}
+		,{
+			"name":"checkNewsCinematicsSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["condition", "isNewsScenesSublevelUnloaded"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"newsUnloaded",
+					"targets":["unloadCareerModeSublevel"]
+				}
+				,{
+					"event":"newsNotUnloaded",
+					"targets":["unloadNewsCinematicsSublevel"]
+				}			
+			]
+		}
+		,{
+			"name":"unloadNewsCinematicsSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["fbStartFlowEvent", "UnloadNewsCinematicsSublevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"NewsCinematicsSublevelUnloaded",
+					"targets":["unloadCareerModeSublevel"]
+				}			
+			]
+		}
+		,{
+			"name":"unloadCareerModeSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["fbStartFlowEvent", "UnloadCareerModeSublevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"CareerModeSublevelUnloaded",
+					"cond":["==",".unloadOnly","true"],
+					"targets":["out"]
+				}
+				,{
+					"event":"CareerModeSublevelUnloaded",
+					"targets":["unloadTheme"]
+				}			
+			]
+		}
+		,{
+			"name":"unloadTheme"
+			,"onEnter":
+			[
+				["unloadView", ["background"]]
+				,["executeCMAction", ["ClearTheme"]]
+				,["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["notifyBackend"]
+				}
+			]
+		}
+		,{
+			"name":"notifyBackend"
+			,"onEnter": 
+			[
+				["executeCMAction", ["EnterQuitState"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"ExitCareerMode"
+					,"targets":["out"] 
+				}			
+			]
+		}
+	]
+}

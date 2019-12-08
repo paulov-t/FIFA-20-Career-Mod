@@ -1,0 +1,112 @@
+{
+	"name":"ReloadFEStadiumFlow"
+	,"initial": { "targets":["TriggerReload"] }
+	, "onEnter": 
+	[
+		["loadViewModel",["ReloadFEStadiumViewModel"]]
+	]
+	, "onExit":
+	[
+		["unloadViewModel",["ReloadFEStadiumViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"TriggerReload"
+			, "onEnter": 
+			[
+				["if", [["==", ".FCE_TESTBED", true]
+				,[
+					["invoke", ["evt_stadium_loaded"]]
+				]
+				,[	/*Don't do anything on else */
+				]]]
+				,["sendAction", ["evt_start_stadium_change","response"]]
+			]
+			,"transitions":
+			[
+				{"event":"evt_stadium_loaded", "targets":["ReloadReady"]}
+				,{"event":"evt_stadium_loading", "targets":["WaitForLoadPopup"]}
+			]
+		}
+		,{
+			"name":"TriggerReloadNoWait"
+			, "onEnter": 
+			[
+				["sendAction", ["evt_start_stadium_change"]]
+				,["invoke", ["evt_load_started"]]
+			]
+			,"transitions":
+			[
+				{"event":"evt_load_started", "targets":["LoadStarted"]}
+			]
+		}
+		,{
+			"name":"WaitForLoadPopup"
+			, "onEnter":
+			[
+				["if", [["==", ".FCE_TESTBED", true]
+				,[
+					["invoke", ["freeRoamReady"]]
+				]
+				,[	/*Don't do anything on else */
+				]]]
+				,["sendAction", ["evt_wait_for_stadium_change", "showPopup"]]
+				,["sendScreenEvent", ["ShowLoadingIcon"]]
+			]
+			, "onExit":
+			[
+				["sendScreenEvent", ["HideLoadingIcon"]]
+				,["sendAction", ["notify", "StadiumChangeDone"]]
+			]
+			,"transitions":
+			[
+				{"event":"freeRoamReady", "targets":["ReloadReady"]}
+			]
+		}
+		,{
+			"name":"WaitForLoad"
+			, "onEnter":
+			[
+				["if", [["==", ".FCE_TESTBED", true]
+				,[
+					["invoke", ["freeRoamReady"]]
+				]
+				,[	/*Don't do anything on else */
+				]]]
+				,["sendAction", ["evt_wait_for_stadium_change"]]
+				,["sendScreenEvent", ["ShowLoadingIcon"]]
+			]
+			, "onExit":
+			[
+				["sendScreenEvent", ["HideLoadingIcon"]]
+			]
+			,"transitions":
+			[
+				{"event":"freeRoamReady", "targets":["ReloadReady"]}
+			]
+		}
+		,{
+			"name":"WaitForLoadBootflow"
+			,"onEnter":
+			[
+				["sendAction", ["evt_wait_for_stadium_change_bootflow"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_advance_to_wait_popup"
+					,"targets":["WaitForLoadPopup"]
+				}
+				,{
+					"event":"evt_advance_to_wait"
+					,"targets":["WaitForLoad"]
+				}
+				,{
+					"event":"evt_stadium_loaded"
+					,"targets":["ReloadReady"]
+				}
+			]
+		}
+	]
+}

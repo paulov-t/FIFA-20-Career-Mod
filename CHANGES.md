@@ -1,3 +1,26 @@
+# Version 1.5.5
+
+## Match Simulation and Stats
+- Goalkeepers will no longer get assists for simulated games
+
+## Player Values
+- Decrease values of players of OVR 78-85 slightly 
+
+## Transfers
+- Slightly increase AI transfer activity
+
+## Player Contracts
+- Players will now occassionaly ask for 5 year contracts
+
+## Player Growth
+- Increase player growth (who are below the curve, there will never be overgrowth)
+- Slightly increase Match Rating affect on player growth
+- Increase dynamic potential for players who score lots of goals
+
+# Version 1.5.4
+
+- EA Update
+
 # Version 1.5.3
 
 ## Transfers

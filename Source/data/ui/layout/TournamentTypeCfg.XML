@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="14/04/2016 15:27:39" VERSION="2">
+  <hub_settings NAME="TournamentTypeHub">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="tournamentTypeHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_Nested_Exported" TILE_NAME="TILE_NESTED" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="TOURNAMENT_TYPE_PANEL" LABEL="TOURNAMENT_TYPE" IS_TAB="FALSE" DEFAULT_LAYOUT="TOURNAMENT_TYPE_BASE">
+      <buttons>
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="back" />
+      </buttons>
+	  <layout NAME="TOURNAMENT_TYPE_BASE" X="0">
+		<tile NAME="WOMEN_TOURNAMENT_NESTED" X="109" Y="278" />
+		<tile NAME="TOURNAMENT_NESTED" X="965" Y="278" />
+	  </layout>
+    </panel>
+    <panel NAME="TOURNAMENT_TYPE_DUMMY_PANEL" LABEL="TOURNAMENTS" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="TOURNAMENT_TYPE_PANEL">
+    <tile NAME="WOMEN_TOURNAMENT_NESTED" PARAM="13" TYPE="TILE_NESTED">
+      <properties WIDTH="846" HEIGHT="632" />
+      <subtile SUBTILE_TYPE="TILE" NAME="WOMEN_TOURNAMENT_CREATE" DESTINATION="CreateWomenTournament" BACKGROUND="CreateWomenTournament" DECORATORS_RANGE="1">
+        <data ID="TITLE" TYPE="title" PARAM="MM_PLAY_WOMENTOURNAMENT" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="WOMEN_TOURNAMENT_LOAD" DESTINATION="LoadWomenTournament" BACKGROUND="LoadWomenTournament" PARAM="" DECORATORS_RANGE="4">
+        <data ID="TITLE" TYPE="title" PARAM="MM_PLAY_LOADWOMENTOURNAMENT" />
+      </subtile>
+    </tile>
+    <tile NAME="TOURNAMENT_NESTED" PARAM="13" TYPE="TILE_NESTED">
+      <properties WIDTH="846" HEIGHT="632" />
+      <subtile SUBTILE_TYPE="TILE" NAME= "NEW_TOURNAMENT" DESTINATION="NewTournament" BACKGROUND="NewTournament" DECORATORS_RANGE="1">
+        <data ID="TITLE" TYPE="title" PARAM="MM_PLAY_NEWTOURNAMENT" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="CREATE_TOURNAMENT" DESTINATION="CreateTournament" BACKGROUND="CustomTournament" PARAM="" DECORATORS_RANGE="1">
+        <data ID="TITLE" TYPE="title" PARAM="MM_PLAY_CREATETOURNAMENT" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="LOAD_TOURNAMENT" DESTINATION="LoadTournament" BACKGROUND="LoadTournament" PARAM="" DECORATORS_RANGE="1">
+        <data ID="TITLE" TYPE="title" PARAM="MM_PLAY_LOADTOURNAMENT" />
+      </subtile>
+    </tile>
+  </panel>
+</root>

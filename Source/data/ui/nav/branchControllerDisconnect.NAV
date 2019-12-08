@@ -1,0 +1,80 @@
+{
+	"name":"BranchControllerDisconnect"
+	,"initial": 
+	{
+		"targets":["FlowReady"]
+	}
+	,"states":
+	[
+		{
+			"name":"FlowReady"
+			,"transitions":
+			[
+				{ "event":"evt_controller_disconnect", "actions":[ ["sendAction",["nav","evt_notify_controller_disconnect"]] ] }
+				,{ "event":"evt_controller_disconnect_flow_not_ready", "targets":["FlowNotReady"] }
+				,{ "event":"evt_branch_flow_blocked", "targets":["FlowReady_InCriticalSection"] }
+			]
+		}
+		,{
+			"name":"FlowNotReady"
+			,"transitions":
+			[
+				{ "event":"evt_controller_disconnect", "targets":["WaitForFlowReady"] }
+				,{ "event":"evt_controller_disconnect_flow_ready", "targets":["FlowReady"] }
+				,{ "event":"evt_branch_flow_blocked", "targets":["FlowNotReady_InCriticalSection"] }
+			]
+		}
+		,{
+			"name":"FlowNotReady_InCriticalSection"
+			,"transitions":
+			[
+				{ "event":"evt_controller_disconnect", "targets":["FlowNotReady_WaitForCriticalSection"] }
+				,{ "event":"evt_controller_disconnect_flow_ready", "targets":["FlowReady_InCriticalSection"] }
+				,{ "event":"evt_branch_flow_recovered", "targets":["FlowNotReady"] }
+				,{ "event":"evt_branch_flow_not_recovered", "targets":["FlowNotReady"] }
+			]
+		}
+		,{
+			"name":"FlowReady_InCriticalSection"
+			,"transitions":
+			[
+				{ "event":"evt_controller_disconnect", "targets":["FlowReady_WaitForCriticalSection"] }
+				,{ "event":"evt_controller_disconnect_flow_not_ready", "targets":["FlowNotReady_InCriticalSection"] }
+				,{ "event":"evt_branch_flow_recovered", "targets":["FlowReady"] }
+				,{ "event":"evt_branch_flow_not_recovered", "targets":["FlowReady"] }
+			]
+		}
+		,{
+			"name":"WaitForFlowReady"
+			,"transitions":
+			[
+				{
+					"event":"evt_branch_flow_blocked", "targets":["FlowNotReady_WaitForCriticalSection"]
+				}
+				,{
+					"event":"evt_controller_disconnect_flow_ready"
+					,"targets":["FlowReady"]
+					,"actions":[ ["sendAction",["nav","evt_notify_controller_disconnect"]] ]
+				}
+			]
+		}
+		,{
+			"name":"FlowReady_WaitForCriticalSection"
+			,"transitions":
+			[
+				{ "event":"evt_branch_flow_recovered", "targets":["FlowReady"], "actions":[ ["sendAction",["nav","evt_notify_controller_disconnect"]] ] }
+				,{ "event":"evt_branch_flow_not_recovered", "targets":["FlowReady"] }
+				,{ "event":"evt_controller_disconnect_flow_not_ready", "targets":["FlowNotReady_WaitForCriticalSection"] }
+			]
+		}
+		,{
+			"name":"FlowNotReady_WaitForCriticalSection"
+			,"transitions":
+			[
+				{ "event":"evt_branch_flow_recovered" ,"targets":["WaitForFlowReady"] }
+				,{ "event":"evt_branch_flow_not_recovered", "targets":["FlowNotReady"] }
+				,{ "event":"evt_controller_disconnect_flow_ready", "targets":["FlowReady_WaitForCriticalSection"] }
+			]
+		}
+	]
+}

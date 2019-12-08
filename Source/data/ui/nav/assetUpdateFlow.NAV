@@ -1,0 +1,17 @@
+{
+	"name":"assetUpdate"
+	,"onEnter":
+	[
+		["loadView", ["popup", "UPDATE_ASSET_POPUP", "TXT_UPDATING_ASSETS"]]
+		,["loadViewModel",["AssetUpdateViewModel"]]
+	]
+    ,"onExit":
+	[
+		["unloadViewModel",["AssetUpdateViewModel"]]
+		,["unloadView", ["popup", "UPDATE_ASSET_POPUP"]]	
+	]
+	,"transitions":
+	[
+		{"event":"advance","targets":["advance"]}
+	]				
+}

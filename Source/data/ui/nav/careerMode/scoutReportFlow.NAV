@@ -1,0 +1,105 @@
+{
+	"name":"ScoutReportFlow"
+	,"initial": { "targets":["ScoutReport"] }
+	,"states":
+	[
+		{
+			"name":"ScoutReport"
+			,"onEnter":
+			[
+				["loadScreenController", ["ScoutReport"]]
+				,["loadView", ["screen", "game/screens/career/PlayerReport"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/PlayerReport"]]
+				,["unloadScreenController", ["ScoutReport"]]
+			]
+			,"states":
+			[
+				{
+					"name":"ScoutReportChild"
+					,"onEnter": 
+					[ 					
+						/* When coming back from Action Popup, since screen is already loaded, need to inform screen controller screen is loaded. */
+						/* This call does not have effect when coming into the screen for the first time. */
+						["executeCMAction", ["NotifyScreenLoadedAndRefresh"]]	
+					]
+					,"transitions":
+					[
+						{
+							"event":"EnterPlayerAction"
+							,"targets":["YouthActionPopup"] 
+							,"actions":[ ["executeCMAction",["EnterPlayerActionsFromYouthScoutReport"]] ]
+						}
+						,{
+							"event":"Back"
+							,"targets":["Back"] 
+						}
+					]
+				}
+				,{
+					"name":"screenWithPopup"
+					,"onEnter": 
+					[ 
+						["executeCMAction", ["SendReadyOnLoadComplete"]]	
+						/*,["invoke", ["Ready"]]*/
+					]
+					,"transitions":
+					[
+						{
+							"event":"Ready"
+							,"targets":["YouthActionPopup"] 
+						}
+					]
+				}
+				,{
+					"states":
+					[
+						{
+							"name":"YouthActionPopup"
+							,"type":"external"
+							,"file":"/careerMode/youthActionPopupFlow.nav"
+							,"outputs": 
+							{ 
+								"BackFromPopup":"ScoutReportChild"
+							}
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"EnterYouthSquad"
+							,"targets":["YouthSquad"] 
+							,"actions":[ ["executeCMAction",["EnterYouthSquadFromReport"]] ]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"YouthSquad"
+			,"type":"external"
+			,"file":"/careerMode/youthSquadFlow.nav"
+			,"outputs":	
+			{
+				"Back":"BackToScoutReportFromYouthSquad"
+			}
+		}
+		,{
+			"name":"BackToScoutReportFromYouthSquad"
+			,"onEnter":
+			[
+				["executeCMAction",["EnterScoutReportFromSquad"]]
+				,["invoke", ["GoToScoutReport"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"GoToScoutReport"
+					,"targets":["ScoutReportChild"]
+				}
+			]
+		}
+	]
+}

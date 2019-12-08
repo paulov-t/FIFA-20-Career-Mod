@@ -1,0 +1,108 @@
+{
+	"name":"GTNScoutReport"
+	,"initial": { "targets":["ScoutReport"] }
+	,"states":
+	[
+		{
+			"name":"ScoutReport"
+			,"onEnter": 
+			[ 
+				["loadScreenController", ["GTNScoutReport"]] 
+				, ["loadView",["screen", "game/screens/career/PlayerReport"]]
+			]
+			,"onExit": 
+			[	
+				["unloadView",["screen", "game/screens/career/PlayerReport"]]
+				,["unloadScreenController", ["GTNScoutReport"]]
+			]		
+			,"states":
+			[
+				{
+					"states":
+					[
+						{
+							"name":"idleOnScreen"
+						}
+						,{
+							"name":"backFromActionPopup"
+							,"onEnter": 
+							[ 					
+								/* When coming back from Action Popup, since screen is already loaded, need to inform screen controller screen is loaded. */
+								/* This call does not have effect when coming into the screen for the first time. */
+								["executeCMAction", ["NotifyScreenLoadedAndRefresh"]]	
+							]
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"EnterPlayerAction"
+							,"targets":["ActionPopup"] 
+						}
+						,{
+							"event":"Back"
+							,"targets":["Back"] 
+						}
+					]
+				}
+				,{
+					"onEnter": 
+					[ 
+						["executeCMAction", ["SendReadyOnLoadComplete"]]
+						, ["loadView",["screen", "game/screens/career/PlayerReport"]]
+					]
+					,"states":
+					[
+						{
+							"name":"screenWithPopup"
+							,"transitions":
+							[
+								{
+									"event":"Ready"
+									,"targets":["ActionPopup"] 
+								}
+							]
+						}	
+						,{
+							"name":"screenWithoutPopup"
+							,"transitions":
+							[
+								{
+									"event":"Ready"
+									,"targets":["idleOnScreen"] 
+								}
+							]
+						}		
+					]
+				}			
+				,{	
+					"onEnter":
+					[
+						["set", ["FromContext", ".FromContext" ]]
+					]
+					,"states":
+					[
+						{
+							"name":"ActionPopup"
+							,"type":"external"
+							,"file":"/careerMode/actionPopupFlow.nav"
+							,"outputs": 
+							{ 
+								"BackFromPopup":"backFromActionPopup"
+								,"BackFromScreen":"screenWithPopup"
+								,"BackFromScreenWithoutPopup":"screenWithoutPopup"
+							}	
+						}
+					]
+				}				
+			]						
+			,"transitions": 
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"]
+				}
+			]
+		}
+	]	
+}

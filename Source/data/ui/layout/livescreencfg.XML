@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="23/02/2018 11:50:00" VERSION="1">
+  <hub_settings NAME="LiveScreen" HUB_VERSION="4">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_Nested_Exported" TILE_NAME="TILE_NESTED" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="DYNAMIC_CONTENT_PANEL" IS_TAB="FALSE" >
+      <layout NAME="DYNAMIC_CONTENT_BASE">
+        <tile NAME="DYNAMIC_CONTENT_TILE" X="0" Y="0"/>
+      </layout>
+	  <layout NAME="DYNAMIC_CONTENT_FUT_NO_CONTENT">
+        <tile NAME="DYNAMIC_CONTENT_TILE_FUT_NO_CONTENT" X="0" Y="0"/>
+      </layout>
+	  <layout NAME="DYNAMIC_CONTENT_SSF_NO_CONTENT">
+        <tile NAME="DYNAMIC_CONTENT_TILE_SSF_NO_CONTENT" X="0" Y="0"/>
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="DYNAMIC_CONTENT_PANEL">
+    <tile NAME="DYNAMIC_CONTENT_TILE" TYPE="TILE_NESTED" DATAPROVIDERID="ONLINE_LIVE_CONTENT_DP">
+      <properties WIDTH="1920" HEIGHT="1080" />
+      <subtile NAME="DYNAMIC_CONTENT_SUBTILE" SUBTILE_TYPE="TILE" ALWAYS_ACTIVE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+      </subtile>
+    </tile>
+	<tile NAME="DYNAMIC_CONTENT_TILE_FUT_NO_CONTENT" TYPE="TILE" DATAPROVIDERID="MAINHUB_FUT_DP" ALWAYS_ACTIVE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="1920" HEIGHT="1080" />
+	  <data ID="CLUB0" TYPE="text" FORMAT="HHXXL|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE" PARAM="" TRANSLATE="FALSE" WIDTH="1920" HEIGHT="200" X="0" Y="500" />
+	  <data ID="CLUB1" TYPE="text" FORMAT="HM|COLOR_TEXT_UNHIGHLIGHT_FLUX|center|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="" TRANSLATE="FALSE" WIDTH="1920" HEIGHT="200" X="0" Y="628"  />
+	  <data ID="CRESTID" TYPE="asset" PATH="crestfuttile" FORMAT="STRETCH" WIDTH="256" HEIGHT="256" X="832" Y="220" />
+    </tile>
+	<tile NAME="DYNAMIC_CONTENT_TILE_SSF_NO_CONTENT" TYPE="TILE" DATAPROVIDERID="MAINHUB_SSF_DP" ALWAYS_ACTIVE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="1920" HEIGHT="1080" />
+	  <data ID="SSF_LOGO" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/worldtour/showtimeImages/notfound.dds" HLALPHA="100" UHLALPHA="0" WIDTH="526" HEIGHT="256" X="697" Y ="412"/>
+    </tile>
+  </panel>
+</root>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="CustomizePlayerHub">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" PARAM="CUSTOMIZE_PLAYER_HUB_TITLE|Customize_player_hub_subtitle" X="50" Y="100" />
+  </components>
+  <panel_set>
+    <panel NAME="CUSTOMIZEPLAYER_ITEMS_PANEL" LABEL="CUSTOMIZEPLAYER_HUB" IS_TAB="FALSE" />
+    <buttons>
+      <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="back" />
+    </buttons>
+    <panel NAME="CUSTOMIZEPLAYER_DUMMY_PANEL" LABEL="CUSTOMIZEPLAYER_TAB_CPT" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="CUSTOMIZEPLAYER_ITEMS_PANEL" LABEL="CUSTOMIZEPLAYER_DEBUG" IS_TAB="FALSE">
+	<tile NAME="CUSTOMIZEPLAYER_PANEL_1" TYPE="TILE_LIST" DESTINATION="" DATAPROVIDERID="CUSTOMIZE_PLAYER_CATEGORIES_LIST_DP" NEEDS_PUBLISH="1">
+      <properties WIDTH="280" HEIGHT="635" X="50" Y="285" />
+	    
+	  <data ID="catname" TYPE="text" VISIBLE="TRUE" PARAM="" FORMAT="SL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|TSL|TSLU" X="0" Y="40" WIDTH="240" />  
+    </tile>
+	
+    <tile NAME="CUSTOMIZEPLAYER_PANEL_2" TYPE="TILE_LIST" DESTINATION="" DATAPROVIDERID="CUSTOMIZE_PLAYER_ITEM_LIST_DP" NEEDS_PUBLISH="1" >
+      <properties WIDTH="740" HEIGHT="635" X="400" Y="285" />
+	  
+	  <data ID="imageasset" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/boot/%s.dds" WIDTH="200" HEIGHT="115" X="30" Y="30" />
+	  <data ID="checkicon" TYPE="asset" VISIBLE="TRUE" PATH="crest" WIDTH="36" HEIGHT="36" X="10" Y="10" />
+	  <data ID="assetdescr" TYPE="text" VISIBLE="TRUE" PARAM="" FORMAT="SL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|TSL|TSLU" X="0" Y="140" WIDTH="240" />  
+    </tile>
+  </panel>
+</root>

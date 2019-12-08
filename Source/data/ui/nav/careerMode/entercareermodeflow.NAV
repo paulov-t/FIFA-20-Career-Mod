@@ -1,0 +1,38 @@
+{
+	"name":"enterCareerModeFlow"
+	,"initial":
+	{
+		"targets":["loadCareerModeSublevel"]
+	}
+	,"states":
+	[
+		{
+			"name":"loadCareerModeSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["fbStartFlowEvent", "LoadCareerModeSublevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"CareerModeSublevelLoaded"
+					,"targets":["loadNewsCinematicsSublevel"] 
+				}
+			]
+		}
+		,{
+			"name":"loadNewsCinematicsSublevel"
+			,"onEnter": 
+			[
+				["sendAction", ["fbStartFlowEvent", "LoadNewsCinematicsSublevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"NewsCinematicsSublevelLoaded"
+					,"targets":["out"] 
+				}
+			]
+		}
+	]
+}

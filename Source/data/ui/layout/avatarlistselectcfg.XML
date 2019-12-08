@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="AvatarListSelect" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <variable_set>
+	  <variable id="teamCrest" type="int"/>
+	  <variable id="toggleParamList" type="string"/>
+	  <variable id="descriptionParamList" type="string"/>
+	  <variable id="playerNameList" type="string"/>
+	  <variable id="playerPositionList" type="string"/>
+  	  <variable id="playerPositionIconList" type="string"/>
+  	  <variable id="playerKitNumberList" type="int"/>
+  	  <variable id="playerOverallList" type="int"/>
+	  <variable id="rowIndexColor" type="bool"/>
+  </variable_set>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" PARAM="EDIT_PLAYER" X="209" Y="95" WIDTH="1535" />
+  </components>
+  <panel_set>
+    <panel NAME="AVATAR_LIST_SELECT_PANEL" >
+	  <buttons>
+		<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+	  </buttons>
+      <layout NAME="AVATAR_LIST_LAYOUT" X="209" Y="190">
+  		  <tile NAME="SELECT_PLAYER_TOGGLE" X="0" Y="0" />
+		    <tile NAME="PLAYER_LIST" X="0" Y="190" />
+      </layout>
+      <layout NAME="AVATAR_LIST_FEMALE_LAYOUT" X="209" Y="190">
+  		  <tile NAME="SELECT_PLAYER_TOGGLE" X="0" Y="0" />
+		    <tile NAME="PLAYER_LIST" X="0" Y="130" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="AVATAR_LIST_SELECT_PANEL">
+    <tile NAME="SELECT_PLAYER_TOGGLE" TYPE="TILE_LIST" HIGHLIGHTABLE="TRUE" SELECTABLE="FALSE" >	
+      <properties WIDTH="707" HEIGHT="180"/>
+      <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="60" ROWS="2" />
+	  <data ID="rectangle" TYPE="rectangle" PARAM="COLOR_PROGRESSBAR_SMALLER_VALUE" HEIGHT="60" WIDTH="707" UHLALPHA="100" HLALPHA="0">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	 </data>
+      <data ID="desc" TYPE="text" ALIGN="center" PARAM="@descriptionParamList[i]" FORMAT="FONT_TILE_TSM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|||middle" TRANSLATE="TRUE" WIDTH="300" HEIGHT="240" >
+      	<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="-30" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="toggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE||COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|FONT_TILE_TSL|FONT_TILE_TSLU" PARAM="@#Pattern(@toggleParamList[i],*|0|false|false|false|true)" WIDTH="390" HEIGHT="50">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-30"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="5" />
+      </data>
+    </tile>
+    <tile NAME="PLAYER_LIST" TYPE="TILE_LIST" HIGHLIGHTABLE="TRUE" SELECTABLE="TRUE" DESTINATION="advance">	
+      <properties WIDTH="707" HEIGHT="480"/>
+      <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="60" />
+  	 <data ID="rectangle" TYPE="rectangle" PARAM="COLOR_PROGRESSBAR_EQUAL_VALUE" HEIGHT="60" WIDTH="707"  VISIBLE="@#Equal(@rowIndexColor[i],true)"  UHLALPHA="30" HLALPHA="30">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+	 </data>
+      <data ID="positionIcon" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" WIDTH="14" HEIGHT="14" PARAM="@playerPositionIconList[i]" >
+      	<align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="30"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>		
+      </data>
+      <data ID="position" TYPE="text" PARAM="@playerPositionList[i]" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|||middle" TRANSLATE="FALSE" WIDTH="100" HEIGHT="50" >
+      	<align TARGET="positionIcon" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="40"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="kitNumber" TYPE="text" PARAM="@playerKitNumberList[i]" FORMAT="|COLOR_TEXT_UNHIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_BOLD_CRUMBS_PATH|FONT_BOLD_CRUMBS_PATH|middle" TRANSLATE="FALSE" WIDTH="50" HEIGHT="50" X="200">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="player" TYPE="text" PARAM="@playerNameList[i]" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_BOLD_CRUMBS_PATH|FONT_BOLD_CRUMBS_PATH|middle" TRANSLATE="FALSE" WIDTH="250" HEIGHT="50" >
+       	<align TARGET="kitNumber" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="50"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="overall" TYPE="text" PARAM="@playerOverallList[i]" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|right|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_BOLD_CRUMBS_PATH|FONT_BOLD_CRUMBS_PATH|middle" TRANSLATE="FALSE" WIDTH="75" HEIGHT="50" >
+       	<align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-30"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="1"/>
+      </data>
+    </tile>
+</panel>
+</root>

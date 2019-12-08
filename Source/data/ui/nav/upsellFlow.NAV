@@ -1,0 +1,134 @@
+{
+	"name":"upsellFlow"
+	,"onEnter":
+	[
+		["sendScreenEvent", ["ShowLoadingIcon", ""]]
+	]
+	,"onExit":
+	[
+		["sendAction",["leaveUpsell"]]
+	]
+	,"transitions":
+	[
+		{
+			"event":"back"
+			,"targets":["out_back"]
+		}
+		,{
+			"event":"ShowMainMenu"
+			,"targets":["out_MainMenu"]
+		}
+		,{
+			"event":"evt_online_disconnected"
+			,"targets":["out_back"]
+		}
+	]
+	,"initial":
+	{
+		"targets":["upsellScreenReadyCondition"]
+	}
+	,"states":
+	[
+		{
+			"name":"upsellScreenReadyCondition"
+			,"onEnter":
+			[
+				["sendAction", ["condition","upsellScreenReadyCheck"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"true"
+					,"targets":["upsellServerScreen"]
+				}
+				,{
+					"event":"false"
+					,"targets":["upsellDownloadFailedCondition"]
+				}
+			]
+		}
+		,{
+			"name":"upsellDownloadFailedCondition"
+			,"onEnter":
+			[
+				["sendAction", ["condition","upsellDownloadFailedCheck"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"true"
+					,"targets":["upsellFailureFlow"]
+				}
+				,{
+					"event":"false"
+					,"targets":["upsellWaitingArea"]
+				}
+			]
+		}
+		,{
+			"name":"upsellWaitingArea"
+			,"onEnter":
+			[
+				["loadView", ["popup", "TXT_UPSELL_NOT_READY", "TXT_UPSELL_NOT_READY|back|back|continue|purchase"]]
+				,["sendScreenEvent", ["ShowLoadingIcon", ""]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideLoadingIcon", ""]]
+				,["unloadView", ["popup", "TXT_UPSELL_NOT_READY"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["upsellServerScreen"]
+				}
+				,{
+					"event":"CheckoutComplete"
+					,"targets":["out_back"]
+				}
+			]
+		}
+		,{
+			"name":"upsellFailureFlow"
+			,"onEnter":
+			[
+				["loadView", ["popup", "TXT_CONTENT_NOT_AVAILABLE", "TXT_CONTENT_NOT_AVAILABLE|back|back|continue|purchase"]]
+				,["sendScreenEvent", ["HideLoadingIcon", ""]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "TXT_CONTENT_NOT_AVAILABLE"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"CheckoutComplete"
+					,"targets":["out_back"]
+				}
+			]
+		}
+		,{
+			"name":"upsellServerScreen"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/upsell/UpsellScreenLoader"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/upsell/UpsellScreenLoader"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"CheckoutComplete"
+					,"actions":
+					[
+						["sendAction", ["condition","upsellCheckoutComplete"]]
+						,["invoke", ["GoToTitleScreen"]]
+					]
+				}
+			]
+		}
+	]
+}

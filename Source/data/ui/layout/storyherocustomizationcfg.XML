@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryHeroCustomizationHub" HUB_VERSION="3">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+	<component PATH="game/fluxHelpers/StoryHubLibrary.swf" X="0" Y="0" />
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" PARAM="SM_CUSTOM_TITLE|SM_CUSTOM_SUBTITLE" X="109" Y="95" WIDTH="1031" />
+  </components>
+  <buttons>
+    <button ID="L2R2" HINT="RotatePlayer" />
+	<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+  </buttons>
+  <panel_set>
+    <panel NAME="STORY_HERO_CUSTOMIZATION_GROUP_SELECT" LABEL="" IS_TAB="FALSE">
+      <layout NAME="SELECT_GROUP" X="109" Y="278">
+        <tile NAME="CUSTOMIZE_WARDROBE" X="0" Y="0" />
+        <tile NAME="CUSTOMIZE_APPEARANCE" X="347" Y="0" />
+        <tile NAME="CUSTOMIZE_KIT" X="694" Y="0" />
+      </layout>
+    </panel>
+    <panel NAME="STORY_HERO_CUSTOMIZATION_EDIT" LABEL="" IS_TAB="FALSE">
+      <layout NAME="EDIT" X="109" Y="278">
+        <tile NAME="CATEGORY_SELECT" X="0" Y="0" WIDTH="256" />
+        <tile NAME="ITEM_SELECT" X="266" Y="0" WIDTH="739" />
+      </layout>
+      <layout NAME="EDIT_CATEGORY_SCROLLBAR" EXTEND="EDIT">
+        <tile NAME="CATEGORY_SELECT" WIDTH="281" /> 
+        <tile NAME="ITEM_SELECT" X="291" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="STORY_HERO_CUSTOMIZATION_GROUP_SELECT">
+	<tile NAME="CUSTOMIZE_WARDROBE" TYPE="EXPANDABLE_TILE" SUBPANEL_ID="STORY_HERO_CUSTOMIZATION_EDIT" DATAPROVIDERID="CUSTOMIZE_PLAYER_GROUPS_DP">
+      <properties WIDTH="337" HEIGHT="632" />
+	  <data ID="title" TYPE="title" PARAM="SM_CUSTOM_WARDROBE" />  
+	  <data ID="description_1" TYPE="text" FORMAT="I" HEIGHT="620" WIDTH="300" X="18" REL_TARGET="title" REL_Y="10" TRANSLATE="FALSE"/> 
+	  <data ID="newItemIcon_1" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" WIDTH="25" HEIGHT="25" X="302" Y="10" />
+	  <data ID="background_1" TYPE="asset" PATH="storyHeroCustomizationTiles" WIDTH="337" HEIGHT="632"/>
+    </tile>
+	<tile NAME="CUSTOMIZE_APPEARANCE" TYPE="EXPANDABLE_TILE" SUBPANEL_ID="STORY_HERO_CUSTOMIZATION_EDIT" DATAPROVIDERID="CUSTOMIZE_PLAYER_GROUPS_DP">
+      <properties WIDTH="337" HEIGHT="632" />
+	  <data ID="title" TYPE="title" PARAM="SM_CUSTOM_HAIR_AND_TATTOO" />  
+	  <data ID="description_2" TYPE="text" FORMAT="I" HEIGHT="620" WIDTH="300" X="18" REL_TARGET="title" REL_Y="10" TRANSLATE="FALSE"/> 
+	  <data ID="newItemIcon_2" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" WIDTH="25" HEIGHT="25" X="302" Y="10" />
+	  <data ID="background_2" TYPE="asset" PATH="storyHeroCustomizationTiles" WIDTH="337" HEIGHT="632"/>
+    </tile>
+	<tile NAME="CUSTOMIZE_KIT" TYPE="EXPANDABLE_TILE" SUBPANEL_ID="STORY_HERO_CUSTOMIZATION_EDIT" DATAPROVIDERID="CUSTOMIZE_PLAYER_GROUPS_DP">
+      <properties WIDTH="337" HEIGHT="632" />
+	  <data ID="title" TYPE="title" PARAM="SM_CUSTOM_KIT" />  
+	  <data ID="description_0" TYPE="text" FORMAT="I" HEIGHT="620" WIDTH="300" X="18" REL_TARGET="title" REL_Y="10" TRANSLATE="FALSE" /> 
+	  <data ID="newItemIcon_0" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" WIDTH="25" HEIGHT="25" X="302" Y="10" />
+	  <data ID="background_0" TYPE="asset" PATH="storyHeroCustomizationTiles" WIDTH="337" HEIGHT="632"/>
+    </tile>
+  </panel>
+  <panel NAME="STORY_HERO_CUSTOMIZATION_EDIT">
+	<variable_set>
+		<variable id="labelParamList" type="string"/>
+		<variable id="labelAlphaList" type="int"/>
+		<variable id="selectedVisibleList" type="bool"/>
+		<variable id="newItemIconParamList" type="int"/>
+		<variable id="newItemIconVisibleList" type="bool"/>
+	</variable_set>
+    <tile NAME="CATEGORY_SELECT" TYPE="TILE_LIST" >
+      <properties WIDTH="256" HEIGHT="630" />
+      <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="105" ITEM_WIDTH="256" TOTAL_ITEMS="20" />
+      <buttons>
+        <button ID="BACK" ACTION="ACTION_FLUX_TAB_CHANGED" DESTINATION="STORY_HERO_CUSTOMIZATION_GROUP_SELECT" />
+      </buttons>
+	  <data ID="label" TYPE="text" PARAM="@labelParamList[i]" FORMAT="FONT_TITLE_FHD|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|leading|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_TILE_TSL|FONT_TILE_TSLU|middle" TRANSLATE="FALSE" X="18" WIDTH="220" HEIGHT="105" />
+	  <data ID="selected" TYPE="rectangle" FORMAT="|||COLOR_FILL_HIGHLIGHT_ALTERNATE" VISIBLE="@selectedVisibleList[i]" X="0" Y="0" WIDTH="256" HEIGHT="105" />
+	  <data ID="selectedLabel" TYPE="text" PARAM="@labelParamList[i]" FORMAT="FONT_TITLE_FHD||leading|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|FONT_TILE_TSL|FONT_TILE_TSLU|middle" TRANSLATE="FALSE" X="18" WIDTH="220" HEIGHT="105" VISIBLE="@selectedVisibleList[i]" />
+	  <data ID="newItemIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM="@newItemIconParamList[i]" WIDTH="25" HEIGHT="25" X="221" Y="10" VISIBLE="@newItemIconVisibleList[i]" />
+    </tile>
+    <tile NAME="ITEM_SELECT" TYPE="TILE_LIST" DATAPROVIDERID="CUSTOMIZE_PLAYER_ITEM_LIST_DP" NEEDS_PUBLISH="1">
+      <properties WIDTH="714" HEIGHT="630" />
+      <buttons>
+        <button ID="BACK" ACTION="ACTION_BACKOUT" />
+      </buttons>
+	  <data ID="itemImage" TYPE="asset" VISIBLE="FALSE" PATH="storyHeroCustomization" WIDTH="218" HEIGHT="134" X="10" Y="10" />
+	  <data ID="itemImageLocked" TYPE="asset" PATH="storyHeroCustomization" HLALPHA="40" UHLALPHA="40" WIDTH="218" HEIGHT="134" X="10" Y="10" />
+	  <data ID="itemDescription" TYPE="multilinetext" VISIBLE="TRUE" FORMAT="TSM|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_UNHIGHLIGHT_FLUX||FONT_TILE_TSMU" TRANSLATE="FALSE" X="10" Y="145" WIDTH="218" HEIGHT="60"/>
+	  <data ID="lock" TYPE="icon" PARAM="STATUS_LOCKED" FORMAT="|COLOR_FILL_HIGHLIGHT_HIGH_CONTRAST||COLOR_FILL_UNHIGHLIGHT_HIGH_CONTRAST" VISIBLE="FALSE" WIDTH="36" HEIGHT="36" X="14" Y="14" />  
+	  <data ID="equippedIcon" TYPE="icon" PARAM="CHECKMARK_ACTIVE" VISIBLE="FALSE" WIDTH="36" HEIGHT="36" X="14" Y="14"/>  
+	  <data ID="newItemIcon" TYPE="component" PATH="game/components/FluxComponents/NotificationIcon.swf" PARAM=" " WIDTH="13" HEIGHT="13" X="211" Y="14" />
+    </tile>
+  </panel>
+</root>

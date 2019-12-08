@@ -1,0 +1,291 @@
+{
+	"name":"CreateNewAvatarPlayerCareerFlow"
+	,"initial": { "targets":["SelectPlayerType"] }
+	,"states":
+	[
+		{
+			"name":"SelectPlayerType"
+			,"initial": { "targets":["Idle"] }
+			,"onEnter":
+			[
+				["loadScreenController", ["SelectPlayerType"]]
+				,["loadViewModel",["PAPSelectionViewModel"]]
+				,["loadViewModel",["FluxViewModel"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["FluxViewModel"]]
+				,["unloadViewModel",["PAPSelectionViewModel"]]
+				,["unloadScreenController", ["SelectPlayerType"]]
+			]
+			,"states":
+			[
+				{
+					"name":"Idle"
+					,"transitions":
+					[
+						{
+							"event":"CreateAvatarVirtualProCheckProfile"
+							,"targets":["CheckAvatarProfileSignedIn"] 
+						}
+						,{
+							"event":"Back"
+							,"targets":["Back"] 
+						}
+						,{
+							"event":"PlayReal"
+							,"targets":["SelectPlayerTeam"] 
+						}
+					]
+				}
+				,{
+					"name":"CheckAvatarProfileSignedIn"
+					,"onEnter":
+					[
+						["executeCMAction",["VirtualProCheckProfileSignedIn"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Advance"
+							,"cond":["==", ".FCE_TESTBED", true]
+							,"targets":["SoakSkipAvatarVirtualProPlayerFlow"] 
+						}
+						,{
+							"event":"Advance"
+							,"targets":["CreateAvatarVirtualProPlayerFlow"] 
+						}
+						,{
+							"event":"Failure"
+							,"targets":["ShowPopup"] 
+						}
+					]
+				}
+				,{
+					"name":"ShowPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup", "NOT_SIGNED_IN_POPUP", "CM_WarningNotSignedInProfile|Ok|Advance"]]
+					],
+					"onExit":
+					[
+						["unloadView", ["popup", "NOT_SIGNED_IN_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Advance"
+							,"targets":["Idle"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"SoakSkipAvatarVirtualProPlayerFlow"
+			,"onEnter":
+			[
+				["executeCMAction",["AvatarSoakSetup"]]
+				,["invoke", ["goToSelectVProTeam"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"goToSelectVProTeam"
+					,"targets":["SelectVProTeam"]
+				}
+			]
+		}
+		,{	
+			"onEnter":
+			[
+				["loadViewModel",["VirtualProViewModel"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["VirtualProViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"ProfileSignOutFromAvatar"
+					,"onEnter":
+					[
+						["invoke", ["GoToQuitAfterSignOut"]]
+					]
+				}
+				,{
+					"let":{"AvatarFlowConfigViewModelName":"PlayerCareerAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"create"}
+					,"onEnter":
+					[
+						["sendAction", ["suppressPOWWidget"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["unsuppressPOWWidget"]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/avatar/avatarFlow.nav"
+							,"inputs":
+							{
+								"CreateAvatarVirtualProPlayerFlow":"in_initializeSessionAttemptState"
+								,"ShutdownSessionForCreateAvatarVirtualProPlayer":"in_shutdownSessionAttemptState"
+							}
+							,"outputs":
+							{
+								"out_advance":"PlayerCareerAdvance"
+								,"out_back":"SelectPlayerType"
+								,"out_custom":"SelectPlayerType"
+								,"out_custom2":"SelectPlayerType"
+								,"out_savefail":"ShutdownSessionForCreateAvatarVirtualProPlayer"
+								,"out_profilesignedout":"ProfileSignOutFromAvatar"
+							}
+						}
+						,{
+							"name":"PlayerCareerAdvance"
+							,"onEnter":
+							[
+								["invoke", ["advance"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["SelectVProTeam"] 
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"SelectVProTeam"
+			,"type":"external"
+			,"file":"/careerMode/selectTeamFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"BackToCreateAvatarVirtualProPlayerFlow"
+				,"Advance":"VProSetup"
+			}	
+		}	
+		,{
+			"name":"BackToCreateAvatarVirtualProPlayerFlow"
+			,"onEnter":
+			[
+				["loadView", ["popup", "AVATAR_BACK_TO_MOODS_WARNING_POPUP", "CM_CareerAvatarFlowBackToMoodsWarning|Ok|Advance|Back|BackToSelectVProTeam"]]
+			],
+			"onExit":
+			[
+				["unloadView", ["popup", "AVATAR_BACK_TO_MOODS_WARNING_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["CreateAvatarVirtualProPlayerFlow"]
+				}
+				,{
+					"event":"BackToSelectVProTeam"
+					,"targets":["SelectVProTeam"]
+				}
+			]
+		}	
+		,{
+			"name":"VProSetup"
+			,"type":"external"
+			,"file":"/careerMode/setupFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"SelectVProTeam"
+				,"Advance":"InitVProCareerMode"
+			}	
+		}
+		,{
+			"name":"SelectPlayerTeam"
+			,"type":"external"
+			,"file":"/careerMode/selectTeamFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"SelectPlayerType"
+				,"Advance":"SelectPlayer"
+			}	
+		}	
+		,{
+			"name":"SelectPlayer"
+			,"onEnter":
+			[
+				["executeCMAction",["EnterSelectPlayer"]]
+				,["loadScreenController", ["SelectPlayer"]]
+				,["loadView", ["screen", "game/screens/career/SelectPlayer"]]	
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/SelectPlayer"]]
+				,["unloadScreenController", ["SelectPlayer"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["SelectPlayerTeam"] 
+					,"actions":[ ["executeCMAction",["LeaveSelectPlayer"]] ]
+				}
+				,{
+					"event":"Complete"
+					,"targets":["PlayerSetup"] 
+				}
+			]
+		}
+		,{
+			"name":"PlayerSetup"
+			,"type":"external"
+			,"file":"/careerMode/setupFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"SelectPlayer"
+				,"Advance":"InitPlayerCareerMode"
+			}	
+		}
+		,{
+			"name":"InitPlayerCareerMode"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["InitCareerMode"] 
+					,"actions":[ ["executeCMAction",["LeaveSelectPlayerWithInitMode"]] ]
+				}
+			]
+		}
+		,{
+			"name":"InitVProCareerMode"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["InitCareerMode"] 
+					,"actions":[ ["executeCMAction",["MoveCreatedPlayerToNewTeam"]], ["executeCMAction",["SetUpVirtualPro"]] ]
+				}
+			]
+		}
+		,{
+			"name":"InitCareerMode"
+			,"type":"external"
+			,"file":"/careerMode/initCareerModeFlow.nav"
+		}
+	]
+}

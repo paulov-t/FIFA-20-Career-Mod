@@ -1,0 +1,74 @@
+{
+	"name":"BranchInviteGuard"
+	,"initial": 
+	{
+		"targets":["FlowNotReady"]
+	}
+	,"states":
+	[
+		{
+			"name":"FlowNotReady"
+			,"transitions":
+			[
+				{ "event":"evt_invite_accepted", "targets":["WaitForFlowReady"] }
+				,{ "event":"evt_invite_flow_ready", "targets":["FlowReady"] }
+				,{ "event":"evt_branch_flow_blocked", "targets":["FlowNotReady_InCriticalSection"] }
+			]
+		}
+		,{
+			"name":"FlowNotReady_InCriticalSection"
+			,"transitions":
+			[
+				{ "event":"evt_invite_accepted", "targets":["FlowNotReady_WaitForCriticalSection"] }
+				,{ "event":"evt_invite_flow_ready", "targets":["FlowReady_InCriticalSection"] }
+				,{ "event":"evt_branch_flow_recovered", "targets":["FlowNotReady"] }
+				,{ "event":"evt_branch_flow_not_recovered", "targets":["FlowNotReady"] }
+			]
+		}
+		,{
+			"name":"FlowReady"
+			,"transitions":
+			[
+				{ "event":"evt_invite_accepted", "actions":[["invoke",["goToInviteFlow"]]] }
+				,{ "event":"evt_invite_flow_not_ready", "targets":["FlowNotReady"] }
+				,{ "event":"evt_branch_flow_blocked", "targets":["FlowReady_InCriticalSection"] }
+			]
+		}
+		,{
+			"name":"FlowReady_InCriticalSection"
+			,"transitions":
+			[
+				{ "event":"evt_invite_accepted", "targets":["FlowReady_WaitForCriticalSection"] }
+				,{ "event":"evt_invite_flow_not_ready", "targets":["FlowNotReady_InCriticalSection"] }
+				,{ "event":"evt_branch_flow_recovered", "targets":["FlowReady"] }
+				,{ "event":"evt_branch_flow_not_recovered", "targets":["FlowNotReady"] }
+			]
+		}
+		,{
+			"name":"WaitForFlowReady"
+			,"transitions":
+			[
+				{ "event":"evt_invite_flow_ready", "targets":["FlowReady"], "actions":[["invoke",["goToInviteFlow"]]] }
+				,{ "event":"evt_branch_flow_blocked", "targets":["FlowNotReady_WaitForCriticalSection"] }
+			]
+		}
+		,{
+			"name":"FlowReady_WaitForCriticalSection"
+			,"transitions":
+			[
+				{ "event":"evt_branch_flow_recovered", "targets":["FlowReady"], "actions":[["invoke",["goToInviteFlow"]]] }
+				,{ "event":"evt_branch_flow_not_recovered", "targets":["WaitForFlowReady"] }
+				,{ "event":"evt_invite_flow_not_ready", "targets":["FlowNotReady_WaitForCriticalSection"] }
+			]
+		}
+		,{
+			"name":"FlowNotReady_WaitForCriticalSection"
+			,"transitions":
+			[
+				{ "event":"evt_branch_flow_recovered", "targets":["WaitForFlowReady"] }
+				,{ "event":"evt_branch_flow_not_recovered", "targets":["FlowNotReady"] }
+				,{ "event":"evt_invite_flow_ready", "targets":["FlowReady_WaitForCriticalSection"] }
+			]
+		}
+	]
+}

@@ -1,0 +1,453 @@
+{
+	"name":"PressConference"
+	,"initial": { "targets":["LoadSublevel"] }
+	,"states":
+	[
+		{
+			"onEnter":
+			[
+				["invoke", ["evt_sign_out_flow_not_ready"]]
+				,["invoke", ["evt_invite_flow_not_ready"]]
+				,["sendAction", ["suppressPOWWidget"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["unsuppressPOWWidget"]]
+				,["invoke", ["evt_sign_out_flow_ready"]]
+				,["invoke", ["evt_invite_flow_ready"]]
+			]
+			,"states":
+			[
+				{
+					"name":"LoadSublevel"
+					,"states":
+					[
+						{
+							"name":"loadPressCinematicsSublevel"
+							,"onEnter": 
+							[
+								["sendAction", ["fbStartFlowEvent", "LoadInterviewCinematicsSublevel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"InterviewSublevelLoaded"
+									,"cond":["==",".ENTRY_POINT","timelineTester"]
+									,"targets":["TimelineTester"]
+								}
+								,{
+									"event":"InterviewSublevelLoaded"
+									,"targets":["Scene"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"Scene"
+					,"onEnter":
+					[
+						["loadViewModel", ["PressConferenceViewModel", ".ENTRY_POINT"]]
+						,["loadViewModel", ["FluxViewModel"]]
+						,["loadView", ["screen", "game/screens/fluxHub/FluxHub"]]		
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+						,["unloadViewModel", ["PressConferenceViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"Startup"
+							,"transitions":
+							[
+								{
+									"event":"Start"
+									,"targets":["WaitForIntro"]
+								}
+							]
+						}
+						,{
+							"name":"WaitForIntro"
+							,"onEnter":
+							[
+								["sendAction",["cmPressStartTimeline", "Intro"]]
+								,["sendAction",["cmPressPrepareTimeline", "ReporterSpeaks"]]
+							]
+							,"onExit":
+							[
+								["sendAction",["cmPressShowWidget", "SummaryQuestions"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"AnimationFinished"
+									,"targets":["WaitForReporter"]
+								}
+								,{
+									"event":"SubtitleHintShow"
+									,"actions":
+									[
+										["sendAction",["cmPressShowWidget", "IntroBanner"]]
+									]
+								}
+								,{
+									"event":"SubtitleHintHide"
+									,"actions":
+									[
+										["sendAction",["cmPressHideWidget", "IntroBanner"]]
+									]
+								}
+							]
+						}
+						,{
+							"name":"WaitForReporter"
+							,"onEnter":
+							[
+								["sendAction",["cmPressPrepareTimeline", "Idle"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"SubtitleHintShow"
+									,"actions":
+									[
+										["sendAction",["cmPressShowWidget", "SubtitleReporter"]]
+									]
+								}
+								,{
+									"event":"SubtitleHintHide"
+									,"actions":
+									[
+										["sendAction",["cmPressHideWidget", "SubtitleReporter"]]
+									]
+								}
+								,{
+									"event":"AnimationFinished"
+									,"targets":["WaitForUserDecision"]
+								}
+							]
+						}
+						,{
+							"name":"WaitForUserDecision"
+							,"onEnter":
+							[
+								["sendAction",["cmPressShowWidget", "Chatwheel"]]
+							]
+							,"onExit":
+							[
+								["sendAction",["cmPressHideWidget", "Chatwheel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["HasMoreQuestions"]
+									,"actions":
+									[
+										["sendAction",["cmPressStartTimeline", "UserSpeaks"]]
+										,["sendAction",["cmPressCheckKeyAnswer"]]
+									]
+								}
+							]
+						}
+						,{
+							"name":"HasMoreQuestions"
+							,"onEnter":
+							[
+								["sendAction",["cmPressHasMoreQuestions"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"true"
+									,"targets":["WaitForUserMoreQuestions"]
+								}
+								,{
+									"event":"false"
+									,"targets":["WaitForUserLastQuestion"]
+								}
+							]
+						}
+						,{
+							"name":"WaitForUser"
+							,"onExit":
+							[
+								/*need to advance the current question even if we don't have more*/
+								["sendAction",["cmPressAdvanceQuestion"]]
+							]
+							,"states":
+							[
+								{
+									"name":"WaitForUserMoreQuestions"
+									,"onEnter":
+									[
+										["sendAction",["cmPressPrepareTimeline", "ReporterSpeaks"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"AnimationFinished"
+											,"targets":["WaitForReporter"]
+										}
+									]
+								}
+								,{
+									"name":"WaitForUserLastQuestion"
+									,"onEnter":
+									[
+										["sendAction",["cmPressPrepareTimeline", "Outro"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"AnimationFinished"
+											,"targets":["WaitForOutro"]
+										}
+									]
+								}
+							]
+							,"transitions":
+							[
+								{
+									"event":"SubtitleHintShow"
+									,"actions":
+									[
+										["sendAction",["cmPressShowWidget", "SubtitleUser"]]
+									]
+								}
+								,{
+									"event":"SubtitleHintHide"
+									,"actions":
+									[
+										["sendAction",["cmPressHideWidget", "SubtitleUser"]]
+									]
+								}
+							]
+						}
+						,{
+							"name":"WaitForOutro"
+							,"onEnter":
+							[
+								["sendAction",["cmPressHideWidget", "SummaryQuestions"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"SceneFinished"
+									,"targets":["UnloadSublevel"]
+								}
+								,{
+									"event":"AcceptedInvite"
+									,"targets":["UnloadSublevelAcceptedInvite"]
+								}
+								,{
+									"event":"SubtitleHintShow"
+									,"actions":
+									[
+										["sendAction",["cmPressShowWidget", "SubtitleOutro"]]
+									]
+								}
+								,{
+									"event":"SubtitleHintHide"
+									,"actions":
+									[
+										["sendAction",["cmPressHideWidget", "SubtitleOutro"]]
+									]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"UnloadSublevel"
+					,"states":
+					[
+						{
+							"name":"checkPressScenesUnloadedSceneFinished"
+							,"onEnter": 
+							[
+								["sendAction",["condition", "areScenesUnloaded"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"scenesUnloaded"
+									,"targets":["unloadPressCinematicsSublevelSceneFinished"]
+								}
+								,{
+									"event":"scenesNotUnloaded"
+									,"targets":["waitForPressScenesUnloadSceneFinished"]
+								}			
+							]
+						}
+						,{
+							"name":"waitForPressScenesUnloadSceneFinished"
+							,"transitions":
+							[
+								{
+									"event":"scenesUnloaded"
+									,"targets":["unloadPressCinematicsSublevelSceneFinished"]
+								}			
+							]
+						}
+						,{
+							"name":"unloadPressCinematicsSublevelSceneFinished"
+							,"onEnter": 
+							[
+								["sendAction", ["fbStartFlowEvent", "UnloadInterviewCinematicsSublevel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"InterviewSublevelUnloaded"
+									,"targets":["Back"]
+								}			
+							]
+						}
+					]
+				}
+				,{
+					"name":"UnloadSublevelAcceptedInvite"
+					,"states":
+					[
+						{
+							"name":"checkPressScenesUnloadedAcceptedInvite"
+							,"onEnter": 
+							[
+								["sendAction",["condition", "areScenesUnloaded"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"scenesUnloaded"
+									,"targets":["unloadPressCinematicsSublevelAcceptedInvite"]
+								}
+								,{
+									"event":"scenesNotUnloaded"
+									,"targets":["waitForPressScenesUnloadAcceptedInvite"]
+								}			
+							]
+						}
+						,{
+							"name":"waitForPressScenesUnloadAcceptedInvite"
+							,"transitions":
+							[
+								{
+									"event":"scenesUnloaded"
+									,"targets":["unloadPressCinematicsSublevelAcceptedInvite"]
+								}			
+							]
+						}
+						,{
+							"name":"unloadPressCinematicsSublevelAcceptedInvite"
+							,"onEnter": 
+							[
+								["sendAction", ["fbStartFlowEvent", "UnloadInterviewCinematicsSublevel"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"InterviewSublevelUnloaded"
+									,"targets":["WaitForInvite"]
+								}			
+							]
+						}
+					]
+				}
+				/*this is used for debugging*/
+				,{
+					"name":"TimelineTester"
+					,"states":
+					[
+						{
+							"name":"RunTest"
+							,"onEnter":
+							[
+								["loadViewModel", ["PressConferenceViewModel", "TimelineTester"]]
+								,["loadViewModel", ["FluxViewModel"]]
+								,["loadView", ["screen", "game/screens/fluxHub/FluxHub"]]		
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["unloadViewModel",["FluxViewModel"]]
+								,["unloadViewModel", ["PressConferenceViewModel"]]
+							]
+							,"states":
+							[
+								{
+									"name":"WaitForSceneStart"
+									,"transitions":
+									[
+										{
+											"event":"Start"
+											,"targets":["WaitForCurrentTimeline"]
+											,"actions":
+											[
+												["sendAction",["cmPressStartTimeline"]]
+											]
+										}
+									]
+								}
+								,{
+									"name":"WaitForCurrentTimeline"
+									,"onEnter":
+									[
+										["sendAction",["cmPressPrepareTimeline"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"AnimationFinished"
+											,"targets":["HasNextTimeline"]
+										}
+										,{
+											"event":"advance"
+											,"actions":
+											[
+												["sendAction",["cmPressAdvanceQuestion"]]
+												,["sendAction",["cmPressStartTimeline"]]
+												,["sendAction",["cmPressPrepareTimeline"]]
+											]
+										}
+									]
+								}
+								,{
+									"name":"HasNextTimeline"
+									,"onEnter":
+									[
+										["sendAction",["cmPressHasMoreQuestions"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"true"
+											,"targets":["WaitForCurrentTimeline"]
+											,"actions":
+											[
+												["sendAction",["cmPressAdvanceQuestion"]]
+											]
+										}
+									]
+								}
+							]
+							,"transitions":
+							[
+								{
+									"event":"SceneFinished"
+									,"targets":["UnloadSublevel"]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"WaitForInvite"
+		}
+	]
+}

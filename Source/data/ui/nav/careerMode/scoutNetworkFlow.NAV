@@ -1,0 +1,74 @@
+{
+	"name":"ScoutNetworkFlow"
+	,"initial": { "targets":["ScoutNetwork"] }
+	,"states":
+	[
+		{
+			"name":"ScoutNetwork"
+			,"initial": { "targets":["ScoutNetworkChild"] }
+			,"onEnter":
+			[
+				["loadScreenController", ["ScoutNetwork"]]
+				,["loadView", ["screen", "game/screens/career/YouthScout/ScoutNetwork"]]
+			]
+			,"onExit":
+			[
+				["unloadScreenController", ["ScoutNetwork"]]
+				,["unloadView", ["screen", "game/screens/career/YouthScout/ScoutNetwork"]]
+			]
+			,"states":
+			[
+				{
+					"name":"ScoutNetworkChild"
+					,"transitions":
+					[
+						{
+							"event":"Back"
+							,"targets":["Back"]
+						}
+						,{
+							"event":"EnterHireScout"
+							,"targets":["HireScout"] 
+							,"actions":[ ["executeCMAction",["EnterHireScout"]] ]
+						}
+						,{
+							"event":"EnterScoutReport"
+							,"targets":["ScoutReport"] 
+							,"actions":[ ["executeCMAction",["EnterScoutReport"]] ]
+						}
+					]
+				}
+				,{
+					"name":"HireScout"
+					,"onEnter":
+					[
+						["loadScreenController", ["HireScout"]]
+						,["loadView", ["screen", "game/screens/career/YouthScout/HireScout"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/career/YouthScout/HireScout"]]
+						,["unloadScreenController", ["HireScout"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Back"
+							,"targets":["ScoutNetwork"] 
+							,"actions":[ ["executeCMAction",["EnterScoutNetwork"]] ]
+						}
+					]
+				}
+				,{
+					"name":"ScoutReport"
+					,"type":"external"
+					,"file":"/careerMode/scoutReportFlow.nav"
+					,"outputs":
+					{
+						"Back":"ScoutNetwork"
+					}
+				}
+			]
+		}
+	]
+}

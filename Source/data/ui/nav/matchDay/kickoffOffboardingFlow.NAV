@@ -1,0 +1,79 @@
+{
+	"name":"kickoffOffboardingFlow"
+	, "initial":
+	{
+		"targets":["checkRECOData"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel", ["KickoffOffboardingViewModel"]]
+		,["sendAction",["evt_hub_update_event", ".NavFIFAHubBackgroundType.MAIN_HUB_BACKGROUND"]]
+		,["sendAction", ["evt_hub_show_event"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel", ["KickoffOffboardingViewModel"]]
+	]
+	,"states":
+	[
+        {
+			"name":"checkRECOData"
+			,"onEnter":
+			[
+				["sendAction",["wait", "showOffboardingScreen"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"skipOffboarding"
+					,"targets":["quit"]
+				}
+				,{
+					"event":"showOffboarding"
+					,"targets":["offboardingScreen"]
+				}
+			]				
+		}
+		,{
+			"name":"offboardingScreen"
+			,"onEnter":
+			[
+				["loadViewModel",["FluxViewModel"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["FluxViewModel"]]
+				,["unloadView", ["background"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"goto_FUT"
+					,"targets":["out_goToFUT"]
+				}
+				,{
+					"event":"goto_Kickoff"
+					,"targets":["out_goToKickOff"]
+				}
+				,{
+					"event":"goto_CareerMode"
+					,"targets":["out_goToCareer"]
+				}
+				,{
+					"event":"goto_ProClubs"
+					,"targets":["out_goToProClubs"]
+				}
+				,{
+					"event":"goto_Volta"
+					,"targets":["out_goToVolta"]
+				}
+				,{
+					"event":"quit"
+					,"targets":["quit"]
+				}
+			]
+		}
+	]
+}

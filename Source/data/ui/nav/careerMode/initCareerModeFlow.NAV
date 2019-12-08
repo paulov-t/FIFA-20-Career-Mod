@@ -1,0 +1,211 @@
+{
+	"name":"InitCareerModeFlow"
+	,"initial": { "targets":["InitCareerMode"] }
+	,"states":
+	[
+		{
+			"onEnter": 
+			[ 
+				["loadScreenController", ["InitCareerMode"]] 
+			]
+			,"onExit": 
+			[	
+				["unloadScreenController", ["InitCareerMode"]]
+				,["unloadView",["screen", "game/screens/career/Scheduling"]]
+				,["unloadView",["screen", "game/screens/tournamentMode/WomenTournamentScheduling"]]
+				
+			]
+			,"states":
+			[
+				{
+					"name":"InitCareerModeIdle"
+				}
+				,{
+					"name":"InitCareerMode"
+					,"onEnter": 
+					[ 
+						["loadView",["screen", "game/screens/career/Scheduling"]]
+						,["invoke", ["InitCareerModeStadium"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"InitCareerModeStadium"
+							,"targets":["InitStadium"]
+						}
+					]
+				}
+				,{
+					"name":"InitWomenTournamentMode"
+					,"onEnter": 
+					[ 
+						["loadView",["screen", "game/screens/tournamentMode/WomenTournamentScheduling"]]
+						,["invoke", ["InitWomenTournamentModeStadium"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"InitWomenTournamentModeStadium"
+							,"targets":["InitStadium"]
+						}
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/reloadfestadiumflow.nav"
+					,"inputs":
+					{
+						"InitStadium":"TriggerReloadNoWait"
+					}
+					,"outputs":
+					{
+						"LoadStarted":"InitCareerModeIdle"
+						,"ReloadReady":"InitCareerModeIdle"
+					}
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"InterruptSeasonCreate"
+					,"actions":[ ["executeCMAction",["InterruptNewSeason"]] ]
+				}
+				,{
+					"event":"StartInit"
+					,"actions":[ ["executeCMAction",["StartInit"]] ]
+				}
+				,{
+					"event":"CareerComplete"					
+					,"actions":[ ["executeCMAction",["ReceivedCareerComplete"]] ]
+				}
+				,{
+					"event":"CareerCompleteNoSave"
+					,"targets":["WaitForStadiumCompleteNoSave"]
+					,"actions":[ ["executeCMAction",["EnterHubFirstTimeWithPreSavePrep"]]]
+				}
+				,{
+					"event":"TournamentComplete"
+					,"targets":["Save"] 
+					,"actions":[ ["executeCMAction",["EnterSaveFromIntroFlow"]] ]
+				}
+				,{
+					"event":"TournamentCompleteNoSave"
+					,"targets":["WaitForStadiumCompleteNoSave"]
+					,"actions":[ ["executeCMAction",["EnterHubFirstTimeWithPreSavePrep"]] ]
+				}
+				,{
+					"event":"Advance"
+					,"cond":["==", ".FCE_TESTBED", true]
+					,"targets":["FCETestbedSave"] 
+					,"actions":[ ["executeCMAction",["EnterSaveFromIntroFlow"]] ]
+				}
+				,{
+					"event":"Advance"
+					,"targets":["Save"]
+					,"actions":[ ["executeCMAction",["EnterSaveFromIntroFlow"]] ]
+				}
+				,{
+					"event":"inviteAccepted"
+				}
+			]
+		}
+		,{
+			"name":"FCETestbedSave"		/* Used by FCE_Testbed */
+			,"onEnter":
+			[
+				["loadScreenController", ["Save"]]
+			]
+			,"onExit": 
+			[	
+				["unloadScreenController", ["Save"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Success"
+					,"actions":
+					[
+					   ["executeCMAction",["EnterHubFirstTime"]]
+					   ,["invoke", ["GotoMainMenuHub"]]
+					]
+				}
+				,{
+					"event":"Failure"
+					,"actions":
+					[
+					   ["executeCMAction",["EnterHubFirstTime"]]
+					   ,["invoke", ["GotoMainMenuHub"]]
+					]
+				}
+			]
+		}
+		,{
+			"onEnter": 
+			[ 
+				["loadScreenController", ["Save"]]
+			]
+			,"onExit": 
+			[	
+				["unloadScreenController", ["Save"]]
+			]
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/saveload/save.nav"
+					,"inputs":
+					{
+						"Save":"in_SaveDefault"
+					}
+					,"outputs":
+					{
+						"out_Back":"WaitForStadiumComplete"		/* Unexpected case */
+						,"out_Success":"WaitForStadiumComplete"
+						,"out_Failure":"WaitForStadiumComplete"
+					}
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/reloadfestadiumflow.nav"
+			,"inputs":
+			{
+				"WaitForStadiumComplete":"WaitForLoad"
+			}
+			,"outputs":
+			{
+				"ReloadReady":"StadiumLoaded"
+				,"LoadStarted":"StadiumLoaded"
+			}
+		}
+		,{
+			"type":"external"
+			,"file":"/reloadfestadiumflow.nav"
+			,"inputs":
+			{
+				"WaitForStadiumCompleteNoSave":"WaitForLoad"
+			}
+			,"outputs":
+			{
+				"ReloadReady":"StadiumLoadedNoSave"
+				,"LoadStarted":"StadiumLoadedNoSave"
+			}
+		}
+		,{
+			"name":"StadiumLoaded"
+			,"onEnter":
+			[
+				["executeCMAction",["EnterHubFirstTime"]]
+				,["invoke", ["GotoMainMenuHub"]]
+			]
+		}
+		,{
+			"name":"StadiumLoadedNoSave"
+			,"onEnter":
+			[
+				["invoke", ["GotoMainMenuHub"]]
+			]
+		}
+	]
+}

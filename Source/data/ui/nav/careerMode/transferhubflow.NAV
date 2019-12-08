@@ -1,0 +1,315 @@
+{
+	"name":"TransferHubFlow"
+	,"initial": { "targets":["TransferHub"] }
+	,"transitions":
+	[
+		{
+			"event":"GoBackToTransferHub"
+			,"targets":["TransferHub"]
+		}
+	]
+	,"states":
+	[
+		{
+			"name":"TransferHub"
+			,"onEnter":
+			[
+				["loadViewModel", ["TransferHubViewModel", ".FromContext"]]
+				,["sendAction",["notify", "ShowAvatar"]]
+				,["loadView",["screen", "game/screens/career/transfers/TransferHub"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/career/transfers/TransferHub"]]
+				,["sendAction",["notify", "HideAvatar"]]
+				,["unloadViewModel", ["TransferHubViewModel", ""]]
+			]
+			,"states":
+			[
+				{
+					"name":"Idle"
+					,"transitions":
+					[
+						{
+							"event":"DelegateNegotiation"
+							,"targets":["DelegateNegotiationOverlay"]
+						}
+						,{
+							"event":"ClubNotInterestedPopup"
+							,"targets":["ClubNotInterestedPopup"]
+						}
+						,{
+							"event":"NotEnoughMoneyPopup"
+							,"targets":["NotEnoughMoneyPopup"]
+						}
+						,{
+							"event":"ClubReleaseClausePopup"
+							,"targets":["ClubReleaseClausePopup"]
+						}
+						,{
+							"event":"StartPlayerNegotiationScene"
+							,"targets":["NegotiationSceneFlowPlayerUserBuyer"]
+						}
+						,{
+							"event":"StartClubUserBuyerNegotiationScene"
+							,"targets":["NegotiationSceneFlowClubUserBuyer"]
+						}
+						,{
+							"event":"StartClubUserLoanInNegotiationScene"
+							,"targets":["NegotiationSceneFlowClubUserLoanIn"]
+						}
+						,{
+							"event":"StartClubUserLoanOutNegotiationScene"
+							,"targets":["NegotiationSceneFlowClubUserLoanOut"]
+						}
+						,{
+							"event":"StartClubUserSellerNegotiationScene"
+							,"targets":["NegotiationSceneFlowClubUserSeller"]
+						}
+						,{
+							"event":"GoToSearchPlayers"
+							,"targets":["PlayerSearchFlow"]
+						}
+						,{
+							"event":"GoToGTNHub"
+							,"targets":["GTNHubFlow"]
+						}
+					]
+				}
+				,{
+					"name":"DelegateNegotiationOverlay"
+					,"onEnter":
+					[
+						["loadView", ["overlay", "game/screens/career/DelegateNegotiationPopup"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["overlay", "game/screens/career/DelegateNegotiationPopup"]]
+						,["sendAction",["notify", "ActionHandleComplete"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupOk"
+							,"targets":["Idle"]
+						}
+						,{
+							"event":"popupCancel"
+							,"let":{ "direction":"back" }
+							,"targets":["Idle"]
+						}
+					]
+				}
+				,{
+					"name":"ClubNotInterestedPopup"
+					,"onExit":
+					[
+						["sendAction",["notify", "ActionHandleComplete"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupOk"
+							,"targets":["Idle"]
+						}
+					]
+				}
+				,{
+					"name":"NotEnoughMoneyPopup"
+					,"onExit":
+					[
+						["sendAction",["notify", "ActionHandleComplete"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupOk"
+							,"targets":["Idle"]
+						}
+					]
+				}
+				,{
+					"name":"ClubReleaseClausePopup"
+					,"transitions":
+					[
+						{
+							/*user accepts release clause, the action handling is done*/
+							"event":"popupYes"
+							,"actions":[ ["sendAction",["notify", "ActionHandleComplete"]] ]
+							,"targets":["Idle"]
+						}
+						,{
+							/*use selects to go into the scene, the action handling is not yet done*/
+							"event":"popupNo"
+							,"targets":["NegotiationSceneFlowClubUserBuyer"]
+						}
+						,{
+							/*user cancels the popup, the action handling is done*/
+							"event":"popupCancel"
+							,"actions":[ ["sendAction",["notify", "ActionHandleComplete"]] ]
+							,"targets":["Idle"]
+						}
+					]
+				}
+				/*THIS STATE IS FOR TESTING ONLY, IT SHOULD BE REMOVED WHEN WE'RE DONE WITH IT*/
+				,{
+					"name":"PlayerNegotiationScene"
+					,"onEnter":
+					[
+						["loadViewModel", ["PlayerNegotiationViewModel", ""]]
+						,["loadView", ["screen", "game/screens/career/PlayerNegotiation"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/career/PlayerNegotiation"]]
+						,["unloadViewModel", ["PlayerNegotiationViewModel", ""]]
+						,["sendAction",["notify", "NegotiationSceneFinished"]]
+						,["sendAction",["notify", "ActionHandleComplete"]]
+						,["loadView",["screen", "game/screens/career/transfers/TransferHub"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"PlayerNegotiationFinished"
+							,"targets":["Idle"]
+						}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["Back"] 
+				}
+			]
+		}
+		,{
+			"name" : "NegotiationSceneFlowExternalPlayerUserBuyer"
+			,"let":{"sceneType":"playeruserbuyer"}
+			,"states":
+			[
+				{
+					"name":"NegotiationSceneFlowPlayerUserBuyer"
+					,"type":"external"
+					,"file":"/careerMode/negotiationSceneFlow.nav"
+					,"outputs":
+					{
+						"back":"Idle"
+					}
+				}
+			]
+		}
+		,{
+			"name" : "NegotiationSceneFlowExternalClubUserBuyer"
+			,"let":{"sceneType":"clubuserbuyer"}
+			,"states":
+			[
+				{
+					"name":"NegotiationSceneFlowClubUserBuyer"
+					,"type":"external"
+					,"file":"/careerMode/negotiationSceneFlow.nav"
+					,"outputs":
+					{
+						"back":"Idle"
+					}
+				}
+			]
+		}
+		,{
+			"name" : "NegotiationSceneFlowExternalClubUserLoanIn"
+			,"let":{"sceneType":"clubuserloanin"}
+			,"states":
+			[
+				{
+					"name":"NegotiationSceneFlowClubUserLoanIn"
+					,"type":"external"
+					,"file":"/careerMode/negotiationSceneFlow.nav"
+					,"outputs":
+					{
+						"back":"Idle"
+					}
+				}
+			]
+		}
+		,{
+			"name" : "NegotiationSceneFlowExternalClubUserLoanOut"
+			,"let":{"sceneType":"clubuserloanout"}
+			,"states":
+			[
+				{
+					"name":"NegotiationSceneFlowClubUserLoanOut"
+					,"type":"external"
+					,"file":"/careerMode/negotiationSceneFlow.nav"
+					,"outputs":
+					{
+						"back":"Idle"
+					}
+				}
+			]
+		}
+		,{
+			"name" : "NegotiationSceneFlowExternalClubUserSeller"
+			,"let":{"sceneType":"clubuserseller"}
+			,"states":
+			[
+				{
+					"name":"NegotiationSceneFlowClubUserSeller"
+					,"type":"external"
+					,"file":"/careerMode/negotiationSceneFlow.nav"
+					,"outputs":
+					{
+						"back":"Idle"
+					}
+				}
+			]
+		}
+		,{
+			"name" : "PlayerSearchFlowExternal"
+			,"let":{"FromContext":"TransferHub"}
+			,"states":
+			[
+				{
+					"name":"PlayerSearchFlow"
+					,"type":"external"
+					,"file":"/careerMode/playerSearchFlow.nav"
+					,"outputs":
+					{
+						"Back":"Idle"
+					}
+				}
+			]
+		}
+		,{
+			"name" : "SquadHubFlowExternal"
+			,"states":
+			[
+				{
+					"name":"SquadHubFlow"
+					,"type":"external"
+					,"file":"/careerMode/squadHubFlow.nav"
+					,"outputs":
+					{
+						"Back":"Idle"
+					}
+				}
+			]
+		}
+		,{
+			"name" : "GTNHubFlowExternal"
+			,"let":{"FromContext":"TransferHub"}
+			,"states":
+			[
+				{
+					"name":"GTNHubFlow"
+					,"type":"external"
+					,"file":"/careerMode/gtnHubFlow.nav"
+					,"outputs":
+					{
+						"Back":"Idle"
+					}
+				}
+			]
+		}
+	]
+}

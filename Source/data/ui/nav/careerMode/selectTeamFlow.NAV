@@ -1,0 +1,56 @@
+{
+	"name":"SelectTeamFlow"
+	,"initial": { "targets":["SelectTeam"] }
+	,"states":
+	[
+		{
+			"name":"SelectTeam"
+			,"onEnter":
+			[
+				["loadScreenController", ["SelectTeam"]]
+				,["loadView", ["screen", "game/screens/career/SelectTeam"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/SelectTeam"]]
+				,["unloadScreenController", ["SelectTeam"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Back"
+					,"targets":["Back"] 
+					,"actions":[ ["executeCMAction",["ClearUserTeamData"]] ]
+				}
+				,{
+					"event":"Nation"
+					,"actions":[ ["executeCMAction",["SetUserNationData"]] ]
+				}
+				,{
+					"event":"League"
+					,"actions":[ ["executeCMAction",["SetUserLeagueData"]] ]
+				}
+				,{
+					"event":"Team"
+					,"actions":[ ["executeCMAction",["SetUserTeamData"]] ]
+				}
+				,{
+					"event":"ShowSwapTeamsData"
+					,"actions":[ ["executeCMAction",["StartSwapTeams"]] ]
+				}
+				,{
+					"event":"SwapTeams"
+					,"actions":[ ["executeCMAction",["SwapUserTeamData"]] ]
+				}
+				,{
+					"event":"SwapTeamsBack"
+					,"actions":[ ["executeCMAction",["SwapTeamsBack"]] ]
+				}
+				,{
+					"event":"Complete"
+					,"targets":["Advance"]
+				}
+			]
+		}	
+	]
+}

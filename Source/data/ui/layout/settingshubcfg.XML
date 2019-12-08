@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="SettingsHub" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" X="109" Y="95" WIDTH="1031" DATAPROVIDERID="FLUX_HEADER_DP" />
+  </components>
+  <buttons>
+    <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+    <button ID="OPTION_TOP" HINT="RestoreDefaults" ACTION="ACTION_BUTTON_Y" />
+  </buttons>
+  <panel_set>
+    <panel NAME="SETTING_CATEGORY_0" LABEL="MM_ACCESSIBILITY_SETTINGS" IS_TAB="FALSE">
+      <layout NAME="SETTINGS_LIST" X="109" Y="288">
+        <tile NAME="LIST" X="0" Y="0" />
+        <tile NAME="DETAILS" X="856" Y="0" />
+      </layout>
+    </panel>
+    <panel NAME="FAKE_SETTINGS_PANEL" LABEL="MM_CUSTOMISE_SETTINGS" IS_TAB="FALSE"/>
+  </panel_set>
+  <panel NAME="SETTING_CATEGORY_0">
+    <tile NAME="LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DATAPROVIDERID="GridControlDP">
+      <properties WIDTH="846" HEIGHT="612" />
+	  
+	  <data ID="background" TYPE="panel" PARAM="STYLE_ROWBAND" WIDTH="846" HEIGHT="100" HLALPHA="0" UHLALPHA="100" />
+      <data ID="icon" TYPE="asset" PATH="settingsIcn" FORMAT="||center||||middle" KEEP_SCALE="TRUE" WIDTH="60" HEIGHT="60" Y="15" TRANSLATE="FALSE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="10"/>
+	  </data>
+      <data ID="name" TYPE="text" FORMAT="FONT_TILE_SM|COLOR_TEXT_SELECTED|leading|COLOR_TEXT_UNHIGHLIGHT||FONT_TILE_TSMM|middle" WIDTH="650" HEIGHT="101" TRANSLATE="FALSE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+		<align TARGET="icon" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="75"/>
+	  </data>
+      <data ID="checkbox" TYPE="checkbox" Y="25" WIDTH="36" HEIGHT="36" VISIBLE="FALSE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-27"/>
+	  </data>
+      <data ID="toggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" WIDTH="375" HEIGHT="50" TRANSLATE="FALSE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="5" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-25"/>
+      </data>
+		
+	  <data ID="sliderRefTarget" TYPE="null" X="20" WIDTH="710" HEIGHT="100"/>
+		
+      <data ID="slider" TYPE="component" PATH="game/components/FluxComponents/FluxSlider.swf" ALIGN="leading" WIDTH="375" HEIGHT="20" TRANSLATE="FALSE" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE||COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="-8" />
+        <align TARGET="sliderRefTarget" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" />
+      </data>
+    </tile>
+    <tile NAME="DETAILS" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DATAPROVIDERID="SCREEN_CONFIG_DP">
+      <properties WIDTH="812" HEIGHT="612" />
+      <data ID="name" TYPE="text" FORMAT="FONT_BOLD_FHD||leading|COLOR_TEXT_LABEL" WIDTH="772" HEIGHT="578" X="20" Y="30" TRANSLATE="FALSE" />
+      <data ID="description" TYPE="text" FORMAT="FONT_MEDIUM_DESCRIPTION||leading|COLOR_TEXT_LABEL" WIDTH="772" HEIGHT="126" X="20" REL_TARGET="name" REL_Y="25" TRANSLATE="FALSE" />
+      <data ID="image" TYPE="asset" PATH="settingsImg" FORMAT="||center||||top" KEEP_SCALE="TRUE" WIDTH="821" HEIGHT="367" Y="220" REL_TARGET="description" />
+    </tile>
+  </panel>
+  <panel NAME="FAKE_SETTINGS_PANEL"/>
+ </root>

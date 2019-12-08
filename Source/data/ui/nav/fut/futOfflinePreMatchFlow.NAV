@@ -1,0 +1,220 @@
+{
+	"name":"futOfflinePreMatch"
+	,"onEnter":
+	[
+		["loadViewModel",["KitSelectViewModel"]]
+		,["loadViewModel",["futofflineselectteamviewmodel"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel",["futofflineselectteamviewmodel"]]
+		,["unloadViewModel",["KitSelectViewModel"]]
+	]
+	,"initial":
+	{
+		"targets":["InitSelectTeam"]
+	}
+	,"states":
+	[
+		{
+			"name":"InitSelectTeam"
+			,"states":
+			[
+				{
+					"name":"AdvanceSelectTeam"
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["futSelectTeam"] }
+					]
+				}
+				,{
+					"name":"AdvanceSelectKit"
+					,"onEnter":
+					[
+						["sendAction", ["useSavedMatchData"]]
+						,["sendAction", ["useSavedMatchKits"]]
+					]
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["kitConfig"] }
+					]
+				}
+			]
+			,"transitions":
+			[					
+				{
+					"event":"NoFriendsErr"
+					,"targets":["showFriendsErrorPopup"]
+				}
+				,{
+					"event":"NoValidSquadErr"
+					,"targets":["showNoValidSquadErrorPopup"]
+				}
+				,{
+					"event":"SelectTeamServerErr"
+					,"targets":["showErrorPopup"]
+				}
+			]
+		}
+		,{
+			"name":"futSelectTeam"	
+			,"onEnter":
+			[
+				["loadViewModel",["TeamSetupViewModel"]]
+				,["loadView",["screen", "external/ion_fut/screens/futSelectTeam"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "external/ion_fut/screens/futSelectTeam"]]
+				,["unloadViewModel",["TeamSetupViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"teamConfigWrapper"
+					,"onEnter":
+					[
+						["sendAction", ["evt_team_setup_state", ".NavTeamSetupState.STATE_TEAM"]]
+						,["sendAction",["evt_hub_update_event", ".NavFIFAHubBackgroundType.FUT_MODE_BACKGROUND"]]
+					]
+					,"states":
+					[
+						{
+							"name":"teamConfig"	
+							,"transitions":
+							[
+								{	"event":"advance", "targets":["kitConfig"] }
+								,{	"event":"back", "targets":["back"], "let":{ "direction":"back" } }
+								,{	"event":"onServerError", "targets":["onServerError"] }
+								,{	"event":"GotoViewSquad", "targets":["futViewSquad"] }
+								,{  "event":"SelectTeamServerErr", "targets":["showErrorPopup"]	}
+								,{	"event":"OpenUserActionsOverlay", "targets":["UserActionsOverlayTeamSelect"] }
+							]
+						}
+						,{
+							"let":{"AbuseReportingViewModel":"futabusereportingviewmodel"}
+							,"name":"UserActionsOverlayTeamSelect"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/online/abuseReportFlow.nav"
+									,"outputs":
+									{
+										"out_back":"teamConfig"
+									}
+								}
+							]
+						}
+						,{
+							"name":"futViewSquad"	
+							,"onEnter":
+							[
+								["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.FUT_SQUAD_BACKGROUND"]]
+								,["loadView", ["overlay", "external/ion_fut/screens/PAFPractice/futViewSquads", "", "hideScreen"]]
+							]
+							,"onExit":
+							[
+								["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.FUT_MODE_BACKGROUND"]]
+								,["unloadView", ["overlay", "external/ion_fut/screens/PAFPractice/futViewSquads"]]
+							]
+							,"transitions":
+							[
+								{	"event":"back", "targets":["teamConfig"], "let":{ "direction":"back" } }
+								,{	"event":"onServerError", "targets":["onServerError"] }
+							]
+						}
+					]
+				}
+				,{
+					"name":"kitConfig"
+					,"onEnter":
+					[
+						["sendAction", ["evt_team_setup_state", ".NavTeamSetupState.STATE_KIT"]]
+						,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MATCH_FLOW_PLAYERS_BACKGROUND"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.FUT_MODE_BACKGROUND"]]
+					]	
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["WaitForKits"] }
+						,{ "event":"back", "targets":["teamConfig"], "let":{ "direction":"back" } }
+						,{  "event":"SelectTeamServerErr", "targets":["showErrorPopup"]	}
+					]
+				}
+				,{
+					"name":"WaitForKits"
+					,"onEnter":
+					[
+						["sendAction",["condition", "WaitForKitsLoad"]]
+					]
+					,"onExit":[]
+					,"transitions":
+					[
+						{"event":"KitsLoadComplete", "targets":["advance"]}
+					]
+				}
+			]
+			,"transitions":
+			[
+				{ "event":"evt_notify_controller_disconnect", "targets":["back"] }
+			]
+		}
+		,{
+			"name":"showErrorPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","OfflineSelectTeamError", "FUT_NON_CRITICAL_ERROR|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "OfflineSelectTeamError"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+			]
+		}
+		,{
+			"name":"showFriendsErrorPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","NoFriendsError", "FUT_NO_FRIENDS_WITH_CLUB|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "NoFriendsError"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+			]
+		}
+		,{
+			"name":"showNoValidSquadErrorPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","NoValidSquadError", "FUT_NO_VALID_SQUADS|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "NoValidSquadError"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+			]
+		}
+	]
+}

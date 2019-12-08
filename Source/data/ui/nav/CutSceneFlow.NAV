@@ -1,0 +1,39 @@
+{
+	"name":"CutSceneFlow"
+	,"initial": 
+	{ 
+		"targets":["StartCutScene"]
+	}
+	,"states":
+	[
+		{
+			"name":"StartCutScene"
+			,"onEnter":
+			[	
+				["sendAction", ["cutScenePlay", ".cutSceneName", ".cutSceneSubLevel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"gmCutSceneStarted"
+					,"targets":["PlayCutScene"]
+				}
+			]
+		}
+		,{
+			"name":"PlayCutScene"
+			,"transitions":
+			[
+				{
+					"event":"gmCutSceneEnded"
+					,"targets":["BackFromCutScene"]
+				}
+				,{ 
+					"event":"evt_input_event" 
+					,"cond":["==",".skipingAllowed",true]
+					,"actions":[ ["sendAction", ["cutSceneCommand", "gmStopCutScene"]] ]
+				} 
+			]
+		}
+	]
+}

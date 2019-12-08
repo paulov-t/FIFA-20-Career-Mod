@@ -1,0 +1,68 @@
+{
+	"name":"demoPostIntroFlow"
+	,"onEnter":
+	[
+		["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]]
+		,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]]
+		,["sendAction", ["evt_hub_show_event"]]
+		,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MAIN_HUB_BACKGROUND"]]
+	]
+	,"initial":
+	{
+		"targets":["stadiumLoad"]
+	}
+	,"states":
+	[
+		{
+			"type":"external"
+			,"file":"/reloadfestadiumflow.nav"
+			,"inputs":
+			{
+				"stadiumLoad":"WaitForLoad"
+			}
+			,"outputs":
+			{
+				"ReloadReady":"kioskCheck"
+				,"LoadStarted":"kioskCheck"
+			}
+		}
+		,{
+			"name":"kioskCheck"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","cond":["==",".DEMO_KIOSK",true],"targets":["out_advance"]}
+				,{"event":"advance","cond":["==",".FIFA_DEMO",true],"targets":["signIn"]}
+			]
+		}
+		,{
+			"transitions":
+			[
+				{
+					"event":"returnFromOnlineModeWaitComplete"
+					,"actions":[["sendScreenEvent", ["CancelLoginToEA"]]]
+					,"targets":["signIn"]
+				}
+			]
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/online/onlineLoginFlow.nav"
+					,"inputs":
+					{
+						"signIn":"in_startSilentSignIn"
+					}
+					,"outputs":
+					{
+						"loginSuccess":"out_advance"
+						,"loginFail":"out_advance"
+					}
+				}
+			]
+		}
+	]
+}

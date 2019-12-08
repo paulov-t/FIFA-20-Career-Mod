@@ -1,0 +1,291 @@
+{
+	"name":"futOpenPackAnim"
+	,"initial":
+	{
+		"targets":["PreOpenPackAnim"]
+	}
+	,"onEnter":
+	[
+		["if", [["==", ".isFUTLoaded", "true"]
+		,[
+			["loadViewModel",["futopenpackanimviewmodel"]]	
+		]
+		,[ 
+			/* Do nothing */
+		]]]
+	]
+	,"onExit":
+	[
+		["if", [["==", ".isFUTLoaded", "true"]
+		,[
+			["unloadViewModel",["futopenpackanimviewmodel"]]
+		]
+		,[ 
+			/* Do nothing */
+		]]]
+		
+	]
+	,"transitions":
+	[
+		{
+			"event":"gmCutScenesSublevelUnloaded"
+			,"targets":["back"]
+		}
+	]
+	,"states":
+	[
+		{
+			"name":"PreOpenPackAnim"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["ResetFELoadingIcon"]]
+				,["sendScreenEvent", ["RequestStartOpenPack"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"success"
+					,"targets":["OpenPackAnimation"]
+				}
+				,{
+					"event":"fail"
+					,"targets":["back"]
+				}
+			]
+		}
+		,{
+			"name":"OpenPackAnim_Wrapper"
+			,"onEnter":
+			[
+				["sendAction", ["futWidgetHide"]] /* the fut widget is set to show in the NotifyScreenChange function */
+				,["loadViewModel",["CutSceneViewModel"]]
+				,["loadView",["screen", "external/ion_fut/components/Animation/OpenPackAnimFB", "", "scene"]]  
+				,["sendAction", ["loadCutScenesSubLevel", "LoadFUTPackOpenAnimation"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["unloadCutScenesSubLevel", "UnloadFUTPackOpenAnimation"]]
+				,["unloadView",["screen", "external/ion_fut/components/Animation/OpenPackAnimFB", "", "scene"]]  
+				,["unloadViewModel",["CutSceneViewModel"]]
+			]
+			,"transitions":
+			[	
+				{
+					"event":"SkipCutScene"
+					,"actions":[ ["sendAction", ["cutSceneCommand", "gmStopCutScene"]] ]
+				}
+				,{
+					"event":"RevealItemNation"
+					,"actions":[ ["sendScreenEvent", ["RevealItemNation"]] ]
+				}
+				,{
+					"event":"RevealItemCrest"
+					,"actions":[ ["sendScreenEvent", ["RevealItemCrest"]] ]
+				}
+				,{
+					"event":"RevealItemOverallAndPosition"
+					,"actions":[ ["sendScreenEvent", ["RevealItemOverallAndPosition"]] ]
+				}
+				,{
+					"event":"RevealItemOverall"
+					,"actions":[ ["sendScreenEvent", ["RevealItemOverall"]] ]
+				}
+				,{
+					"event":"RevealItemPosition"
+					,"actions":[ ["sendScreenEvent", ["RevealItemPosition"]] ]
+				}
+				,{
+					"event":"RevealItemPortrait"
+					,"actions":[ ["sendScreenEvent", ["RevealItemPortrait"]] ]
+				}
+				,{
+					"event":"RevealItemName"
+					,"actions":[ ["sendScreenEvent", ["RevealItemName"]] ]
+				}
+				,{
+					"event":"RevealItemAttributes"
+					,"actions":[ ["sendScreenEvent", ["RevealItemAttributes"]] ]
+				}
+				,{
+					"event":"RevealItemAllData"
+					,"actions":[ ["sendScreenEvent", ["RevealItemAllData"]] ]
+				}
+				,{
+					"event":"ResetItemData"
+					,"actions":[ ["sendScreenEvent", ["ResetItemData"]] ]
+				}
+				,{
+					"event":"AnimationStarted"
+					,"actions":[ ["sendScreenEvent", ["AnimationStarted"]] ]
+				}
+				,{
+					"event":"AnimationAboutToEnd"
+					,"actions":[ ["sendScreenEvent", ["AnimationAboutToEnd"]] ]
+				}
+				,{
+					"event":"VideoWallNation"
+					,"actions":[ ["sendScreenEvent", ["VideoWallNation"]] ]
+				}
+				,{
+					"event":"VideoWallPosition"
+					,"actions":[ ["sendScreenEvent", ["VideoWallPosition"]] ]
+				}
+				,{
+					"event":"VideoWallCrest"
+					,"actions":[ ["sendScreenEvent", ["VideoWallCrest"]] ]
+				}
+				,{
+					"event":"VideoWallName"
+					,"actions":[ ["sendScreenEvent", ["VideoWallName"]] ]
+				}
+				,{
+					"event":"VideoWallOverall"
+					,"actions":[ ["sendScreenEvent", ["VideoWallOverall"]] ]
+				}
+				,{
+					"event":"VideoWallAllData"
+					,"actions":[ ["sendScreenEvent", ["VideoWallAllData"]] ]
+				}
+				,{
+					"event":"RevealDescriptionTiming"
+					,"actions":[ ["sendScreenEvent", ["RevealDescriptionTiming"]] ]
+				}
+				,{
+					"event":"RevealTunnelWall"
+					,"actions":[ ["sendScreenEvent", ["RevealTunnelWall"]] ]
+				}
+				,{
+					"event":"RevealTunnelNation"
+					,"actions":[ ["sendScreenEvent", ["RevealTunnelNation"]] ]
+				}
+				,{
+					"event":"RevealTunnelNationFade"
+					,"actions":[ ["sendScreenEvent", ["RevealTunnelNationFade"]] ]
+				}
+				,{
+					"event":"RevealTunnelPosition"
+					,"actions":[ ["sendScreenEvent", ["RevealTunnelPosition"]] ]
+				}
+				,{
+					"event":"RevealTunnelPositionFade"
+					,"actions":[ ["sendScreenEvent", ["RevealTunnelPositionFade"]] ]
+				}
+				,{
+					"event":"RevealTunnelCrest"
+					,"actions":[ ["sendScreenEvent", ["RevealTunnelCrest"]] ]
+				}
+				,{
+					"event":"RevealTunnelCrestFade"
+					,"actions":[ ["sendScreenEvent", ["RevealTunnelCrestFade"]] ]
+				}
+				,{
+					"event":"RevealStage"
+					,"actions":[ ["sendScreenEvent", ["RevealStage"]] ]
+				}
+				,{
+					"event":"ShowSkipButton"
+					,"actions":[ ["sendScreenEvent", ["ShowSkipButton"]] ]
+				}				
+			]
+			,"states":
+			[
+				{
+					"name":"OpenPackAnimation"
+					,"onEnter":
+					[
+						["sendAction", ["loadCutScenesSubLevel", "LoadFUTPackOpenAnimation"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["unloadCutScenesSubLevel", "UnloadFUTPackOpenAnimation"]]
+					]
+					,"let":
+					{ 
+						"cutSceneName":"futStartOpenPack"
+						,"skipingAllowed":false
+					}
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/CutSceneFlow.nav"
+							,"outputs": 
+							{ 
+								"BackFromCutScene":"WaitingForUnload"
+							}
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"GotoFUTLogout"
+							/* Disconnect: Hold on "GotoFUTLogout", stop the scene, wait until cut scene ended */
+							,"actions":[ ["sendAction", ["cutSceneCommand", "gmStopCutScene"]] ]
+							,"targets":["WaitingDuringLogout"]
+						}
+						,{
+							"event":"goToInviteFlow"
+							/* Invite: Hold on "goToInviteFlow", stop the scene, wait until cut scene ended */
+							,"actions":[ ["sendAction", ["cutSceneCommand", "gmStopCutScene"]] ]
+							,"targets":["WaitingDuringInviteAccepted"]
+						}
+					]
+				}
+				,{
+					"name":"WaitingForUnload"
+					/* The "gmCutScenesSublevelUnloaded" transition event at the top will get us out of here */
+				}
+				,{
+					"name":"WaitingDuringLogout"
+					,"transitions":	
+					[
+						{
+							"event":"gmCutSceneEnded"
+							,"actions":[ ["sendAction", ["unloadCutScenesSubLevel", "UnloadFUTPackOpenAnimation"]] ]
+							,"targets":["WaitingSublevelUnloadDuringLogout"]					
+						}
+					]
+				}
+				,{
+					/* Disconnect: Send "GotoFUTLogout" until pack opening sublevel is unloaded. 
+					Since pack opening has its own detached sublevel from FUT sublevel, have to unload pack opening sublevel before unload FUT sublevel*/
+					"name":"WaitingSublevelUnloadDuringLogout"
+					,"transitions":	
+					[
+						{
+							"event":"gmCutScenesSublevelUnloaded"							
+							,"actions":[ ["invoke", ["GotoFUTLogout"]] ]		
+						}
+					]
+				}
+				,{
+					"name":"WaitingDuringInviteAccepted"
+					,"transitions":	
+					[
+						{
+							"event":"gmCutSceneEnded"
+							,"actions":[ ["sendAction", ["unloadCutScenesSubLevel", "UnloadFUTPackOpenAnimation"]] ]
+							,"targets":["WaitingSublevelUnloadDuringInvite"]
+						}												
+					]
+				}
+				,{
+					/* Invite: Send "goToInviteFlow" until pack opening sublevel is unloaded. 
+					Since pack opening has its own detached sublevel from FUT sublevel, have to unload pack opening sublevel before unload FUT sublevel*/
+					"name":"WaitingSublevelUnloadDuringInvite"
+					,"transitions":	
+					[
+						{
+							"event":"gmCutScenesSublevelUnloaded"							
+							,"actions":[ ["invoke", ["goToInviteFlow"]] ]
+						}
+						,{
+							"event":"SkipInviteDuringOnboardingPackOpening"
+							,"actions":[ ["sendAction", ["condition", "openPackAnimComplete"]] ] /* Using FUTLoginViewModel */
+						}
+					]
+				}
+			]
+		}
+	]
+}

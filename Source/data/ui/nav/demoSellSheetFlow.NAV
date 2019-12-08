@@ -1,0 +1,101 @@
+{
+	"name":"demoSellSheetFlow"
+	,"onEnter":
+	[
+		["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]]
+		,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]]
+		,["sendAction", ["evt_hub_show_event"]]
+	]
+	,"onExit":
+	[
+		["sendAction", ["condition", "cameraBlendCheckCancel"] ]
+		,["unloadView", ["screen", "game/screens/demo/DemoSellsheet"]]
+	]
+	,"initial":
+	{
+		"targets":["gameplay"]
+	}
+	,"states":
+	[	
+		{
+			"name":"gameplay"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/demo/DemoSellsheet","GAMEPLAY|0|118|2|gameplay||||||-143"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["gameplay2"]}
+			]
+		}
+		,{
+			"name":"gameplay2"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/demo/DemoSellsheet","GAMEPLAY2|0|118|2|gameplay2|310|0||||-143"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","cond":["==",".SKIP_FUT_SELLSHEET",true],"targets":["career"]}
+				,{"event":"advance","targets":["fut"]}
+			]
+		}
+		,{
+			"name":"fut"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/demo/DemoSellsheet","FUT|2|118|2|fut|758|86||||-143"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["career"]}
+			]
+		}
+		,{
+			"name":"career"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/demo/DemoSellsheet","CAREER|0|118|1|career|310|0||||-143"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["volta"]}
+			]
+		}
+		,{
+			"name":"volta"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/demo/DemoSellsheet","VOLTA|1|118|1|volta|0|0||||-143"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","cond":["==",".DEMO_KIOSK",true],"targets":["kioskvolta2"]}
+				,{"event":"advance","targets":["volta2"]}
+			]
+		}
+		,{
+			"name":"volta2"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/demo/DemoSellsheet","VOLTA2|1|118|1|volta2|0|0|||Grid|-143"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","actions":[["sendAction",["logTelemetry", "demoPurchaseSelectedEOM"]]],"targets":["out_advance"]}
+				,{"event":"quit","targets":["out_quit"]}
+			]
+		}
+		,{
+			"name":"kioskvolta2"
+			,"onEnter":
+			[
+				["loadView", ["screen", "game/screens/demo/DemoSellsheet","VOLTA2|1|118|1|volta2|0|0||||-143"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["out_quit"]}
+			]
+		}
+	]
+}

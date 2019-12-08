@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2017 15:27:39" VERSION="2">
+  <hub_settings NAME="PAPSelectionHub">
+	<artasset_paths DEFAULT_TILES_ASSETTYPE="papSelection" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="PAP_SELECTION_PANEL" LABEL="CM_Breadcrumb_Player_Type" IS_TAB="FALSE" DEFAULT_LAYOUT="PAP_SELECTION_BASE_LAYOUT">
+      <buttons>
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="Back" />
+      </buttons>
+      <layout NAME="PAP_SELECTION_BASE_LAYOUT" >
+        <tile NAME="CREATE_PRO_TILE_BIG" X="107" Y="265" />
+        <tile NAME="PLAY_AS_REAL_PLAYER_TILE_BIG" X="963" Y="265" />
+      </layout>
+      <layout NAME="PAP_SELECTION_WITH_ALEX_LAYOUT" >
+        <tile NAME="CREATE_PRO_TILE_SMALL" X="107" Y="265" />
+        <tile NAME="PLAY_AS_REAL_PLAYER_TILE_SMALL" X="678" Y="265" />
+		<tile NAME="PLAY_AS_ALEX_SMALL" X="1248" Y="265" />
+      </layout>
+	  <layout NAME="PAP_SELECTION_WITH_DANNY_LAYOUT" >
+        <tile NAME="CREATE_PRO_TILE_SMALL" X="107" Y="265" />
+        <tile NAME="PLAY_AS_REAL_PLAYER_TILE_SMALL" X="678" Y="265" />
+		<tile NAME="PLAY_AS_DANNY_SMALL" X="1248" Y="265" />
+      </layout>
+    </panel>
+    <panel NAME="PAP_SELECTION_PANEL_DUMMY" LABEL="CM_Breadcrumb_New_Career" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="PAP_SELECTION_PANEL">
+    <tile NAME="CREATE_PRO_TILE_BIG" TYPE="TILE" DESTINATION="CreateAvatarVirtualProCheckProfile" BACKGROUND="VirtualPro_2Tiles" DECORATORS_RANGE="4">
+      <properties WIDTH="846" HEIGHT="632" />
+        <data ID="TITLE" TYPE="title" PARAM="CM_INTRO_Player_Type_1"/>
+        <data ID="DESCRIPTION" TYPE="text" PARAM="CM_INTRO_Player_Type_1_Descr" WIDTH="350" HEIGHT="450" X="10" Y="170"/>
+    </tile>
+    <tile NAME="PLAY_AS_REAL_PLAYER_TILE_BIG" TYPE="TILE" DESTINATION="PlayReal" BACKGROUND="RealPlayer_2Tiles" DECORATORS_RANGE="1">
+      <properties WIDTH="846" HEIGHT="632" />
+      <data ID="TITLE" TYPE="title" PARAM="CM_INTRO_Player_Type_2"/>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CM_INTRO_Player_Type_2_Descr" WIDTH="350" HEIGHT="450" X="10" Y="170"/>
+    </tile>
+	<!-- variants for 3 tiles: W/H=555/620 -->
+    <tile NAME="CREATE_PRO_TILE_SMALL" TYPE="TILE" DESTINATION="CreateAvatarVirtualProCheckProfile" BACKGROUND="VirtualPro_3Tiles" DECORATORS_RANGE="4">
+      <properties WIDTH="555" HEIGHT="620" />
+      <data ID="TITLE" TYPE="title" PARAM="CM_INTRO_Player_Type_1"/>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CM_INTRO_Player_Type_1_Descr" WIDTH="300" HEIGHT="450" X="10" Y="170"/>
+    </tile>
+    <tile NAME="PLAY_AS_REAL_PLAYER_TILE_SMALL" TYPE="TILE" DESTINATION="PlayReal" BACKGROUND="RealPlayer_3Tiles" DECORATORS_RANGE="1">
+      <properties WIDTH="555" HEIGHT="620" />
+      <data ID="TITLE" TYPE="title" PARAM="CM_INTRO_Player_Type_2"/>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CM_INTRO_Player_Type_2_Descr" WIDTH="350" HEIGHT="450" X="10" Y="170"/>
+    </tile>
+	<tile NAME="PLAY_AS_ALEX_SMALL" TYPE="TILE" DESTINATION="PlayAsAlex" BACKGROUND="Alex_3Tiles" DECORATORS_RANGE="4">
+      <properties WIDTH="555" HEIGHT="620" />
+      <data ID="TITLE" TYPE="title" PARAM="CM_INTRO_Player_Type_3"/>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CM_INTRO_Player_Type_3_Descr" WIDTH="350" HEIGHT="450" X="10" Y="170"/>
+    </tile>
+	<tile NAME="PLAY_AS_DANNY_SMALL" TYPE="TILE" DESTINATION="PlayAsDanny" BACKGROUND="Danny_3Tiles" DECORATORS_RANGE="4">
+      <properties WIDTH="555" HEIGHT="620" />
+      <data ID="TITLE" TYPE="title" PARAM="CM_INTRO_Player_Type_4"/>
+      <data ID="DESCRIPTION" TYPE="text" PARAM="CM_INTRO_Player_Type_4_Descr" WIDTH="350" HEIGHT="450" X="10" Y="170"/>
+    </tile>
+  </panel>
+</root>

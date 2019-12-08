@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="2/12/2014 14:23:25" VERSION="2">
+  <hub_settings NAME="OnlineClubsViewVProHub">
+    <artasset_paths DEFAULT_TAB_ICONPATH="artAssets/MainMenu/GameHubTab/GameHubTab_%s.swf" DEFAULT_TILES_ASSETTYPE="clubHub" />	
+    <helper_class_name CLASSNAME="game.fluxHelpers.ProClubsViewVproFluxHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="ONL_CLUB_MYPRO_PANEL" LABEL="TXT_SCOUT_PRO" IS_TAB="TRUE" />
+  </panel_set>
+  <panel NAME="ONL_CLUB_MYPRO_PANEL">
+    <tile NAME="MY_VPRO_TOP_OPTION" TYPE="TILE" DESTINATION="optionTop">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
+	  <data ID="title" PARAM="txt_No_Action" TYPE="title" ALIGN="leading" FORMAT="HS" />
+    </tile>
+    <tile NAME="MY_VPRO_DISABLED" TYPE="TILE">
+      <properties WIDTH="846" HEIGHT="418" X="109" Y="492" />
+      <data ID="txtInfoNotAvailable" TYPE="title" ALIGN="leading" PARAM="TXT_INFO_NOT_AVAILABLE" FORMAT="HS" />
+    </tile>
+    <tile NAME="MY_VPRO_OPTION_LEFT" TYPE="TILE" DESTINATION="optionLeft">
+      <properties WIDTH="418" HEIGHT="204" X="109" Y="278" />
+      <data ID="title" PARAM="txt_Promote" TYPE="title" ALIGN="leading" FORMAT="HS" />
+    </tile>
+    <tile NAME="MY_VPRO_OPTION_RIGHT" TYPE="TILE" DESTINATION="optionRight">
+      <properties WIDTH="418" HEIGHT="204" X="537" Y="278" />
+      <data ID="title" PARAM="txt_Remove" TYPE="title" ALIGN="leading" FORMAT="HS" />
+    </tile>    
+    <tile NAME="MY_VPRO_PLAYER" TYPE="TILE" DESTINATION="player">
+      <properties WIDTH="419" HEIGHT="632" X="965" Y="278" />
+	  <data ID="title" TYPE="title" FORMAT="HL" WIDTH="324" HEIGHT="75" />
+      <data ID="customRenderObject" TYPE="component" PATH="game/components/FluxComponents/online/CustomRenderObject.swf" WIDTH="395" HEIGHT="48" X="0" Y="0" />
+      <data ID="ringChart" TYPE="component" PATH="game/components/RingChart.swf" WIDTH="300" HEIGHT="300" X="60" Y="232" />
+      <data ID="txtMostUsedPos" TYPE="text" FORMAT="SM" WIDTH="55" HEIGHT="32" X="186" Y="345" />
+      <data ID="txtMostUsedPosPct" TYPE="text" FORMAT="SL||center" WIDTH="100" HEIGHT="32" X="160" Y="370" />
+      <data ID="txtPosFwd" TYPE="text" FORMAT="SS" WIDTH="55" HEIGHT="32" X="87" Y="488" />
+      <data ID="txtPosMid" TYPE="text" FORMAT="SS" WIDTH="50" HEIGHT="32" X="162" Y="488" />
+      <data ID="txtPosDef" TYPE="text" FORMAT="SS" WIDTH="60" HEIGHT="32" X="237" Y="488" />
+      <data ID="txtPosGk" TYPE="text" FORMAT="SS" WIDTH="50" HEIGHT="32" X="312" Y="488" />
+      <data ID="ringChartIndicatorFwd" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="72" Y="497" />
+      <data ID="ringChartIndicatorMid" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="147" Y="497" />
+      <data ID="ringChartIndicatorDef" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="222" Y="497" />
+      <data ID="ringChartIndicatorGk" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="297" Y="497" />
+      <data ID="txtOverallLabel" TYPE="text" FORMAT="SM||center" WIDTH="420" HEIGHT="30" UHLALPHA="60" X="-130" Y="536" />
+      <data ID="txtHeightLabel" TYPE="text" FORMAT="SM||center" WIDTH="420" HEIGHT="30" UHLALPHA="60" X="-20" Y="536" />
+      <data ID="txtWeightLabel" TYPE="text" FORMAT="SM||center" WIDTH="420" HEIGHT="30" UHLALPHA="60" X="120" Y="536" />
+      <data ID="txtOverall" TYPE="text" FORMAT="HS||center" WIDTH="420" HEIGHT="32" UHLALPHA="90" X="-130" Y="552" />
+      <data ID="txtHeight" TYPE="text" FORMAT="HS||center" WIDTH="420" HEIGHT="32" UHLALPHA="90" X="-20" Y="552" />
+      <data ID="txtWeight" TYPE="text" FORMAT="HS||center" WIDTH="420" HEIGHT="32" UHLALPHA="90" X="120" Y="552" />
+      <data ID="number" TYPE="text" FORMAT="VPRO_BIG_NUMBER||center|COLOR_TEXT_REGULAR" WIDTH="150" HEIGHT="109" HLALPHA="30" UHLALPHA="30" X="140" Y="145" />
+      <data ID="position" TYPE="text" FORMAT="SL||left" WIDTH="98" HEIGHT="40" X="192" Y="235" />
+      <data ID="playstyle" TYPE="text" FORMAT="SL||center" WIDTH="420" HEIGHT="40" X="0" Y="240" />
+      <data ID="positionIndicator" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="16" HEIGHT="16" X="170" Y="249" />
+    </tile>
+    <tile NAME="MY_PRO_STATISTICS" TYPE="TILE" DESTINATION="statistics">
+      <properties WIDTH="418" HEIGHT="418" X="109" Y="492" />
+      <data ID="title" TYPE="title" ALIGN="leading" FORMAT="HS" WIDTH="418" HEIGHT="75" />
+      <data ID="LIGHT_ROWS" TYPE="panel" VISIBLE="FALSE" WIDTH="418" HEIGHT="305" X="0" Y="88" />
+      <data ID="component0" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="88" />
+      <data ID="component1" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="139" />
+      <data ID="component2" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="190" />
+      <data ID="component3" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="241" />
+      <data ID="component4" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="292" />
+      <data ID="component5" TYPE="component" PATH="game/components/FluxComponents/online/ProStatistics.swf" WIDTH="418" HEIGHT="51" X="0" Y="343" />
+    </tile>
+    <tile NAME="MY_VPRO_ATTRIBUTES" TYPE="TILE" DESTINATION="attributes">
+      <properties WIDTH="418" HEIGHT="418" X="537" Y="492" />
+      <data ID="title" TYPE="title" ALIGN="leading" FORMAT="HS" WIDTH="419" HEIGHT="75" />
+      <data ID="skillPoints" TYPE="image" ALIGN="trailing" PATH="imgAssets/playerGrowth/points/points0.dds" WIDTH="36" HEIGHT="36" X="365" Y="20" FORMAT="|COLOR_FILL_UNHIGHLIGHT||COLOR_FILL_UNHIGHLIGHT_CONTRAST">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="TRAILING" TARGET_ATTRIBUTE="TRAILING" OFFSET="-17" />		
+	  </data>
+      <data ID="component0" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="70" />
+      <data ID="component1" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="116" />
+      <data ID="component2" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="162" />
+      <data ID="component3" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="208" />
+      <data ID="component4" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="254" />
+      <data ID="component5" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="300" />
+      <data ID="component6" TYPE="component" PATH="game/components/FluxComponents/online/ProAttributes.swf" WIDTH="395" HEIGHT="48" X="0" Y="346" />
+    </tile>
+    <tile NAME="MY_VPRO_PLAYER_DISABLED" TYPE="TILE" DESTINATION="player">
+      <properties WIDTH="846" HEIGHT="632" X="965" Y="278" />
+      <data ID="txtInfoNotAvailable" TYPE="title" ALIGN="leading" PARAM="TXT_INFO_NOT_AVAILABLE" FORMAT="HS" />
+    </tile>
+  </panel>
+</root>

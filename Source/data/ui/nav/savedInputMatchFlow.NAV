@@ -1,0 +1,123 @@
+{
+	"name":"savedInputMatchFlow"
+	,"states":
+	[
+		{
+			"name":"LoadSavedInput"
+			,"onEnter":
+			[
+				["sendScreenEvent",["UXShowLoadSavedInputScreen", ""]]
+            ]
+            ,"transitions":
+			[
+				{
+					"event":"evt_sl_operation_load"
+					,"targets":["loadScreen"]
+				}
+            ]
+		}
+        ,{
+            "type":"external"
+			,"file":"/saveload/load.nav"
+			,"inputs":
+			{
+				"loadScreen": "LoadScreen"
+			}
+			,"outputs":
+			{
+				"out_Back": "back",
+				"out_Success": "loadSuccess"
+			}
+		}
+		,{
+			"name":"SaveSavedInput"
+			,"onEnter":
+			[
+				["sendScreenEvent",["UXShowSaveSavedInputScreen", ""]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"evt_sl_operation_save"
+					,"targets":["saveScreen"]
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/saveload/save.nav"
+			,"inputs":
+			{
+				"saveScreen": "SaveScreen"
+			}
+			,"outputs":
+			{
+				"out_Back": "back"
+				,"out_Success": "back"
+				,"out_Failure": "back"
+			}
+		}
+		,{
+			"name":"EnterSavedMatch"
+			,"onEnter":
+			[
+				["loadViewModel",["MatchdaySetupViewModel"]]
+				,["sendScreenEvent", ["UxEnterGameFlow", "SavedInputMatchPlaybackInProgress"]]
+				,["sendScreenEvent",["UxSetFlowState",".eState.SAVED_INPUT_PLAYBACK"]]
+				,["sendScreenEvent",["UxSetFlowSubState",".eSubState.PREGAME"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel", ["MatchdaySetupViewModel"]]
+				,["sendScreenEvent", ["UxExitGameFlow"]]
+				,["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]]
+				,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]]
+			]
+			,"states":
+			[
+				{
+					"name":"waitForFreeRoamState"
+					,"onEnter":
+					[
+						["sendAction",["wait", "checkFreeRoamReady"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"freeRoamReady"
+							,"targets":["gamePlay"]
+						}
+					]
+				}
+				,{	
+					"name":"gamePlay"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["UxSetFlowSubState",".eSubState.LOADING"]]
+					]
+					,"states":
+					[
+						{
+							"name":"InGameFlow"
+							,"type":"external"
+							,"file":"/pauseMenuFlow.nav"
+							,"outputs":
+							{
+								"quit":"quit"
+								,"continue":"quit"
+								,"profileSignOut":"back"
+							}
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"restartWithNewTeams"
+ 							,"targets":["waitForFreeRoamState"]
+						}
+					]
+				}
+			]
+		}
+    ]
+}

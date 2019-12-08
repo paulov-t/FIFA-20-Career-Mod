@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="DbSquadSelect">
+	<tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+	<tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+  </hub_settings>
+  <buttons>
+    <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+  </buttons>
+  <panel_set>
+    <panel NAME="DB_SQUAD_SELECT_MAIN" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="DB_SQUAD_SELECT_MAIN">
+    <variable_set>
+	  <variable id="message" type="string" />
+	  <variable id="options" type="string" />
+	</variable_set>
+	<tile NAME="MAIN" TYPE="TILE_LIST" HIGHLIGHTABLE="TRUE" SELECTABLE="FALSE" DESTINATION="" DECORATORS_RANGE="NO_BACKGROUND">
+	  <properties WIDTH="740" HEIGHT="582" X="589" Y="333" />
+	  <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="36" ITEM_WIDTH="740" ROWS="3" COLUMNS="1" LIST_Y="346" LIST_X="0" LIST_WIDTH="740" LIST_HEIGHT="128"/>
+	  <backgroundData>
+	    <data ID="BACKGROUND_UPPER" TYPE="panel" PARAM="STYLE_POPUP" X="0" Y="0" WIDTH="740" HEIGHT="335" />
+	    <data ID="BACKGROUND_LOWER" TYPE="rectangle" FORMAT="|COLOR_FILL_PANEL_MAINFRAME||COLOR_FILL_PANEL_MAINFRAME" X="0" Y="336" WIDTH="740" HEIGHT="138" />
+	    <data ID="IMAGE" TYPE="asset" PATH="careerSettings" PARAM="Icon_Squad" FORMAT="|COLOR_FILL_ICON_HIGHLIGHT||COLOR_FILL_ICON_HIGHLIGHT" X="295" Y="54" WIDTH="151" HEIGHT="111"/>
+	    <data ID="MESSAGE" TYPE="text" PARAM="@message" FORMAT="SM|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" X="10" Y="220" WIDTH="720" HEIGHT="100"/>
+	  </backgroundData>
+	  <data ID="BUTTON" TYPE="component" ALIGN="leading" PATH="game/components/FluxComponents/ButtonText.swf" PARAM="^A^|||TRUE" TRANSLATE="FALSE" HLALPHA="100" UHLALPHA="0" Y="1" FORMAT="SM|||"/>
+	  <data ID="OPTION" TYPE="text" ALIGN="leading" PARAM="@options[i]" WIDTH="640" HEIGHT="36" FORMAT="SM|||" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="50" />
+	  </data>
+    </tile>
+  </panel>
+</root>

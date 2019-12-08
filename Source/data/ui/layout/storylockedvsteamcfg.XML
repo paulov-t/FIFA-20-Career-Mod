@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryLockedVsTeam" HUB_VERSION="3">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+    <component PATH="game/fluxHelpers/StoryHubLibrary.swf" X="0" Y="0" />
+  </components>
+  <panel_set>
+    <panel NAME="STORY_LOCKED_VS_TEAM">
+      <layout NAME="SELECT_LOCKED_VS_TEAM" X="209" Y="292">
+        <tile NAME="LOCKED_TO_TEAM" X="0" Y="0" />
+        <tile NAME="LOCKED_TO_PLAYER" X="756" Y="0" />
+        <tile NAME="LOCKED_VS_TEAM_EXPLANATION" X="0" Y="-210" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="STORY_LOCKED_VS_TEAM">
+    <tile NAME="LOCKED_TO_PLAYER" TYPE="EXPANDABLE_TILE" BACKGROUND="LockedToPlayer_Large" DESTINATION="advance">
+      <properties WIDTH="746" HEIGHT="620"  />
+      <data ID="TITLE" TYPE="title" PARAM="SM_LOCKER_ADVANCE_PLAYER" />
+      <data TYPE="text" PARAM="SM_PLAY_STYLE_LOCKED_TO_PLAYER_DESC" FORMAT="I" HEIGHT="620" WIDTH="320" X="18" REL_TARGET="TITLE" REL_Y="10"  />
+    </tile>
+    <tile NAME="LOCKED_TO_TEAM" TYPE="EXPANDABLE_TILE" BACKGROUND="ControllingTeam_Large" DESTINATION="advance">	
+      <properties WIDTH="746" HEIGHT="620"  />
+      <data ID="TITLE" TYPE="title" PARAM="SM_LOCKER_ADVANCE_TEAM" />
+      <data TYPE="text" PARAM="SM_PLAY_STYLE_CONTROL_TEAM_DESC" FORMAT="I" HEIGHT="620" WIDTH="320" X="18" REL_TARGET="TITLE" REL_Y="10"  />
+    </tile>
+    <tile NAME="LOCKED_VS_TEAM_EXPLANATION" TYPE="TILE" HIGHLIGHTABLE="FALSE" TILE_STATE="DISABLED">
+      <properties WIDTH="1502" HEIGHT="200"  />
+      <data ID="TITLE" TYPE="title" PARAM="SM_PLAY_STYLE_TITLE" />
+      <data TYPE="text" PARAM="SM_PLAY_STYLE_DESC" FORMAT="I" HEIGHT="200" WIDTH="1466" X="18" REL_TARGET="TITLE" REL_Y="10"  />
+    </tile>
+  </panel>
+</root>

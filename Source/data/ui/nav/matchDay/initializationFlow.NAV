@@ -1,0 +1,52 @@
+{
+	"name":"initializationFlow"
+	, "initial":
+	{
+		"targets":["modeInitialization"]
+	}
+	,"states":
+	[
+		{
+			"name":"modeInitialization"
+			,"onEnter":
+			[
+				["sendAction",["enterMode"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["matchDayDownload"]
+				}
+				,{
+					"event":"kinectActive"
+					,"targets":["introVideo"]
+				}
+			]	
+		}
+		,{
+			"name":"introVideo"
+			,"onEnter":
+			[
+				["loadView",["video", "POW"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"videoStopped"
+					,"targets":["matchDayDownload"]
+				}
+			]	
+		}
+		,{
+			"name":"matchDayDownload"
+			,"type":"external"
+			,"file":"/matchDay/downloadFlow.nav"
+			,"outputs":
+			{
+				"advance":"advance"
+				,"back":"back"
+			}
+		}
+	]
+}

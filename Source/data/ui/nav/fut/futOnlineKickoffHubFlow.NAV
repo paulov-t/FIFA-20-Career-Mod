@@ -1,0 +1,64 @@
+{
+	"name":"futOnlineKickoffHubFlow"
+	,"onEnter":
+	[
+		["loadViewModel",["OnlineKickOffHubViewModel"]]
+		,["sendAction", ["enterMode", "SyncDataForFUT"] ]
+		,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MATCH_FLOW_BACKGROUND"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel",["OnlineKickOffHubViewModel"]]
+	]
+	, "initial":
+	{
+		"targets":["WaitForKits"]
+	}
+	,"states":
+	[
+		{
+			"name":"OnlineKickoffHub_Wrapper"
+			,"onEnter":
+			[
+				["loadViewModel",["KitSelectViewModel"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["KitSelectViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"WaitForKits"
+					,"onEnter":
+					[
+						["sendAction",["condition", "WaitForKitsLoad"]]
+					]
+					,"transitions":
+					[
+						{	
+							"event":"KitsLoadComplete", 
+							"targets":["advance"]
+						}
+					]
+				}
+			]
+		}
+	]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

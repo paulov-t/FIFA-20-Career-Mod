@@ -1,0 +1,241 @@
+{
+	"name":"futOnlinePreMatch"	
+	,"onEnter":
+	[
+		["loadViewModel", ["futonlineselectteamviewmodel"]]
+		,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MATCH_FLOW_PLAYERS_BACKGROUND"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel", ["futonlineselectteamviewmodel"]]
+		,["unloadViewModel", ["futfuncaptchaviewmodel"]]
+		,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.FUT_MODE_BACKGROUND"]]
+	]
+	,"initial":
+	{
+		"targets":["InitSelectTeam"]
+	}
+	,"states":
+	[
+		{
+			"name":"InitSelectTeam"
+			,"states":
+			[
+				{
+					"name":"AdvanceSelectTeam"
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["futPreMatchKits"] }
+						,{ "event":"advanceFriendlies", "targets":["FriendlyTeamSelect"] }
+					]
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event":"NoValidSquadErr"
+					,"targets":["showNoValidSquadErrorPopup"]
+				}
+				,{
+					"event":"SquadLoadServerErr"
+					,"targets":["showErrorPopup"]
+				}
+				,{
+					"event":"SquadListErr"
+					,"targets":["showSquadListErrorPopup"]
+				}
+			]
+		}
+		,{
+			"name":"futPreMatchKits"
+			,"onEnter":
+			[
+				["loadView",["screen", "external/ion_fut/screens/onlineFlow/FutOnlinePreMatchScreen"]]
+				,["loadViewModel",["UserValidationViewModel", "ugc=false"]]
+				,["sendAction", ["notify", "startMonitorUserOnlineRestrictions"]]
+				,["sendAction", ["notify", "checkUserOnlineRestrictions"]]
+				,["loadViewModel",["futuservalidationviewmodel"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["futuservalidationviewmodel"]]
+				,["sendAction", ["notify", "stopMonitorUserOnlineRestrictions"]]
+				,["unloadViewModel",["UserValidationViewModel"]]
+				,["unloadView",["screen", "external/ion_fut/screens/onlineFlow/FutOnlinePreMatchScreen"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}
+				,{
+					"event":"advance"
+					,"targets":["WaitingForTeamSelectToUnload"]
+				}
+				,{
+					"event":"ControllerAndGameSetup", 
+					"targets":["ControllerAndGameSetupHub"] 
+				}
+			]
+		}
+		,{
+			"name":"ControllerAndGameSetupHub_Wrapper"
+			,"onEnter":
+			[
+				["loadView",["widget", "external/ion_fut/screens/onlineFlow/FutOnlinePreMatchWidget"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["widget", "external/ion_fut/screens/onlineFlow/FutOnlinePreMatchWidget"]]
+			]
+			,"states":
+			[
+				{
+					"name":"ControllerAndGameSetupHub"
+					,"onEnter":
+					[
+						["loadView", ["screen", "game/screens/settings/controllerAndGameSetup"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/settings/controllerAndGameSetup"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back", 
+							"targets":["futPreMatchKits"] 
+						}
+						,{
+							"event":"goBackToPreMatchSetup", 
+							"targets":["futPreMatchKits"] 
+						}
+						,{
+							"event":"exitSession"
+							,"targets":["back"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"FriendlyTeamSelect"
+			,"onEnter":
+			[
+				["loadView",["screen", "external/ion_fut/screens/onlineFlow/FutTeamSelectScreen"]]
+				,["loadViewModel",["futuservalidationviewmodel"]]
+				,["loadViewModel", ["futfuncaptchaviewmodel"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel", ["futfuncaptchaviewmodel"]]
+				,["unloadViewModel",["futuservalidationviewmodel"]]
+				,["unloadView",["screen", "external/ion_fut/screens/onlineFlow/FutTeamSelectScreen"]]
+			]
+			,"states":
+			[
+				{
+					"name":"teamSelectInitialState"
+					,"transitions":
+					[
+						{
+							"event":"OpenUserActionsOverlay",
+							"targets":["UserActionsOverlayHub"] 
+						}
+						,{
+							"event":"back"
+							,"targets":["back"]
+						}
+						,{
+							"event":"advance"
+							,"targets":["WaitingForTeamSelectToUnload"]
+						}
+					]
+				} 
+				,{
+					"let":{"AbuseReportingViewModel":"futabusereportingviewmodel"}
+					,"name":"UserActionsOverlayHub"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/online/abuseReportFlow.nav"
+							,"outputs":
+							{
+								"out_back":"teamSelectInitialState"
+							}
+						}
+					]
+				}
+			]		
+		}
+		,{
+			"name":"WaitingForTeamSelectToUnload"
+			,"transitions":
+			[
+				{
+					"event":"UnloadComplete"
+					,"targets":["advance"] 
+				}
+			]
+		}
+		,{
+			"name":"showErrorPopup"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["FUTFECleanup",""]] /* otherwise popup EXTENDED_QM_LOADING_POPUP may not get cleared */
+				,["loadView", ["popup","OnlineSelectTeamError", "FUT_FAILED_TO_LOAD_SQUAD|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "OnlineSelectTeamError"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+			]
+		}
+		,{
+			"name":"showSquadListErrorPopup"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["FUTFECleanup",""]] /* otherwise popup EXTENDED_QM_LOADING_POPUP may not get cleared */
+				,["loadView", ["popup","OnlineSquadListError", "FUT_FAILED_TO_LIST_SQUADS|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "OnlineSquadListError"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+			]
+		}
+		,{
+			"name":"showNoValidSquadErrorPopup"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["FUTFECleanup",""]] /* otherwise popup EXTENDED_QM_LOADING_POPUP may not get cleared */
+				,["loadView", ["popup","NoValidSquadError", "FUT_NO_VALID_SQUADS|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "NoValidSquadError"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["back"]
+				}	
+			]
+		}
+	]
+}

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="AvatarDecisionPoint" HUB_VERSION="3">
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <variable_set>
+      <variable id="descriptionParamList" type="string"/>
+      <variable id="toggleParamList" type="string"/>
+      <variable id="inputTextString" type="string"/>
+      <variable id="componentVisibilityList" type="string"/>
+      <variable id="selectable" type="bool"/>
+      <variable id="optionListCategoryTitle" type="string"/>
+      <variable id="optionListCategoryToggle" type="string"/>
+      <variable id="optionListValueStrings" type="string"/>
+      <variable id="optionListValueAssets" type="int"/>
+      <variable id="languageId" type="int"/>
+      <variable id="downloadIconVisible" type="bool"/>
+  </variable_set>
+  <components>
+    <component PATH="game/components/FluxComponents/FluxHubHeader.swf" PARAM="AVATAR_DECISION_POINT" X="209" Y="95" WIDTH="1535" />
+  </components>
+  <panel_set>
+    <panel NAME="AVATAR_DECISION_POINT_PANEL" >
+      <buttons>
+        <button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+      </buttons>
+      <layout NAME="AVATAR_DP_MAIN_LAYOUT" X="200" Y="292">
+        <tile NAME="AVATAR_DP_INFO" X="0" Y="-100" />
+        <tile NAME="AVATAR_DP_EDIT_AVATAR" X="680" Y="-100" />
+        <tile NAME="AVATAR_DP_START_GAME" X="680" Y="420" />
+      </layout>
+      <layout NAME="AVATAR_DP_SELECTION_LIST_LAYOUT" X="200" Y="292">
+        <tile NAME="AVATAR_DP_SELECTION_LIST_TOGGLE" X="0" Y="-100" />
+        <tile NAME="AVATAR_DP_SELECTION_LIST" X="0" Y="-40" />
+      </layout>
+      <layout NAME="AVATAR_DLC_POPUP_LAYOUT" X="200" Y="292" >
+        <tile NAME="AVATAR_DP_INFO" X="0" Y="-100" SELECTABLE="FALSE" TILE_STATE="DISABLED" />
+        <tile NAME="AVATAR_DP_EDIT_AVATAR" X="680" Y="-100" SELECTABLE="FALSE" TILE_STATE="DISABLED" />
+        <tile NAME="AVATAR_DP_START_GAME" X="680" Y="420" SELECTABLE="FALSE" TILE_STATE="DISABLED" />
+        <tile NAME="AVATAR_DLC_POPUP_DIMMER" X="-200" Y="-292" /> <!-- initial values when excluding baseX and baseY X="0" Y="0" -->
+        <tile NAME="AVATAR_DLC_POPUP_PANEL" X="280" Y="-2" /> <!-- initial values when excluding baseX and baseY X="480" Y="290" -->
+        <tile NAME="AVATAR_DLC_POPUP_OPEN_STORE" X="280" Y="378" /> <!-- initial values when excluding baseX and baseY X="480" Y="670" -->
+        <tile NAME="AVATAR_DLC_POPUP_CONTINUE" X="740" Y="378" /> <!-- initial values when excluding baseX and baseY X="940" Y="670" -->
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="AVATAR_DECISION_POINT_PANEL">
+    <tile NAME="AVATAR_DP_INFO" TYPE="TILE_LIST" SELECTABLE="TRUE">
+      <properties WIDTH="660" HEIGHT="640"/>
+      <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="50" ITEM_WIDTH="660" ROWS="6" LIST_Y="160" LIST_X="0" LIST_WIDTH="660" LIST_HEIGHT="640" HIGHLIGHT_TYPE="ALTERNATE" />
+      <backgroundData>
+        <data ID="background" TYPE="rectangle" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX||COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="TRUE" WIDTH="660" HEIGHT="760" />
+        <data ID="title" TYPE="title" PARAM="AVATAR_DP_BASIC_INFO" TRANSLATE="FALSE" WIDTH="600"/>
+        <data ID="desc" TYPE="text" PARAM="AVATAR_DP_BASIC_INFO_DESC" TRANSLATE="FALSE">
+          <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="0"/>
+        </data>
+      </backgroundData>
+      <data ID="desc" TYPE="text" PARAM="@descriptionParamList[i]" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|left|||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="TRUE" WIDTH="380" HEIGHT="240" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="listSelection" TYPE="text" PARAM="@inputTextString[i]" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|center|||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="FALSE" WIDTH="380" HEIGHT="50" VISIBLE="@#Equal(@componentVisibilityList[i],LIST)">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-40" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="toggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@#Pattern(@toggleParamList[i],*|false|false)" WIDTH="350" HEIGHT="50" VISIBLE="@#Equal(@componentVisibilityList[i],TOGGLE)">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-40"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="inputText" TYPE="component" PATH="game/components/FluxComponents/FluxInputText.swf" PARAM="@inputTextString[i]" WIDTH="350" HEIGHT="50" VISIBLE="@#Equal(@componentVisibilityList[i],INPUT_TEXT)">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-40" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="downloadIcon" TYPE="asset" PATH="eventIcon" PARAM="DownloadingLrg" WIDTH="30" HEIGHT="30" KEEP_SCALE="TRUE" FORMAT="|COLOR_SAFE_BLACK||COLOR_SAFE_BLACK" VISIBLE="@downloadIconVisible[i]">
+        <align TARGET="toggle" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" OFFSET="-12"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+    </tile>
+    <tile NAME="AVATAR_DP_SELECTION_LIST_TOGGLE" TYPE="TILE" SELECTABLE="TRUE">
+      <properties WIDTH="704" HEIGHT="50"/>
+      <data ID="listAttribute" TYPE="title" PARAM="@optionListCategoryTitle" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|left|||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="FALSE" WIDTH="250" HEIGHT="50">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="optionListsToggle" TYPE="component" PATH="game/components/FluxComponents/FluxToggleComponent.swf" PARAM="@optionListCategoryToggle" WIDTH="250" HEIGHT="50">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-30"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+    </tile>
+    <tile NAME="AVATAR_DP_SELECTION_LIST" TYPE="TILE_LIST" SELECTABLE="TRUE">
+      <properties WIDTH="704" HEIGHT="420"/>
+      <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="50" ITEM_WIDTH="660" ROWS="10" HIGHLIGHT_TYPE="ALTERNATE" />
+      <data ID="listDesc" TYPE="text" PARAM="@optionListValueStrings[i]" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|left|||COLOR_TEXT_HIGHLIGHT_FLUX|middle" TRANSLATE="FALSE" WIDTH="380" HEIGHT="240" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="listFlags" TYPE="asset" PATH="flags512x512" WIDTH="100" HEIGHT="60" PARAM="@optionListValueAssets[i]" VISIBLE="@#Equal(@optionListCategoryTitle,NATIONALITY)" KEEP_SCALE="TRUE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-30"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+    </tile>
+    <tile NAME="AVATAR_DP_EDIT_AVATAR" TYPE="EXPANDABLE_TILE" DESTINATION="avatarCustomization">    
+    <properties WIDTH="494" HEIGHT="500"/>
+      <data ID="title" TYPE="title" PARAM="AVATAR_DP_CUSTOMIZE" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|left|||COLOR_TEXT_HIGHLIGHT_FLUX|top" TRANSLATE="TRUE" WIDTH="380" HEIGHT="240" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="20"/>
+      </data>
+      <data ID="desc" TYPE="text" PARAM="AVATAR_DP_CUSTOMIZE_DESC" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|left|||COLOR_TEXT_HIGHLIGHT_FLUX|top" TRANSLATE="TRUE" WIDTH="380" HEIGHT="240" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20"/>
+        <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM"/>
+      </data>
+      <data ID="icon_1" TYPE="asset" PATH="tiles/avatar" WIDTH="84" HEIGHT="84" PARAM="decision_point_icon_1" FORMAT="||right|COLOR_TEXT_UNHIGHLIGHT_TITLE|||bottom" KEEP_SCALE="TRUE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="106"/>
+        <align TARGET="desc" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="130"/>
+      </data>
+      <data ID="icon_2" TYPE="asset" PATH="tiles/avatar" WIDTH="84" HEIGHT="84" PARAM="decision_point_icon_2" FORMAT="||right|COLOR_TEXT_UNHIGHLIGHT_TITLE|||bottom" KEEP_SCALE="TRUE">
+        <align TARGET="icon_1" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20"/>
+        <align TARGET="desc" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="130"/>
+      </data>
+      <data ID="icon_3" TYPE="asset" PATH="tiles/avatar" WIDTH="84" HEIGHT="84" PARAM="decision_point_icon_3" FORMAT="||right|COLOR_TEXT_UNHIGHLIGHT_TITLE|||bottom" KEEP_SCALE="TRUE">
+        <align TARGET="icon_2" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20"/>
+        <align TARGET="desc" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="130"/>
+      </data>
+      <data ID="icon_4" TYPE="asset" PATH="tiles/avatar" WIDTH="84" HEIGHT="84" PARAM="decision_point_icon_4" FORMAT="||right|COLOR_TEXT_UNHIGHLIGHT_TITLE|||bottom" KEEP_SCALE="TRUE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="106"/>
+        <align TARGET="icon_1" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="20"/>
+      </data>
+      <data ID="icon_5" TYPE="asset" PATH="tiles/avatar" WIDTH="84" HEIGHT="84" PARAM="decision_point_icon_5" FORMAT="||right|COLOR_TEXT_UNHIGHLIGHT_TITLE|||bottom" KEEP_SCALE="TRUE">
+        <align TARGET="icon_4" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20"/>
+        <align TARGET="icon_2" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="20"/>
+      </data>
+      <data ID="icon_6" TYPE="asset" PATH="tiles/avatar" WIDTH="84" HEIGHT="84" PARAM="decision_point_icon_6" FORMAT="||right|COLOR_TEXT_UNHIGHLIGHT_TITLE|||bottom" KEEP_SCALE="TRUE">
+        <align TARGET="icon_5" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20"/>
+        <align TARGET="icon_3" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="20"/>
+      </data>
+    </tile>
+    <tile NAME="AVATAR_DP_START_GAME" TYPE="EXPANDABLE_TILE">    
+    <properties WIDTH="494" HEIGHT="242"/>
+      <data ID="title" TYPE="title" PARAM="AVATAR_DP_START" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX|left|||COLOR_TEXT_HIGHLIGHT_FLUX|top" TRANSLATE="TRUE" WIDTH="380" HEIGHT="240" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="20"/>
+      </data>
+      <data ID="gfx" TYPE="asset" PATH="tiles/avatar" WIDTH="494" HEIGHT="242" PARAM="decision_point_gfx" FORMAT="||right||||bottom" KEEP_SCALE="TRUE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM"/>
+      </data>
+    </tile>
+    <tile NAME="AVATAR_DLC_POPUP_DIMMER" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" >
+      <properties WIDTH="2048" HEIGHT="2048" />
+      <data ID="dimmer" TYPE="component" PATH="game/components/FluxComponents/FluxScreenDimmer.swf" PARAM="true|ALPHA_TRANSPARENT" />
+    </tile>
+    <tile NAME="AVATAR_DLC_POPUP_PANEL" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="910" HEIGHT="370" />
+      <data ID="background" TYPE="panel" PARAM="STYLE_PREVIEW" WIDTH="910" HEIGHT="370" >
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM"/>
+      </data>
+      <data ID="warning" TYPE="asset" PATH="tiles/avatar" PARAM="icon_alert" WIDTH="40" HEIGHT="40" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" KEEP_SCALE="TRUE">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="20" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+      </data>
+      <data ID="title" TYPE="text" PARAM="SM_EPISODIC_DOWNLOAD_NEEDED" FORMAT="FONT_BOLD_PREVIEW|COLOR_TEXT_PREVIEW|left|COLOR_TEXT_PREVIEW|||middle">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-50" />
+        <align TARGET="warning" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" OFFSET="20" />
+        <align TARGET="warning" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" />
+        <align TARGET="warning" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+      </data>
+      <data ID="desc" TYPE="text" PARAM="SM_EPISODIC_DOWNLOAD_POPUP_DESC" WIDTH="495" FORMAT="FONT_REGULAR_TITLE|COLOR_TEXT_PREVIEW|left|COLOR_TEXT_PREVIEW|||top">
+        <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="40" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" OFFSET="-20" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="20" />
+      </data>
+      <data ID="flag" TYPE="asset" PATH="flags512x512" PARAM="@languageId" WIDTH="256" HEIGHT="256" FORMAT="||center||||">
+        <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" />
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="595" />
+      </data>
+    </tile>
+    <tile NAME="AVATAR_DLC_POPUP_OPEN_STORE" TYPE="TILE" DESTINATION="goToStore">
+      <properties WIDTH="450" HEIGHT="115" />
+      <data ID="label" TYPE="text" PARAM="SM_EPISODIC_GO_TO_STORE" FORMAT="FONT_REGULAR_LARGE|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|||middle">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="28"/> <!-- offset by the size of icon /2 + space between /2 -->
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+      <data ID="icon" TYPE="asset" PATH="eventIcon" PARAM="DownloadingLrg" WIDTH="40" HEIGHT="40" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_ALT_PREVIEW" KEEP_SCALE="TRUE">
+        <align TARGET="label" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" OFFSET="-10"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+    </tile>
+    <tile NAME="AVATAR_DLC_POPUP_CONTINUE" TYPE="TILE" DESTINATION="defaultContinue">
+      <properties WIDTH="450" HEIGHT="115" />
+      <data ID="label" TYPE="text" PARAM="SM_EPISODIC_CONTINUE_WITH_DEFAULT" WIDTH="450" HEIGHT="115" FORMAT="FONT_REGULAR_LARGE|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_UNHIGHLIGHT_FLUX_TITLE|||middle">
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH"/>
+        <align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+      </data>
+    </tile>
+</panel>
+</root>

@@ -1,0 +1,28 @@
+{
+	"name":"checkProfileChangeFlow"
+	, "initial":
+	{
+		"targets":["checkProfileChangeFromFailedSignIn"]
+	}
+	,"states":
+	[
+		{
+			"name":"checkProfileChangeFromFailedSignIn"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["IsProfileChangedFromFailedSignIn"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["advance"]
+				}
+				,{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]
+		}		
+	]
+}

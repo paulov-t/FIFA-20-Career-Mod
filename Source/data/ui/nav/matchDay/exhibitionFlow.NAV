@@ -1,0 +1,316 @@
+{
+	"let":{"GameMode":"kickoff"}
+	,"name":"exhibitionFlow"
+	, "initial":
+	{
+		"targets":["EnterMatchDayFlow"]
+	}
+	,"onEnter":
+	[
+		["sendScreenEvent", ["UxSetFlowState",".eState.MOTM_MATCH"]]
+		,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.CENTRAL"]]
+		,["sendScreenEvent", ["UxEnterGameFlow", "PlayNowInProgress"]]
+		,["loadViewModel", ["MatchdayModeViewModel", "0"]]
+		,["sendAction", ["teamSheetAction", "InitMatchDay"]]
+		,["sendAction", ["notify", "telemetryEnterGameMode", ".GameMode"] ]
+	]
+	,"onExit":
+	[
+		["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]]
+		,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]]
+		,["sendAction", ["teamSheetAction", "UninitMatchDay"]]
+		,["unloadViewModel", ["MatchdayModeViewModel"]]
+		,["sendScreenEvent", ["UxExitGameFlow"]]
+		,["sendAction", ["notify", "telemetryExitGameMode", ".GameMode"] ]
+	]
+	,"states":
+	[
+		{
+			"name":"EnterMatchDayFlow"
+			,"type":"external"
+			,"file":"/matchDay/enterMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"exhibitionDbVerificationFlow"
+			}
+		}
+		,{
+			"name":"QuitMatchDay"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"quit"
+			}
+		}
+		,{
+			"name":"BackFromMatchDay"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"back"
+			}
+		}
+		,{
+			"name":"QuitToInviteFlow"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"SendGoToInviteFlow"
+			}
+		}
+		,{
+			"name":"SendGoToInviteFlow"
+			,"onEnter": 
+			[
+				["invoke", ["goToInviteFlow"]]
+			]
+		}
+		,{
+			"name":"QuitAfterSignOut"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"profileSignOut"
+			}
+		}
+		,{
+			"name":"QuitToTitleScreen"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"SendGoToTitleScreen"
+			}
+		}
+		,{
+			"name":"SendGoToTitleScreen"
+			,"onEnter": 
+			[
+				["invoke", ["GoToTitleScreen"]]
+			]
+		}
+		,{
+			"name":"exhibitionDbVerificationFlow"
+			,"type":"external"
+			,"file":"/dbVerificationFlow.nav"
+			,"outputs":
+			{
+				"out_success":"matchDaySetupCheck"
+				,"out_fail":"QuitMatchDay"
+			}
+		}
+		,{
+			"name":"matchDaySetupCheck"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","cond":["==",".FIFA_PRESS",true],"targets":["matchDaySetup"]}
+				,{"event":"advance","cond":["==",".FIFA_DEMO",true],"targets":["kickoffTutorialCondition"]}
+				,{"event":"advance","cond":["==",".FIFA_CLOSEDBETA",true],"targets":["kickoffTutorialCondition"]}
+				,{"event":"advance","cond":["==",".FIFA_CFE",true],"targets":["kickoffTutorialCondition"]}
+				,{"event":"advance","targets":["modeInitialization"]}				
+			]
+		}
+		,{
+			"name":"modeInitialization"
+			,"onEnter": 
+			[ 
+				["sendScreenEvent", ["UXSaveGMTrackerInfo", ".GameModeRecordID.GM_MD_KICK_OFF"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","cond":["==",".FIFA_DEMO",true],"targets":["kickoffTutorialCondition"]}
+				,{"event":"advance","cond":["==",".FIFA_PRESS",true],"targets":["matchDaySetup"]}
+				,{"event":"advance","cond":["==",".FIFA_CLOSEDBETA",true],"targets":["kickoffTutorialCondition"]}
+				,{"event":"advance","cond":["==",".FIFA_CFE",true],"targets":["kickoffTutorialCondition"]}
+				,{"event":"advance","targets":["checkInstallMode"]}
+			]
+		}
+		,{
+			"name":"checkInstallMode"
+			,"onEnter":
+			[
+				["sendAction", ["condition","installMode"]]
+			]
+			,"transitions":
+			[
+				{"event":"install_mode_true", "targets":["kickoffTutorialCondition"]}
+				,{"event":"install_mode_false","targets":["postSaveModeInitialization"]}
+			]
+		}
+		,{
+			"name":"postSaveModeInitialization"
+			,"type":"external"
+			,"file":"/matchDay/initializationFlow.nav"
+			,"outputs":
+			{
+				"advance":"kickoffTutorialCondition"
+				,"back":"BackFromMatchDay"
+			}
+		}
+		,{
+			"name": "kickoffTutorial"
+			,"onEnter":
+			[
+				["loadViewModel", ["KickOffTutorialViewModel", "mandatory"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel", ["KickOffTutorialViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"kickoffTutorialCondition"
+					,"onEnter":
+					[
+						["sendAction", ["condition","showKickoffTutorial"]]
+					]
+					,"transitions":
+					[
+						{"event":"true","targets":["kickoffTutorialScreen"]}
+						,{"event":"false","targets":["matchDaySetup"]}
+					]
+				}
+				,{
+					"name":"kickoffTutorialScreen"
+					,"onEnter":
+					[
+						["loadViewModel",["FluxViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", ".direction"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+						,["unloadView", ["background"]]
+					]
+						
+				}
+			]
+			,"transitions":
+			[
+				{
+					"event": "advance"
+					,"targets":["matchDaySetup"]
+				}
+			]
+		}
+		,{
+			"name":"matchDaySetup"
+			, "initial":
+			{
+				"targets":["setupFlow"]
+			}
+			,"transitions":
+			[
+				{ 	
+					"event":"goToInviteFlow", 
+					"targets":["QuitToInviteFlow"] 
+				}
+				,{
+					"event":"GoToTitleScreen"
+					,"targets":["QuitToTitleScreen"] 
+				}
+			]
+			,"states":
+			[
+				{
+					"name":"setupFlow"
+					,"type":"external"
+					,"file":"/matchDay/setupFlow.nav"
+					,"outputs":
+					{
+						"quit":"QuitMatchDay"
+						,"quitToHub": "quitToHub"
+						,"checkOffboarding":"kickoffOffboarding"
+						,"back":"BackFromMatchDay"
+						,"backMainMenu":"BackFromMatchDay"
+						,"profileSignOut":"QuitAfterSignOut"
+					}
+				}
+			]
+		}
+		,
+		{
+			"transitions":
+			[
+				{ 	
+					"event":"goToInviteFlow", 
+					"targets":["QuitToInviteFlow"] 
+				}
+			]
+			,"states":
+			[
+				{
+					"name":"kickoffOffboarding"
+					,"type":"external"
+					,"file":"/matchDay/kickoffOffboardingFlow.nav"
+					,"outputs":
+					{
+						"quit":"quitToHub"
+						,"out_goToFUT":"quitToFut"
+						,"out_goToKickOff":"quitToHub"
+						,"out_goToCareer":"quitToCareerMode"
+						,"out_goToProClubs":"quitToProClubs"
+						,"out_goToVolta":"quitToVolta"
+					}
+				}
+			]
+		}
+		,{
+			"name":"quitToFut"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"preLaunchFUTFlow"
+			}
+		}
+		,{
+			"name":"quitToCareerMode"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"preNewCareerModeFlow"
+			}
+		}
+		,{
+			"name":"quitToProClubs"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"preCheckProClubsAdvance"
+			}
+		}
+		,{
+			"name":"quitToVolta"
+			,"type":"external"
+			,"file":"/matchDay/exitMatchDayFlow.nav"
+			,"outputs":
+			{
+				"out":"preNewVoltaFlow"
+			}
+		}
+		,{
+			"name":"quitToHub"
+			,"onEnter":
+			[
+				["invoke", ["gotoKickoff"]]
+			]
+			,"transitions":
+			[
+				{"event":"gotoKickoff","targets":["matchDaySetup"]}			
+			]
+		}
+	]
+}

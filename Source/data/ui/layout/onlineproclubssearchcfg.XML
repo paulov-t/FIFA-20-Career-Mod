@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="2/13/2014 19:24:23" VERSION="2">
+  <hub_settings NAME="OnlineClubsSearchHub">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="clubSearch" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.ProClubsSearchFluxHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+    <tile_path TILE_PATH="game/components/FluxTiles/online/GridControlList.swf" TILE_NAME="TILE_GRID_CONTROL_LIST" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="ONL_CLUB_RECOMMENDED_PANEL" LABEL="TXT_ONLINE_CLUBS_RECOMMENDED" IS_TAB="TRUE" />
+    <panel NAME="ONL_CLUB_FRIENDS_CLUBS_PANEL" LABEL="TXT_ONLINE_CLUBS_FRIENDS_CLUBS" IS_TAB="TRUE" />
+  </panel_set>
+  <panel NAME="ONL_CLUB_RECOMMENDED_PANEL">
+    <tile NAME="ONL_CLUBS_SEARCH_CUSTOMIZE" TYPE="TILE" DESTINATION="searchclubs" BACKGROUND="customise_Med" DATAPROVIDERID="CLUB_SEARCH_TILE_INFO_DP" NARRATION_HIGHLIGHT="ACC_CLUBS_SEARCH_CUSTOMIZE_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUBS_SEARCH_CUSTOMIZE_SELECTED">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
+      <data ID="title" TYPE="title" FORMAT="HS" WIDTH="652" HEIGHT="75" X="18" Y="18" />
+      <data ID="description" TYPE="text" FORMAT="SS" WIDTH="645" HEIGHT="45" X="20" Y="85" />
+    </tile>
+    <tile NAME="ONL_CLUBS_SEARCH_RESULTS" TYPE="TILE_GRID_CONTROL_LIST" DESTINATION="clubselected" DATAPROVIDERID="CLUB_LIST_DP" NARRATION_HIGHLIGHT="ACC_CLUBS_SEARCH_RESULTS_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUBS_SEARCH_RESULTS_SELECTED">
+      <properties WIDTH="846" HEIGHT="418" X="109" Y="492" />
+    </tile>
+    <tile NAME="ONL_CLUBS_SEARCH_CLUB_INFO" TYPE="TILE" DATAPROVIDERID="CLUB_INFO" HIGHLIGHTABLE="FALSE" >
+      <properties WIDTH="846" HEIGHT="632" X="965" Y="278" />      
+      <data ID="name" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="590" HEIGHT="75" X="20" Y="4" VISIBLE="FALSE" />
+      <data ID="title" ALIGN="leading" TYPE="text" FORMAT="HL|||COLOR_TEXT_PREVIEW_FLUX" WIDTH="780" HEIGHT="75" X="20"/>
+      <data ID="region" TYPE="text" FORMAT="TSL||left|COLOR_TEXT_PREVIEW_FLUX" WIDTH="652" HEIGHT="45" X="20" Y="90" />
+      <data ID="crest" TYPE="image" WIDTH="200" HEIGHT="200" X="617" Y="25" PATH="imgAssets/online/notfound.dds" />      
+      <data ID="squad_breakdown" TYPE="text" FORMAT="TSL||left|COLOR_TEXT_PREVIEW_FLUX" WIDTH="500" HEIGHT="45" X="21" Y="143" />
+      <data ID="members_count" TYPE="text" FORMAT="TSMU||left|COLOR_TEXT_PREVIEW" WIDTH="500" HEIGHT="45" X="21" Y="179" />
+      <data ID="members_label1" TYPE="text" FORMAT="TSMU||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="1" Y="265" />
+      <data ID="members_label2" TYPE="text" FORMAT="TSMU||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="212" Y="265" />
+      <data ID="members_label3" TYPE="text" FORMAT="TSMU||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="423" Y="265" />
+      <data ID="members_label4" TYPE="text" FORMAT="TSMU||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="634" Y="265" />
+      <data ID="members_image1" TYPE="image" PATH="imgAssets/tiles/clubTransfers/CircleBacking.dds" WIDTH="93" HEIGHT="93" X="59" Y="300" VISIBLE="FALSE" />
+      <data ID="members_image2" TYPE="image" PATH="imgAssets/tiles/clubTransfers/CircleBacking.dds" WIDTH="93" HEIGHT="93" X="270" Y="300" VISIBLE="FALSE" />
+      <data ID="members_image3" TYPE="image" PATH="imgAssets/tiles/clubTransfers/CircleBacking.dds" WIDTH="93" HEIGHT="93" X="481" Y="300" VISIBLE="FALSE" />
+      <data ID="members_image4" TYPE="image" PATH="imgAssets/tiles/clubTransfers/CircleBacking.dds" WIDTH="93" HEIGHT="93" X="692" Y="300" VISIBLE="FALSE" />
+      <data ID="members_value1" TYPE="text" FORMAT="HL||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="1" Y="305" />
+      <data ID="members_value2" TYPE="text" FORMAT="HL||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="212" Y="305" />
+      <data ID="members_value3" TYPE="text" FORMAT="HL||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="423" Y="305" />
+      <data ID="members_value4" TYPE="text" FORMAT="HL||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="634" Y="305" />
+      <data ID="table_component" TYPE="component" PATH="game/components/FluxComponents/online/ProTableStatistics.swf" WIDTH="846" HEIGHT="192" X="0" Y="420" />
+      <data ID="table_component2" TYPE="component" PATH="game/components/FluxComponents/online/ProTableStatistics.swf" WIDTH="846" HEIGHT="288" X="0" Y="80" />
+      <data ID="no_data_message" TYPE="text" FORMAT="SL|COLOR_TEXT_PREVIEW_FLUX|center|COLOR_TEXT_PREVIEW_FLUX" TRANSLATE="FALSE" WIDTH="548" HEIGHT="50" X="132" Y="259" />
+      <data ID="spinner_component" TYPE="component" PARAM="3" PATH="online/components/ui/StreamingIcon.swf" WIDTH="200" HEIGHT="200" X="410" Y="305" />	  
+    </tile>
+  </panel>
+  <panel NAME="ONL_CLUB_FRIENDS_CLUBS_PANEL">
+    <tile NAME="ONL_CLUBS_SEARCH_FRIENDS_CLUBS" TYPE="TILE_GRID_CONTROL_LIST" DESTINATION="clubselected" DATAPROVIDERID="CLUB_LIST_DP" NARRATION_HIGHLIGHT="ACC_CLUBS_SEARCH_FRIENDS_HIGHLIGHTED" NARRATION_SELECT="ACC_CLUBS_SEARCH_FRIENDS_SELECTED">
+      <properties WIDTH="846" HEIGHT="632" X="109" Y="278" />
+    </tile>
+    <tile NAME="ONL_CLUBS_SEARCH_FRIENDS_CLUBS_INFO" TYPE="TILE" DATAPROVIDERID="CLUB_INFO_FD" HIGHLIGHTABLE="FALSE">
+      <properties WIDTH="846" HEIGHT="632" X="965" Y="278" />	  
+	  <data ID="name" TYPE="component" PATH="game/components/FluxComponents/TextScrollerFluxComponent.swf" WIDTH="590" HEIGHT="75" X="20" Y="4" VISIBLE="FALSE" />
+      <data ID="title" TYPE="text" FORMAT="HL||left|COLOR_TEXT_PREVIEW_FLUX" WIDTH="652" HEIGHT="75" X="20" />
+      <data ID="region" TYPE="text" FORMAT="TSL||left|COLOR_TEXT_PREVIEW_FLUX" WIDTH="652" HEIGHT="45" X="20" Y="90" />
+      <data ID="crest" TYPE="image" WIDTH="200" HEIGHT="200" X="617" Y="25" PATH="imgAssets/online/notfound.dds"/>
+      <data ID="squad_breakdown" TYPE="text" FORMAT="TSL||left|COLOR_TEXT_PREVIEW" WIDTH="500" HEIGHT="45" X="21" Y="143" />
+      <data ID="members_count" TYPE="text" FORMAT="TSMU||left|COLOR_TEXT_PREVIEW" WIDTH="500" HEIGHT="45" X="21" Y="179" />
+      <data ID="members_label1" TYPE="text" FORMAT="TSMU||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="1" Y="265" />
+      <data ID="members_label2" TYPE="text" FORMAT="TSMU||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="212" Y="265" />
+      <data ID="members_label3" TYPE="text" FORMAT="TSMU||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="423" Y="265" />
+      <data ID="members_label4" TYPE="text" FORMAT="TSMU||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="634" Y="265" />
+      <data ID="members_image1" TYPE="image" PATH="imgAssets/tiles/clubTransfers/CircleBacking.dds" WIDTH="93" HEIGHT="93" X="59" Y="300" VISIBLE="FALSE" />
+      <data ID="members_image2" TYPE="image" PATH="imgAssets/tiles/clubTransfers/CircleBacking.dds" WIDTH="93" HEIGHT="93" X="270" Y="300" VISIBLE="FALSE" />
+      <data ID="members_image3" TYPE="image" PATH="imgAssets/tiles/clubTransfers/CircleBacking.dds" WIDTH="93" HEIGHT="93" X="481" Y="300" VISIBLE="FALSE" />
+      <data ID="members_image4" TYPE="image" PATH="imgAssets/tiles/clubTransfers/CircleBacking.dds" WIDTH="93" HEIGHT="93" X="692" Y="300" VISIBLE="FALSE" />
+      <data ID="members_value1" TYPE="text" FORMAT="HL||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="1" Y="305" />
+      <data ID="members_value2" TYPE="text" FORMAT="HL||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="212" Y="305" />
+      <data ID="members_value3" TYPE="text" FORMAT="HL||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="423" Y="305" />
+      <data ID="members_value4" TYPE="text" FORMAT="HL||center|COLOR_TEXT_PREVIEW" WIDTH="211" HEIGHT="75" X="634" Y="305" />
+      <data ID="table_component" TYPE="component" PATH="game/components/FluxComponents/online/ProTableStatistics.swf" WIDTH="846" HEIGHT="192" X="0" Y="420" />
+      <data ID="table_component2" TYPE="component" PATH="game/components/FluxComponents/online/ProTableStatistics.swf" WIDTH="846" HEIGHT="288" X="0" Y="80" />
+      <data ID="no_data_message" TYPE="text" FORMAT="SL|COLOR_TEXT_PREVIEW_FLUX|center|COLOR_TEXT_PREVIEW_FLUX" TRANSLATE="FALSE" WIDTH="548" HEIGHT="50" X="132" Y="259" />
+      <data ID="spinner_component" TYPE="component" PARAM="3" PATH="online/components/ui/StreamingIcon.swf" WIDTH="200" HEIGHT="200" X="410" Y="305" />
+    </tile>
+  </panel>
+</root>

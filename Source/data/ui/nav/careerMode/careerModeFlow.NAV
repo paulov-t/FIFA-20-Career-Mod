@@ -1,0 +1,523 @@
+{
+	"let":{"GameMode":"career"}
+	,"name":"careermodeflow"
+	,"initial":
+	{
+		"targets":["StartMenu"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel",["CareerGlobalViewModel"]]
+		,["loadViewModel", ["CutSceneViewModel"]]
+		,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MAIN_HUB_BACKGROUND"]]
+	]
+	,"onExit": 
+	[	
+		["unloadViewModel",["CareerGlobalViewModel"]]
+		,["sendAction", ["notify", "telemetryExitGameMode", ".GameMode"] ]
+		,["sendScreenEvent", ["UxExitGameFlow"]]
+		,["sendAction",["navigationBackoutContinue"]]
+		,["sendAction", ["notify", "logpostshipdata"]]
+		,["unloadViewModel", ["CutSceneViewModel"]]		
+	]
+	,"transitions":
+	[
+		{	
+			"event":"overlayTest",
+			"targets":["in_overlayTest"] 		
+		}
+	]
+	,"states":
+	[
+		{
+			"name":"CareerProfileSignOutWait"
+			,"transitions":
+			[
+				{	
+					"event":"profileSignOutComplete", 
+					"targets":["QuitAfterSignOut"]	
+				}
+			]
+		}
+		,{
+			"transitions":
+			[
+				{ 	
+					"event":"goToInviteFlow", 
+					"targets":["CareerInviteAccepted"] 
+				}
+				,{ 
+					"event":"profileSignOut", 
+					"targets":["CareerProfileSignOutWait"] 
+				}
+				,{
+					"event":"GoToQuitAfterSignOut", 
+					"targets":["QuitAfterSignOut"] 
+				}
+				,{ 
+					"event":"QuitMode"
+					,"targets":["StateQuit"]
+				}
+				,{
+					"event":"GotoMainMenuHub"
+					,"targets":["MainMenuHub"]
+				}
+				,{
+					"event":"GotoStartMenu"
+					,"targets":["StartMenu"]
+				}
+				,{
+					"event":"evt_sl_operation_load"
+					,"targets":["LoadCareerFilesScreen"]
+				}
+				,{
+					"event":"PrepareTournament"
+					,"actions":[ ["executeCMAction",["PrepareTournaments"]] ]
+				}
+				,{
+					"event":"navigationBackoutStart"
+					,"targets":["StateQuit"]
+				}
+				,{
+					"event":"ExitCareerMode"
+					,"targets":["QuitAfterExitCareerMode"] 
+				}
+				,{
+					"event":"GoToTitleScreen"
+					,"targets":["QuitToTitleScreen"] 
+				}
+				,{ 	
+					"event":"QuitMatchAfterInvite", 
+					"targets":["QuitFromMatch"] 
+				}
+			]
+			,"states":
+			[
+				{
+					"name":"ContinueCareerModeFlow"
+					,"onEnter":
+					[
+						/* This is a hack to split the continue flow from the load one by using a string instead of DynamicContentType enum value.
+						   Please do not re-use this logic and make sure you are using an enum value as param.*/
+						["loadViewModel", ["LiveScreenViewModel", "DynamicContent_CareerContinue"]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{"event":"advance", "targets":["ContinueEnterCareerModeFlow"]}
+					]
+				}
+				,{
+					"name":"LoadCareerModeFlow"
+					,"onEnter":
+					[
+						["loadViewModel", ["LiveScreenViewModel", ".DynamicContentType.CAREERLOAD"]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{"event":"advance", "targets":["LoadEnterCareerModeFlow"]}
+					]
+				}
+				,{
+					"name":"ContinueEnterCareerModeFlow"
+					,"type":"external"
+					,"file":"/careerMode/enterCareerModeFlow.nav"
+					,"outputs":
+					{
+						"out":"ResumeContinueCareerModeFlow"
+					}
+				}
+				,{
+					"name":"ResumeContinueCareerModeFlow"
+					,"onEnter": 
+					[
+						["invoke", ["evt_sign_out_flow_not_ready"]]
+						,["invoke", ["evt_invite_flow_not_ready"]]
+						,["sendScreenEvent", ["UXSaveGMTrackerInfo", ".GameModeRecordID.GM_CONTINUE_CAREER"]]
+						,["sendAction", ["notify", "telemetryContinueGameMode", ".GameMode"] ]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["PostContinueCareerModeFlow"] 
+						}
+					]
+				}
+				,{
+					"name":"PostContinueCareerModeFlow"
+					,"onEnter": 
+					[ 
+						["sendScreenEvent", ["UxEnterGameFlow", "CareerModeInProgress"]]
+						,["sendScreenEvent", ["UxSetFlowState", ".eState.FCE_CAREER"]]						
+						,["sendScreenEvent", ["LoadCareerMode", "false"]]
+						,["invoke", ["GotoStartMenu"]] 
+					]
+				}
+				,{
+					"name":"NewCareerModeFlow"
+					,"type":"external"
+					,"file":"/careerMode/enterCareerModeFlow.nav"
+					,"outputs":
+					{
+						"out":"ResumeNewCareerModeFlow"
+					}
+				}
+				,{
+					"name":"ResumeNewCareerModeFlow"
+					,"onEnter": 
+					[ 
+						["sendScreenEvent", ["UXSaveGMTrackerInfo", ".GameModeRecordID.GM_CONTINUE_CAREER"]]
+						,["sendAction", ["notify", "telemetryNewGameMode", ".GameMode"] ]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["PostSaveNewCareerModeFlow"] 
+						}
+					]
+				}
+				,{
+					"name":"PostSaveNewCareerModeFlow"
+					,"onEnter": 
+					[ 
+						["sendScreenEvent", ["UxEnterGameFlow", "CareerModeInProgress"]]
+						,["sendScreenEvent", ["UxSetFlowState",".eState.FCE_CAREER"]]						
+						,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SETUP"]]
+						,["sendScreenEvent", ["CareerProfileCheckDone"]]
+						,["invoke", ["GotoStartMenu"]] 
+					]
+				}
+				,{
+					"name":"LoadEnterCareerModeFlow"					
+					,"type":"external"
+					,"file":"/careerMode/enterCareerModeFlow.nav"
+					,"outputs":
+					{
+						"out":"ResumeLoadCareerModeFlow"
+					}
+				}
+				,{
+					"name":"ResumeLoadCareerModeFlow"
+					,"onEnter": 
+					[ 
+						["invoke", ["evt_sign_out_flow_not_ready"]]
+						,["invoke", ["evt_invite_flow_not_ready"]]
+						,["sendScreenEvent", ["UXSaveGMTrackerInfo", ".GameModeRecordID.GM_CONTINUE_CAREER"]]
+						,["sendAction", ["notify", "telemetryLoadGameMode", ".GameMode"] ]						
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["PostSaveLoadCareerModeFlow"] 
+						}
+					]
+				}
+				,{
+					"name":"PostSaveLoadCareerModeFlow"
+					,"onEnter": 
+					[ 
+						["sendScreenEvent", ["UxEnterGameFlow", "CareerModeInProgress"]]
+						,["sendScreenEvent", ["UxSetFlowState", ".eState.FCE_CAREER"]]
+						,["sendScreenEvent", ["LoadCareerMode", "true"]]
+						,["invoke", ["GotoStartMenu"]]
+					]
+				}
+				,{
+					"name":"StartMenu"
+					,"onEnter":
+					[
+						["executeCMAction", ["EnterStartMenu"]]
+					]
+					,"onExit":
+					[
+						["executeCMAction", ["ExitCurrentScreenState"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"Quit"
+							,"targets":["StateQuit"] 
+						}
+						,{
+							"event":"NewCareer"
+							,"targets":["CreateNewCareer"]
+							,"actions":[ ["executeCMAction",["NewGame"]] ]
+						}
+						,{
+							"event":"LoadCareer"
+							,"targets":["SaveProfile"]
+						}
+						,{
+							"event":"LoadCareerAutoSave"
+							,"targets":["MainMenuHub"]
+							,"actions":[ ["executeCMAction",["LoadAutoSaveCareerGame"]] ]
+						}
+					]
+				}
+				,{
+					
+					"type":"external"
+					,"file":"/saveload/load.nav"
+					,"inputs":
+					{
+						"LoadCareerFilesScreen":"LoadScreen"
+					}
+					,"outputs":
+					{
+						"out_Back":"SaveProfile"		/* Unexpected case */
+						,"out_Success":"CareerDynamicContent"
+					}
+					
+				}
+				,{
+					"name":"CareerDynamicContent"
+					,"onEnter":
+					[
+						["loadViewModel",["FluxViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["LiveScreenViewModel"]]
+						,["unloadViewModel",["FluxViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"SaveProfile"
+							,"onEnter":
+							[
+								["if", [["==", ".FCE_TESTBED", true]
+								,[
+									["invoke", ["evt_sl_operation_complete"]]
+								]
+								,[	/*Don't do anything on else */
+								]]]
+								,["executeCMAction", ["LoadGame"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"evt_sl_operation_complete"
+									,"targets":["ChangeStadiumCareerLoad"] 
+								}
+							]
+						}
+						,{
+							"type":"external"
+							,"file":"/reloadfestadiumflow.nav"
+							,"inputs":
+							{
+								"ChangeStadiumCareerLoad" : "TriggerReload"
+							}
+							,"outputs":
+							{
+								"ReloadReady":"ScreenInteraction"
+								,"LoadStarted":"ScreenInteraction"
+							}
+						}
+						,{
+							"name":"ScreenInteraction"
+							,"onEnter":
+							[
+								["sendAction", ["advanceRequest"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["MainMenuHub"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"onEnter":
+					[
+						["invoke", ["evt_sign_out_flow_ready"]]
+						,["invoke", ["evt_invite_flow_ready"]]
+					]
+					,"states":
+					[
+						{
+							"name":"CreateNewCareer"
+							,"type":"external"
+							,"file":"/careerMode/createNewCareerFlow.nav"
+							,"outputs":
+							{
+								"profileSignOut":"profileSignOut"
+							}
+						}
+					]
+				}
+				,{
+					"onEnter":
+					[
+						["invoke", ["evt_sign_out_flow_ready"]]
+						,["invoke", ["evt_invite_flow_ready"]]
+					]
+					,"states":
+					[
+						{
+							"name":"MainMenuHub"
+							,"type":"external"
+							,"file":"/careerMode/mainMenuHubFlow.nav"
+							,"outputs":
+							{
+								"profileSignOut":"CareerProfileSignOutWait"
+								,"out_CareerInviteAccepted":"CareerInviteAccepted"
+							}
+						}
+					]
+				}
+			]
+		}
+		,{
+			"let":{"unloadOnly":"true"}
+			,"onEnter":
+			[
+				["unloadViewModel",["LiveScreenViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"QuitAfterExitCareerMode"
+					,"type":"external"
+					,"file":"/careerMode/exitCareerModeFlow.nav"
+					,"outputs":
+					{
+						"out":"ExitCareerMode"
+					}
+				}
+			]
+		}
+		,{
+			"let":{"unloadOnly":"true"}
+			,"onEnter":
+			[
+				["sendAction", ["fbStartFlowEvent", "gmPrepareForcedExitCareerMode"]] 
+			]
+			,"states":
+			[
+				{
+					"name":"QuitAfterSignOut"
+					,"type":"external"
+					,"file":"/careerMode/exitCareerModeFlow.nav"
+					,"outputs":
+					{
+						"out":"profileSignOut"
+					}
+				}
+			]
+		}
+		,{
+			"let":{"unloadOnly":"true"}
+			,"states":
+			[
+				{
+					"name":"QuitFromMatch"
+					,"type":"external"
+					,"file":"/careerMode/exitCareerModeFlow.nav"
+					,"outputs":
+					{
+						"out":"QuitFromMatchDone"
+					}
+				}
+				,{
+					"name":"QuitFromMatchDone"
+				}
+			]
+		}
+		,{
+			"let":{"unloadOnly":"true"}
+			,"states":
+			[
+				{
+					"name":"QuitToTitleScreen"
+					,"type":"external"
+					,"file":"/careerMode/exitCareerModeFlow.nav"
+					,"outputs":
+					{
+						"out":"SendGoToTitleScreen"
+					}
+				}
+				,{
+					"name":"SendGoToTitleScreen"
+					,"onEnter": 
+					[
+						["invoke", ["GoToTitleScreen"]]
+					]
+				}
+			]
+		}
+		,{
+			"name":"StateQuit"
+			,"type":"external"
+			,"file":"/careerMode/exitCareerModeFlow.nav"
+			,"outputs":
+			{
+				"out":"ExitCareerMode"
+			}
+		}	
+		,{
+			"name":"CareerInviteAccepted"
+			,"initial":
+			{
+				"targets":["QuitAfterInvite"]
+			}
+			,"onEnter":
+			[
+				["sendAction", ["fbStartFlowEvent", "gmPrepareForcedExitCareerMode"]] 
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]]
+				,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]]
+			]
+			,"states":
+			[
+				{
+					"name":"QuitAfterInvite"
+					,"type":"external"
+					,"file":"/careerMode/exitCareerModeFlow.nav"
+					,"outputs":
+					{
+						"out":"out_goToInviteFlow"
+					}
+				}
+			]
+		}
+		,{
+			"name":"in_overlayTest"
+			,"onEnter":
+			[
+				["sendAction", ["feRenderInGame","true"]]
+				,["loadViewModel",["testscreenviewmodel"]]
+				,["loadView",["screen", "game/screens/debug/OverlayTest"]]
+				,["loadScreenController", ["DebugTourTreeOverlay"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["feRenderInGame","false"]]
+				,["unloadView",["screen", "game/screens/debug/OverlayTest"]]
+				,["unloadViewModel",["testscreenviewmodel"]]
+				,["unloadScreenController", ["DebugTourTreeOverlay"]]
+				
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["MainMenuHub"]
+				}
+			]
+		}
+	]
+}
+

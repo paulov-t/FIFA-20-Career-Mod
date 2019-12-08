@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="CalibrationHub" HUB_VERSION="4">
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <buttons>
+     <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="back" />
+     <button ID="OPTION_TOP" HINT="RestoreDefaults" ACTION="ACTION_BUTTON_Y" />
+     <button ID="R2" HINT="TXT_OVERSCAN_INCREASE" ACTION="ACTION_BUTTON_RB"/>
+     <button ID="L2" HINT="TXT_OVERSCAN_DECREASE" ACTION="ACTION_BUTTON_LB"/>
+  </buttons>
+  <panel_set>
+    <panel NAME="CALIBRATION_PANEL" LABEL="CALIBRATION" IS_TAB="FALSE">
+        <layout NAME="BASE_WITH_COVER" X="0" Y="0">
+            <tile NAME="BG_COVER" X="-10000" Y="-10000" />        
+        </layout>
+        <layout NAME="BRIGHTNESS_SCREEN" X="0" Y="0" EXTEND="BASE_WITH_COVER">
+            <tile NAME="CALIBRATION_BRIGHTNESS" X="0" Y="0" />
+        </layout>
+        <layout NAME="COLOR_SCREEN" X="0" Y="0" EXTEND="BASE_WITH_COVER">
+            <tile NAME="CALIBRATION_COLOR" X="0" Y="0" />
+        </layout>
+        <layout NAME="OVERSCAN_SCREEN" X="0" Y="0">
+            <tile NAME="CALIBRATION_OVERSCAN" X="0" Y="0" />
+        </layout>
+        <layout NAME="HDR_SCREEN" X="0" Y="0">
+            <tile NAME="CALIBRATION_HDR" X="0" Y="0" />
+        </layout>
+    </panel>
+  </panel_set>
+  
+  <panel NAME="CALIBRATION_PANEL">
+	<variable_set>
+	    <variable id="numPanels" type="int" />
+    </variable_set>
+    
+    <tile NAME="BG_COVER" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">>
+        <properties WIDTH="21920" HEIGHT="21080"/>
+        <data ID="BG" TYPE="rectangle" PARAM="COLOR_FILL_BACKGROUND_HDR_CALIBRATION">
+            <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+            <align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+        </data>
+    </tile>
+
+    <tile NAME="CALIBRATION_BRIGHTNESS" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+        <properties WIDTH="1920" HEIGHT="1080"/>
+        
+        <data ID="LOGO_IMAGE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/calibration/eafaded.dds" WIDTH="587" HEIGHT="302" X="667" Y="272" />
+        <data ID="BW_IMAGE" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/calibration/brightness.png" WIDTH="1800" HEIGHT="379" X="60" Y="600" />
+
+        <data ID="TITLE" TYPE="text" PARAM="AdjustTVBrightnessTitle" FORMAT="FONT_BOLD_PREVIEW" X="180" Y="70"/>
+        <data ID="DESC"  TYPE="text" PARAM="AdjustTVBrightness" FORMAT="FONT_MEDIUM_INACTIVE_LABEL_DESCRIPTION||center" X="100" Y="160" WIDTH="1720" />
+        <data ID="BULLET_LIST" TYPE="component" PATH="game/components/BulletList.swf" PARAM="@#Pattern(@numPanels,*|0|RAS_LR||true|ANCHOR_SIDE_LEFT|ANCHOR_SIDE_TOP)" WIDTH="360" HEIGHT="50" X="180" Y="120" />
+   </tile>
+   
+    <tile NAME="CALIBRATION_COLOR" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+        <properties WIDTH="1920" HEIGHT="1080"/>
+       
+        <data ID="SHAPE" TYPE="rectangle" X="0" Y="0" WIDTH="1920" HEIGHT="375" PARAM="0x000000" />
+        <data ID="SHAPE0" TYPE="rectangle" X="0" Y="375" WIDTH="274" HEIGHT="360" PARAM="0xC0C0C0" />
+        <data ID="SHAPE1" TYPE="rectangle" X="274" Y="375" WIDTH="275" HEIGHT="360" PARAM="0xbfbf00" />
+        <data ID="SHAPE2" TYPE="rectangle" X="548" Y="375" WIDTH="275" HEIGHT="360" PARAM="0x00bfbf" />
+        <data ID="SHAPE3" TYPE="rectangle" X="823" Y="375" WIDTH="273" HEIGHT="360" PARAM="0x00bf00" />
+        <data ID="SHAPE4" TYPE="rectangle" X="1096" Y="375" WIDTH="275" HEIGHT="360" PARAM="0xbf00bf" />
+        <data ID="SHAPE5" TYPE="rectangle" X="1370" Y="375" WIDTH="275" HEIGHT="360" PARAM="0xbf0000" />
+        <data ID="SHAPE6" TYPE="rectangle" X="1645" Y="375" WIDTH="275" HEIGHT="360" PARAM="0x0000c0" />
+        <data ID="SHAPE7" TYPE="rectangle" X="0" Y="735" WIDTH="275" HEIGHT="105" PARAM="0x0000bf" />
+        <data ID="SHAPE8" TYPE="rectangle" X="274" Y="735" WIDTH="275" HEIGHT="105" PARAM="0x131313" />
+        <data ID="SHAPE9" TYPE="rectangle" X="548" Y="735" WIDTH="275" HEIGHT="105" PARAM="0xc000c0" />
+        <data ID="SHAPE10" TYPE="rectangle" X="823" Y="735" WIDTH="273" HEIGHT="105" PARAM="0x131313" />
+        <data ID="SHAPE11" TYPE="rectangle" X="1096" Y="735" WIDTH="275" HEIGHT="105" PARAM="0x00bfbf" />
+        <data ID="SHAPE12" TYPE="rectangle" X="1370" Y="735" WIDTH="275" HEIGHT="105" PARAM="0x131313" />
+        <data ID="SHAPE13" TYPE="rectangle" X="1645" Y="735" WIDTH="275" HEIGHT="105" PARAM="0xc0c0c0" />
+        <data ID="SHAPE14" TYPE="rectangle" X="0" Y="840" WIDTH="342" HEIGHT="240" PARAM="0x083e59" />
+        <data ID="SHAPE15" TYPE="rectangle" X="342" Y="840" WIDTH="342" HEIGHT="240" PARAM="0xffffff" />
+        <data ID="SHAPE16" TYPE="rectangle" X="684" Y="840" WIDTH="342" HEIGHT="240" PARAM="0x39007d" />
+        <data ID="SHAPE17" TYPE="rectangle" X="1026" Y="840" WIDTH="342" HEIGHT="240" PARAM="0x131313" />
+        <data ID="SHAPE18" TYPE="rectangle" X="1368" Y="840" WIDTH="93" HEIGHT="240" PARAM="0x090909" />
+        <data ID="SHAPE19" TYPE="rectangle" X="1461" Y="840" WIDTH="91" HEIGHT="240" PARAM="0x131313" />
+        <data ID="SHAPE20" TYPE="rectangle" X="1552" Y="840" WIDTH="93" HEIGHT="240" PARAM="0x1d1d1d" />
+        <data ID="SHAPE21" TYPE="rectangle" X="1645" Y="840" WIDTH="275" HEIGHT="240" PARAM="0x131313" />
+
+        <data ID="TITLE" TYPE="text" PARAM="AdjustTVColorsTitle" FORMAT="FONT_BOLD_PREVIEW" X="180" Y="70"/>
+        <data ID="DESC"  TYPE="text" PARAM="HDTV_Calibration" FORMAT="FONT_MEDIUM_INACTIVE_LABEL_DESCRIPTION||center" X="100" Y="160" WIDTH="1720" />
+        <data ID="BULLET_LIST" TYPE="component" PATH="game/components/BulletList.swf" PARAM="@#Pattern(@numPanels,*|1|RAS_LR||true|ANCHOR_SIDE_LEFT|ANCHOR_SIDE_TOP)" WIDTH="360" HEIGHT="50" X="180" Y="120" />
+   </tile>
+
+    <tile NAME="CALIBRATION_OVERSCAN" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+        <properties WIDTH="1920" HEIGHT="1080"/>
+        
+        <data ID="BOX1_TOP"     TYPE="rectangle" X="0"      Y="0"    WIDTH="1920" HEIGHT="4"     PARAM="0xE6E6E6" />
+        <data ID="BOX1_BOTTOM"  TYPE="rectangle" X="0"      Y="1076" WIDTH="1920" HEIGHT="4"     PARAM="0xE6E6E6" />
+        <data ID="BOX1_LEFT"    TYPE="rectangle" X="0"      Y="4"    WIDTH="4"    HEIGHT="1072"  PARAM="0xE6E6E6" />
+        <data ID="BOX1_RIGHT"   TYPE="rectangle" X="1916"   Y="4"    WIDTH="4"    HEIGHT="1072"  PARAM="0xE6E6E6" />
+
+        <data ID="BOX2_TOP"     TYPE="rectangle" X="100"    Y="60"      WIDTH="1720" HEIGHT="4"    PARAM="0xE6E6E6" />
+        <data ID="BOX2_BOTTOM"  TYPE="rectangle" X="100"    Y="1016"    WIDTH="1720" HEIGHT="4"    PARAM="0xE6E6E6" />
+        <data ID="BOX2_LEFT"    TYPE="rectangle" X="100"    Y="64"      WIDTH="4"    HEIGHT="952"  PARAM="0xE6E6E6" />
+        <data ID="BOX2_RIGHT"   TYPE="rectangle" X="1816"   Y="64"      WIDTH="4"    HEIGHT="952"  PARAM="0xE6E6E6" />
+
+        <data ID="BOX_COVER" TYPE="rectangle" X="104" Y="64" WIDTH="1712" HEIGHT="165" PARAM="0x000000" UHLALPHA="50" HLALPHA="50" />   
+        
+        <data ID="TITLE" TYPE="text" PARAM="TXT_OVERSCAN_TITLE" FORMAT="FONT_BOLD_PREVIEW" X="180" Y="70"/>
+        <data ID="DESC"  TYPE="text" PARAM="TXT_OVERSCAN_DESC"  FORMAT="FONT_MEDIUM_INACTIVE_LABEL_DESCRIPTION||center" X="100" Y="160" WIDTH="1720" />
+        <data ID="BULLET_LIST" TYPE="component" PATH="game/components/BulletList.swf" PARAM="@#Pattern(@numPanels,*|2|RAS_LR||true|ANCHOR_SIDE_LEFT|ANCHOR_SIDE_TOP)" WIDTH="360" HEIGHT="50" X="180" Y="120" />
+    </tile>
+
+    <tile NAME="CALIBRATION_HDR" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND">
+        <properties WIDTH="1920" HEIGHT="1080"/>
+        <data ID="OPTIONS" TYPE="component" PATH="game/components/OptionList.swf" DATAPROVIDERID="OptionListDP" PARAM="" WIDTH="860" HEIGHT="440" Y="896" FORMAT="|COLOR_TEXT_HIGHLIGHT_ALTERNATE||COLOR_TEXT_UNHIGHLIGHT_ALTERNATE">
+            <align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+        </data>
+        
+        <data ID="TITLE" TYPE="text" PARAM="TXT_HDR_TITLE" FORMAT="FONT_BOLD_PREVIEW" X="180" Y="70" />
+        <data ID="BULLET_LIST" TYPE="component" PATH="game/components/BulletList.swf" PARAM="@#Pattern(@numPanels,*|3|RAS_LR||true|ANCHOR_SIDE_LEFT|ANCHOR_SIDE_TOP)" WIDTH="360" HEIGHT="50" X="180" Y="120" />
+   </tile>
+    
+   </panel>
+  </root>

@@ -1,0 +1,46 @@
+{
+	"name":"performGuestProfileCheckFlow"
+	, "initial":
+	{
+			"targets":["checkGuestProfile"]
+	}
+	,"states":
+	[
+		{
+			"name":"checkGuestProfile"
+			,"onEnter": 
+			[ 
+				["sendScreenEvent", ["GuestSelectedTileCheck",""]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"false"
+					,"targets":["success"]
+				}
+				,{
+					"event":"true"
+					,"targets":["showGuestSelectedTilePopup"]
+				}
+			]
+		}
+		,{
+			"name":"showGuestSelectedTilePopup" 
+			,"onEnter":
+			[
+				["loadView", ["popup","GuestSelectedTilePopup", "TXT_CANT_ACCESS_AS_GUEST|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "GuestSelectedTilePopup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["fail"]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+	<hub_settings NAME="StoryPersonalSocialMedia" HUB_VERSION="3">
+		<artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+		<helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+		<tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+	</hub_settings>
+	<panel_set>
+		<panel NAME="PERSONAL_SOCIAL_MEDIA" IS_TAB="FALSE">
+			<layout NAME="PERSONAL_SOCIAL_MEDIA_SCREEN" X="170" Y="0">
+				<tile NAME="PERSONAL_SOCIAL_MEDIA_LIST" X="0" Y="0" />
+			</layout>
+		</panel>
+	</panel_set>
+	<panel NAME="PERSONAL_SOCIAL_MEDIA">
+		<variable_set>
+			<variable id="assetImage" type="string" />
+			<variable id="assetUser" type="string" />
+			<variable id="loadingBarProgress" type="string" />
+			<variable id="accountFullName" type="string" />
+			<variable id="socialMediaText" type="string" />
+			<variable id="personalityParams" type="string" />
+			<variable id="iconCryParams" type="string" />
+			<variable id="iconHappyParams" type="string" />
+			<variable id="iconOMGParams" type="string" />
+			<variable id="iconHeartParams" type="string" />
+		</variable_set>
+		<tile NAME="PERSONAL_SOCIAL_MEDIA_LIST" TYPE="EXPANDABLE_TILE" DESTINATION="advance" DECORATORS_RANGE="NO_BACKGROUND">
+			<properties WIDTH="1000" HEIGHT="942" />
+			<data ID="background" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" WIDTH="570" HEIGHT="845" X="0" Y="107" />
+			<data ID="barbg" TYPE="bar" PARAM="100" FORMAT="COLOR_PURE_BLACK" UHLALPHA="20" HLALPHA="20" HEIGHT="10" >
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="background" />
+				<align ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" TARGET="background" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" TARGET="background" />
+			</data>
+			<data ID="bar" PARAM="@loadingBarProgress" FORMAT="|COLOR_FILL_ALERT||COLOR_FILL_ALERT" TYPE="bar" >
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="barbg" />
+				<align ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" TARGET="barbg" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" TARGET="barbg" />
+				<align ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" TARGET="barbg" />
+			</data>
+			<data ID="assetImage" TYPE="asset" PARAM="@assetImage" PATH="socialMedia/images_lg" WIDTH="529" HEIGHT="505">
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" TARGET="barbg" OFFSET="20" />
+				<align ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" TARGET="background" />
+			</data>
+			<data ID="reactionAnchor" TYPE="asset" PATH="eventIcon" PARAM="Inactive_BaseEmoji" WIDTH="64">
+				<align ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="WIDTH" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" TARGET="assetImage" OFFSET="-20" />
+				<align ELEMENT_ATTRIBUTE="BOTTOM" TARGET_ATTRIBUTE="BOTTOM" TARGET="assetImage" OFFSET="-20" />
+			</data>
+			<data ID="personalityIcon" TYPE="component" PARAM="@personalityParams" PATH="game/components/FluxComponents/ParticleEmitter.swf">
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET="reactionAnchor" TARGET_ATTRIBUTE="LEFT" />
+				<align ELEMENT_ATTRIBUTE="WIDTH" TARGET="reactionAnchor" TARGET_ATTRIBUTE="WIDTH" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET="reactionAnchor" TARGET_ATTRIBUTE="TOP" />
+				<align ELEMENT_ATTRIBUTE="HEIGHT" TARGET="reactionAnchor" TARGET_ATTRIBUTE="HEIGHT" />
+			</data>
+			<data ID="reactionSad" TYPE="component" PARAM="@iconCryParams" PATH="game/components/FluxComponents/ParticleEmitter.swf" >
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" TARGET="reactionAnchor" />
+			</data>
+			<data ID="reactionHappy" TYPE="component" PARAM="@iconHappyParams" PATH="game/components/FluxComponents/ParticleEmitter.swf" >
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" TARGET="reactionAnchor" />
+			</data>
+			<data ID="reactionOMG" TYPE="component" PARAM="@iconOMGParams" PATH="game/components/FluxComponents/ParticleEmitter.swf" >
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" TARGET="reactionAnchor" />
+			</data>
+			<data ID="reactionHeart" TYPE="component" PARAM="@iconHeartParams" PATH="game/components/FluxComponents/ParticleEmitter.swf" >
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" TARGET="reactionAnchor" />
+				<align ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" TARGET="reactionAnchor" />
+			</data>
+			<data ID="assetUser" TYPE="asset" PARAM="@assetUser" PATH="socialMedia/users" WIDTH="85" HEIGHT="85" >
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="assetImage" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" TARGET="assetImage" OFFSET="25" />
+			</data>
+			<data ID="accountFullName" TYPE="title" FORMAT="HS|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX|||middle" PARAM="@accountFullName" TRANSLATE="FALSE">
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" TARGET="assetUser" OFFSET="5" />
+				<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" TARGET="assetUser" />
+				<align ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" TARGET="assetImage" />
+			</data>
+			<data ID="socialMediaText" TYPE="text" FORMAT="FONT_CATEGORY_TITLE_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="@socialMediaText" TRANSLATE="FALSE">
+				<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="assetImage" />
+				<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" TARGET="assetUser" OFFSET="20" />
+				<align ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" TARGET="assetImage" />
+			</data>
+		</tile>
+	</panel>
+</root>

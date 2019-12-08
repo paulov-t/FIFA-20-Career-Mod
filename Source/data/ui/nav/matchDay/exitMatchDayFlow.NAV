@@ -1,0 +1,34 @@
+{
+	"name":"exitMatchDayFlow"
+	,"initial":
+	{
+		"targets":["unloadCinematicSublevel"]
+	}
+	,"states":
+	[
+		{
+			"name":"unloadCinematicSublevel"
+			,"onEnter": 
+			[
+				["if", [["==", ".KICKOFF_CINEMATICS_ENABLED", true]
+				,[
+				["sendAction", ["fbStartFlowEvent", "UnloadPreMatchCinematicsSublevel"]]
+				]
+				,[	
+					["invoke", ["ExitFlow"]]
+				]]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"PreMatchCinematicsSublevelUnloaded"
+					,"targets":["out"]
+				}			
+				,{
+					"event":"ExitFlow"
+					,"targets":["out"]
+				}				
+			]
+		}
+	]
+}

@@ -1,0 +1,26 @@
+{
+	"name":"ManagerModeSeasonObjectives"
+	,"onEnter":
+	[
+		["loadViewModel", ["TcmObjectivesViewModel", ".targetPanel"]]
+		,["loadView", ["screen", "game/screens/career/managermode/TcmObjectivesHub"]]
+	]
+	,"onExit":
+	[
+		["unloadView", ["screen", "game/screens/career/managermode/TcmObjectivesHub"]]
+		,["unloadViewModel", ["TcmObjectivesViewModel"]]
+	]
+	,"transitions":
+	[
+		{
+			/* this is sent from viewmodel */
+			"event":"back"
+			,"targets":["Back"] 
+		}
+		,{
+			/* this is sent from screen controller, with capital B */
+			"event":"Back"
+			,"targets":["Back"] 
+		}
+	]
+}

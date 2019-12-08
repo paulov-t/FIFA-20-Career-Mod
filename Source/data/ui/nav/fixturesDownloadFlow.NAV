@@ -1,0 +1,15 @@
+{
+	"name":"fixturesDownload"
+	,"onEnter":
+	[
+		["loadViewModel",["FixturesDownloadViewModel"]]
+	]
+    ,"onExit":
+	[
+		["unloadViewModel",["FixturesDownloadViewModel"]]
+	]
+	,"transitions":
+	[
+		{"event":"advance","targets":["advance"]}
+	]				
+}

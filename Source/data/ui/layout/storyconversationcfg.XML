@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryConversation" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+	<tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE"/>
+  </hub_settings>
+  <buttons>
+    <button ID="BACK" HINT="Exit" ACTION="ACTION_BACKOUT" />
+  </buttons>
+  <panel_set>
+    <panel NAME="CONVERSATION_MAIN" IS_TAB="FALSE">
+      <layout NAME="CONVERSATION_WHEEL_SOLO" X="0" Y="0">
+        <tile NAME="CONVERSATION_WHEEL" X="0" Y="0" />
+      </layout>
+      <layout NAME="CONVERSATION_WHEEL_AND_PHOTO" EXTEND="CONVERSATION_WHEEL_SOLO">
+        <tile NAME="KIM_PHOTO" X="101" Y="180" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="CONVERSATION_MAIN">
+    <tile NAME="CONVERSATION_WHEEL" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="TRUE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="1920" HEIGHT="1080" />
+      <data ID="conversationWheel" TYPE="component" PATH="game/components/ConversationWheel.swf" DATAPROVIDERID="SMConversationDP" X="960" Y="948" />
+    </tile>
+    <tile NAME="KIM_PHOTO" TYPE="EXPANDABLE_TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="480" HEIGHT="460" />
+	  <data ID="background" TYPE="rectangle" PARAM="COLOR_FILL_PANEL_UNHIGHLIGHT_FLUX" HEIGHT="460" />
+	  <data ID="assetImage" TYPE="asset" PARAM="KimPhoto" PATH="socialMedia/images_lg" WIDTH="440" HEIGHT="252">
+		<align ELEMENT_ATTRIBUTE="TOP" OFFSET="20" />
+		<align ELEMENT_ATTRIBUTE="CENTER" />
+	  </data>
+	  <data ID="assetUser" TYPE="asset"  PARAM="profile22410" PATH="socialMedia/users" WIDTH="85" HEIGHT="85">
+		<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="assetImage" />
+		<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" TARGET="assetImage" OFFSET="5" />
+	  </data>
+	  <data ID="accountFullName" TYPE="title" FORMAT="HS|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX|||middle" PARAM="SM_OSM_MeganRapinoe">
+		<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" TARGET="assetUser" OFFSET="5" />
+		<align ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" TARGET="assetUser" />
+		<align ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" TARGET="assetImage" />
+	  </data>
+	  <data ID="socialMediaText" TYPE="text" FORMAT="FONT_CATEGORY_TITLE_FHD|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="19_2_KSC_3300_1_OSM_KimPhoto">
+		<align ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" TARGET="assetImage" />
+		<align ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" TARGET="assetUser" OFFSET="5" />
+		<align ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" TARGET="assetImage" />
+	  </data>
+    </tile>
+  </panel>
+ </root>

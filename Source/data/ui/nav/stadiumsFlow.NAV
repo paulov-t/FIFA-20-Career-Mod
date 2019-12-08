@@ -1,0 +1,60 @@
+{
+	"name":"stadiumsFlow"
+	,"onEnter":
+	[
+		["loadViewModel",["StadiumAssignmentViewModel", "offline"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel",["StadiumAssignmentViewModel"]]
+	]
+	, "initial":
+	{
+		"targets":["selectFavoriteTeam"]
+	}
+	,"states":
+	[
+		{
+			"name":"selectFavoriteTeam"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["SetSelectTeamForStadiumScreen",""]]
+				,["loadView",["screen", "game/screens/misc/SelectFavoriteTeam"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/misc/SelectFavoriteTeam"]]
+				,["sendScreenEvent", ["ResetSelectTeamContext",""]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["stadiumAssignment"]
+				}
+				,{
+					"event":"back"
+					,"targets":["back"]
+				}
+			]				
+		}
+		,{
+			"name":"stadiumAssignment"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/stadiumAssignment/StadiumAssignment"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/stadiumAssignment/StadiumAssignment"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["selectFavoriteTeam"]
+				}
+			]
+		}
+	]
+}

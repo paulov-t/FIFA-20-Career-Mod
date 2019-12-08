@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="KickOffUpsellHub" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+    <component PATH="game/components/BackgroundImage.swf" X="685" Y="0" DATAPROVIDERID="BACKGROUND_IMAGE_DP"/>
+  </components>
+  <panel_set>
+    <panel NAME="KICK_OFF_UPSELL" LABEL="" IS_TAB="FALSE">
+      <layout NAME="UPSELL_LAYOUT" X="134" Y="0">
+        <tile NAME="UPSELL_LIST" X="0" Y="790" />
+        <tile NAME="UPSELL_TILE" X="0" Y="0" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="KICK_OFF_UPSELL">  
+	<variable_set>
+		<variable id="upsellLabel" type="string"/>
+		<variable id="upsellDescLabel" type="string"/>
+	</variable_set>
+	<tile NAME="UPSELL_LIST" TYPE="TILE_LIST" SELECTABLE="FALSE" DATAPROVIDERID="GridControlDP" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="600" HEIGHT="104" />      
+      <data ID="upsellOptionLabel" TYPE="component" PATH="game/components/FluxComponents/FluxTextBox.swf" PARAM ="txt_ko2_switch_id|1" FORMAT="FONT_MEDIUM_INACTIVE_LABEL_PREVIEW|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|FONT_HEAVY_INACTIVE_LABEL_PREVIEW|FONT_MEDIUM_INACTIVE_LABEL_PREVIEW" X="18" Y="8" WIDTH="550" HEIGHT="267" />
+	</tile>
+    <tile NAME="UPSELL_TILE" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+	  <data ID="upsellTitle" TYPE="text" FORMAT="FONT_TILE_HXL|COLOR_FILL_HIGHLIGHT|left|COLOR_FILL_HIGHLIGHT" PARAM="@upsellLabel" HEIGHT="500" WIDTH="1500" X="0" Y="207" TRANSLATE="FALSE"/>
+	  <data ID="upsellDesc" TYPE="text" FORMAT="FONT_MEDIUM_ACTIVE_LABEL_PREVIEW|COLOR_TEXT_UNHIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="@upsellDescLabel" HEIGHT="400" WIDTH="800" X="0" Y="334" TRANSLATE="FALSE"/>
+	  <data ID="upsellBenefitsLabel" TYPE="text" FORMAT="FONT_TILE_TSL|COLOR_TEXT_UNHIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="KICKOFF_UPSELL_BENEFITS_LABEL" HEIGHT="400" WIDTH="800" X="0" Y="474" >
+		<align TARGET="upsellDesc" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="20" />
+	  </data>
+	  <data ID="upsellBenefit1" TYPE="text" FORMAT="FONT_MEDIUM_ACTIVE_LABEL_PREVIEW|COLOR_TEXT_UNHIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="KICKOFF_UPSELL_BENEFIT_1" HEIGHT="400" WIDTH="800" X="70" Y="548" >
+		<align TARGET="upsellBenefitsLabel" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="5" />
+	  </data>
+	  <data ID="upsellBenefit2" TYPE="text" FORMAT="FONT_MEDIUM_ACTIVE_LABEL_PREVIEW|COLOR_TEXT_UNHIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="KICKOFF_UPSELL_BENEFIT_2" HEIGHT="400" WIDTH="800" X="70" Y="618" >
+		<align TARGET="upsellBenefit1" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="5" />
+	  </data>
+	  <data ID="upsellBenefitArrow1" TYPE="asset" PATH="kickOff/upsell" PARAM="Arrow" X="40" Y="555" WIDTH="15" HEIGHT="24">
+		<align TARGET="upsellBenefit1" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="7" />
+	  </data>
+	  <data ID="upsellBenefitArrow2" TYPE="asset" PATH="kickOff/upsell" PARAM="Arrow" X="40" Y="625" WIDTH="15" HEIGHT="24">
+		<align TARGET="upsellBenefit2" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="7" />
+	  </data>    
+	  <properties WIDTH="1800" HEIGHT="800"  />  
+    </tile>
+  </panel>
+ </root>

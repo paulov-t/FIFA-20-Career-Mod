@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="AvatarDebugCustomizationHub" HUB_VERSION="3">
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="AVATAR_DEBUG_CUSTOMIZATION" IS_TAB="TRUE" LABEL="AVATAR_HEAD">
+	  <buttons>
+		<button ID="BACK" HINT="Back" ACTION="ACTION_BACKOUT" />
+	  </buttons>
+      <layout NAME="AVATAR_DEBUG_CUSTOMIZATION_LAYOUT" X="209" Y="150">
+		<tile NAME="AVATAR_DEBUG_CUSTOMIZATION_TILE" X="0" Y="0" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="AVATAR_DEBUG_CUSTOMIZATION">
+	  <tile NAME="AVATAR_DEBUG_CUSTOMIZATION_TILE" TYPE="TILE" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">	
+      	<properties WIDTH="225" HEIGHT="75"/>
+	</tile>
+</panel>
+</root>

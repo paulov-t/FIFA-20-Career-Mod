@@ -1,0 +1,65 @@
+{
+	"name":"futSideSelectFlow"
+	,"initial":
+	{
+		"targets":["futSideSelect"]
+	}
+	,"onEnter":
+	[
+		["sendScreenEvent", ["UxSetFlowSubState",".eSubState.PREGAME"]]
+		,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MATCH_FLOW_BACKGROUND"]]
+	]
+	,"states":
+	[
+		{
+			"name":"futSideSelect"
+			,"onEnter":
+			[
+				["loadViewModel",["futsideselectviewmodel"]]
+				,["loadView",["screen", "game/screens/playNow/SideSelect"]]
+				,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/playNow/SideSelect"]]
+				,["unloadViewModel",["futsideselectviewmodel"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["advance"]
+				}
+				,{
+					"event":"GotoControllerSetup"
+					,"targets":["controllerSetup"]
+				}
+				,{
+					"event":"back"
+					,"targets":["back"]
+				}
+				,{
+					"event":"GotoSideSelect"
+				}
+			]
+		}
+		,{
+			"name":"controllerSetup"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/settings/controllerAndGameSetup"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/settings/controllerAndGameSetup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["futSideSelect"]
+				}
+			]
+		}
+	]
+}		

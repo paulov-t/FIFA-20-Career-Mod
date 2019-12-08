@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2015 15:27:39" VERSION="2">
+  <hub_settings NAME="StoryChapterSummary" HUB_VERSION="3">
+    <artasset_paths DEFAULT_TILES_ASSETTYPE="storyHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+    <component PATH="game/components/BackgroundImage.swf" X="0" Y="0" DATAPROVIDERID="BACKGROUND_IMAGE_DP"/>
+  </components>
+  <panel_set>
+    <panel NAME="STORY_CHAPTER_SUMMARY_PANEL" IS_TAB="FALSE" >
+      <buttons>
+        <button ID="ADVANCE" HINT="Advance" ACTION="ACTION_ADVANCE" />
+      </buttons>
+      <layout NAME="STORY_CHAPTER_SUMMARY_OBJECTIVES" X="90" Y="0">
+		<tile NAME="OBJECTIVES" X="125" Y="285" SELECTABLE="FALSE" />
+		<tile NAME="HELP_BUTTON_SPACER" X="-90" WIDTH="1920" HEIGHT="950" />
+	    <tile NAME="HEADER" X="91" Y="85" SELECTABLE="FALSE" />
+      </layout>
+	  <layout NAME="STORY_CHAPTER_SUMMARY_CHARACTER_SUMMARY" EXTEND="STORY_CHAPTER_SUMMARY_OBJECTIVES" REMOVE="OBJECTIVES">
+		<tile NAME="CHARACTER_SUMMARY_TILE" X="-90" Y="185" SELECTABLE="TRUE" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_SINGLE_REWARD" EXTEND="STORY_CHAPTER_SUMMARY_OBJECTIVES" REMOVE="OBJECTIVES">
+		<tile NAME="PRIMARY_REWARD" X="-90" Y="285" WIDTH="1920" HEIGHT="650" SELECTABLE="FALSE" />
+		<tile NAME="CHAPTER_COMPLETION" X="1450" Y="100" SELECTABLE="TRUE" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_SINGLE_REWARD_WOMEN_TOURNAMENT" EXTEND="STORY_CHAPTER_SUMMARY_OBJECTIVES" REMOVE="OBJECTIVES">
+		<tile NAME="PRIMARY_REWARD" X="-90" Y="285" WIDTH="1920" HEIGHT="650" SELECTABLE="TRUE" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_DOUBLE_REWARD" EXTEND="STORY_CHAPTER_SUMMARY_OBJECTIVES" REMOVE="OBJECTIVES">
+		<tile NAME="PRIMARY_REWARD" X="-90" Y="240" WIDTH="960" HEIGHT="650" SELECTABLE="TRUE" />
+		<tile NAME="SECONDARY_REWARD" X="870" Y="240" WIDTH="960" HEIGHT="650" SELECTABLE="FALSE" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_ADVANCE_CONTINUE_KICKOFF_FUT" EXTEND="STORY_CHAPTER_SUMMARY_DOUBLE_REWARD">
+	    <tile NAME="CONTINUE_THE_JOURNEY" X="353" Y="833" />
+		<tile NAME="ADVANCE_TO_KICK_OFF" X="701" Y="833" />
+		<tile NAME="ADVANCE_TO_FUT" X="1049" Y="833" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_ADVANCE_CONTINUE_FUT_KICKOFF" EXTEND="STORY_CHAPTER_SUMMARY_DOUBLE_REWARD">
+	    <tile NAME="CONTINUE_THE_JOURNEY" X="353" Y="833" />
+		<tile NAME="ADVANCE_TO_FUT" X="701" Y="833" />
+		<tile NAME="ADVANCE_TO_KICK_OFF" X="1049" Y="833" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_ADVANCE_CONTINUE_FUT" EXTEND="STORY_CHAPTER_SUMMARY_SINGLE_REWARD">
+	    <tile NAME="CONTINUE_THE_JOURNEY" X="527" Y="833" />
+		<tile NAME="ADVANCE_TO_FUT" X="875" Y="833" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_ADVANCE_CAREER_FUT_QUIT" EXTEND="STORY_CHAPTER_SUMMARY_DOUBLE_REWARD">
+	    <tile NAME="CONTINUE_THE_JOURNEY" X="353" Y="833" />
+		<tile NAME="ADVANCE_TO_CAREER" X="701" Y="833" />
+		<tile NAME="ADVANCE_TO_FUT" X="1049" Y="833" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_ADVANCE_FUT_CAREER_QUIT" EXTEND="STORY_CHAPTER_SUMMARY_DOUBLE_REWARD">
+		<tile NAME="CONTINUE_THE_JOURNEY" X="353" Y="833" />
+	    <tile NAME="ADVANCE_TO_FUT" X="701" Y="833" />
+		<tile NAME="ADVANCE_TO_CAREER" X="1049" Y="833" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_ADVANCE_WOMEN_TOURNAMENT_FUT_QUIT" EXTEND="STORY_CHAPTER_SUMMARY_SINGLE_REWARD_WOMEN_TOURNAMENT">
+		<tile NAME="CONTINUE_THE_JOURNEY" X="353" Y="833" />
+		<tile NAME="ADVANCE_TO_WOMEN_TOURNAMENT" X="701" Y="833" />
+		<tile NAME="ADVANCE_TO_FUT" X="1049" Y="833" />
+      </layout>
+      <layout NAME="STORY_CHAPTER_SUMMARY_ADVANCE_FUT_WOMEN_TOURNAMENT_QUIT" EXTEND="STORY_CHAPTER_SUMMARY_SINGLE_REWARD_WOMEN_TOURNAMENT">
+		<tile NAME="CONTINUE_THE_JOURNEY" X="353" Y="833" />
+		<tile NAME="ADVANCE_TO_FUT" X="701" Y="833" />
+		<tile NAME="ADVANCE_TO_WOMEN_TOURNAMENT" X="1049" Y="833" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="STORY_CHAPTER_SUMMARY_PANEL">
+	  <variable_set>
+		  <variable id="primaryRewardTitle" type="string"/>
+		  <variable id="primaryRewardDescription" type="string"/>
+		  <variable id="primaryRewardAssetType" type="string"/>
+		  <variable id="primaryRewardAssetId" type="string"/>
+		  <variable id="secondaryRewardTitle" type="string"/>
+		  <variable id="secondaryRewardDescription" type="string"/>
+		  <variable id="secondaryRewardAssetType" type="string"/>
+		  <variable id="secondaryRewardAssetId" type="string"/>
+		  <variable id="showLock" type="bool"/>
+		  <variable id="numChaptersComplete" type="string"/>
+	  </variable_set>
+	<tile NAME="HEADER" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" DATAPROVIDERID="STORY_CHAPTER_PROGRESSION_TILE_DP">
+      <properties WIDTH="1558" HEIGHT="150" />
+      <data ID="subTitle" TYPE="text" FORMAT="TSL|COLOR_TEXT_STORY_SUB_TITLE|center|COLOR_TEXT_STORY_SUB_TITLE" TRANSLATE="FALSE" HEIGHT="75" WIDTH="1558" X="0" Y="0"  />
+      <data ID="title" TYPE="text" FORMAT="HL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" TRANSLATE="FALSE" HEIGHT="75" WIDTH="1558" X="0" Y="36"  />
+      <data ID="backgroundBar" TYPE="rectangle" PARAM="COLOR_FILL_UNHIGHLIGHT" HEIGHT="5" WIDTH="528" X="515" Y="123" UHLALPHA="20" HLALPHA="20" />
+      <data ID="bar1" TYPE="rectangle" PARAM="COLOR_FILL_UNHIGHLIGHT" HEIGHT="5" WIDTH="132"  X="647" Y="123" UHLALPHA="20" HLALPHA="20" />
+      <data ID="bar2" TYPE="rectangle" PARAM="COLOR_FILL_UNHIGHLIGHT" HEIGHT="5" WIDTH="132" REL_TARGET="bar1" REL_X="132" REL_Y="-5" UHLALPHA="20" HLALPHA="20" />
+      <data ID="progressBar" TYPE="bar" FORMAT="|||COLOR_FILL_HIGHLIGHT_ALTERNATE" HEIGHT="5" WIDTH="528" X="515" REL_TARGET="backgroundBar" REL_Y="-5" />
+    </tile>
+	<tile NAME="CHAPTER_COMPLETION" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" DATAPROVIDERID="STORY_CHAPTER_COMPLETION_TILE_DP">
+		<properties WIDTH="400" HEIGHT="800"  />
+		<data ID="title" TYPE="text" FORMAT="FONT_CM_PLAYERINFO_NAME||center||||top" TRANSLATE="TRUE" OFFSET="-53"/>
+		<data ID="alexHead" TYPE="asset" PATH="heads" PARAM="26501" FORMAT="||center||||middle" WIDTH="62" HEIGHT="62">
+			 <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10"/>
+			 <align TARGET="title" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+		</data>
+		<data ID="alexCheckBox" TYPE="checkbox" WIDTH="25" HEIGHT="25">
+			<align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="30"/>
+			<align TARGET="title" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-68"/> 
+		</data>
+		<data ID="dannyHead" TYPE="asset" PATH="heads" PARAM="26503" FORMAT="||center||||middle" WIDTH="62" HEIGHT="62">
+			 <align TARGET="alexHead" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10"/>
+			 <align TARGET="alexHead" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+		</data>
+		<data ID="dannyCheckBox" TYPE="checkbox" WIDTH="25" HEIGHT="25">
+			<align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="100"/>
+			<align TARGET="title" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-68"/> 
+		</data>
+		<data ID="kimHead" TYPE="asset" PATH="heads" PARAM="26531" FORMAT="||center||||middle" WIDTH="62" HEIGHT="62">
+			 <align TARGET="dannyHead" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10"/>
+			 <align TARGET="dannyHead" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" />
+		</data>
+		<data ID="kimCheckBox" TYPE="checkbox" WIDTH="25" HEIGHT="25">
+			<align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="170"/>
+			<align TARGET="title" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="RIGHT" OFFSET="-68"/>
+		</data>
+	</tile>
+	<tile NAME="OBJECTIVES" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="TRUE" DECORATORS_RANGE="NO_BACKGROUND" >
+      <properties WIDTH="1558" HEIGHT="663" />
+      <data ID="chapterInfoSummaryPanel" TYPE="component" PATH="game/components/storyMode/ObjectivesList.swf" FORMAT="|COLOR_TEXT_LABEL||COLOR_TEXT_LABEL" PARAM="summary" WIDTH="1558" HEIGHT="663" DATAPROVIDERID="SMChapterProgressionDP"/>
+    </tile>
+	<tile NAME="PRIMARY_REWARD" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="1920" HEIGHT="650" />
+      <data ID="rewardBackground" TYPE="asset" PATH="story" PARAM="Summary_Reward_Backdrop" KEEP_SCALE="TRUE" FORMAT="||center||||middle"/>
+      <data ID="rewardTitle" TYPE="text" PARAM="@primaryRewardTitle" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" TRANSLATE="TRUE" />
+      <data ID="rewardDescription" TYPE="text" PARAM="@primaryRewardDescription" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_PREVIEW|center|COLOR_TEXT_PREVIEW" TRANSLATE="TRUE" REL_TARGET="rewardTitle" REL_Y="0"  >
+          <align TARGET="rewardTitle" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" />
+	  </data>
+      <data ID="rewardAsset" TYPE="asset" PATH="@primaryRewardAssetType" PARAM="@primaryRewardAssetId" KEEP_SCALE="TRUE" FORMAT="||center||||middle" WIDTH="450" HEIGHT="450">
+	  	<align TARGET="rewardBackground" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="rewardBackground" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="20" />
+	  </data>
+	  <data ID="lock" TYPE="asset" PARAM="iconLocked" PATH="tiles/story" VISIBLE="@showLock" WIDTH="95" HEIGHT="118" X="140" Y="440" >
+		<align TARGET="rewardAsset" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="rewardAsset" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	  <data ID="colored_box_completion" TYPE="rectangle" PARAM="COLOR_FILL_WARNING"  HEIGHT="32" VISIBLE="@showLock">
+		<align TARGET="textCompletion" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		<align TARGET="lock" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="lock" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="15" />
+	  </data>	
+	  <data ID="right_edgeCompletion" TYPE="asset" PATH="tiles/story" PARAM="edgeRight" WIDTH="20" HEIGHT="32" FORMAT="|COLOR_FILL_WARNING||COLOR_FILL_WARNING" VISIBLE="@showLock">
+		<align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="RIGHT" /> 
+		<align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" /> 
+	  </data>		
+	  <data ID="left_edgeCompletion" TYPE="asset" PATH="tiles/story" PARAM="edgeLeft" WIDTH="25" HEIGHT="32" FORMAT="|COLOR_FILL_WARNING||COLOR_FILL_WARNING" VISIBLE="@showLock">
+		<align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" /> 
+		<align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" /> 
+	  </data>
+	  <data ID="textCompletion" TYPE="text" FORMAT="|COLOR_TEXT_UNHIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" PARAM="@numChaptersComplete" VISIBLE="@showLock" TRANSLATE="FALSE">
+		 <align TARGET="left_edgeCompletion" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" /> 
+		 <align TARGET="colored_box_completion" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT" OFFSET="-5"/> 
+	  </data>	
+    </tile>
+	<tile NAME="SECONDARY_REWARD" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND">
+      <properties WIDTH="1920" HEIGHT="650" />
+      <data ID="rewardBackground" TYPE="asset" PATH="story" PARAM="Summary_Reward_Backdrop" KEEP_SCALE="TRUE" FORMAT="||center||||middle" />
+      <data ID="rewardTitle" TYPE="text" PARAM="@secondaryRewardTitle" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE" TRANSLATE="TRUE" />
+      <data ID="rewardDescription" TYPE="text" PARAM="@secondaryRewardDescription" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_PREVIEW|center|COLOR_TEXT_PREVIEW" TRANSLATE="TRUE" REL_TARGET="rewardTitle" REL_Y="0"  >
+          <align TARGET="rewardTitle" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" />
+	  </data>
+      <data ID="rewardAsset" TYPE="asset" PATH="@secondaryRewardAssetType" PARAM="@secondaryRewardAssetId" KEEP_SCALE="TRUE" FORMAT="||center||||middle" WIDTH="450" HEIGHT="450">
+	  	<align TARGET="rewardBackground" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER"/>
+		<align TARGET="rewardBackground" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" OFFSET="20" />
+	  </data>
+    </tile>
+	
+	<tile NAME="CHARACTER_SUMMARY_TILE" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND" DATAPROVIDERID="STORY_CHAPTER_PROGRESSION_TILE_DP">
+      <properties WIDTH="1920" HEIGHT="670" />
+      <data ID="profileImage" TYPE="asset" PATH="story" WIDTH="446" HEIGHT="752" X="169" Y="0" KEEP_SCALE="TRUE"/>
+	  <data ID="profileBanner" TYPE="asset" PATH="story" WIDTH="500" HEIGHT="80" X="142" Y="590" />
+	  <data ID="profileCrest" TYPE="asset" PATH="crest50x50" WIDTH="55" HEIGHT="55" REL_TARGET="profileBanner" REL_X="-474" REL_Y="-67"/>
+	  
+	  <data ID="overallCircle" TYPE="asset" PATH="story" PARAM="circle_lg" FORMAT="|COLOR_SWATCH_GREEN||COLOR_SWATCH_GREEN" HEIGHT="310" WIDTH="310" X="805" Y="110" />
+	  <data ID="overallLabel" TYPE="text" PARAM="Overall_abbr3" FORMAT="FONT_REGULAR_LARGE|COLOR_SILVER_FOX|center|COLOR_SILVER_FOX" HEIGHT="30" WIDTH="100" X="910" Y="335"/>
+      <data ID="overallValue" TYPE="text" TRANSLATE="FALSE" FORMAT="FONT_TILE_MASSIVE|COLOR_TEXT_EARNINGS|center|COLOR_TEXT_EARNINGS" HEIGHT="50" WIDTH="300" X="810" Y="130"/>
+	  
+      <data ID="positionName" TYPE="text" TRANSLATE="FALSE" WIDTH="89" FORMAT="FONT_REGULAR_LARGE||right||||middle" HEIGHT="40">
+		<align TARGET="positionSpacer" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" OFFSET="-10" />
+		<align TARGET="positionSpacer" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+	  </data>	
+      <data ID="positionSpacer" TYPE="bar" PARAM="100" HEIGHT="33" WIDTH="1" Y="273" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" REL_TARGET="overallCircle" REL_X="-155" REL_Y="40" />
+      <data ID="personalityIcon" TYPE="asset" PATH="personality" WIDTH="35" HEIGHT="35" X="980" Y="464"/>
+	  <data ID="positionIcon" TYPE="component" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" WIDTH="25" HEIGHT="25">
+		<align TARGET="positionName" ELEMENT_ATTRIBUTE="RIGHT" TARGET_ATTRIBUTE="LEFT" OFFSET="-15" />
+		<align TARGET="positionName" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE"/>
+	  </data>	  
+      <data ID="goalsCircle" TYPE="asset" PATH="story" PARAM="circle_med" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" HEIGHT="95" WIDTH="95" REL_TARGET="positionSpacer" REL_X="-47" REL_Y="80" />
+      <data ID="goalsValue" TYPE="text" TRANSLATE="FALSE" FORMAT="FONT_TILE_HMU||center|COLOR_TEXT_PREVIEW" HEIGHT="50" WIDTH="85" REL_TARGET="goalsCircle" REL_X="-88" REL_Y="-83" />
+	  <data ID="goalsLabel" TYPE="text" PARAM="Goals_upper" FORMAT="FONT_REGULAR_FHD||center|" HEIGHT="30" WIDTH="100" REL_TARGET="goalsCircle" REL_X="-95" REL_Y="-135"/>
+	  
+      <data ID="appearanceCircle" 	TYPE="asset" PATH="story" PARAM="circle_med" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" HEIGHT="95" WIDTH="95" REL_TARGET="goalsCircle" REL_X="-245" REL_Y="-95" />
+      <data ID="appearanceLabel" TYPE="text" PARAM="Appearances_abbr3" FORMAT="FONT_REGULAR_FHD||center|" HEIGHT="30" WIDTH="100" REL_TARGET="appearanceCircle" REL_X="-95" REL_Y="-135"/>
+	  <data ID="appearanceValue" TYPE="text" TRANSLATE="FALSE" FORMAT="FONT_TILE_HMU||center|COLOR_TEXT_PREVIEW" HEIGHT="50" WIDTH="85" REL_TARGET="appearanceCircle" REL_X="-88" REL_Y="-83" />
+	  
+      <data ID="assistsCircle" TYPE="asset" PATH="story" PARAM="circle_med" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" HEIGHT="95" WIDTH="95" REL_TARGET="goalsCircle" REL_X="65" REL_Y="-95" />
+      <data ID="assistsValue" TYPE="text" TRANSLATE="FALSE" FORMAT="FONT_TILE_HMU||center|COLOR_TEXT_PREVIEW" HEIGHT="50" WIDTH="85" REL_TARGET="assistsCircle" REL_X="-88" REL_Y="-83" />
+	  <data ID="assistsLabel" TYPE="text" PARAM="Assists_upper" FORMAT="FONT_REGULAR_FHD||center|" HEIGHT="30" WIDTH="150" REL_TARGET="assistsCircle" REL_X="-120" REL_Y="-135"/>
+	  
+	  <data ID="transferValue" TYPE="text" FORMAT="FONT_TILE_HLU|COLOR_TEXT_PREVIEW|center" TRANSLATE="FALSE" HEIGHT="80" WIDTH="300" X="1393" Y="115" />
+      <data ID="transferValueLabel" TYPE="component" PARAM="SM_TRANSFER_VALUE|eventIcon|TransferValue|30" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_PREVIEW|center" PATH="game/components/FluxComponents/IconText.swf" WIDTH="400" HEIGHT="30" REL_TARGET="transferValue" REL_Y="10" X="1343" HLALPHA="80" UHLALPHA="80"/>
+      <data ID="transferSpacer" TYPE="bar" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" HEIGHT="1" WIDTH="310" REL_TARGET="transferValueLabel" REL_Y="55" X="1385" HLALPHA="40" UHLALPHA="40"/>
+	  
+	  <data ID="earningsValue" TYPE="text" FORMAT="FONT_TILE_HLU|COLOR_TEXT_PREVIEW|center" TRANSLATE="FALSE" HEIGHT="80" WIDTH="300" REL_TARGET="transferSpacer" REL_Y="35" X="1393" />
+      <data ID="earningsValueLabel" TYPE="component" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_PREVIEW|center" PATH="game/components/FluxComponents/IconText.swf" WIDTH="400" HEIGHT="30" REL_TARGET="earningsValue" REL_Y="10" X="1343" HLALPHA="80" UHLALPHA="80"/>
+	  <data ID="earningsSpacer" TYPE="bar" FORMAT="|COLOR_TEXT_PREVIEW||COLOR_TEXT_PREVIEW" HEIGHT="1" WIDTH="310" REL_TARGET="earningsValueLabel" REL_Y="55" X="1385" HLALPHA="40" UHLALPHA="40"/>
+	  
+	  <data ID="followersValue" TYPE="text" FORMAT="FONT_TILE_HLU|COLOR_TEXT_PREVIEW|center" TRANSLATE="FALSE" HEIGHT="80" WIDTH="300" REL_TARGET="earningsSpacer" REL_Y="35" X="1393" />
+      <data ID="followersValueLabel" TYPE="component" PARAM="SM_FOLLOWERS|socialMedia/icons|Followers_lg|30" FORMAT="FONT_REGULAR_FHD|COLOR_TEXT_PREVIEW|center" PATH="game/components/FluxComponents/IconText.swf" WIDTH="400" HEIGHT="30" REL_TARGET="followersValue" REL_Y="10" X="1343" HLALPHA="80" UHLALPHA="80" />
+	</tile>
+	
+	<tile NAME="HELP_BUTTON_SPACER" TYPE="EXPANDABLE_TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE" DECORATORS_RANGE="NO_BACKGROUND"/>
+	<tile NAME="CONTINUE_THE_JOURNEY" TYPE="EXPANDABLE_TILE" DESTINATION="advance">
+      <properties WIDTH="338" HEIGHT="110" />
+      <data TYPE="text" PARAM="SM_CHAPTER_END_CONTINUE" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|||TSLU|middle" HEIGHT="110" WIDTH="338" X="0" Y="0"  />
+    </tile>
+	<tile NAME="ADVANCE_TO_FUT" TYPE="EXPANDABLE_TILE" DESTINATION="goToFut">
+      <properties WIDTH="338" HEIGHT="110" />
+      <data TYPE="text" PARAM="SM_CHAPTER_END_PLAY_FUT" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|||TSLU|middle" HEIGHT="110" WIDTH="338" X="0" Y="0"  />
+    </tile>
+	<tile NAME="ADVANCE_TO_KICK_OFF" TYPE="EXPANDABLE_TILE" DESTINATION="goToKickOff">
+      <properties WIDTH="338" HEIGHT="110" />
+      <data TYPE="text" PARAM="SM_CHAPTER_END_PLAY_KICK_OFF" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|||TSLU|middle" HEIGHT="110" WIDTH="338" X="0" Y="0"  />
+    </tile>
+	<tile NAME="ADVANCE_TO_CAREER" TYPE="EXPANDABLE_TILE" DESTINATION="goToCareer">
+      <properties WIDTH="338" HEIGHT="110" />
+      <data TYPE="text" PARAM="SM_CHAPTER_END_PLAY_CAREER" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|||TSLU|middle" HEIGHT="110" WIDTH="338" X="0" Y="0"  />
+    </tile>
+	<tile NAME="ADVANCE_TO_WOMEN_TOURNAMENT" TYPE="EXPANDABLE_TILE" DESTINATION="goToWomenTournament">
+      <properties WIDTH="338" HEIGHT="110" />
+      <data TYPE="text" PARAM="SM_CHAPTER_END_PLAY_WOMEN_TOURNAMENT" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|||TSLU|middle" HEIGHT="110" WIDTH="338" X="0" Y="0"  />
+    </tile>
+	<tile NAME="QUIT_THE_JOURNEY" TYPE="EXPANDABLE_TILE" DESTINATION="advance">
+      <properties WIDTH="338" HEIGHT="110" />
+      <data TYPE="text" PARAM="SM_END_STORY_GOTO_MAIN" FORMAT="TSL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|||TSLU|middle" HEIGHT="110" WIDTH="338" X="0" Y="0"  />
+    </tile>
+  </panel>
+</root>

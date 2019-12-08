@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="11/10/2014 19:24:36" VERSION="2">
+  <hub_settings NAME="OnlineSpeventHub">
+    <artasset_paths DEFAULT_TAB_ICONPATH="artAssets/MainMenu/GameHubTab/GameHubTab_%s.swf" DEFAULT_TILES_ASSETTYPE="spEventHub" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.SpEventHubDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <components>
+    <component PATH="game/components/FluxComponents/online/SeasonsStatusWidget.swf" X="120" Y="40" />
+  </components>
+  <buttons>
+    <button ID="BACK" HINT="Back" ACTION="ACTION_NAV" DESTINATION="back" />
+  </buttons>
+  <panel_set>
+    <panel NAME="ONL_SEASONS_SPEVENT_PANEL" LABEL="ONLINE_SPEVENT_TAB" IS_TAB="TRUE" />
+  </panel_set>
+  <panel NAME="ONL_SEASONS_SPEVENT_PANEL">
+    <tile NAME="ONS_SPEVENT_PLAY_MATCH" TYPE="TILE" DESTINATION="playmatch" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="SPEVENT_PLAY_MATCH_DP" TILE_STATE="DISABLED">
+      <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
+      <data ID="tileTitle" TYPE="title" PARAM="TXT_ONLINE_SEASONS_PLAY_MATCH" FORMAT="HS" WIDTH="800" HEIGHT="75" />
+      <data ID="BACKGROUND" TYPE="image" PATH="imgAssets/tiles/spEventHub/tile_1_VirtualBundesligaPlayMatch_Med.dds" WIDTH="846" HEIGHT="204" X="0" Y="0" />
+      <data ID="vbImageAsset" TYPE="asset" PARAM="" PATH="crest" FORMAT="" WIDTH="100" HEIGHT="100" X="12" Y="75" VISIBLE="FALSE" />
+      <data ID="fiwcImageAsset" TYPE="asset" PARAM="" PATH="flags512x512" FORMAT="" WIDTH="110" HEIGHT="110" X="12" Y="75" VISIBLE="FALSE" />
+    </tile>
+    <tile NAME="ONS_SPEVENT_COMPETITION_STATUS" TYPE="TILE" DESTINATION="competitionStatus" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="SPEVENT_COMPETITION_STATUS_DP">
+      <properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
+      <data ID="tileTitle" TYPE="title" TRANSLATE="TRUE" PARAM="TXT_ONLINE_SPEVENT_COMPETITION_STATUS_TILE_TITLE" FORMAT="HS" WIDTH="500" HEIGHT="40" />
+      <data ID="BACKGROUND" TYPE="image" PATH="imgAssets/tiles/spEventHub/tile_3_VirtualBundesligaStatus_Med.dds" WIDTH="846" HEIGHT="204" X="0" Y="0" />
+      <data ID="timerIcon" TYPE="image" PATH="imgAssets/online/tileIcons/Timer.dds" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="62" HEIGHT="72" HLALPHA="100" UHLALPHA="100" X="20" Y="85" />
+      <data ID="competitionValue" TYPE="text" TRANSLATE="FALSE" PARAM="" FORMAT="SL" WIDTH="200" HEIGHT="50" UHLALPHA="100" X="90" Y="90" />
+      <data ID="timerLabel" TYPE="text" TRANSLATE="TRUE" PARAM="TXT_ONLINE_SPEVENT_REMAINING" FORMAT="SS" WIDTH="200" HEIGHT="50" UHLALPHA="100" X="90" Y="125" />
+      <data ID="gamesIcon" TYPE="image" PATH="imgAssets/online/tileIcons/IconCompetitionStatusGames.dds" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="62" HEIGHT="72" HLALPHA="100" UHLALPHA="100" X="295" Y="85" />
+      <data ID="gamesValue" TYPE="text" TRANSLATE="FALSE" PARAM="" FORMAT="SL" WIDTH="200" HEIGHT="50" UHLALPHA="100" X="370" Y="90" />
+      <data ID="gamesLabel" TYPE="text" TRANSLATE="TRUE" PARAM="TXT_ONLINE_SPEVENT_ALLOWED" FORMAT="SS" WIDTH="200" HEIGHT="50" UHLALPHA="100" X="370" Y="125" />
+    </tile>
+    <tile NAME="ONS_SPEVENT_LEADERBOARDS" TYPE="TILE" DESTINATION="leaderboards" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="SPEVENT_LEADERBOARDS_DP">
+      <properties WIDTH="846" HEIGHT="418" X="965" Y="492" />
+      <data ID="title" TYPE="title" TRANSLATE="TRUE" PARAM="TXT_ONL_LIVE_COMPETITION_LEADERBOARD_TILE_TITLE" FORMAT="HL" WIDTH="360" HEIGHT="75" />
+      <data ID="BACKGROUND" TYPE="image" PATH="imgAssets/tiles/spEventHub/tile_4_VirtualBundesligaLeaderbds_Lrg.dds" WIDTH="846" HEIGHT="418" X="0" Y="0" />
+      <data ID="txtOverall" TYPE="text" TRANSLATE="FALSE" FORMAT="SL" WIDTH="350" HEIGHT="51" X="22" Y="85" />
+      <data ID="txtSeasonNumber" TYPE="text" TRANSLATE="FALSE" FORMAT="SS" WIDTH="220" HEIGHT="30" X="22" Y="125" />      
+	  <data ID="mcUpArrow" TYPE="component" PATH="game/components/FluxComponents/Arrow.swf" WIDTH="15" HEIGHT="15" X="24" Y="265" />
+      <data ID="mcDownArrow" TYPE="component" PATH="game/components/FluxComponents/Arrow.swf" WIDTH="15" HEIGHT="15" X="80" Y="250" />
+      <data ID="trophy_icon" TYPE="image" PATH="imgAssets/tiles/clubTransfers/TrophyIcon.dds" FORMAT="|COLOR_TEXT_HIGHLIGHT_FLUX||COLOR_TEXT_UNHIGHLIGHT_FLUX" WIDTH="64" HEIGHT="64" X="210" Y="227" />
+      <data ID="txtTrophy" TYPE="text" TRANSLATE="FALSE" FORMAT="HL" WIDTH="80" HEIGHT="75" X="280" Y="215" />
+      <data ID="txtUpArrow" TYPE="text" TRANSLATE="FALSE" FORMAT="HM" WIDTH="120" HEIGHT="44" X="100" Y="193" />
+      <data ID="txtDownArrow" TYPE="text" TRANSLATE="FALSE" FORMAT="HM" WIDTH="120" HEIGHT="44" X="100" Y="256" />
+      <data ID="mcStars" TYPE="component" PATH="game/components/FluxComponents/Stars.swf" WIDTH="300" HEIGHT="54" X="25" Y="340" />
+    </tile>
+    <tile NAME="ONS_SPEVENT_STATS" TYPE="TILE" BACKGROUND="invalid_path_activates_shards" DATAPROVIDERID="SPEVENT_STATS_DP" TILE_STATE="DISABLED">
+      <properties WIDTH="846" HEIGHT="418" X="109" Y="492" />
+      <data ID="TITLE" TYPE="title" TRANSLATE="TRUE" PARAM="TXT_ONLINE_SEASONS_CURRENT_SEASON_TILE_TITLE" FORMAT="HL" WIDTH="800" HEIGHT="65" />
+      <data ID="FORMRECT0" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="18" Y="96" />
+      <data ID="FORM0" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="19" Y="98" />		
+      <data ID="FORMRECT1" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="56" Y="96" />
+      <data ID="FORM1" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="57" Y="98" />
+      <data ID="FORMRECT2" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="94" Y="96" />
+      <data ID="FORM2" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="95" Y="98" />
+      <data ID="FORMRECT3" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="132" Y="96" />
+      <data ID="FORM3" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="133" Y="98" />
+      <data ID="FORMRECT4" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="170" Y="96" />
+      <data ID="FORM4" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="171" Y="98" />
+      <data ID="FORMRECT5" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="208" Y="96" />
+      <data ID="FORM5" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="209" Y="98" />
+      <data ID="FORMRECT6" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="246" Y="96" />
+      <data ID="FORM6" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="246" Y="98" />
+      <data ID="FORMRECT7" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="284" Y="96" />
+      <data ID="FORM7" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="284" Y="98" />
+      <data ID="FORMRECT8" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="322" Y="96" />
+      <data ID="FORM8" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="322" Y="98" />
+      <data ID="FORMRECT9" TYPE="rectangle" VISIBLE="TRUE" PARAM="" WIDTH="36" HEIGHT="36" X="360" Y="96" />
+      <data ID="FORM9" TYPE="text" VISIBLE="TRUE" FORMAT="SS|COLOR_TEXT_LABEL|center|COLOR_TEXT_LABEL" TRANSLATE="FALSE" WIDTH="36" HEIGHT="36" X="360" Y="98" />	
+      <data ID="RECORD_LABEL" TYPE="text" PARAM="" FORMAT="I" WIDTH="350" HEIGHT="40" X="20" Y="144" VISIBLE="FALSE" />
+      <data ID="RECORD_VALUE" TYPE="text" PARAM="" FORMAT="I" WIDTH="350" HEIGHT="40" X="300" Y="144" VISIBLE="FALSE" />
+      <data ID="REMAINING_LABEL" TYPE="text" PARAM="" FORMAT="I" WIDTH="350" HEIGHT="40" X="20" Y="174" VISIBLE="FALSE" />
+      <data ID="REMAINING_VALUE" TYPE="text" PARAM="" FORMAT="I" WIDTH="350" HEIGHT="40" X="300" Y="174" VISIBLE="FALSE" />
+      <data ID="PROJECTED_LABEL" TYPE="text" PARAM="" FORMAT="I" WIDTH="350" HEIGHT="40" X="20" Y="204" VISIBLE="FALSE" />
+      <data ID="PROJECTED_VALUE" TYPE="text" PARAM="" FORMAT="I" WIDTH="350" HEIGHT="40" X="300" Y="204" VISIBLE="FALSE" />
+	  <data ID="progressBarBacking" TYPE="text" PARAM="Points_abbr3" FORMAT="FONT_TILE_MASSIVE|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|||middle" HLALPHA="15" UHLALPHA="15" WIDTH="300" HEIGHT="25" TRANSLATE="TRUE">
+ 			<align TARGET="PROGRESSION_GRAPH" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+			<align TARGET="PROGRESSION_GRAPH" ELEMENT_ATTRIBUTE="LEFT" TARGET_ATTRIBUTE="LEFT"/>
+	  </data>				
+      <data ID="PROGRESSION_GRAPH" TYPE="component" PATH="game/components/SeasonsProgressBar.swf" WIDTH="822" HEIGHT="120" X="12" Y="253" VISIBLE="FALSE" />      
+      <data ID="DIVISION" TYPE="component" PATH="game/components/online/DivisionEmblem.swf" WIDTH="125" HEIGHT="125" X="600" Y="12" VISIBLE="FALSE" />
+    </tile>
+  </panel>
+</root>

@@ -1,0 +1,130 @@
+{
+	"name":"bootflow"
+	,"initial": 
+	{
+		"targets":["initialBootflow"]
+	}
+	,"onEnter":
+	[
+		["sendAction",["enableAardvark", "TEAM_SHEET_EDITOR"]]
+		,["loadViewModel",["BootflowViewModel"]]
+		,["loadView", ["background", "BOOTFLOW"]]
+	]
+    ,"onExit":
+	[
+		["unloadViewModel",["BootflowViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"initialBootflow"
+			/* This is a synchronization point between nav and the FE, it tells the fe nav is ready */
+			/* The "onEnter" event is for the case that the fe is ready first */
+			/* The "transition" event is for the case that nav is ready first */
+			/* (the "BootFlowReady" event comes from commonMainInitialization) */
+			,"onEnter":
+			[
+				["sendScreenEvent",["BootFlowReady"]]
+			]
+			,"transitions":
+			[
+				{"event":"BootFlowReady","actions":[["sendScreenEvent",["BootFlowReady"]]]}
+				,{"event":"startBootflow","targets":["languageSelectCondition"]}
+				,{"event":"skipBootflow","targets":["skipBootflow"]}
+			]
+		}
+		,{
+			"name":"skipBootflow"
+			,"initial": 
+			{
+				"targets":["skipToFECheck"]
+			}
+			,"states":
+			[
+				{
+					"name":"skipToFECheck"
+					,"onEnter":
+					[
+						["sendAction", ["conditionAardvark", "SKIP_BOOTFLOW_TO_FE"]]
+					]
+					,"transitions":
+					[
+						{"event":"true","targets":["skipToFE"]}
+						,{"event":"false","targets":["skipToArena"]}
+					]		
+				}
+				,{
+					"onEnter":
+					[
+						["sendScreenEvent", ["BootflowFinished"]]
+					]
+					,"states":
+					[
+						{
+							"name":"skipToFE"
+							,"onEnter":
+							[
+								["sendAction", ["transitionManager", ".NavTransitionManager.TO_FE_QUICK"]]
+							]
+							,"transitions":
+							[
+								{"event":"bootflowFinished","targets":["mainFeFlow"]}
+							]
+						}
+						,{
+							"name":"skipToArena"
+							,"transitions":
+							[
+								{"event":"bootflowFinished","targets":["skipBootflowArena"]}
+							]
+						}
+					
+					]
+				}
+			
+			]	
+		}
+		,{
+			"name":"languageSelectCondition"
+			,"onEnter":
+			[
+				["sendAction", ["condition","languageSelect"]]
+			]
+			,"transitions":
+			[
+				{"event":"true","targets":["languageSelect"]}
+				,{"event":"false","targets":["bootCommonFlow"]}
+			]
+		}
+		,{
+			"name":"languageSelect"
+			,"onEnter":
+			[
+				["loadView",["screen", "game/screens/bootflow/LanguageSelect"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/bootflow/LanguageSelect"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance","targets":["bootCommonFlow"]}
+			]
+		}	
+		,{
+			"name":"bootCommonFlow"
+			,"type":"external"
+			,"file":"/bootCommonFlow.nav"
+			,"inputs":
+			{
+				"idlePressStart":"idlePressStart"
+			}
+			,"outputs":
+			{
+				"mainFeFlow":"mainFeFlow"
+				,"out_pauseIntroFlow":"out_pauseIntroFlow"
+				,"out_pauseDemoFlow":"out_pauseDemoFlow"
+			}
+		}
+	]
+}

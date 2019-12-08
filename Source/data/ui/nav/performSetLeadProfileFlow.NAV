@@ -1,0 +1,163 @@
+{
+	"name":"performSetLeadProfileFlow"
+	, "initial":
+	{
+			"targets":["checkSkipBootFlow"]
+	}
+	,"states":
+	[
+		{
+			"name":"checkSkipBootFlow"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["PerformProfileCheck",""]]
+			]
+			,"transitions":
+			[
+				{ "event":"advance", "targets":["guestProfileCheckFlow"] }
+				,{ "event":"success", "targets":["out_success"] }
+				,{ "event":"fail", "targets":["showFailSignInPopup"] }
+			]				
+		}
+		,{
+			"name":"showFailSignInPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","FailSignInPopup", "TXT_SIGNED_IN_REQUIRED_MSG|Ok|fail"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "FailSignInPopup"]]
+			]
+			,"transitions":
+			[
+				{ "event":"fail", "targets":["out_fail"] }	
+			]
+		}
+		,{
+			"name":"guestProfileCheckFlow"
+			,"type":"external"
+			,"file":"/performGuestProfileCheckFlow.nav"
+			,"outputs":
+			{
+				"success":"leadProfileCheckFlow"
+				,"fail":"out_fail"
+			}			
+		}
+		,{
+			"name":"leadProfileCheckFlow"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["LeadProfileCheck",""]]
+			]
+			,"onExit":
+			[
+
+			]
+			,"transitions":
+			[
+				{ "event":"advance", "targets":["SetLeadFlow"] }
+				,{ "event":"success", "targets":["out_success"] }
+				,{ "event":"fail", "targets":["showFailSignInPopup"] }
+				,{ "event":"pranDownload", "targets":["pranDownload"] }
+				,{ "event":"mainMenuProfileCreationDone","actions":[["sendScreenEvent", ["MainMenuLeadProfileLoaded"]]] }
+			]				
+		}
+		,{
+			"name":"SetLeadFlow"
+			,"transitions":
+			[
+				{ "event":"success", "targets":["eaAccessSuccessFlow"] }
+				,{ "event":"fail", "targets":["out_fail"] }
+				,{ "event":"pranDownload", "targets":["pranDownload"] }
+			]
+			,"states":
+			[
+				{
+					"name":"SetLeadPopupFlow"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["SetLeadProfile",""]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"mainMenuProfileCreationDone"
+							,"actions":[ ["sendScreenEvent", ["MainMenuLeadProfileLoaded"]] ]
+						}
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/pranFlow.nav"
+					,"inputs":
+					{
+						"pranUpload":"pranUpload"
+						,"pranDownload":"pranDownload"
+					}
+					,"outputs":
+					{
+						"back":"assetUpdate"
+						,"success":"welcomeEulaSuccess"
+						,"fail":"welcomeEulaFail"
+						,"successClosedBeta":"welcomeEulaSuccess"
+						,"successCFE":"welcomeEulaSuccess"
+						,"failClosedBeta":"welcomeEulaFail"
+						,"failCFE":"welcomeEulaFail"
+					}
+				}
+				,{
+					"type":"external"
+					,"file":"/eulaFlow.nav"
+					,"inputs":
+					{
+						"welcomeEulaSuccess":"welcomeEulaSuccess"
+						,"welcomeEulaFail":"welcomeEulaFail"
+					}
+					,"outputs":
+					{
+						"success":"welcomePranSuccess"
+						,"fail":"welcomePranFail"
+						,"exit":"out_success"
+						,"continue":"out_success"
+					}
+				}
+				,{
+					"type":"external"
+					,"file":"/profileFlow.nav"
+					,"inputs":
+					{
+						"welcomePranSuccess":"welcomePranSuccess"
+						,"welcomePranFail":"welcomePranFail"
+					}
+					,"outputs":
+					{
+						"assetUpdate":"assetUpdate"
+						,"pranUpload":"pranUpload"
+						,"bootflowSaveLoadFailed":"out_fail"
+					}
+				}
+				,{
+					"name":"assetUpdate"
+					,"type":"external"
+					,"file":"/assetUpdateFlow.nav"
+					,"outputs":
+					{
+						"advance":"eaAccessSuccessFlow"
+						,"advanceClosedBeta":"eaAccessSuccessFlow"
+						,"advanceCFE":"eaAccessSuccessFlow"
+					}
+				}
+				,{
+					"name":"eaAccessSuccessFlow"
+					,"type":"external"
+					,"file":"/online/eaAccessMainFeCheckFlow.nav"
+					,"outputs":
+					{
+						"eaAccessFlowSuccess":"out_success"
+					}
+				}
+			]
+		}
+	]
+}

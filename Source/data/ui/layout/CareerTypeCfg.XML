@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2017 15:27:39" VERSION="2">
+  <hub_settings NAME="CareerTypeHub">
+	<artasset_paths DEFAULT_TILES_ASSETTYPE="careerType" />
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+  </hub_settings>
+  <panel_set>
+    <panel NAME="CAREER_TYPE_PANEL" LABEL="MM_PLAY_NEWMANAGERCAREER" IS_TAB="FALSE" >
+      <buttons>
+        <button ID="BACK" HINT="Exit" ACTION="ACTION_NAV" DESTINATION="Back" />
+      </buttons>
+      <layout NAME="CAREER_TYPE_BASE_LAYOUT" >
+        <tile NAME="CAREER_TYPE_MANAGER" X="109" Y="278" />
+        <tile NAME="CAREER_TYPE_PLAYER" X="965" Y="278" />
+      </layout>
+    </panel>
+    <panel NAME="CAREER_TYPE_PANEL_DUMMY" LABEL="MM_TAB_PLAY" IS_TAB="FALSE" />
+  </panel_set>
+  <panel NAME="CAREER_TYPE_PANEL">
+    <tile NAME="CAREER_TYPE_MANAGER" TYPE="TILE" DESTINATION="AvatarManager" BACKGROUND="Manager_Lrg" DECORATORS_RANGE="4">
+      <properties WIDTH="846" HEIGHT="632" />
+		<data ID="TITLE" TYPE="title" PARAM="CM_Intro_Career Type_1_Career_Type_upper"/>
+		<data ID="DESCRIPTION" TYPE="text" PARAM="CM_Intro_Career Type_1_Help_Career_Type" FORMAT="I|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|||top" WIDTH="350" HEIGHT="450" X="10" Y="170"/>
+    </tile>
+    <tile NAME="CAREER_TYPE_PLAYER" TYPE="TILE" DESTINATION="AvatarPlayer" BACKGROUND="Player_Lrg" DECORATORS_RANGE="2">
+      <properties WIDTH="846" HEIGHT="632" />
+		<data ID="TITLE" TYPE="title" PARAM="CM_Intro_Career Type_2_Career_Type_upper"/>
+		<data ID="DESCRIPTION" TYPE="text" PARAM="CM_Intro_Career Type_2_Help_Career_Type" FORMAT="I|COLOR_TEXT_HIGHLIGHT_FLUX|left|COLOR_TEXT_UNHIGHLIGHT_FLUX|||top" WIDTH="350" HEIGHT="450" X="10" Y="170"/>
+    </tile>
+  </panel>
+</root>

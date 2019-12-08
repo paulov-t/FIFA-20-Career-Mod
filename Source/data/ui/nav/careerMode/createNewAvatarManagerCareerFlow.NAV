@@ -1,0 +1,148 @@
+{
+	"name":"CreateNewAvatarManagerCareerFlow"
+	,"initial": { "targets":["AvatarManagerPrefsChoice"] }
+	,"states":
+	[
+		{
+			"name":"AvatarManagerPrefsChoice"
+			,"onEnter":
+			[
+				["if", [["==", ".FCE_TESTBED", true]
+				,[
+					["executeCMAction",["AvatarSoakSetup"]]
+					,["invoke", ["goToSelectTeam"]]
+				]
+				,[	
+					["invoke", ["goToAvatarManagerPrefs"]]
+				]]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"goToSelectTeam"
+					,"targets":["SelectTeam"]
+				}
+				,{
+					"event":"goToAvatarManagerPrefs"
+					,"targets":["AvatarManagerPrefs"]
+				}
+			]
+		}
+		,{
+			"let":{"AvatarFlowConfigViewModelName":"ManagerCareerAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"create"}
+			,"onEnter":
+			[
+				["loadScreenController", ["ManagerCareerAvatarSetup"]]
+				,["sendAction", ["suppressPOWWidget"]]
+			]
+			,"onExit":
+			[
+				["unloadScreenController", ["ManagerCareerAvatarSetup"]]
+				,["sendAction", ["unsuppressPOWWidget"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"SetupPresetForSoaks"
+					,"actions":[ ["sendAction", ["attempt", "selectPresetForSoaks"]] ]
+				}
+			]
+			,"states":
+			[
+				{
+					"name":"ProfileSignOutFromAvatar"
+					,"onEnter":
+					[
+						["invoke", ["GoToQuitAfterSignOut"]]
+					]
+				}
+				,{
+					"name":"AvatarManagerPrefs"
+					,"type":"external"
+					,"file":"/avatar/avatarFlow.nav"
+					,"inputs":
+					{
+						"createAvatarFlow":"in_genderSelectScreen"
+						,"ShutdownSessionForCreateManagerAvatar":"in_shutdownSessionAttemptState"
+					}
+					,"outputs":
+					{
+						"out_advance":"SelectTeam"
+						,"out_back":"Back"
+						,"out_custom":"Back"
+						,"out_custom2":"Back"
+						,"out_savefail":"ShutdownSessionForCreateManagerAvatar"
+						,"out_profilesignedout":"ProfileSignOutFromAvatar"
+					}
+				}
+			]
+		}
+		,{
+			"name":"SelectTeam"
+			,"type":"external"
+			,"file":"/careerMode/selectTeamFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"BackToAvatarManagerPrefs"
+				,"Advance":"Setup"
+			}	
+		}
+		,{
+			"name":"BackToAvatarManagerPrefs"
+			,"onEnter":
+			[
+				["loadView", ["popup", "AVATAR_BACK_TO_MOODS_WARNING_POPUP", "CM_CareerAvatarFlowBackToMoodsWarning|Ok|Advance|Back|BackToSelectTeam"]]
+			],
+			"onExit":
+			[
+				["unloadView", ["popup", "AVATAR_BACK_TO_MOODS_WARNING_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"Advance"
+					,"targets":["AvatarManagerPrefs"]
+				}
+				,{
+					"event":"BackToSelectTeam"
+					,"targets":["SelectTeam"]
+				}
+			]
+		}
+		,{
+			"onEnter":
+			[
+				["executeCMAction",["ResetTeamSheets"]]
+			]
+			,"let":{"careerType":"manager"}
+			,"states":
+			[
+				{
+					"name":"Setup"
+					,"type":"external"
+					,"file":"/careerMode/setupFlow.nav"
+					,"outputs": 
+					{ 
+						"Back":"SelectTeam"
+						,"Advance":"InitCareerMode"
+					}	
+				}
+			]
+		}
+		,{
+			"onEnter":
+			[
+				["executeCMAction", ["SetupManagerNewTeam"]]
+				,["executeCMAction",["UpdateManagerGender"]]
+			]
+			,"states":
+			[
+				{
+					"name":"InitCareerMode"
+					,"type":"external"
+					,"file":"/careerMode/initCareerModeFlow.nav"
+				}
+			]
+		}
+	]
+}

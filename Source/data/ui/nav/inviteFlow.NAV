@@ -1,0 +1,158 @@
+{
+	"name":"inviteFlow"
+	,"initial":
+	{
+		"targets":["fakeInviteCheck"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel", ["InviteViewModel"]],
+		["loadViewModel",["UserValidationViewModel", "ugc=false"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel", ["InviteViewModel"]],
+		["unloadViewModel", ["UserValidationViewModel"]]
+	]
+	,"transitions":
+	[
+		{ "event":"InviteJoinFailed", "targets":["out_MainMenu"] }
+		,{ "event":"evt_online_disconnected", "targets":["out_MainMenu"] }
+		,{ "event":"gotoFriendliesInviteAccepted", "targets":["out_FriendliesInviteAccepted"] }
+		,{ "event":"gotoOrganizedTournamentInviteAccepted", "targets":["out_OrganizedTournamentInviteAccepted"] }		
+		,{ "event":"evt_invite_profile_login", "targets":["InviteProfileLogin"] }
+		]
+	,"states":
+	[
+		{
+			"name":"fakeInviteCheck"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{ "event":"advance","cond":["==",".FAKE_INVITE",true],"targets":["out_MainMenu"] } /* FAKE_INVITE comes from user.ini */
+				,{"event":"advance", "targets":["InviteValidateIdle"] }
+			]			
+		}
+		,{
+			"name":"InviteValidateIdle"
+			,"onEnter":
+			[
+				["sendAction", ["inviteFlowAbortSaveLoad"]]
+			]
+			,"transitions":
+			[
+				{ "event":"evt_invite_profile_login", "targets":["InviteProfileLogin"] }
+				,{ "event":"evt_verify_invite_nav_cleanup", "actions":[["sendAction",["inviteFlowAbortSaveLoad"]]] }
+				,{ "event":"pranDownload","targets":["welcomeInviteEulaFail"] }
+			]
+		}
+		,{
+			"name":"InviteValidateUser"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["GameInviteValidateUser",""]]
+			]
+		}
+		,{
+			"name":"InviteLoginFailure"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["GameInviteOnLoginFailure",""]]
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/online/onlineLoginFlow.nav"
+			,"inputs":
+			{
+				"InviteProfileLogin":"startLoginWithMultiplayerCheck"
+			}
+			,"outputs":
+			{
+				"loginSuccess":"eaAccessTrialXuidCheck"
+				,"loginFail":"InviteLoginFailure"
+			}
+		}
+		,{
+			"name":"eaAccessTrialXuidCheck"
+			,"states":
+			[
+				{
+					"name":"eaAccessTrialXuidCondition"
+					,"onEnter":
+					[
+						["sendAction", ["condition","eaAccessTrialXuid"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"true"
+							,"targets":["InviteValidateUser"]
+						}
+						,{
+							"event":"false"
+							,"targets":["eaAccessTrialXuidMisMatchMainFeFlow"]
+						}
+					]
+				}
+				,{
+					"name":"eaAccessTrialXuidMisMatchMainFeFlow"
+					,"onEnter":
+					[
+						["loadView", ["popup", "EaAccessPopup", "TXT_NO_EA_ACCESS_TRIAL_XUID_MISMATCH|Ok|advance"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "EaAccessPopup"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["eaAccessSubTrialExitMainFeFlow"]
+						}
+					]
+				}
+				,{
+					"name":"eaAccessSubTrialExitMainFeFlow"
+					,"onEnter":
+					[
+						["sendAction", ["condition","eaAccessTrialExit"]]
+					]
+				}
+			]
+		}		
+		,{
+			"type":"external"
+			,"file":"/profileFlow.nav"
+			,"inputs":
+			{
+				"welcomeInvitePranFail":"welcomePranFail"
+			}
+			,"outputs":
+			{
+				"assetUpdate":"InviteValidateIdle"
+				,"pranUpload":"InviteValidateIdle"
+				,"bootflowSaveLoadFailed":"InviteValidateIdle"
+			}
+		}
+		,{
+			"type":"external"
+			,"file":"/eulaFlow.nav"
+			,"inputs":
+			{
+				"welcomeInviteEulaFail":"welcomeEulaFail"
+			}
+			,"outputs":
+			{
+				"fail":"welcomeInvitePranFail"
+				,"success":"InviteLoginFailure"
+				,"exit":"InviteLoginFailure"
+				,"continue":"InviteLoginFailure"
+			}
+		}
+	]
+}

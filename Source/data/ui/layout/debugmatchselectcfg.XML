@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="us-ascii"?>
+<root DATE="12/03/2017 15:27:39" VERSION="2">
+  <hub_settings NAME="DebugMatchSelect" HUB_VERSION="3">
+    <helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
+    <tile_path TILE_PATH="FluxTile_Exported" TILE_NAME="TILE" />
+	<tile_path TILE_PATH="FluxTile_List_Exported" TILE_NAME="TILE_LIST" />
+	<tile_path TILE_PATH="FluxTile_Expandable_Exported" TILE_NAME="EXPANDABLE_TILE" />
+  </hub_settings>
+  <components>
+	<component PATH="game/components/FluxComponents/FluxHubHeader.swf" PARAM="Match Selection" X="200" Y="50" WIDTH="1535" />
+  </components>
+  <buttons>
+    <button ID="BACK" HINT="Exit" ACTION="ACTION_BACKOUT" />
+    <button ID="START" HINT="Advance Match" ACTION="ACTION_BUTTON_START" />
+  </buttons>
+  <panel_set>
+    <panel NAME="DEBUG_MATCH_SELECT_PANEL" IS_TAB="FALSE" >
+      <layout NAME="MATCH_SELECT_LAYOUT" X="200" Y="150">
+		 <tile NAME="STADIUM_INFO" X="0" Y="0" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" />
+        <tile NAME="STADIUM_LIST" X="0" Y="100" />
+		<tile NAME="MATCH_TYPE_INFO" X="270" Y="0" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" />
+		<tile NAME="MATCH_TYPE_LIST" X="270" Y="100" />
+		<tile NAME="NUM_GOALS_INFO" X="540" Y="0" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" />
+		<tile NAME="NUM_GOALS_LIST" X="540" Y="100" />
+		<tile NAME="NUM_HALVES_INFO" X="810" Y="0" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" />
+		<tile NAME="NUM_HALVES_LIST" X="810" Y="100" />
+		<tile NAME="MATCH_INFO" X="1100" Y="0" SELECTABLE="FALSE" HIGHLIGHTABLE="FALSE" />
+		<tile NAME="MATCH_ADVANCE" X="1100" Y="510" />
+      </layout>
+    </panel>
+  </panel_set>
+  <panel NAME="DEBUG_MATCH_SELECT_PANEL">
+	  <variable_set>
+	  <variable id="stadiumNameArray" type="string"/>
+	  <variable id="matchTypeArray" type="string"/>
+	  <variable id="numGoalsArray" type="int"/>
+	  <variable id="numHalvesArray" type="int"/>
+	  <variable id="selectedStadium" type="string"/>
+	  <variable id="selectedMatchType" type="string"/>
+	  <variable id="selectedGoals" type="int"/>
+	  <variable id="selectedHalves" type="int"/>
+	  <variable id="stadiumSelectionStatus" type="bool"/>
+	  <variable id="matchTypeSelectionStatus" type="bool"/>
+	  <variable id="selectedGoalsSelectionStatus" type="bool"/>
+	  <variable id="selectedHalvesSelectionStatus" type="bool"/>
+  </variable_set>
+	<tile NAME="STADIUM_INFO" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE">
+		<properties WIDTH="250" HEIGHT="90" />
+		<data ID="title" TYPE="text" PARAM="STADIUM INFO" FORMAT="FONT_TILE_SL|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE" WIDTH="225">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+		</data>
+	</tile>
+    <tile NAME="STADIUM_LIST" TYPE="TILE_LIST">
+	  <properties WIDTH="250" HEIGHT="600" />
+	  <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="100" />
+	  <data ID="selected" TYPE="rectangle" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE||COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE" VISIBLE="@stadiumSelectionStatus[i]" UHLALPHA="50" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" OFFSET="-20" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" OFFSET="-20"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	  <data ID="name" TYPE="text" PARAM="@stadiumNameArray[i]" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|||middle" TRANSLATE="FALSE">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+	  </data>
+    </tile>
+	<tile NAME="MATCH_TYPE_INFO" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE">
+		<properties WIDTH="250" HEIGHT="90" />
+		<data ID="title" TYPE="text" PARAM="MATCH TYPE" FORMAT="FONT_TILE_SL|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE" WIDTH="200">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+		</data>
+	</tile>
+	<tile NAME="MATCH_TYPE_LIST" TYPE="TILE_LIST">
+	  <properties WIDTH="250" HEIGHT="600" />
+	  <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="100" />
+	  <data ID="selected" TYPE="rectangle" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE||COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE" VISIBLE="@matchTypeSelectionStatus[i]" UHLALPHA="50" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" OFFSET="-20" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" OFFSET="-20"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	  <data ID="name" TYPE="text" PARAM="@matchTypeArray[i]" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|||middle" TRANSLATE="FALSE">
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+	  </data>
+    </tile>
+	<tile NAME="NUM_GOALS_INFO" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE">
+		<properties WIDTH="250" HEIGHT="90" />
+		<data ID="title" TYPE="text" PARAM="NUM. OF GOALS" FORMAT="FONT_TILE_SL|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+		</data>
+	</tile>
+	<tile NAME="NUM_GOALS_LIST" TYPE="TILE_LIST">
+	  <properties WIDTH="250" HEIGHT="600" />
+	  <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="100" ROWS="6" />
+	  <data ID="selected" TYPE="rectangle" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE||COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE" VISIBLE="@selectedGoalsSelectionStatus[i]" UHLALPHA="50" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" OFFSET="-20" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" OFFSET="-20"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	  <data ID="name" TYPE="text" PARAM="@numGoalsArray[i]" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|||middle" TRANSLATE="FALSE">
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+	  </data>
+    </tile>
+	<tile NAME="NUM_HALVES_INFO" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE">
+		<properties WIDTH="250" HEIGHT="90" />
+		<data ID="title" TYPE="text" PARAM="NUM. OF HALVES" FORMAT="FONT_TILE_SL|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE">
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+			<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+		</data>
+	</tile>
+	<tile NAME="NUM_HALVES_LIST" TYPE="TILE_LIST">
+	  <properties WIDTH="250" HEIGHT="600" />
+	  <listProperties LIST_TYPE="GRID" ITEM_HEIGHT="100" ROWS="3" />
+	  <data ID="selected" TYPE="rectangle" FORMAT="|COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE||COLOR_FILL_PANEL_HIGHLIGHT_FLUX_ALTERNATE" VISIBLE="@selectedHalvesSelectionStatus[i]" UHLALPHA="50" >
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" OFFSET="-20" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" OFFSET="-20"/>
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="MIDDLE" TARGET_ATTRIBUTE="MIDDLE" />
+	  </data>
+	  <data ID="name" TYPE="text" PARAM="@numHalvesArray[i]" FORMAT="FONT_TILE_SM|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|||middle" TRANSLATE="FALSE">
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+	  </data>
+    </tile>
+	<tile NAME="MATCH_INFO" TYPE="TILE" HIGHLIGHTABLE="FALSE" SELECTABLE="FALSE">
+	<properties WIDTH="470" HEIGHT="500" />
+	  <data ID="title" TYPE="text" PARAM="MATCH DETAILS" FORMAT="FONT_TILE_HL|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE" HEIGHT="100">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="TOP" OFFSET="10" />
+	  </data>
+	  <data ID="stadium" TYPE="text" PARAM="@selectedStadium" FORMAT="FONT_TILE_HSU|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE" HEIGHT="100">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="title" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="20" />
+	  </data>
+	  <data ID="type" TYPE="text" PARAM="@selectedMatchType" FORMAT="FONT_TILE_HSU|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE" HEIGHT="100">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="stadium" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+	  </data>
+	  <data ID="goals" TYPE="text" PARAM="@selectedGoals" FORMAT="FONT_TILE_HSU|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE" HEIGHT="100">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="type" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+	  </data>
+	  <data ID="halves" TYPE="text" PARAM="@selectedHalves" FORMAT="FONT_TILE_HSU|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||" TRANSLATE="FALSE" HEIGHT="100">
+		<align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="goals" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="10" />
+	  </data>
+	  </tile>
+	<tile NAME="MATCH_ADVANCE" TYPE="EXPANDABLE_TILE" DESTINATION="advance">
+      <properties WIDTH="470" HEIGHT="200" />
+	  <data ID="title" TYPE="text" PARAM="Advance Match" FORMAT="FONT_TILE_SXL|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|center|COLOR_TEXT_HIGHLIGHT_FLUX_TITLE|||middle" TRANSLATE="FALSE">
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="WIDTH" TARGET_ATTRIBUTE="WIDTH" />
+		  <align TARGET="parent" ELEMENT_ATTRIBUTE="HEIGHT" TARGET_ATTRIBUTE="HEIGHT" />
+	  </data>
+    </tile>
+  </panel>
+</root>

@@ -1,0 +1,91 @@
+{
+	"name":"YouthSquadFlow"
+	,"initial": { "targets":["YouthSquad"] }
+	,"states":
+	[
+		{
+			"name":"YouthSquad"
+			,"onEnter":
+			[
+				["loadScreenController", ["YouthSquad"]]
+				,["loadView", ["screen", "game/screens/career/PlayerReport"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["screen", "game/screens/career/PlayerReport"]]
+				,["unloadScreenController", ["YouthSquad"]]
+			]
+			,"states":
+			[
+				{
+					"name":"YouthSquadChild"
+					,"onEnter": 
+					[ 					
+						/* When coming back from Action Popup, since screen is already loaded, need to inform screen controller screen is loaded. */
+						/* This call does not have effect when coming into the screen for the first time. */
+						["executeCMAction", ["NotifyScreenLoadedAndRefresh"]]	
+					]
+					,"transitions":
+					[
+						{
+							"event":"EnterPlayerAction"
+							,"targets":["YouthActionPopup"]
+							,"actions":[ ["executeCMAction",["EnterPlayerActionsFromYouthAcademy"]] ]
+						}
+						,{
+							"event":"Back"
+							,"targets":["Back"]
+						}
+					]
+				}
+				,{
+					"name":"screenWithPopup"
+					,"onEnter": 
+					[ 
+						["executeCMAction", ["SendReadyOnLoadComplete"]]
+						/*,["invoke", ["Ready"]]*/
+					]
+					,"transitions":
+					[
+						{
+							"event":"Ready"
+							,"targets":["YouthActionPopup"] 
+						}
+					]
+				}
+				,{
+					"states":
+					[
+						{
+							"name":"YouthActionPopup"
+							,"type":"external"
+							,"file":"/careerMode/youthActionPopupFlow.nav"
+							,"outputs": 
+							{ 
+								"BackFromPopup":"YouthSquadChild"
+							}
+						}
+					]
+					,"transitions":
+					[
+						{
+							"event":"EnterSquadHub"
+							,"targets":["SquadHub"] 
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"SquadHub"
+			,"type":"external"
+			,"file":"/careerMode/squadHubFlow.nav"
+			,"outputs": 
+			{ 
+				"Back":"screenWithPopup"
+				,"PapRetire":"screenWithPopup" /*can't reach youth squad from PAP, so we won't need these states*/
+				,"PapMove":"screenWithPopup"
+			}
+		}
+	]
+}

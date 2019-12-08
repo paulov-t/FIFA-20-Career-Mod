@@ -1,0 +1,38 @@
+{
+	"name":"dbVerificationFlow"
+	,"initial":
+	{
+		"targets":["dbVerification"]
+	}
+	,"states":
+	[
+		{
+			"name":"dbVerification"
+			,"onEnter": 
+			[
+				["sendAction", ["condition", "verifyDb"]]
+			]
+			,"transitions":
+			[
+				{"event":"true", "targets":["out_success"]}
+				,{"event":"false", "cond":["==",".FIFA_DEMO",true], "targets":["dbVerificationFailed"]}
+				,{"event":"false", "targets":["out_fail"]}
+			]
+		}
+		,{
+			"name":"dbVerificationFailed"
+			,"onEnter":
+			[
+				["loadView", ["popup", "dbVerificationFailurePopup","TXT_DEMO_SECURITY_CHECK|OK|advance"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "dbVerificationFailurePopup"]]
+			]
+			,"transitions":
+			[
+				{"event":"advance", "targets":["out_fail"]}
+			]
+		}
+	]
+}
