@@ -2,7 +2,6 @@
 <root DATE="17/02/2014 15:45:18" VERSION="2">
   <hub_settings NAME="CareerManagerHub">
     <artasset_paths DEFAULT_TILES_ASSETTYPE="careerHub" />
-	<helper_class_name CLASSNAME="game.fluxHelpers.BaseDataHelper" />
     <helper_class_name CLASSNAME="game.fluxHelpers.CareerHubDataHelper" />
     <tile_path TILE_PATH="game/components/FluxTiles/career/FluxTile_Advance.swf" TILE_NAME="TILE_ADVANCE" />
     <tile_path TILE_PATH="FluxTile_Nested_Exported" TILE_NAME="TILE_NESTED" />
@@ -34,7 +33,6 @@
       <variable id="playerConversation" type="bool"/>
   </variable_set>
   <panel NAME="PAM_HUB_CENTRAL_PANEL">
-	
     <tile NAME="PAM_ADVANCE_CALENDAR" TYPE="TILE_ADVANCE" DATAPROVIDERID="CM_CALENDAR_DP" >
       <properties WIDTH="846" HEIGHT="204" X="109" Y="278" />
     </tile>
@@ -1252,7 +1250,7 @@
       <data ID="TITLE" TYPE="title" PARAM="CM_HUB_Calendar" FORMAT="HS" />
       <data TYPE="text" PARAM="txt_cmhub_season_calendar_desc" FORMAT="I" WIDTH="400" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
     </tile>
-    <tile NAME="PAM_TEAM_STATS" TYPE="TILE" DESTINATION="EnterTeamStats" BACKGROUND="TeamStats_Med">
+    <tile NAME="PAM_TEAM_STATS" TYPE="TILE" DESTINATION="EnterTeamStats" BG_ICON="TeamStats_Small">
       <properties WIDTH="846" HEIGHT="204" X="109" Y="492" />
       <data ID="TITLE" TYPE="title" PARAM="TeamStats_n" FORMAT="HS" />
       <data TYPE="text" PARAM="Txt_cmhub_season_teamstats_desc" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
