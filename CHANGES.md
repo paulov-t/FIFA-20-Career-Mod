@@ -1,3 +1,16 @@
+# Version 1.6
+## Transfers
+- AI Teams will now look to buy Youth Potential
+
+## Player Contracts
+- Fix 21-29 year old players are not extending their contracts
+
+## AI Team Selection
+- AI now selects thier first eleven based on OVR, match importance and fitness
+
+## Match Importance
+- Match importance has been overhauled to reflect realism importance per each game. AI will now treat cup matches against vs poor teams differently to league matches
+
 # Version 1.5.5
 
 ## Match Simulation and Stats
