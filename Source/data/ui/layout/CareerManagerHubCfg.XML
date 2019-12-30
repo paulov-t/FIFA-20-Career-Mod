@@ -1262,9 +1262,9 @@
     </tile>
 	<tile NAME="PAM_SEASON_TABLES_NESTED" TYPE="TILE_NESTED">
 		<properties WIDTH="846" HEIGHT="204" X="965" Y="278" ENABLE_CYCLING="TRUE" />
-		<subtile NAME="PAM_OTHER_LEAGUES" SUBTILE_TYPE="TILE" DESTINATION="ViewOtherCompetitions" BACKGROUND="OtherLeagues_Med">
+		
+		<subtile SUBTILE_TYPE="TILE" NAME="PAM_OTHER_COMPS" DESTINATION="EnterOtherCompsOld" BACKGROUND="OtherLeagues_Med" >
 			<data ID="TITLE" TYPE="title" PARAM="CM_Other_Leagues_Caps" FORMAT="HS" />
-			<data TYPE="text" PARAM="Txt_cmhub_season_otherleagues_desc" FORMAT="I" WIDTH="340" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />>
 		</subtile>
 		<subtile SUBTILE_TYPE="TILE" NAME="PAM_OTHER_TEAM_SHEETS" DESTINATION="OtherTeamSheets" BG_ICON="TeamSheets_Small" >
 			<data ID="TITLE" TYPE="title" PARAM="Change Other Team Sheets" FORMAT="HS" />
@@ -1272,6 +1272,7 @@
 		<subtile NAME="PAM_EDIT_TRANSFERS" SUBTILE_TYPE="TILE" DESTINATION="ClubTransfers" BG_ICON="Transfers_Small" >
       		<data ID="TITLE" TYPE="title" PARAM="Make Manual Transfers" FORMAT="HS" />
         </subtile>
+		
 	</tile>
     <tile NAME="PAM_SEASON_TABLES_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="418" X="965" Y="492" ENABLE_CYCLING="TRUE" />

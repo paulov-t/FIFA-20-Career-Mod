@@ -2,11 +2,11 @@ Release Clause Score,1,,,,,,,,,,
 Another Club Accepted,0,,,,,,,,,,
 Another Club Pending,0,,,,,,,,,,
 Free Agent Points,115,,,,,,,,,,
-Is Transfer Listed,231,,,,,,,,,,
+Is Transfer Listed,350,,,,,,,,,,
 Is Loan Listed,150,,,,,,,,,,
 Stay In Country Points,300,,,,,,,,,,
-minLOBscore for Transfer,116,,,,,,,,,,
-minLOBscore for Loan,140,,,,,,,,,,
+minLOBscore for Transfer,115,,,,,,,,,,
+minLOBscore for Loan,135,,,,,,,,,,
 ,,,,,,,,,,,
 Team Level Star Rank(0 based index),,,,,,,,,,,
 0,-100,,,,,,,,,,
@@ -38,32 +38,32 @@ Africa,//Cameroon;Ivory;Coast;Egypt,103,108,111,,,,,,,
 Oceania,//Australia;New;Zealand,195,198,,,,,,,,
 ,,,,,,,,,,,
 Nationality FromGroup\ToGroup,British Isles,Latin Europe,Western Europe,Nothern Europe,Southern Europe,Eastern Europe,North America,South America,Asia,Africa,Oceania
-British Isles,125,-400,-500,-400,-500,-500,-30,-500,-500,-500,-500
-Latin Europe,-70,145,12,15,50,25,-25,-20,-100,-100,-100
-Western Europe,-80,30,129,30,75,75,-25,-20,-100,-100,-100
-Nothern Europe,-80,30,-20,129,25,25,-25,-20,-100,-100,-100
-Southern Europe,-80,30,-20,0,129,150,-25,-20,-100,-100,-100
-Eastern Europe,-85,30,-20,0,129,135,-25,-20,-100,-100,-100
-North America,-85,30,-20,0,25,25,135,-25,-100,-100,125
-South America,-75,42,-20,0,75,75,75,125,125,-100,-100
-Asia,-85,30,-20,0,0,0,-25,-20,125,-100,-100
-Africa,-35,42,-20,0,50,-500,-25,-20,-100,125,-500
-Oceania,-85,-80,-20,-80,-20,-20,-25,-20,-20,-20,125
+British Isles,125,-450,-550,-450,-550,-550,-45,-550,-550,-550,-550
+Latin Europe,-80,155,12,15,50,25,-25,-20,-100,-100,-100
+Western Europe,-90,30,129,30,75,75,-25,-20,-100,-100,-100
+Nothern Europe,-90,30,-20,129,25,25,-25,-20,-100,-100,-100
+Southern Europe,-90,30,-20,0,129,150,-25,-20,-100,-100,-100
+Eastern Europe,-95,30,-20,0,129,135,-25,-20,-100,-100,-100
+North America,-95,30,-20,0,25,25,135,-25,-100,-100,125
+South America,-85,42,-20,0,75,75,75,125,125,-100,-100
+Asia,-95,30,-20,0,0,0,-25,-20,125,-100,-100
+Africa,-45,42,-20,0,50,-500,-25,-20,-100,125,-500
+Oceania,-95,-80,-20,-80,-20,-20,-25,-20,-20,-20,125
 ,,,,,,,,,,,
 Team Overall >=,Score,,,,,,,,,,
 86,39,,,,,,,,,,
-81,25,,,,,,,,,,
+81,26,,,,,,,,,,
 71,21,,,,,,,,,,
 67,8,,,,,,,,,,
-59,-10,,,,,,,,,,
-1,-20,,,,,,,,,,
+59,0,,,,,,,,,,
+1,0,,,,,,,,,,
 ,,,,,,,,,,,
 League Rank,Score,,,,,,,,,,
 0,12,,,,,,,,,,
 1,7,,,,,,,,,,
 2,2,,,,,,,,,,
-3,-15,,,,,,,,,,
-4,-50,,,,,,,,,,
+3,0,,,,,,,,,,
+4,0,,,,,,,,,,
 ,,,,,,,,,,,
 Current Contract Years,Score,,,,,,,,,,
 0,67,,,,,,,,,,
@@ -90,8 +90,8 @@ Time At Club,Score,,,,,,,,,,
 60,-1000,,,,,,,,,,
 ,,,,,,,,,,,
 Role Difference(Buyer-Seller),Score,"Do not leave gaps, i.e. you can not enter only ""+2"" and ""0"" diff(s), you must add for the ""+1"" diff a value too",,,,,,,,,
-2,-20,"The leftoutside diff(s) will use the edge values, i.e. a +3 or +4 will use the same value as for the +2 diff",,,,,,,,,
-1,7,,,,,,,,,,
+2,-10,"The leftoutside diff(s) will use the edge values, i.e. a +3 or +4 will use the same value as for the +2 diff",,,,,,,,,
+1,10,,,,,,,,,,
 0,5,,,,,,,,,,
 -1,-25,,,,,,,,,,
 -2,-175,,,,,,,,,,
@@ -99,6 +99,6 @@ Role Difference(Buyer-Seller),Score,"Do not leave gaps, i.e. you can not enter o
 Preferred Position Available,Score,Comment,,,,,,,,,
 0,-3000,Fallback Case,,,,,,,,,
 1,74,Player first preferred position found,,,,,,,,,
-2,-300,,,,,,,,,,
-3,-1500,,,,,,,,,,
+2,-50,,,,,,,,,,
+3,-100,,,,,,,,,,
 4,-3000,,,,,,,,,,
