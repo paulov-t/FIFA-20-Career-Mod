@@ -1,15 +1,54 @@
 # Version 1.6
-## Transfers
-- AI Teams will now look to buy Youth Potential
 
-## Player Contracts
-- Fix 21-29 year old players are not extending their contracts
+## UI
+- On request of a user, added "Make Manual Transfer" to the UI so you can manually move players to other teams in Career Mode
+- On request of a user, added "Edit other team sheets" to the UI so you can manually change or check opposition team sheets before a match
+
+## CPU v CPU
+- On request of a user, CPU v CPU matches is now available in Career Mode
+
+## Match Simulation and League Tables
+- Match simulation has been revisited and now been developed against the latest EA Squad file (rather than my personal changes to the initial DB). 
+- Teams now end the season with points very close the the 18/19 season (the only final tally we know is correct). 
 
 ## AI Team Selection
-- AI now selects thier first eleven based on OVR, match importance and fitness
+- AI now selects thier first eleven based on OVR, match importance and fitness (rather than just OVR in previous versions, this is work in progress)
 
 ## Match Importance
-- Match importance has been overhauled to reflect realism importance per each game. AI will now treat cup matches against vs poor teams differently to league matches
+- Match importance has been overhauled to reflect realistic importance per each match. AI will now treat cup matches against vs poor teams differently to league matches
+
+## AI Transfers
+- The AI transfers has been increased while making sure stacking doesn't happen ( please let me know if stacking does occur. I haven't checked all teams and random instances. )
+- The AI will fill empty positions ( for example Spurs will fill the spot behind Harry Kane )
+- The AI will actively try to improve the OVR of their team
+
+## Player Growth 
+- Player growth has been slowed from 1.5.6
+- Player OVR growth will no longer randomly "jump" several OVR at certain points of the season
+
+## Dynamic Potential
+- Players can now grow or drop in potential dependant on the thier ratings throughout the season
+- The highest amount of potential difference that can be affected is 7 (So like Tammy Abraham this season, the potential of a player like him can get a +1 increase)
+- A player who scores low in the season will get a reduction in potential, so be sure to play and get good ratings for your high potential players
+
+## Finances
+### Remaining Budget to next season now does not take account your manager rating (which is dumb anyway, is should use the profitability of the club). 
+- Remaining Budget to next season now works in the following way:
+- Those with a budget of over 100m left will receive an extra 30m for the next season
+- Those with a budget of over 50m left will receive an exta 20m for the next season
+- Those with a budget of over 10m left will receive an extra 5m for the next season
+- Those with a budget of over 5m left will receive an extra 700k for the next season
+### Prize Money to next season now does not take account your manager rating
+- Remaining Budget to the next season now works in the following way:
+- Those with a prize money of over 75m left receive an extra 22.5m for the next season
+- Those with a prize money of over 50m left receive an exta 22.5m for the next season
+- Those with a prize money of over 10m left receive an extra 10m for the next season
+- Those with a prize money of over 5m left receive an extra 4m for the next season
+### Sold Player Value to Budget
+- You will now receive the following added to your budget from players sold in the following way:
+- Teams with a high profitability will receive 50% of the transfer value
+- Teams with a medium profitability will receive 75% of the transfer value
+- Teams with a low profitability will receive 100% of the transfer value
 
 # Version 1.5.5
 
