@@ -659,15 +659,26 @@
     </tile>
     <tile NAME="PAM_KITS_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="204" X="1393" Y="706" />
+	  <subtile SUBTILE_TYPE="TILE" NAME="EDIT_PLAYERS" DESTINATION="EnterEditAvatarPlayer" BG_ICON="EditPlayers_Small">    
+        <data ID="TITLE" TYPE="title" PARAM="CM_Settings_Edit_player_PAP" FORMAT="HS" />        
+      </subtile>
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_KITS_NUMBER" DESTINATION="EnterEditKitNumber" BG_ICON="KitNumbers_Small">
         <data ID="TITLE" TYPE="title" PARAM="CM_Squad_Edit_Kit_Numbers_PAM" FORMAT="HS" />
       </subtile>
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_KITS_INJURY" DESTINATION="EnterInjuryList" BG_ICON="InjuryList_Small" PARAM="">
         <data ID="TITLE" TYPE="title" PARAM="CM_HUB_Injury_List" FORMAT="HS" />
       </subtile>
-	  <subtile SUBTILE_TYPE="TILE" NAME="EDIT_PLAYERS" DESTINATION="EnterEditAvatarPlayer" BG_ICON="EditPlayers_Small">    
-        <data ID="TITLE" TYPE="title" PARAM="CM_Settings_Edit_player_PAP" FORMAT="HS" />        
+	  
+	  <!--
+      <subtile SUBTILE_TYPE="TILE" NAME="PAM_SQUAD_REPORT_SUBTILE" DESTINATION="EnterSquadReport" BG_ICON="SquadReport_Small" >
+        <data ID="TITLE" TYPE="title" PARAM="txt_cmhub_title_squad_report" FORMAT="HS" />
+        
       </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="PAM_SQUAD_REPORT_RANKING" DESTINATION="EnterSquadRanking" BG_ICON="SquadRanks_Small" PARAM="">
+        <data ID="TITLE" TYPE="title" PARAM="txt_cmhub_title_squad_ranking" FORMAT="HS" />
+        
+      </subtile>
+    -->
     </tile>
   </panel>
   <panel NAME="PAM_HUB_TRANSFERS_PANEL">
