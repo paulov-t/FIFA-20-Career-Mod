@@ -1,0 +1,2253 @@
+<objectives>
+<!-- 7 to 10 Profit (High/Critical) -->
+	<objective type="keep_wages_in_check" score="1"> <!-- Wages under 100k, 20% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="20"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/>
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="100000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>				
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="keep_wages_in_check" score="1"> <!-- Wages under 300k, 15% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="15"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="300000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="100000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>					
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="keep_wages_in_check" score="1"> <!-- Wages over 300k and up to 5m, 10% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="10"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="300000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="5000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>					
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="cashing_in" score="125"> <!-- Make 1m profit by 1st Transfer Window <10m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="struggle_is_real"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="200000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="1"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="0"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="10000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-200000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="200000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 			
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>					
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="cashing_in" score="125"> <!-- Make 3m profit by 1st Transfer Window >10m <30m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="struggle_is_real"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="750000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="1"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="0"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="10000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="30000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-500000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="500000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 	
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>						
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>		
+	<objective type="cashing_in" score="125"> <!-- Make 5m profit by 1st Transfer Window >30m <50m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="struggle_is_real"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="1000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="1"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="0"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="30000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="5000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-1000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="500000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>			
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="cashing_in" score="125"> <!-- Make 10m profit by 1st Transfer Window >50m <300m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="struggle_is_real"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="6000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="1"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="0"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="30000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="30000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-2000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="2000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 		
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+			</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="cashing_in" score="125"> <!-- Make 20m profit by 1st Transfer Window >300m <1bn -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="struggle_is_real"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="9000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="1"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="0"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="300000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1000000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-5000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="5000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>				
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="cashing_in" score="125"> <!-- Make 50m profit by 1st Transfer Window >1bn -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="struggle_is_real"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="12000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="1"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="0"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1000000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="transfer_win_available" arguments="1">
+				<argument name="window" value="0"/>	<!-- transfer window 0=1st transfer window, 2=second transfer window -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-10000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="10000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>					
+			</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+<!-- 5 to 10 Profit (Medium/High/Critical) -->
+	<objective type="tighten_the_belt" score="125"> <!-- finish with 20m, >500m worth -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="transfer_budget" mandatory="true" arguments="1">
+				<argument name="amount" value="10000000"/> <!-- amount of the transfer budget to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="tighten_the_belt" score="125"> <!-- finish with 10m, 500m<>300m worth -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="transfer_budget" mandatory="true" arguments="1">
+				<argument name="amount" value="5000000"/> <!-- amount of the transfer budget to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="300000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>						
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="tighten_the_belt" score="125"> <!-- finish with 7m, 300m<>100m worth -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="transfer_budget" mandatory="true" arguments="1">
+				<argument name="amount" value="3000000"/> <!-- amount of the transfer budget to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="300000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>						
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="tighten_the_belt" score="125"> <!-- finish with 3m, <100m worth -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="transfer_budget" mandatory="true" arguments="1">
+				<argument name="amount" value="1500000"/> <!-- amount of the transfer budget to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="4"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>						
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="struggle_is_real" score="125"> <!-- Make 5m profit if you are <5m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="100000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="3000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-1000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="1000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="struggle_is_real" score="125"> <!-- Make 10m profit if you are <10m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="1000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="3000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="10000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-3000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="3000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="struggle_is_real" score="125"> <!-- Make 20m profit if you are <50m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="2000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="10000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="50000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-5000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="5000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="struggle_is_real" score="125"> <!-- Make 30m profit if you are <100m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="3000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="50000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-7000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="7000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="struggle_is_real" score="125"> <!-- Make 75m profit if you are <500m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="7500000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-10000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="10000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="struggle_is_real" score="125"> <!-- Make 150m profit if you are <1bn -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="30000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1000000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-30000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="30000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="struggle_is_real" score="125"> <!-- Make 250m profit if you are >1bn -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="50000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1000000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-50000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="50000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="keep_wages_in_check" score="95"> <!-- Wages under 100k, 20% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="20"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="100000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>				
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="keep_wages_in_check" score="95"> <!-- Wages under 500k, 15% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="15"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="500000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="100000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+			</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="keep_wages_in_check" score="95"> <!-- Wages over 500k, 10% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="10"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="7"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="500000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="125"> <!-- Wages 100k-300k, -10k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/>
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="10000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="100000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="300000"/>      <!-- wages to compare to -->
+            </precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="125"> <!-- Wages 300k-500k, -20k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="20000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="300000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="500000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+			</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="125"> <!-- Wages 500k-1m, -50k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="50000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="500000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="1000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="125"> <!-- Wages 1m-3m, -100k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="100000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="1000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="3000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="125"> <!-- Wages 3m-5m, -300k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="300000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="3000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="5000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+			</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="125"> <!-- Wages >5m, -500k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="500000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="10"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="5000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+<!-- 3 to 10 -->
+<!-- 2 Seasons -->
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 50% 20m-100m -->
+		<duration min="2" max="2"/>
+		<similarities>
+            <similarity objective="struggle_is_real"/>
+			<similarity objective="cashing_in"/>
+        </similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="40"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="20000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="2">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 30% 100m-300m -->
+		<duration min="2" max="2"/>
+		<similarities>
+			<similarity objective="struggle_is_real"/>
+			<similarity objective="cashing_in"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="30"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="300000000"/>	<!-- club worth -->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="2">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 25% 300m-500m -->
+		<duration min="2" max="2"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="25"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="300000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="2">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 20% 500m-1.5bn -->
+		<duration min="2" max="2"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="20"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1500000000"/>	<!-- club worth -->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="2">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 15% >1.5bn -->
+		<duration min="2" max="2"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="15"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1500000000"/>	<!-- club worth -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="2">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+<!-- 3 Seasons -->	
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 100% 20m-100m -->
+		<duration min="3" max="3"/>
+		<similarities>
+		<similarity objective="struggle_is_real"/>
+			<similarity objective="cashing_in"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="75"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="20000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 75% 100m-300m -->
+		<duration min="3" max="3"/>
+		<similarities>
+			<similarity objective="struggle_is_real"/>
+			<similarity objective="cashing_in"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="50"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="300000000"/>	<!-- club worth -->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 50% 300m-500m -->
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="40"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="300000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 30% 500m-1.5bn -->
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="30"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1500000000"/>	<!-- club worth -->
+			</precondition>			
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="out_of_the_frying_pan" score="90"> <!-- 25% >1.5bn -->
+		<duration min="3" max="3"/>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="increase_club_worth" mandatory="true" arguments="1">
+				<argument name="percentage" value="10"/> <!-- percent of the initial club worth to increase with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1500000000"/>	<!-- club worth -->
+			</precondition>
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="3">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+<!-- 3 to 4 / 5 for Wage Check -->
+	<objective type="wage_structure" score="60"> <!-- Wages 100k-300k, -15k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/>
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="15000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>			
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="100000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="300000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="60"> <!-- Wages 300k-500k, -30k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="30000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>		
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="300000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="500000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="60"> <!-- Wages 500k-1m, -50k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="50000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>		
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="500000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="1000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="60"> <!-- Wages 1m-3m, -100k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="10000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>		
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="1000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="3000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="60"> <!-- Wages 3m-5m, -150k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="150000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>		
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="3000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="5000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>		
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="wage_structure" score="60"> <!-- Wages >5m, -250k -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="keep_wages_in_check"/> 
+		</similarities>		
+		<conditions non_mandatory_max_fail="0">
+			<condition type="change_player_wages" mandatory="true" arguments="2">
+				<argument name="op" value="1"/> <!-- operation, 0=increase wages, 1=decrease wages -->
+				<argument name="amount" value="250000"/> <!-- amount to change the wages with -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="2"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="5000000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>				
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="struggle_is_real" score="60"> <!-- Make 10m profit if you are <50m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="1000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>			
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="10000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="50000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-5000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="5000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="struggle_is_real" score="60"> <!-- Make 20m profit if you are <100m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="2000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>	
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="50000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-7000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="7000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="struggle_is_real" score="60"> <!-- Make 30m profit if you are <500m -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="3000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>	
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="100000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-10000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="10000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="struggle_is_real" score="60"> <!-- Make 50m profit if you are <1bn -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="5000000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>		
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="500000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="1"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1000000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-30000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="30000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	<objective type="struggle_is_real" score="60"> <!-- Make 75m profit if you are >1bn -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="cashing_in"/>
+			<similarity objective="out_of_the_frying_pan"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="have_profit" mandatory="true" arguments="1">
+				<argument name="profit" value="7500000"/> <!-- profit target to have -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-1"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="4"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>		
+			<precondition type="club_worth" arguments="2">
+				<argument name="op" value="0"/>	<!-- operator 0=greater, 1=less -->
+				<argument name="worth" value="1000000000"/>	<!-- club worth -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="0"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="-50000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition>
+			<precondition type="profit" arguments="2">
+				<argument name="op" value="1"/>	<!-- 0=greater or equal, 1=less-->
+				<argument name="profit" value="50000000"/>	<!-- profit value to compare to, can be negative -->
+			</precondition> 
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>		
+	<objective type="keep_wages_in_check" score="60"> <!-- Wages under 100k, 30% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="30"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="100000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>				
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="keep_wages_in_check" score="60"> <!-- Wages 100k <> 500k , 25% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="25"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="100000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="500000"/>      <!-- wages to compare to -->
+            </precondition>			
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>				
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>
+	<objective type="keep_wages_in_check" score="60"> <!-- Wages 500k <> 5m , 15% -->
+		<duration min="1" max="1"/>
+		<similarities>
+			<similarity objective="wage_structure"/>
+		</similarities>
+		<conditions non_mandatory_max_fail="0">
+			<condition type="keep_wages_from_growing" mandatory="true" arguments="1">
+				<argument name="max_growth" value="15"/> <!-- maximum percent of the initial salary to grow -->
+			</condition>
+			<condition type="deadline" mandatory="true" used_for_progress="false" arguments="4">
+				<argument name="type" value="3"/> <!-- deadline type 0=Fixed, 1=End of 1st transfer window, 2=End of 2nd transfer window, 3=End of season -->
+				<argument name="argument" value="0"/> <!-- argument, depends on type: for type 0=date in format YYYYMMDD, for type 1,2 and 3=additional years to add to the deadline -->
+				<argument name="offset" value="-7"/> <!-- offset in days to add/remove from deadline, >0 added, <0 removed -->
+				<argument name="hard_deadline" value="1"/> <!-- hard deadline (condition is completed only on deadline day) 0=no (condition completed up to and on deadline day), 1=yes (condition completed only on deadline day) -->
+			</condition>
+		</conditions>
+		<preconditions>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="3"/>	<!-- minimum rating -->
+                <argument name="op" value="0"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="category_rating" arguments="3">
+				<argument name="category" value="3"/>	<!-- category id 0=Domestic, 1=Regional, 2=popularity, 3=Profitability, 4=Youth -->
+				<argument name="rating" value="5"/>	<!-- minimum rating -->
+                <argument name="op" value="1"/>                                       <!-- 0 = greater or equal to, 1 = less or equal to, 2 = equal -->
+			</precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="0"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="500000"/>      <!-- wages to compare to -->
+            </precondition>
+			<precondition type="team_wages" arguments="2">
+                <argument name="op" value="1"/>       <!-- operator 0=greater, 1=less -->
+                <argument name="value" value="5000000"/>      <!-- wages to compare to -->
+            </precondition>			
+			<precondition type="promotion_relegation" arguments="1">
+				<argument name="op" value="2"/> <!-- 0 = promoted, 1 = relegated, 2 = not promoted (relegated or same), 3 = not relegated (promoted or same), 4 = same league, 5 = not same league (promoted or relegated)-->
+			</precondition>				
+		</preconditions>
+		<expected_progress>
+			<progress type="interval" duration="1">
+				<entry checkpoint="-5" value="0"/>
+				<entry checkpoint="-6" value="100"/>
+			</progress>
+		</expected_progress>
+	</objective>	
+	</objectives>

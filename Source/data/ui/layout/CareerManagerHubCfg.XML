@@ -1278,10 +1278,11 @@
 			<data ID="TITLE" TYPE="title" PARAM="CM_Other_Leagues_Caps" FORMAT="HS" />
 		</subtile>
 		<subtile SUBTILE_TYPE="TILE" NAME="PAM_OTHER_TEAM_SHEETS" DESTINATION="OtherTeamSheets" BG_ICON="TeamSheets_Small" >
-			<data ID="TITLE" TYPE="title" PARAM="Change Other Team Sheets" FORMAT="HS" />
+			<data ID="TITLE" TYPE="title" PARAM="View Other Team Sheets" FORMAT="HS" />
 		</subtile>
 		<subtile NAME="PAM_EDIT_TRANSFERS" SUBTILE_TYPE="TILE" DESTINATION="ClubTransfers" BG_ICON="Transfers_Small" >
       		<data ID="TITLE" TYPE="title" PARAM="Make Manual Transfers" FORMAT="HS" />
+			<data TYPE="text" PARAM="Transfer to Free Agents first then to the Team of your choice" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
         </subtile>
 		
 	</tile>

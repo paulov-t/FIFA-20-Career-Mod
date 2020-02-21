@@ -1,9 +1,9 @@
 BuyerCounterOfferValue,,,,
 % of difference offer,0%,25%,50%,75%
-30,50,30,20,10
-50,40,25,20,15
-75,30,25,25,20
-95,25,25,30,20
+20,50,30,20,10
+40,40,25,20,15
+60,30,25,25,20
+80,25,25,30,20
 ,,,,
 BuyerCounterOfferValueForHighDemand,,,,
 Demanded/MaxOffer %,same chances as above,,,
@@ -14,8 +14,8 @@ Demanded/MaxOffer %,same chances as above,,,
 ,,,,
 BuyerCounterOfferPlayerRankModifier,,,,
 rank,low % change,high % change,,
-1,-50,50,,
-2,-25,25,,
+1,-20,20,,
+2,-15,15,,
 3,-10,10,,
 4,0,0,,
 5,0,0,,
@@ -30,7 +30,7 @@ BuyerCounterOfferValueForPlayer,,,,
 ,,,,
 BuyerCounterForPlayerForHighDemand,,,,
 Demanded/MaxOffer %,same chances as above,,,
-110,25,30,30,15
+100,25,30,30,15
 120,25,30,30,15
 135,25,35,25,15
 150,25,30,25,20

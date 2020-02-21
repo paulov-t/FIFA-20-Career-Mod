@@ -1,11 +1,11 @@
 Description,Value
 ,
-Max Counter Offers,3
-AdjustBuyerMaxOfferIfBudgetIsNotEnough by(%),0
-SellerMin adjust by Other Offers (%),0
+Max Counter Offers,4
+AdjustBuyerMaxOfferIfBudgetIsNotEnough by(%),5
+SellerMin adjust by Other Offers (%),5
 Buyer Top Up If Other Better Offers (%),20
-Stall Increase For Other Negotiations(%),20
-Loan Club Min Accepted Scores Sum,50
-Min Loan Or Buy Threshold,68
+Stall Increase For Other Negotiations(%),5
+Loan Club Min Accepted Scores Sum,100
+Min Loan Or Buy Threshold,100
 ,
 note: do not change the cells arrangement!,
