@@ -483,6 +483,14 @@
 						,"targets":["EditKitNumber"] 
 					}
 					,{
+						"event":"ClubTransfers"
+						,"targets":["clubTransfersFlow"] 
+					}
+					,{
+						"event":"OtherTeamSheets"
+						,"targets":["editTeamManagementFlow"] 
+					}
+					,{
 						"event":"EnterInjuryList"
 						,"targets":["InjuryList"] 
 					}
@@ -1206,6 +1214,24 @@
 							}
 						]
 					}
+										,{
+			"name":"clubTransfersFlow"
+			,"type":"external"
+			,"file":"/clubTransfersFlow.nav"
+			,"outputs":
+			{
+				"back":"MainMenuHub"
+			}
+		}
+										,{
+			"name":"editTeamManagementFlow"
+			,"type":"external"
+			,"file":"/editTeamManagementFlow.nav"
+			,"outputs":
+			{
+				"back":"MainMenuHub"
+			}
+		}
 					,{
 						"name":"InjuryList"
 						,"onEnter": 
@@ -1376,7 +1402,7 @@
 									"out_advance":"SelectEditAvatarPlayer"
 									,"out_back":"MainMenuHub"
 									,"out_custom":"SelectEditAvatarPlayer"
-									,"out_custom2":"SelectEditAvatarPlayer"
+									,"out_custom2":"SelectEditAvatarManager"
 									,"out_savefail":"ShutdownSessionForEditPlayersInManagerCareer"
 									,"out_profilesignedout":"profileSignOut"
 								}
@@ -1397,10 +1423,10 @@
 								}
 								,"outputs":
 								{
-									"out_advance":"MainMenuHub"
+									"out_advance":"SelectEditAvatarPlayer"
 									,"out_back":"MainMenuHub"
-									,"out_custom":"MainMenuHub"
-									,"out_custom2":"MainMenuHub"
+									,"out_custom":"SelectEditAvatarPlayer"
+									,"out_custom2":"SelectEditAvatarPlayer"
 									,"out_savefail":"ShutdownSessionForEditPlayersInTournament"
 									,"out_profilesignedout":"profileSignOut"
 								}
