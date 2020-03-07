@@ -492,7 +492,7 @@
 	    </data>
 	  </subtile>
     </tile> 
-    <tile NAME="PAM_ADVANCE_PLAY" TYPE="TILE" DESTINATION="EnterMatchSubMenuFromPlay" DATAPROVIDERID="CM_DAY_WITH_MATCH_DP">
+    <tile NAME="PAM_ADVANCE_PLAY" TYPE="TILE" DESTINATION="EnterMatchSubMenuFromPlay" BACKGROUND="PlaySmall" DATAPROVIDERID="CM_DAY_WITH_MATCH_DP">
       <properties WIDTH="418" HEIGHT="204" X="109" Y="278" />
       <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CM_HUB_Play_Match" FORMAT="HS" />
       <data ID="MATCH_DATE" TYPE="text" FORMAT="I" TRANSLATE="FALSE" WIDTH="320" HEIGHT="45" X="18" Y="71" />
@@ -500,7 +500,7 @@
       <data ID="MATCH_LEAGUE_LOGO" TYPE="asset" PATH="league512x128" WIDTH="200" HEIGHT="50" X="18" Y="145" />
       <data ID="OPPONENT_CREST" TYPE="asset" PATH="crest" WIDTH="96" HEIGHT="96" X="300" Y="60"  />
     </tile>
-    <tile NAME="PAM_ADVANCE_SIM" TYPE="TILE" DESTINATION="EnterMatchSubMenuFromSim" BG_ICON="SimMatch_Small" DATAPROVIDERID="CM_DAY_WITH_MATCH_DP">
+    <tile NAME="PAM_ADVANCE_SIM" TYPE="TILE" DESTINATION="EnterMatchSubMenuFromSim" BACKGROUND="PlaySmall" BG_ICON="SimMatch_Small" DATAPROVIDERID="CM_DAY_WITH_MATCH_DP">
       <properties WIDTH="418" HEIGHT="204" X="537" Y="278" />
       <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CM_HUB_Sim_Match" FORMAT="HS" />
       <data ID="MATCH_DATE" TYPE="text" FORMAT="I" TRANSLATE="FALSE" WIDTH="320" HEIGHT="45" X="18" Y="71" />
@@ -668,7 +668,17 @@
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_KITS_INJURY" DESTINATION="EnterInjuryList" BG_ICON="InjuryList_Small" PARAM="">
         <data ID="TITLE" TYPE="title" PARAM="CM_HUB_Injury_List" FORMAT="HS" />
       </subtile>
-	 
+	  
+	  <!--
+      <subtile SUBTILE_TYPE="TILE" NAME="PAM_SQUAD_REPORT_SUBTILE" DESTINATION="EnterSquadReport" BG_ICON="SquadReport_Small" >
+        <data ID="TITLE" TYPE="title" PARAM="txt_cmhub_title_squad_report" FORMAT="HS" />
+        
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="PAM_SQUAD_REPORT_RANKING" DESTINATION="EnterSquadRanking" BG_ICON="SquadRanks_Small" PARAM="">
+        <data ID="TITLE" TYPE="title" PARAM="txt_cmhub_title_squad_ranking" FORMAT="HS" />
+        
+      </subtile>
+    -->
     </tile>
   </panel>
   <panel NAME="PAM_HUB_TRANSFERS_PANEL">
@@ -1261,11 +1271,21 @@
       <data ID="TITLE" TYPE="title" PARAM="PlayerStats" FORMAT="HS" />
       <data TYPE="text" PARAM="Txt_cmhub_season_playerstats_desc" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
     </tile>
-    <tile NAME="PAM_OTHER_LEAGUES" TYPE="TILE" DESTINATION="ViewOtherCompetitions" BACKGROUND="OtherLeagues_Med">
-      <properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
-      <data ID="TITLE" TYPE="title" PARAM="CM_Other_Leagues_Caps" FORMAT="HS" />
-      <data TYPE="text" PARAM="Txt_cmhub_season_otherleagues_desc" FORMAT="I" WIDTH="340" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-    </tile>
+	<tile NAME="PAM_SEASON_TABLES_NESTED" TYPE="TILE_NESTED">
+		<properties WIDTH="846" HEIGHT="204" X="965" Y="278" ENABLE_CYCLING="TRUE" />
+		
+		<subtile SUBTILE_TYPE="TILE" NAME="PAM_OTHER_COMPS" DESTINATION="EnterOtherCompsOld" BACKGROUND="OtherLeagues_Med" >
+			<data ID="TITLE" TYPE="title" PARAM="CM_Other_Leagues_Caps" FORMAT="HS" />
+		</subtile>
+		<subtile SUBTILE_TYPE="TILE" NAME="PAM_OTHER_TEAM_SHEETS" DESTINATION="OtherTeamSheets" BG_ICON="TeamSheets_Small" >
+			<data ID="TITLE" TYPE="title" PARAM="View Other Team Sheets" FORMAT="HS" />
+		</subtile>
+		<subtile NAME="PAM_EDIT_TRANSFERS" SUBTILE_TYPE="TILE" DESTINATION="ClubTransfers" BG_ICON="Transfers_Small" >
+      		<data ID="TITLE" TYPE="title" PARAM="Make Manual Transfers" FORMAT="HS" />
+			<data TYPE="text" PARAM="Transfer to Free Agents first then to the Team of your choice" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
+        </subtile>
+		
+	</tile>
     <tile NAME="PAM_SEASON_TABLES_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="418" X="965" Y="492" ENABLE_CYCLING="TRUE" />
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_SEASON_TABLES_STANDINGS" NEEDS_PUBLISH="1" DESTINATION="EnterStandingsHub" DATAPROVIDERID="CM_STANDINGS_DP">
@@ -1345,21 +1365,11 @@
 		<data ID="KO_STAGE_SCORE_PEN" TYPE="text" FORMAT="IS||center" TRANSLATE="FALSE" WIDTH="382" HEIGHT="35" X="18" REL_TARGET="KO_STAGE_SCORE_AGG" REL_Y="-5"/>
       </subtile>
     </tile>
-	<tile NAME="PAM_NESTED_SETTINGS_AND_TWEAKS" TYPE="TILE_NESTED">
-		<properties WIDTH="418" HEIGHT="418" X="1393" Y="492" />
-		<subtile SUBTILE_TYPE="TILE" NAME="PAM_OTHER_TEAM_SHEETS" DESTINATION="OtherTeamSheets" BG_ICON="TeamSheets_Small" >
-				<data ID="TITLE" TYPE="title" PARAM="View Other Team Sheets" FORMAT="HS" />
-		</subtile>
-		<subtile NAME="PAM_EDIT_TRANSFERS" SUBTILE_TYPE="TILE" DESTINATION="ClubTransfers" BG_ICON="Transfers_Small" >
-			<data ID="TITLE" TYPE="title" PARAM="Make Manual Transfers" FORMAT="HS" />
-			<data TYPE="text" PARAM="Transfer to Free Agents first then to the Team of your choice" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-		</subtile>
-		<subtile NAME="PAM_SETTINGS" SUBTILE_TYPE="TILE" DESTINATION="EnterGameSettings" BG_ICON="Settings_Small" >
-		  
-		  <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CM_HUB_Settings" FORMAT="HS" />
-		  <data TYPE="text" ALIGN="leading" PARAM="txt_cmhub_desc_settings_customize" FORMAT="I" WIDTH="382" HEIGHT="75" X="18" REL_TARGET="TITLE" REL_Y="10" />
-		</subtile>
-	</tile>
+    <tile NAME="PAM_SETTINGS" TYPE="TILE" DESTINATION="EnterGameSettings" BG_ICON="Settings_Small" >
+      <properties WIDTH="418" HEIGHT="418" X="1393" Y="492" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CM_HUB_Settings" FORMAT="HS" />
+      <data TYPE="text" ALIGN="leading" PARAM="txt_cmhub_desc_settings_customize" FORMAT="I" WIDTH="382" HEIGHT="75" X="18" REL_TARGET="TITLE" REL_Y="10" />
+    </tile>
   </panel>
   <panel NAME="PAM_HUB_DEBUG_PANEL">
     <tile NAME="PRESS_CONF_TEST_NESTED" TYPE="TILE_NESTED">

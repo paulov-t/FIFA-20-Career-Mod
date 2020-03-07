@@ -118,13 +118,12 @@
 								"name":"MainMenuHubCheckVideo"
 								,"onEnter":
 								[
-									["executeCMAction",["PlayRegionalVideoCheck"]]
+									["executeCMAction",["PlayUEFAVideoCheck"]]
 								]
 								,"transitions":
 								[
-									{"event":"SkipRegionalVideo","targets":["MainMenuHubIdle"]}
-									,{"event":"PlayUEFAVideo","targets":["MainMenuHubPlayUEFAVideo"]}
-									,{"event":"PlayCONMEBOLVideo","targets":["MainMenuHubPlayCONMEBOLVideo"]}
+									{"event":"SkipUEFAVideo","targets":["MainMenuHubIdle"]}
+									,{"event":"PlayUEFAVideo","targets":["MainMenuHubPlayVideo"]}
 								]
 							}
 							,{
@@ -132,27 +131,11 @@
 								,"onEnter":
 								[
 									["sendAction", ["StopMenuMusic"]]
+									,["sendAction", ["fbStartFlowEvent", "gmIntroTournamentVideo"]]
 								]
 								,"onExit":
 								[
 									["sendAction", ["StartMenuMusic"]]
-								]
-								,"states":
-								[
-									{
-										"name":"MainMenuHubPlayUEFAVideo"
-										,"onEnter": 
-										[
-											["sendAction", ["fbStartFlowEvent", "gmIntroTournamentVideo"]]
-										]
-									}
-									,{
-										"name":"MainMenuHubPlayCONMEBOLVideo"
-										,"onEnter": 
-										[
-											["sendAction", ["fbStartFlowEvent", "gmIntroConmebolVideo"]]
-										]
-									}
 								]
 								,"transitions":
 								[
@@ -257,14 +240,13 @@
 												,"onEnter":
 												[
 													["executeCMAction",["SetupTheme"]]
-													,["executeCMAction",["PlayRegionalVideoCheck"]]
+													,["executeCMAction",["PlayUEFAVideoCheck"]]
 												]
 												,"transitions":
 												[
 													{"event":"evt_popup_enter", "targets":["CareerHubNoScreenSaverWaitPopup"]}
 													,{"event":"evt_pow_open_widget", "targets":["CareerHubEASFCWidgetOpened"]}
-													,{"event":"PlayUEFAVideo","targets":["MainMenuHubPlayUEFAVideo"]}
-													,{"event":"PlayCONMEBOLVideo","targets":["MainMenuHubPlayCONMEBOLVideo"]}
+													,{"event":"PlayUEFAVideo","targets":["MainMenuHubPlayVideo"]}
 												]
 											}
 											,{
@@ -1232,24 +1214,24 @@
 							}
 						]
 					}
-					,{
-						"name":"clubTransfersFlow"
-						,"type":"external"
-						,"file":"/clubTransfersFlow.nav"
-						,"outputs":
-						{
-							"back":"MainMenuHub"
-						}
-					}
-					,{
-						"name":"editTeamManagementFlow"
-						,"type":"external"
-						,"file":"/editTeamManagementFlow.nav"
-						,"outputs":
-						{
-							"back":"MainMenuHub"
-						}
-					}
+										,{
+			"name":"clubTransfersFlow"
+			,"type":"external"
+			,"file":"/clubTransfersFlow.nav"
+			,"outputs":
+			{
+				"back":"MainMenuHub"
+			}
+		}
+										,{
+			"name":"editTeamManagementFlow"
+			,"type":"external"
+			,"file":"/editTeamManagementFlow.nav"
+			,"outputs":
+			{
+				"back":"MainMenuHub"
+			}
+		}
 					,{
 						"name":"InjuryList"
 						,"onEnter": 
@@ -1420,7 +1402,7 @@
 									"out_advance":"SelectEditAvatarPlayer"
 									,"out_back":"MainMenuHub"
 									,"out_custom":"SelectEditAvatarPlayer"
-									,"out_custom2":"SelectEditAvatarPlayer"
+									,"out_custom2":"SelectEditAvatarManager"
 									,"out_savefail":"ShutdownSessionForEditPlayersInManagerCareer"
 									,"out_profilesignedout":"profileSignOut"
 								}
