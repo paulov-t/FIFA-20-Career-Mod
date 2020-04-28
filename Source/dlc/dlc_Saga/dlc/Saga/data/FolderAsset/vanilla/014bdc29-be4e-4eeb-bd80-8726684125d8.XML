@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FolderAsset id="014bdc29-be4e-4eeb-bd80-8726684125d8" name="Folder 1" deleted="True">
+  <references>
+    <reference id="50408a68-90b1-4d3e-847e-85f7af06c3b2" />
+    <reference id="42584a6a-8bf5-4248-9f87-98bb16b2b06b" />
+    <reference id="67ac9bb1-68b8-4a68-a9f5-152e59e2a0a4" />
+    <reference id="3e51e40f-27b6-403b-a03a-6ed46070eff8" />
+    <reference id="0b322b78-fe48-4358-9916-85e74bb4f2fb" />
+    <reference id="350edd1b-037f-4c36-9c94-48750075f466" />
+    <reference id="bb3d9123-ee8b-488a-96ad-2232267bfc66" />
+  </references>
+</FolderAsset>

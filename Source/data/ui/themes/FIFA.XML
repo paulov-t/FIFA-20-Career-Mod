@@ -1217,7 +1217,7 @@
       <alpha NAME="ALPHA_PANEL_UNHIGHLIGHT_CALENDAR_TILE" VALUE="100"/>
 
       <!-- Background -->
-      <alpha NAME="ALPHA_BACKGROUND" VALUE="@ALPHA_NONE"/>
+      <alpha NAME="ALPHA_BACKGROUND" VALUE="@ALPHA_FULL"/>
 
       <!-- ScreenDimmer -->
       <alpha NAME="ALPHA_SCREEN_DIMMER" VALUE="80"/>
