@@ -3,12 +3,28 @@ v2k4debugfile = io.open("v2k4debugfile.txt", "w")
 v2k4debugfile:write('initialisation\n')
 
 
+
+v2k4debugfileUFM = io.open("v2k4debugfile_UFM.txt", "w")
+
+v2k4debugfileOther = io.open("v2k4debugfile_Other.txt", "w")
+
+v2k4debugfileEA = io.open("v2k4debugfile_EA.txt", "w")
+
+
 PLAYER_FLUSHNESS_COLOR_LIST = { 0x00, 0xFFDE64AE, 0xFFDE64AE, 0xE5DE64AE, 0xD8DE64AE, 0xCCDE64AE, 0x99DE64AE, 0x8CDE64AE, 0x7FDE64AE, 0x66DE64AE, 0x4CDE64AE }
 
 -- generic hair colors
 PLAYER_COLOR_PRI_LIST = { 0x00B5A787, 0x00000000, 0x00AB875E, 0x00534238, 0x00A89176, 0x007B614A, 0x00483928, 0x00744F34, 0x007A7A7A, 0x00777777, 0x006A7434, 0x00346A74, 0x00744F34, 0x00603124, 0x00e75366 }
 PLAYER_COLOR_SEC_LIST = { 0x00A89269, 0x00231E1E, 0x00A28963, 0x0045332B, 0x00C5B48F, 0x007E6751, 0x00544236, 0x006C371C, 0x009C9996, 0x00787B7D, 0x004B6C28, 0x0028466C, 0x006C4633, 0x00583325, 0x00720c38 }
 PLAYER_COLOR_TER_LIST = { 0x00473326, 0x00100E0D, 0x00362815, 0x0017110E, 0x0056463A, 0x002F211A, 0x001F140E, 0x00250E02, 0x00362F2D, 0x00232421, 0x0022250F, 0x0016162C, 0x0021150F, 0x00171413, 0x00330f2d }
+
+use_mpr_face_system = 0
+use_mpr_boot_system = 0
+use_mpr_tattoo_system = 0
+	
+use_ufm_face_system = 0
+
+use_other_face_system = 0
 
 function dir_exists(directory)
   local ok, err, code = os.rename(directory, directory)
@@ -113,7 +129,7 @@ function random_elem(tb)
     return tb[keys[math.random(#keys)]]
 end
 
-v2k4debugfile:write('create hair and facial hair table arrays\n')
+--v2k4debugfile:write('create hair and facial hair table arrays\n')
 local hair_bald = {
 	0, -- Bald
 	26 -- thin sides
@@ -218,6 +234,8 @@ local facialHairLong = {
 	11, -- Long Beard, No mustache
 	13 -- Long Beard, No mustache
 }
+
+
 
 function doPlayerInjection(dir, player) 
 	v2k4debugfile:write('checking ' .. dir .. 'exists\n')
@@ -492,8 +510,200 @@ function doPlayerRandomShoe(player, use, growthchance)
 	end
 end
 
+function doPlayerRandomTattoo(player, use, growthchance)
+	if(use == 1) then
+		v2k4debugfile:write('Using Dynamic Tattoo System\n')
+		
+		if(player.HasTattooUpperBody == 0) then
+			local tattooRandom = 100 - math.random(growthchance)
+			local tattooRandomOther = math.random(100)
+			v2k4debugfile:write('Random Tattoo System : ' .. tattooRandom .. ' < ' .. tattooRandomOther .. '?\n')
+			if(tattooRandom < tattooRandomOther) then
+				v2k4debugfile:write('Tattoo System : Make a change \n')
+				
+				player.HasTattooUpperBody = 1
+				player.TattooLeftArm = 100 - math.random(99)
+			
+			end
+		end
+	end
+end
 
 
+function doPlayerUFMFace(player) 
+
+	if(file_exists('UFMFaces.txt')) then
+		v2k4debugfileUFM:write('Using UFMFaces.txt\n')
+		
+		for k,v in pairs(lines_from("UFMFaces.txt")) do
+			local r = split(v, '=')
+			local varName = ""
+			local varValue = ""
+			for key, value in pairs(r) do
+				
+				if (varName == "") then
+					varName = value
+				
+				else
+					varValue = value
+					
+					if(tonumber(player.PlayerId) == tonumber(varName)) then 
+						
+						player.HeadClass = 0
+						player.Head = tonumber(varValue)
+						player.HeadAssetId = tonumber(varValue)
+						player.PlayerAssetId = tonumber(varValue)
+						player.Hair = tonumber(varValue)						
+						player.FaceType = tonumber(varValue)
+												
+						v2k4debugfileUFM:write('UFM Face ' .. varName .. ' has been set to ' .. varValue .. '\n')
+						
+					end
+					
+				end
+				
+			end
+		end
+		
+	end
+
+end
+
+
+function doPlayerMPRFace(player) 
+
+	local v2k4debugfileMPR = io.open("v2k4debugfile_MPR.txt", "w")
+
+	if(file_exists('MPRFaces.txt')) then
+		v2k4debugfileMPR:write('Using MPRFaces.txt\n')
+		
+		for k,v in pairs(lines_from("MPRFaces.txt")) do
+			local r = split(v, '=')
+			local varName = ""
+			local varValue = ""
+			for key, value in pairs(r) do
+				--v2k4debugfileMPR:write(key .. '\n')
+				--v2k4debugfileMPR:write(value .. '\n')
+				
+				if (varName == "") then
+					varName = value
+				
+				else
+					varValue = value
+					
+					--v2k4debugfileMPR:write('MPR Face ' .. varName .. '=' .. varValue .. '? \n')
+					--v2k4debugfileMPR:write('PlayerId:: ' .. tostring(player.PlayerId) .. ' \n')
+						
+					if(tonumber(player.PlayerId) == tonumber(varName)) then 
+						
+						player.HeadClass = 0
+						player.Head = tonumber(varValue)
+						player.HeadAssetId = tonumber(varValue)
+						player.PlayerAssetId = tonumber(varValue)
+						player.Hair = tonumber(varValue)						
+						player.FaceType = tonumber(varValue)
+												
+						v2k4debugfileMPR:write('MPR Face ' .. varName .. ' has been set to ' .. varValue .. '\n')
+						
+					end
+					
+				end
+				
+			end
+		end
+		
+	end
+	
+	v2k4debugfileMPR:close()
+
+end
+
+function doMPRSystem(player) 
+
+
+	if(use_mpr_face_system >= 1) then
+		doPlayerMPRFace(player)
+	
+	end
+	
+	
+end
+
+function doUFMSystem(player) 
+	
+	doPlayerUFMFace(player)
+
+end
+
+function doEAFaceSystem(player) 
+
+	if(file_exists('EAFaces.txt')) then
+		v2k4debugfile:write('Using EA Faces\n')
+		
+		for k,v in lines_from("EAFaces.txt") do
+			
+			local id = v
+			--v2k4debugfile:write('EA Face ' .. id .. ' has been set to ' .. id .. '\n')
+			
+			if(tonumber(player.PlayerId) == tonumber(id)) then 
+				
+				player.HeadClass = 0
+				player.Head = tonumber(id)
+				player.HeadAssetId = tonumber(id)
+				player.PlayerAssetId = tonumber(id)
+				player.Hair = tonumber(id)						
+				player.FaceType = tonumber(id)
+										
+				v2k4debugfile:write('EA Face ' .. id .. ' has been set to ' .. id .. '\n')
+				
+			end
+					
+				
+		end
+		
+	end
+end
+
+function doOtherFaceSystem(player)
+
+	if(file_exists('OtherFaces.txt')) then
+		v2k4debugfile:write('Using Other Faces\n')
+		
+		for k,v in pairs(lines_from('OtherFaces.txt')) do
+			local r = split(v, '=')
+			local varName = ""
+			local varValue = ""
+			for key, value in pairs(r) do
+				
+				if (varName == "") then
+					varName = value
+				
+				else
+					varValue = value
+					
+					--v2k4debugfile:write('Other Face ' .. varName .. ' attempting set to ' .. varValue .. '\n')
+					
+					if(tonumber(player.PlayerId) == tonumber(varName)) then 
+						
+						player.HeadClass = 0
+						player.Head = tonumber(varValue)
+						player.HeadAssetId = tonumber(varValue)
+						player.PlayerAssetId = tonumber(varValue)
+						player.Hair = tonumber(varValue)						
+						player.FaceType = tonumber(varValue)
+												
+						v2k4debugfile:write('Other Face ' .. varName .. ' has been set to ' .. varValue .. '\n')
+						
+					end
+					
+				end
+				
+			end
+		end
+		
+	end
+
+end
 
 function PlayerUpdate()
 		
@@ -685,10 +895,7 @@ function PlayerUpdate()
 
 	-- Seasonal assets
 
-	-- if createplayer female disable facial hair stamping
-	if (player.IsCreatedPlayer == 1 and player.Gender == 1) then
-		player.FacialHairType = 0
-	end
+	
 	
 	local file_out2 = io.open("currently_editing_postEA.txt", "w")
 	for k, v in pairs(player) do
@@ -704,9 +911,12 @@ function PlayerUpdate()
 	local use_facialhairgrowth_system = 0
 	local use_bodyweight_system = 0
 	local use_shoe_system = 0
+	
 	local hairgrowth_system_randomgrowth_chance = 100
 	local facialhairgrowth_system_randomgrowth_chance = 100
 	local shoe_system_randomchange_chance = 100
+	
+	
 	
 	v2k4debugfile = io.open("v2k4debugfile.txt", "w")
 	v2k4debugfile:write('loading settings\n')
@@ -744,6 +954,18 @@ function PlayerUpdate()
 						use_shoe_system = tonumber(varValue)
 					elseif varName == "shoe_system_randomchange_chance" then
 						shoe_system_randomchange_chance = tonumber(varValue)
+					elseif varName == "use_tattoo_system" then	
+						use_tattoo_system = tonumber(varValue)
+					elseif varName == "use_mpr_face_system" then
+						use_mpr_face_system = tonumber(varValue)
+					elseif varName == "use_mpr_boot_system" then
+						use_mpr_boot_system = tonumber(varValue)
+					elseif varName == "use_ufm_face_system" then
+						use_ufm_face_system = tonumber(varValue)
+					elseif varName == "use_other_face_system" then
+						use_other_face_system = tonumber(varValue)
+						
+						
 					
 					end
 				end
@@ -799,7 +1021,10 @@ function PlayerUpdate()
 				doPlayerRandomHair(player, use_hairgrowth_system, hairgrowth_system_randomgrowth_chance)
 				
 				-- make change
-				doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
+				--doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
+				
+				-- make change to tattoo
+				--doPlayerRandomTattoo(player, use_tattoo_system, 100)
 			
 			end
 			
@@ -828,9 +1053,43 @@ function PlayerUpdate()
 		
 		-- Overwrite System
 		doPlayerInjection('paulv2k4/overwrite/', player) 
+
+		-- MPR System
+		doMPRSystem(player)
+		
+		if(use_ufm_face_system >= 1) then
+			-- UFM System
+			doUFMSystem(player)
+		end
+		
+		-- Other Faces System
+		if(use_other_face_system >= 1) then
+		
+			doOtherFaceSystem(player)
+		end
+		
+		-- EA Starheads
+		-- doEAFaceSystem(player)
 	
 	end
+	
+	
+	-- if createplayer female disable facial hair stamping
+	if (player.IsCreatedPlayer == 1 and player.Gender == 1) then
+		player.FacialHairType = 0
+	end
+	
 	v2k4debugfile:close()
+	
+
+
+	v2k4debugfileUFM:close()
+
+	v2k4debugfileOther:close()
+
+	v2k4debugfileEA:close()
+	
+	
 end
 
 
