@@ -1,0 +1,60 @@
+{
+	"name":"WorldTourMatchAbortFlow"
+	,"states":
+	[
+		{
+			"let":{"WaitStateParam":"matchFlowAbort"}
+			,"name":"AbortFlowWait"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/waitState.nav"
+					,"outputs":
+					{
+						"out_advance":"LoadFeStadium"
+					}
+				}
+			]
+		}
+		,{
+			"let":{"WaitStateParam":"updateFeStadium"}
+			,"name":"LoadFeStadium"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/waitState.nav"
+					,"outputs":
+					{
+						"out_advance":"LoadLocationHub"
+					}
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/worldtour/cinematicHubFlow.nav"
+			,"inputs":
+			{
+				"LoadLocationHub":"LoadLocationHub"
+			}
+			,"outputs":
+			{
+				"out_advance":"ServerCleanup"
+			}
+		}
+		,{
+			"name":"ServerCleanup"
+			, "onEnter":
+			[
+				["sendAction", ["notify", "requestMatchAbort"]]
+			]
+			, "transitions":
+			[
+				{ "event":"fail", "targets":["out_error"] }
+				,{ "event":"success", "targets":["out_advance"] }
+			]
+		}
+	]
+}

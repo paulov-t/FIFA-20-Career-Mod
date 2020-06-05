@@ -1,0 +1,67 @@
+{	
+    "name":"NewUserFlow"
+    ,"onEnter":
+    [
+        ["sendAction", ["notify", "newUserFlowEntered"]]
+    ]
+    ,"transitions":
+    [
+        { "event":"evt_fe_disconnect_occured", "targets":["out_ConnectionLost"] }
+    ]
+    ,"states":
+    [
+        {
+            "let":{"AvatarFlowConfigViewModelName":"WorldTourAvatarFlowViewModel", "AvatarFlowConfigViewModelParam":"create"}
+            ,"states":
+            [
+                {
+                    "type":"external"
+                    ,"file":"/avatar/avatarFlow.nav"
+                    ,"inputs":
+                    {
+                        "CreateAvatarFlow":"in_initializeSessionAttemptState"
+                        ,"ReturnToCustomizationCreate":"in_avatarCustomizationScreen"
+                        ,"ShutdownSessionForWorldTourCreateAvatar":"in_shutdownSessionAttemptState"
+                    }
+                    ,"outputs":
+                    {
+                        "out_advance":"NewUserSaveFlow"
+                        ,"out_back":"out_quit"
+                        ,"out_custom":"out_quit"
+                        ,"out_custom2":"out_quit"
+                        ,"out_savefail":"ShowPopupForCreateAvatar"
+                        ,"out_profilesignedout":"out_ConnectionLost"
+                    }
+                }
+				,{
+					"name":"ShowPopupForCreateAvatar"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "fadeIn"]]
+						,["sendAction", ["popupShow"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["ReturnToCustomizationCreate"]
+						}	
+					]
+				}
+            ]
+        },
+        {
+            "type":"external"
+            ,"file":"/saveload/saveLoadFlow.nav"
+            ,"inputs":
+            {
+                "NewUserSaveFlow":"SaveFlow"
+            }
+            ,"outputs":
+            {
+                "out_success":"out_done"
+                ,"out_fail":"out_done"
+            }
+        }
+    ]
+}

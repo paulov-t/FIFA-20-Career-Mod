@@ -154,10 +154,6 @@
       <subtile NAME="POST_GAME_CAREER_ADVANCE_TO_MENU_SUBTILE" DESTINATION="AdvanceCareer" BG_ICON="Quit_Small" SUBTILE_TYPE="TILE">
         <data ID="QUITTITLE" TYPE="title" ALIGN="leading" PARAM="Advance_allcaps" PATH="" FORMAT="HS" TRANSLATE="TRUE" WIDTH="418" HEIGHT="42" />
       </subtile>
-	  <subtile NAME="POST_GAME_CAREER_ADVANCE_TO_PRESS_CONF_SUBTILE" DESTINATION="AdvanceCareerPressConf" BG_ICON="Conference_Small" SUBTILE_TYPE="TILE">
-        <properties WIDTH="418" HEIGHT="204" />
-        <data ID="QUITTITLE" TYPE="title" ALIGN="leading" PARAM="AdvanceToPressConference_allcaps" PATH="" FORMAT="HS" TRANSLATE="TRUE" WIDTH="418" HEIGHT="42" />
-      </subtile>
     </tile>
     <tile NAME="POST_GAME_RESTART_TILE" TYPE="TILE" DESTINATION="RestartMatch" BG_ICON="Restart_Small">
       <properties WIDTH="418" HEIGHT="204" />

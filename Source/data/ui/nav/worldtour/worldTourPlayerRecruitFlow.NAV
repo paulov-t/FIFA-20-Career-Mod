@@ -1,0 +1,420 @@
+{
+	"name":"PlayerRecruitFlow"
+	, "initial":
+	{
+		"targets":["PlayerRecruitEnter"]
+	}
+	,"onEnter":
+	[
+		["sendAction", ["fbStartFlowEvent", "EnterAvatarCustomization"]]	/* Places camera on a fixed position */
+	]
+	,"onExit":
+	[
+		["sendAction", ["fbStartFlowEvent", "ExitAvatarCustomization"]]		/* Resume background camera animation */
+	]
+	,"states":
+	[
+		{
+			"name":"PlayerRecruitEnter"
+			,"onEnter":
+			[
+				["loadView", ["popup", "RECRUIT_SERVER_SYNC_POPUP", "GetPlayerRecruitUpdates"]]
+				,["loadViewModel", ["CountdownTimerViewModel", "5000"]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]
+				,["sendAction", ["notify", "getRecruitingOptionsFromServer"]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+				,["unloadViewModel", ["CountdownTimerViewModel"]]
+				,["unloadView", ["popup", "RECRUIT_SERVER_SYNC_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"get_recruit_options_success"
+					,"targets":["PlayerRecruitScreen"]
+				}
+				,{
+					"event":"get_recruit_options_fail"
+					,"targets":["RequestFailPopup"]
+				}
+				,{
+					 "event":"evt_countdown_done"
+					,"targets":["DisconnectPopup"]
+				}
+			]
+		},
+		{
+			"name":"PlayerRecruitDebugFlow"
+			,"onEnter":
+			[
+				["invoke", ["enterPlayerRecruitScreen"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterPlayerRecruitScreen"
+					,"let":{"mode":"debug"}
+					,"targets":["PlayerRecruitScreen"]
+				}
+			]
+		},
+		{
+			"name":"PlayerRecruitInSceneFlow"
+			,"onEnter":
+			[
+				["invoke", ["enterPlayerRecruitScreen"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"enterPlayerRecruitScreen"
+					,"let":{"mode":"scene"}
+					,"targets":["PlayerRecruitScreen"]
+				}
+			]
+		},
+		{
+			"name":"PlayerRecruitScreen"
+			,"onEnter":
+			[
+				["loadViewModel",["FluxViewModel"]]
+				,["loadViewModel",["WorldTourPlayerRecruitViewModel", ".mode"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["WorldTourPlayerRecruitViewModel"]]
+				,["unloadViewModel",["FluxViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"idleState"
+					,"transitions":
+					[
+						{
+							"event":"recruitPlayerRequestAdd"
+							,"let":{"recruitConfirmationMessage":"WT_RECRUIT_PLAYER|TXT_YES|popupYes|TXT_NO|popupNo"}
+							,"targets":["showRecruitConfirmPopup"]
+						}
+						,{
+							"event":"recruitPlayerRequestReplace"
+							,"let":{"recruitConfirmationMessage":"WT_RECRUIT_PLAYER_REPLACE|TXT_YES|popupYes|TXT_NO|popupNo"}
+							,"targets":["showRecruitConfirmPopup"]
+						}
+						,{  
+							"event":"back"
+							,"targets":["confirmBackPopup"]
+						}
+						,{
+							"event":"userActions"
+							,"targets":["UserActions"]
+						}
+						,{  
+							"event":"player_recruit_invalid_location"
+							,"targets":["showInvalidLocationPopup"]
+						}
+						,{  
+							"event":"sceneRecruitSkipPopup"
+							,"targets":["sceneRecruitSkipPopup"]
+						}
+					]
+				}
+				,{
+					"name":"confirmBackPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup","CONFIRM_BACK_POPUP", "WT_RECRUIT_PLAYER_CONFIRM_BACK|TXT_YES|popupYes|TXT_NO|popupNo"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "CONFIRM_BACK_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupYes"
+							,"targets":["fadeBack"]
+						}
+						,{
+							"event":"popupNo"
+							,"targets":["idleState"]
+						}
+					]
+				}
+				,{
+					"name":"sceneRecruitSkipPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup","SKIP_RECRUIT_POPUP", "WT_RECRUIT_PLAYER_SKIP_STORY_RECRUIT|OK|popupOk"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "SKIP_RECRUIT_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupOk"
+							,"targets":["fadeBack"]
+						}
+					]
+				}
+				,{
+					"name":"showRecruitConfirmPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup","RECRUIT_CONFIRM_POPUP", ".recruitConfirmationMessage"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "RECRUIT_CONFIRM_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupYes"
+							,"targets":["SendRecruitPlayerToServer"]
+						}
+						,{
+							"event":"popupNo"
+							,"targets":["idleState"]
+						}
+					]
+				}
+				,{
+					"name":"showInvalidLocationPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup", "RECRUIT_INVALID_LOCATION_POPUP", "INVALID_LOCATION_TXT|TXT_OK|popupOk"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "RECRUIT_INVALID_LOCATION_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupOk"
+							,"targets":["fadeFail"]
+						}
+					]
+				}
+				,{
+					"name":"SendRecruitPlayerToServer"
+					,"onEnter":
+					[
+						["loadView", ["popup", "SQUAD_SERVER_SYNC_POPUP", "RECRUIT_PLAYER"]]
+						,["sendScreenEvent", ["ShowBusyIndicator",""]]
+						,["sendAction", ["notify", "recruitPlayer"]]
+						,["loadViewModel", ["CountdownTimerViewModel", "5000"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel", ["CountdownTimerViewModel"]]
+						,["sendScreenEvent", ["HideBusyIndicator",""]]
+						,["unloadView", ["popup", "SQUAD_SERVER_SYNC_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"player_recruit_success"
+							,"targets":["GetSquadListPostRecruit"]
+						}
+						,{
+							"event":"player_recruit_fail" 
+							,"targets":["RecruitRequestFailPopup"]
+						},
+						{
+							 "event":"evt_countdown_done"
+							,"targets":["RecruitDisconnectPopup"]
+						}
+					]
+				}
+				,{
+					"name":"GetSquadListPostRecruit"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "getSquadListFromServer"]]
+						,["loadView", ["popup", "SsfGetSquadList", "TXT_UPDATE_SQUAD"]]
+						,["loadViewModel", ["CountdownTimerViewModel", "2000"]]
+					]
+					,"onExit":
+					[
+						 ["unloadView", ["popup", "SsfGetSquadList"]]					
+						,["unloadViewModel", ["CountdownTimerViewModel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"squad_get_success"
+							,"targets":["Capture2dPlayerAvatar"]
+						},
+						{
+							"event":"squad_get_fail"
+							,"targets":["RecruitRequestFailPopup"]
+						},
+						{
+							 "event":"evt_countdown_done"
+							,"targets":["RecruitDisconnectPopup"]
+						}
+					]
+				}
+				,{
+					"name":"Capture2dPlayerAvatar"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "capture2dAvatar"]]
+						,["loadView", ["popup", "SsfWaitForBatchCapture", "TXT_GENERATING_2D_CAPTURES"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "SsfWaitForBatchCapture"]]					
+					]
+					,"transitions":
+					[
+						{
+							"event":"capturesComplete"
+							,"targets":["fadeSuccess"]
+						}
+					]
+				}
+				,{
+					"let":{"AbuseReportingViewModel":"AbuseReportingViewModel"}
+					,"name":"UserActions"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/online/abuseReportFlow.nav"
+							,"outputs":
+							{
+								"out_back":"idleState"
+							}
+						}
+					]
+				}
+				,{
+					"name": "RecruitDisconnectPopup",
+					"onEnter":
+					[
+						["loadView", ["popup", "DISCONNECT_POPUP", "OSDK_LOST_CON_TO_EA|OK|back"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "DISCONNECT_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["fadeFail"]
+						}
+					]
+				}
+				,{
+					"name": "RecruitRequestFailPopup",
+					"onEnter":
+					[
+						["loadView", ["popup", "REQUEST_FAIL_POPUP", "WT_REQUEST_FAIL_POPUP|OK|back"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "REQUEST_FAIL_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["fadeFail"]
+						}
+					]
+				}
+				,{
+					"let":{"WaitStateParam":"fadeOut"}
+					,"name":"fadeBack"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"out_back"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"WaitStateParam":"fadeOut"}
+					,"name":"fadeSuccess"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"out_success"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"WaitStateParam":"fadeOut"}
+					,"name":"fadeFail"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"out_fail"
+							}
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name": "DisconnectPopup",
+			"onEnter":
+			[
+				["loadView", ["popup", "DISCONNECT_POPUP", "OSDK_LOST_CON_TO_EA|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "DISCONNECT_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_fail"]
+				}
+			]
+		}
+		,{
+			"name": "RequestFailPopup",
+			"onEnter":
+			[
+				["loadView", ["popup", "REQUEST_FAIL_POPUP", "WT_REQUEST_FAIL_POPUP|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "REQUEST_FAIL_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_fail"]
+				}
+			]
+		}
+	]
+}

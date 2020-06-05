@@ -228,10 +228,7 @@
 		  <properties WIDTH="418" HEIGHT="204" />
 		  <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_RESUME" FORMAT="HS" WIDTH="418" HEIGHT="135" />
 		</subtile>
-		<subtile NAME="SELECT_LOCKED_PLAYER" SUBTILE_TYPE="TILE" DESTINATION="PAM_Lock_player" BG_ICON="ResumeMatch_Small">
-		  <properties WIDTH="418" HEIGHT="204" />
-		  <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="PM_RESUME" FORMAT="HS" WIDTH="418" HEIGHT="135" />
-		</subtile>
+		
     </tile>
     <tile NAME="PAUSE_STORY_COLD_OPEN_RESUME" TYPE="TILE" DESTINATION="ResumeMatch">
       <properties WIDTH="418" ALIGN="leading" HEIGHT="118" />
@@ -258,13 +255,14 @@
     </tile>
     <tile NAME="PAUSE_CAREER_QUIT" TYPE="TILE_NESTED" NARRATION_HIGHLIGHT="ACC_PAUSE_CAREER_QUIT_HIGHLIGHTED" NARRATION_SELECT="ACC_PAUSE_CAREER_QUIT_SELECTED" >
       <properties WIDTH="418" HEIGHT="204" />
+	  <subtile SUBTILE_TYPE="TILE" NAME="PAUSE_CAREER_SIMREST" DESTINATION="SimRestofMatch" BG_ICON="SimMatch_Small">
+        <data ID="QUITTITLE" TYPE="title" ALIGN="leading" PARAM="SimRestofMatch" FORMAT="HS" TRANSLATE="TRUE" />
+      </subtile>
       <subtile SUBTILE_TYPE="TILE" NAME="PAUSE_CAREER_QUIT_SUBTILE" DESTINATION="CareerQuitMatch" BG_ICON="Quit_Small">
         <data ID="QUITTITLE" TYPE="title" ALIGN="leading" PARAM="ForfeitMatch" FORMAT="HS" TRANSLATE="TRUE" />
       </subtile>
       <subtile SUBTILE_TYPE="TILE" NAME="PAUSE_CAREER_QUIT_RESTART" DESTINATION="RestartMatch" BG_ICON="Restart_Small" PARAM="">
         <data TYPE="title" ALIGN="leading" PARAM="PM_RESTART_GAME" FORMAT="HS" />
-        <data ID="PAUSERESTARTLOCKEDON" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tileIcons/LockIcon_Active.dds" SHOW_IN_STATE="DISABLED" HLALPHA="100" UHLALPHA="0" WIDTH="33" HEIGHT="40" X="319" Y="88" />
-        <data ID="PAUSERESTARTLOCKEDOFF" TYPE="image" VISIBLE="TRUE" PATH="imgAssets/tileIcons/LockIcon_Inactive.dds" SHOW_IN_STATE="DISABLED" HLALPHA="0" UHLALPHA="100" WIDTH="33" HEIGHT="40" X="319" Y="88" />
       </subtile>
     </tile>
     <tile NAME="PAUSE_MATCH_FACTS_LARGE" TYPE="TILE" DESTINATION="MatchFacts" DATAPROVIDERID="PAUSEHUB_MATCHSTATS_DP" NARRATION_HIGHLIGHT="ACC_PAUSE_MATCH_FACTS_HIGHLIGHTED" NARRATION_SELECT="ACC_PAUSE_MATCH_FACTS_SELECTED" >

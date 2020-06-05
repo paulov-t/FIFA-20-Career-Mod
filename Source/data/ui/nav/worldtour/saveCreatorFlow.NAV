@@ -1,0 +1,145 @@
+{
+	"name":"SaveCreatorFlow"
+	,"onExit":
+	[
+		 ["sendAction", ["notify", "standardFlowEntered"]]
+	]
+	,"states":
+	[
+		{
+			"name":"doCreateSave"
+			,"onEnter":
+			[
+				["loadViewModel", ["StorySaveCreatorViewModel", ""]]
+				,["loadView", ["popup","StorySaveCreatorPopup", "Creating save file. Please wait."]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+				,["unloadView", ["popup","StorySaveCreatorPopup"]]
+				,["unloadViewModel", ["StorySaveCreatorViewModel"]]
+			]
+			, "initial":
+			{
+				"targets":["SaveCreateSaveFlow"]
+			}
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["SaveCreateSuccessPopup"]
+				}
+				,{
+					"event":"back"
+					,"targets":["SaveCreateFailPopup"]
+				}
+			]
+			,"states":
+			[
+				{
+					"name":"SaveCreateIdle"
+					,"transitions":
+					[
+						{
+							"event":"doSaveCreatorSave" ,"targets":["SaveCreateSaveFlow"]
+						}
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/saveload/saveLoadFlow.nav"
+					,"inputs":
+					{
+						"SaveCreateSaveFlow":"SaveFlow"
+					}
+					,"outputs":
+					{
+						"out_success":"SaveCreatorSaveSuccess"
+						,"out_fail":"SaveCreatorSaveFail"
+					}
+				}
+				,{
+					"name":"SaveCreatorSaveSuccess"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "SaveCreatorSaveSuccess"]]	
+						,["invoke", ["enterIdle"]]
+					]
+					,"transitions":
+					[
+						{ "event":"enterIdle", "targets":["SaveCreateIdle"] }
+					]
+				}
+				,{
+					"name":"SaveCreatorSaveFail"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "SaveCreatorSaveFail"]]
+					]
+				}
+			]
+		}
+		,{
+			"name":"SaveCreateSuccessPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","SaveCreationSuccessPopup", "Successfully created save file|Advance|advance|Back|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup","SaveCreationSuccessPopup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance" ,"targets":["SaveCreatorAdvance"]
+				}
+				,{
+					"event":"back" ,"targets":["SaveCreatorExit"]
+				}
+			]
+		}
+		,{
+			"name":"SaveCreateFailPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","SaveCreationFailurePopup", "Could not create save file or end condition could not be reached|Back|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup","SaveCreationFailurePopup"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back" ,"targets":["SaveCreatorExit"]
+				}
+			]
+		}
+		,{
+			"type":"external"
+			,"file":"/worldtour/worldTourExitFlow.nav"
+			,"inputs":
+			{
+				"SaveCreatorAdvance":"OnlineLogout"
+			}
+			,"outputs":
+			{
+				"out_ExitComplete":"out_advance"
+			}
+		}
+		,{
+			"type":"external"
+			,"file":"/worldtour/worldTourExitFlow.nav"
+			,"inputs":
+			{
+				"SaveCreatorExit":"OnlineLogout"
+			}
+			,"outputs":
+			{
+				"out_ExitComplete":"out_quit"
+			}
+		}
+	]
+}

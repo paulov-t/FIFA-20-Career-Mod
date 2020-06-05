@@ -1,0 +1,703 @@
+{
+	"name":"onlineMatchFlow"
+	,"onEnter":
+	[
+		["sendAction", ["notify", "telemetryEnterGameMode", "SSFSeasons"] ]
+	]
+	,"onExit":
+	[
+		["sendAction", ["notify", "telemetryExitGameMode", "SSFSeasons"] ]
+	]
+	,"states":
+	[
+		{
+			"name":"frontEnd"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["UxSetFlowState",".eState.SSF_SEASONS"]]
+				,["sendScreenEvent", ["UxSetFlowSubState", ".eSubState.SETUP"]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["UxSetFlowState",".eState.WORLD_TOUR"]]
+			]
+			,"transitions":
+			[
+				
+			]
+			,"states":
+			[
+				{
+					"name":"SeasonsHub"
+					,"onEnter":
+					[
+						["loadViewModel", ["WorldTourMatchSetupViewModel", "seasons"]]
+						,["loadViewModel", ["FluxViewModel"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel", ["FluxViewModel"]]
+						,["unloadViewModel", ["WorldTourMatchSetupViewModel"]]
+						
+					]
+					,"transitions":
+					[
+						/* Note: Nav event sent from MessageListener::ReceiveMsg(ControllerDisconnected/ControllerConnected...) to communicate with viewmodel*/
+						{ "event":"controllerDisconnected", "actions":[["sendAction", ["notify", "controllerDisconnected"]]]} 
+						,{ "event":"controllerConnected", "actions":[["sendAction", ["notify", "controllerConnected"]]]} 
+					]
+					,"states":
+					[	
+						{	
+							"let":{"ConditionStateParam":"isServerConnectionAlive"}
+							,"name":"CheckServerConnection"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"startMultiplayerCheck"
+										,"out_false":"out_disconnect"
+									}
+								}
+							]
+						}				
+						,{
+							"name":"startMultiplayerCheck"
+							, "let":{"SKIP_USERVALIDATION_LOAD":true}
+							,"states":
+							[
+								{
+									"name":"startMultiplayerCheckExternal"
+									,"type":"external"
+									,"file":"/online/membershipCheckFlow.nav"
+									,"outputs":
+									{
+										"onlinePlayAllowed":"SeasonsHubScreen"
+										,"onlinePlayDenied":"MultiplayerCheckExternalFailed"
+									}
+								}
+								,{	
+									"let":{"ConditionStateParam":"isServerConnectionAlive"}
+									,"name":"MultiplayerCheckExternalFailed"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/conditionState.nav"
+											,"outputs":
+											{
+												"out_true":"out_back"
+												,"out_false":"out_disconnect"
+											}
+										}
+									]
+								}				
+							]
+						}	
+						,{
+							"name":"SeasonsHubScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"states":
+							[
+								{
+									"let":{"CheckLiveMessagesParam":"ssfseasons"}
+									,"name":"OnlineMatchCheckTakeMeThereFlow"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"takeMeThereFlow.nav"
+											,"outputs":
+											{
+												"out_activatedTakeMeThereLink":"out_back"
+												,"out_skip":"SeasonsHubIdle"
+											}
+										}
+									]
+								}			
+								,{
+									"name":"SeasonsHubIdle"
+									,"transitions":
+									[
+										{ "event":"back", "targets":["out_back"] }
+										,{ "event":"findMatch", "targets":["MatchMakingFlow"] }
+										,{ "event":"squadManagement", "targets":["SquadManagement"] }
+										,{ "event":"teamInfo", "targets":["TeamInfo"] }
+										,{ "event":"manualSignout", "targets":["ManualSignout"] }
+										,{ "event":"guestNotSignedIn", "targets":["GuestNotSignedIn"] }
+										,{ "event":"guestError", "targets":["GuestError"] }
+									]
+								}
+								,{
+									"name":"GuestNotSignedIn"
+									,"onEnter":
+									[						
+										["loadView", ["popup", "GUEST_NOT_SIGNED_IN_POPUP", "OSDK_INSUFFICIENT_GUESTS|Okay_abbr2|popupAdvance"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "GUEST_NOT_SIGNED_IN_POPUP"]]
+										,["sendAction", ["notify", "attemptSignin"]]
+									]
+									,"transitions":
+									[
+										{ "event":"popupAdvance", "targets":["SeasonsHubIdle"] }
+									]		
+								}
+								,{
+									"name":"GuestError"
+									,"onEnter":
+									[						
+										["loadView", ["popup", "GUEST_ERROR_POPUP", "OSDK_MUST_BE_GUEST|Okay_abbr2|popupAdvance"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "GUEST_ERROR_POPUP"]]
+										,["sendAction", ["notify", "resetGuest"]]
+									]
+									,"transitions":
+									[
+										{ "event":"popupAdvance", "targets":["SeasonsHubIdle"] }
+									]		
+								}
+								,{
+									"name":"ManualSignout"
+									,"onEnter":
+									[						
+										["loadView", ["popup", "MANUAL_SIGNOUT_POPUP", "TXT_GUEST_MANUAL_PSN_SIGNOUT|Okay_abbr2|popupAdvance"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "MANUAL_SIGNOUT_POPUP"]]
+										,["sendAction", ["notify", "resetGuest"]]
+									]
+									,"transitions":
+									[
+										{ "event":"popupAdvance", "targets":["SeasonsHubIdle"] }
+									]		
+								}
+								,{
+									"name":"MatchMakingFlow"
+									,"onEnter":
+									[						
+										["sendScreenEvent", ["ShowBusyIndicator",""]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{ "event":"preGameFailed", "targets":["MatchMakingFailed"] }
+										,{ "event":"matchupFailed", "targets":["MatchMakingFailed"] }
+										,{ "event":"matchupKillSwitch", "targets":["MatchMakingKillSwitch"] }
+									]
+									, "states":
+									[
+										{
+											"name":"SearchForOpponent"
+											,"onEnter":
+											[						
+												["loadView", ["popup", "FINDING_MATCH_POPUP", "SSF_SEASONS_SEARCHING|cancel|cancelSearch"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["popup", "FINDING_MATCH_POPUP"]]
+											]
+											,"transitions":
+											[
+												{ "event":"opponentFound", "targets":["OpponentFound"] }
+												,{ "event":"cancelSearch", "targets":["CancelSearchPending"] }
+											]
+										}
+										,{
+											"name":"CancelSearchPending"
+											,"onEnter":
+											[
+												["sendAction", ["notify", "cancelSearch"]]			
+												,["loadView", ["popup", "CANCELLED_SEARCH_POPUP", "SSF_SEASONS_CANCELSEARCH"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["popup", "CANCELLED_SEARCH_POPUP"]]
+											]
+											,"transitions":
+											[
+												{ "event":"cancelSearchConfirmed", "targets":["SeasonsHubIdle"] }
+											]
+										}
+										,{
+											"name":"OpponentFound"
+											,"onEnter":
+											[						
+												["loadView", ["popup", "OPPONENT_FOUND_POPUP", "SSF_SEASONS_OPPONENTFOUND"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["popup", "OPPONENT_FOUND_POPUP"]]
+											]
+											, "states":
+											[
+												{
+													"name":"WaitForMatchupSuccess"
+													,"transitions":
+													[
+														{ "event":"matchupSuccess" ,"targets":["PrepForAirlock"] }
+													]
+												}
+												,{
+													"name":"PrepForAirlock"
+													,"onEnter":
+													[						
+														[ "sendScreenEvent", ["EASODisableDisconnect"] ] 
+													]
+													,"initial": 
+													{
+														"targets":["UnloadLocationHub"] 
+													}
+													, "states":
+													[
+														{
+															"type":"external"
+															,"file":"/worldTour/cinematicHubFlow.nav"
+															,"inputs":
+															{
+																"UnloadLocationHub":"UnloadLocationHub"
+															}
+															,"outputs":
+															{
+																"out_advance":"TriggerPlayAirlock"
+															}
+														}
+														/* NOTE: FBSceneControl::PlayScene(AIRLOCK_PREMATCH) will 'PrepScene' before playing, which when finished will send a direct nav event "AirlockContentLoaded" */
+														,{
+															"name":"TriggerPlayAirlock"
+															,"onEnter":
+															[
+																["sendAction", ["notify", "playAirlock"] ]
+																,["sendAction", ["notify", "evt_disconnect_flow_not_ready"]] /* Note: disconnect flow is disabled/enabled while in cinematicHubFlow. Re-disable it now that we're out of the file */
+															]
+															,"transitions":
+															[
+																{
+																	"event":"AirlockContentLoaded"
+																	,"targets":["OnlineAirlockFlow"] 
+																}
+															]
+														}
+													]
+												}
+											]
+										}
+										,{
+											"name":"MatchMakingFailed"
+											,"onEnter":
+											[						
+												["loadView", ["popup", "MATCHMAKING_FAILED_POPUP", "SSF_SEASONS_MATCHMAKINGFAILED|ok|advance"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["popup", "MATCHMAKING_FAILED_POPUP"]]
+												,["sendAction", ["notify", "evt_disconnect_flow_ready"]]
+											]
+											,"transitions":
+											[
+												{ "event":"advance", "targets":["SeasonsHubIdle"] }
+											]
+										}
+										,{
+											"name":"MatchMakingKillSwitch"
+											,"onEnter":
+											[						
+												["loadView", ["popup", "MATCHMAKING_KILLSWITCH_POPUP", "SSF_KILLSWITCH_DESC|ok|advance"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["popup", "MATCHMAKING_KILLSWITCH_POPUP"]]
+												,["sendAction", ["notify", "evt_disconnect_flow_ready"]]
+											]
+											,"transitions":
+											[
+												{ "event":"advance", "targets":["SeasonsHubIdle"] }
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"OnlineAirlockFlow"
+					,"onEnter":
+					[
+						["loadViewModel",["FluxViewModel"]]
+						,["loadViewModel",["WorldTourAirlockViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["WorldTourAirlockViewModel"]]
+						,["unloadViewModel",["FluxViewModel"]]
+					]
+					,"states":
+					[
+						/* NOTE: MatchFlowTryLoadMatchAssets is added in an attempt to help merge onlineMatchFlow and matchFlow in the future. Currently will only set SubState to loading and immediately advance to gotoGameplay */
+						{
+							"let":{"ConditionStateParam":"isMatchLoadStarted"}
+							,"name":"MatchFlowTryLoadMatchAssets"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"gamePlay"
+										,"out_false":"UnloadFeStadium"
+									}
+								}
+								,{
+									"let":{"WaitStateParam":"unloadFeStadium"}
+									,"name":"UnloadFeStadium"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/waitState.nav"
+											,"outputs":
+											{
+												"out_advance":"LoadMatchAssets"
+											}
+										}
+									]
+								}
+								,{
+									"let":{"WaitStateParam":"loadMatchAssets"}
+									,"name":"LoadMatchAssets"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/waitState.nav"
+											,"outputs":
+											{
+												"out_advance":"UnloadAirlock"
+											}
+										}
+									]
+								}
+								,{
+									"name":"UnloadAirlock"
+									,"onEnter":
+									[	
+										["sendAction", ["notify", "deactivateFadeGroup"]]					
+										,["sendAction", ["fbStartFlowEvent", "AirlockStopScene"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"AirlockSceneEnded"
+											,"targets":["ExitAirlock"]
+										}
+									]
+								}
+								,{
+									"name":"ExitAirlock"
+									,"onEnter":
+									[
+										["sendAction", ["notify", "airlockFlowStop"]]
+										,["invoke", ["advance"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"advance"
+											,"targets":["gamePlay"] 
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"gamePlay"
+					,"onExit":
+					[
+						["sendAction", ["notify", "evt_disconnect_flow_ready"]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/online/onlineInGameSSF.nav"
+							,"outputs":
+							{
+								"out_continue":"ReloadBackground"
+								,"out_error":"out_error"
+								,"out_profileSignOut":"out_profileSignOut"
+								,"out_disconnect":"out_disconnect"
+							}
+						}		
+					]
+				}
+				,{
+					"name":"ReloadBackground"
+					,"states":
+					[
+						{
+							"let":{"WaitStateParam":"updateFeStadium"}
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/waitState.nav"
+									,"outputs":
+									{
+										"out_advance":"ReloadLocationHub"
+									}
+								}
+							]
+						}
+						,{
+							"type":"external"
+							,"file":"/worldtour/cinematicHubFlow.nav"
+							,"inputs":
+							{
+								"ReloadLocationHub":"LoadLocationHub"
+							}
+							,"outputs":
+							{
+								"out_advance":"CheckForPostMatchDestination"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"queryHasPostMatchDestination"}
+					,"name":"CheckForPostMatchDestination"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"PostMatchNavigation"
+								,"out_false":"SeasonsHub"
+							}
+						}
+					]
+				}
+				,{
+					"name":"PostMatchNavigation"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "triggerPostMatchNavigation"]]
+					]
+					,"transitions":
+					[
+						  { "event":"home", "targets":["SeasonsHub"] }	
+						, { "event":"event", "targets":["SeasonsHub"] }	
+						, { "event":"avatar", "targets":["Avatar_withSwapAvatarEntry"] }
+						, { "event":"hypeTotal", "targets":["HypeStore_withSwapAvatarEntry"] }
+						, { "event":"playerGrowth", "targets":["PlayerDevelopment"] }
+						, { "event":"squadManagement", "targets":["SquadManagement"] }
+					]
+				}
+				,{
+					"name":"SquadManagement"
+					,"states":
+					[
+						{
+							"let":{"OnboardingInfoStateViewModelParam":"onboardSquadManagement"}
+							,"name":"SquadManagementOnboarding"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldTour/onboardingFlow.nav"
+									,"outputs":
+									{
+										"out_bypass":"SquadManagementScreen"
+										,"out_trigger":"SquadManagementScreen"
+									}
+								}
+							]
+						}
+						,{
+							"type":"external"
+							,"file":"/worldTour/squadManagementFlow.nav"
+							,"name":"SquadManagementScreen"
+							,"outputs":
+							{
+								"out_back":"SeasonsHub"
+								,"out_error":"out_error"
+								,"out_ConnectionLost":"out_disconnect"
+							}
+						}
+					]
+				}
+				,{
+					"name":"TeamInfo"
+					,"let":{"WorldTourTeamInfoFlowParam":"edit"}
+					,"states":
+					[
+						{
+							"let":{"OnboardingInfoStateViewModelParam":"onboardTeamInfo"}
+							,"name":"TeamInfoOnboarding"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldTour/onboardingFlow.nav"
+									,"outputs":
+									{
+										"out_bypass":"TeamInfoScreen"
+										,"out_trigger":"TeamInfoScreen"
+									}
+								}
+							]
+						}
+						,{
+							"name":"TeamInfoScreen"
+							,"type":"external"
+							,"file":"/worldtour/teamInfoFlow.nav"
+							,"outputs":
+							{
+								"out_advance":"SeasonsHub"
+								,"out_back":"SeasonsHub"
+							}
+						}
+					]
+				}
+				/* NOTE: Two versions of the screen to allow preservation of state when transitioning between Avatar and Hype*/
+				,{
+					"name":"HypeStoreScreens"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/hypeStoreFlow.nav"
+							,"inputs":
+							{
+								"HypeStore_withoutSwapAvatarEntry":"in_hypeSeason"
+							}
+							,"outputs":
+							{
+								"out_back":"SeasonsHub"
+								,"out_ConnectionLost":"out_disconnect"
+								,"out_avatarCustomization":"Avatar_withoutSwapAvatarEntry"
+							}
+						}
+						,{
+							"let": { "hasSwapAvatarEntry":"true" }
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldtour/hypeStoreFlow.nav"
+									,"inputs":
+									{
+										"HypeStore_withSwapAvatarEntry":"in_hypeSeason"
+									}
+									,"outputs":
+									{
+										"out_back":"SeasonsHub"
+										,"out_ConnectionLost":"out_disconnect"
+										,"out_avatarCustomization":"Avatar_withoutSwapAvatarEntry"
+									}
+								}
+							]
+						}
+					]
+				}
+				/* NOTE: Two versions of the screen to allow preservation of state when transitioning between Avatar and Hype*/
+				,{
+					"name":"AvatarScreens"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/worldTourAvatarFlow.nav"
+							,"inputs":
+							{
+								"Avatar_withoutSwapAvatarEntry":"AvatarOnboarding"
+							}
+							,"outputs":
+							{
+								"out_HypeStore":"HypeStore_withoutSwapAvatarEntry"
+								,"out_ConnectionLost":"out_disconnect"
+								,"out_exit":"SeasonsHub"
+							}
+						}
+						,{
+							"let": { "hasSwapAvatarEntry":"true" }
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldtour/worldTourAvatarFlow.nav"
+									,"inputs":
+									{
+										"Avatar_withSwapAvatarEntry":"AvatarOnboarding"
+									}
+									,"outputs":
+									{
+										"out_HypeStore":"HypeStore_withoutSwapAvatarEntry"
+										,"out_ConnectionLost":"out_disconnect"
+										,"out_exit":"SeasonsHub"
+									}
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"PlayerDevelopment"
+					,"states":
+					[
+						{
+							"let":{"OnboardingInfoStateViewModelParam":"onboardPlayerGrowth"}
+							,"name":"PlayerGrowthOnboarding"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldTour/onboardingFlow.nav"
+									,"outputs":
+									{
+										"out_bypass":"PlayerDevelopmentScreen"
+										,"out_trigger":"PlayerDevelopmentScreen"
+									}
+								}
+							]
+						}
+						,{
+							"name":"PlayerDevelopmentScreen"
+							,"type":"external"
+							,"file":"/worldtour/playerDevelopment.nav"
+							,"outputs":
+							{
+								"out_back":"SeasonsHub",
+								"out_fail":"SeasonsHub"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

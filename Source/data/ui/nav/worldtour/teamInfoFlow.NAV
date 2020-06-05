@@ -1,0 +1,157 @@
+{
+	"name":"TeamInfoFlow"
+	,"initial":
+	{
+		"targets":["TeamInfo"]
+	}
+	,"states":
+	[
+		{
+			"name":"TeamInfo"
+			,"onEnter":
+			[
+				["loadViewModel",["WorldTourTeamInfoViewModel", ".WorldTourTeamInfoFlowParam"]]
+				,["loadViewModel",["FluxViewModel"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["FluxViewModel"]]
+				,["unloadViewModel",["WorldTourTeamInfoViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"enterTeamInfo"
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["uploadTeamInfoAttempt"] }
+						,{ "event":"back", "targets":["uploadTeamInfoAttempt"] }
+						,{ "event":"crestCustomization", "targets":["GoToCrestCustomizationAttempt"] }
+					]
+				}
+				,{
+					"name":"GoToCrestCustomizationAttempt"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "goToCrestCustomization"]]
+					]
+					,"transitions":
+					[
+						{ "event":"crestCustomizationCreate", "let":{"WorldTourCrestCustomizationParam":"create"}, "targets":["CrestCustomization"] }
+						,{ "event":"crestCustomizationEdit", "let":{"WorldTourCrestCustomizationParam":"edit"}, "targets":["CrestCustomization"] }
+					]
+				}
+				,{
+					"name":"uploadTeamInfoAttempt"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["ShowBusyIndicator",""]]	
+						,["loadView", ["popup","UPLOAD_TEAM_INFO_POPUP", "WT_WAIT_FOR_SERVER_CALL"]]
+						,["sendAction", ["attempt", "uploadTeamInfo"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "UPLOAD_TEAM_INFO_POPUP"]]
+						,["sendScreenEvent", ["HideBusyIndicator",""]]
+					]
+					,"transitions":
+					[
+						{ "event":"success" ,"targets":["advanceAttempt"] }
+						,{ "event":"fail" ,"targets":["ShowPopupForTeamInfo"] }
+					]
+				}
+				,{
+					"name":"ShowPopupForTeamInfo"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "fadeIn"]]
+						,["sendAction", ["popupShow"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["enterTeamInfo"]
+						}	
+					]
+				}
+				,{
+					"name":"advanceAttempt"
+					,"onEnter":
+					[
+						["sendAction", ["attempt", "resetScreenFlowState"]]
+					]
+					,"transitions":
+					[
+						{ "event":"success", "targets":["out_advance"] }
+					]
+				}
+			]
+		}
+		,{
+			"name":"CrestCustomization"
+			,"onEnter":
+			[
+				["loadViewModel",["WorldTourCrestCustomizationViewModel", ".WorldTourCrestCustomizationParam"]]
+				,["loadViewModel",["FluxViewModel"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["unloadViewModel",["FluxViewModel"]]
+				,["unloadViewModel",["WorldTourCrestCustomizationViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"name":"enterCrestCustomization"
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["SendingCrestName"] }
+						,{ "event":"back", "targets":["SendingCrestName"] }
+					]
+				}
+				,{
+					"name":"SendingCrestName"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["ShowBusyIndicator",""]]	
+						,["loadView", ["popup","UPLOAD_TEAM_INFO_POPUP", "WT_WAIT_FOR_SERVER_CALL"]]
+						,["sendAction", ["attempt", "SendingCrest"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "UPLOAD_TEAM_INFO_POPUP"]]
+						,["sendScreenEvent", ["HideBusyIndicator",""]]
+					]
+					,"transitions":
+					[
+						{ "event":"success" ,"targets":["TeamInfo"] }
+						,{ "event":"fail" ,"targets":["ShowServerErrorPopup"] }
+					]
+				}
+				,{
+					"name":"ShowServerErrorPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup", "ServerError", "SSF_SERVER_ERROR|OK|back"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "ServerError"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["TeamInfo"]
+						}
+					]
+				}
+			]
+		}
+	]
+}

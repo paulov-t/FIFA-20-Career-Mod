@@ -75,7 +75,7 @@
                 {
                   "name": "HEIGHT",
                   "minValue": 160,
-                  "maxValue": 188,
+                  "maxValue": 205,
                   "componentType": "SLIDER"
                 },
                 {
@@ -158,71 +158,12 @@
                 },
                 {
                   "name": "PREFERRED_POSITION",
-                  "isVisible": false
+                  "isVisible": false,
+				     "componentType": "TOGGLE"
                 },
                 {
                   "name": "PREFERRED_FOOT",
                   "componentType": "TOGGLE"
-                },
-                {
-                  "name": "ACCELERATION",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "AGILITY",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "BALANCE",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "JUMPING",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "REACTIONS",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "SPRINT_SPEED",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "STAMINA",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "STRENGTH",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "MARKING",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
-                },
-                {
-                  "name": "COMPOSURE",
-                  "minValue": 1,
-                  "maxValue": 99,
-                  "componentType": "BAR"
                 }
               ]
             }
@@ -273,9 +214,9 @@
                         "isEditable": true
                       },
                       {
-                        "name": "WEAK_FOOT_ABILITY",
+                        "name": "COMPOSURE",
                         "minValue": 1,
-                        "maxValue": 5,
+                        "maxValue": 99,
                         "componentType": "BAR",
                         "isEditable": true
                       }
@@ -296,6 +237,20 @@
                       },
                       {
                         "name": "SLIDING_TACKLE",
+                        "minValue": 1,
+                        "maxValue": 99,
+                        "componentType": "BAR",
+                        "isEditable": true
+                      },
+                      {
+                        "name": "MARKING",
+                        "minValue": 1,
+                        "maxValue": 99,
+                        "componentType": "BAR",
+                        "isEditable": true
+                      },
+                      {
+                        "name": "INTERCEPTIONS",
                         "minValue": 1,
                         "maxValue": 99,
                         "componentType": "BAR",
@@ -341,6 +296,13 @@
                         "name": "BALL_CONTROL",
                         "minValue": 1,
                         "maxValue": 99,
+                        "componentType": "BAR",
+                        "isEditable": true
+                      },
+                      {
+                        "name": "WEAK_FOOT_ABILITY",
+                        "minValue": 1,
+                        "maxValue": 5,
                         "componentType": "BAR",
                         "isEditable": true
                       }
@@ -522,8 +484,21 @@
               ]
             }
           }
+		  ,
+			{
+				"name": "TRAITS",
+				"filters": {
+					"areFiltersAttributes":true,
+					"data":	[
+					{
+						"name": "TRAITS"
+					}
+					]
+				}
+			}
         ]
       }
+	  
     },
     {
       "name": "INFO",
@@ -654,8 +629,7 @@
                   "name": "GLOVES"
                 },
                 {
-                  "name": "GK_GLOVES",
-                  "disabledOptions": [103, 104, 95, 96, 117, 118]
+                  "name": "GK_GLOVES"
                 },
                 {
                   "name": "LEFT_WRIST"
@@ -680,8 +654,7 @@
 						"areFiltersAttributes": true,
 						"data": [
 							{
-                						"name": "GOALCELEBRATION",
-                						"disabledOptions": [3610, 3612, 3616, 3617, 3620, 3623, 3624, 3628, 3609, 3611, 3615, 3618, 3619, 3621, 3622, 3625, 3626, 3627]
+                						"name": "GOALCELEBRATION"
 							},
 							{
 								"name": "RUNNINGCELEBRATION"
@@ -727,15 +700,6 @@
 		"KIT_NAME"
 	  ]
 	},
-	{
-      "parents": [
-        "HEIGHT",
-        "WEIGHT"
-      ],
-      "children": [
-        "BODY_TYPE"
-      ]
-    },
     {
       "parents": [
         "GENDER",
@@ -755,49 +719,6 @@
         "GK_PANTS",
         "GLOVES",
         "ROLE"
-      ]
-    },
-    {
-      "parents": [
-        "ROLE"
-      ],
-      "children": [
-        "CROSSING",
-        "FINISHING",
-        "HEADING_ACCURACY",
-        "SHORT_PASSING",
-        "VOLLEYS",
-        "WEAK_FOOT_ABILITY",
-        "MARKING",
-        "STANDING_TACKLE",
-        "SLIDING_TACKLE",
-        "DRIBBLING",
-        "CURVE",
-        "FREE_KICK_ACCURACY",
-        "LONG_PASSING",
-        "BALL_CONTROL",
-        "SHOT_POWER",
-        "JUMPING",
-        "STAMINA",
-        "STRENGTH",
-        "LONG_SHOTS",
-        "ACCELERATION",
-        "SPRINT_SPEED",
-        "AGILITY",
-        "REACTIONS",
-        "BALANCE",
-        "AGGRESSION",
-        "COMPOSURE",
-        "INTERCEPTIONS",
-        "POSITIONING",
-        "VISION",
-        "PENALTIES",
-        "GK_DIVING",
-        "GK_HANDLING",
-        "GK_KICKING",
-        "GK_POSITIONING",
-        "GK_REFLEXES",
-		"PREFERRED_POSITION"
       ]
     },
     {

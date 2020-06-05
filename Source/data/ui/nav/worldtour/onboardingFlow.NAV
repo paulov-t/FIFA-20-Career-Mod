@@ -1,0 +1,60 @@
+{
+	"name":"OnboadringFlow"
+	,"onEnter":
+	[
+		["loadViewModel", ["WorldTourOnboardingInfoViewModel", ".OnboardingInfoStateViewModelParam"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel", ["WorldTourOnboardingInfoViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"let":{"ConditionStateParam":"shouldShowOnboardingScreen"}
+			,"name":"OnboardingScreenCheck"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/conditionState.nav"
+					,"outputs":
+					{
+						"out_true":"OnboardingScreenInfo"
+						,"out_false":"out_bypass"
+					}
+				}
+			]
+		}
+		,{
+			"name":"OnboardingScreenInfo"
+			,"onEnter": 
+			[
+				["sendAction", ["viewReady", "OnboardingScreenReady"]]
+				,["loadView",["overlay", "game/screens/storyMode/OnboardingInfo.swf", "WorldTourOnboardingInfoDP"]]
+			]
+			, "onExit":
+			[
+				["unloadView",["overlay", "game/screens/storyMode/OnboardingInfo.swf"]]
+			]
+			,"transitions":
+			[
+				{ "event":"advance", "targets":["OnboardingSaveFlow"] }
+			]
+		}
+		,{
+			"name":"OnboardingSaveFlow"
+			,"type":"external"
+			,"file":"/saveload/saveLoadFlow.nav"
+			,"inputs":
+			{
+				"HomeHubSaveLocalInfo":"SaveFlow"
+			}
+			,"outputs":
+			{
+				"out_success":"out_trigger"
+				,"out_fail":"out_trigger"
+			}
+		}
+	]
+}

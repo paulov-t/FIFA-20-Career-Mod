@@ -105,10 +105,30 @@ function P.unlinkref(refs, value)
 	return unlinked
 end
 
+function dumpJson(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. ''..k..' : ' .. dumpJson(v) .. ',\n'
+      end
+      return s .. '}\n '
+   else
+      return tostring(o)
+   end
+end
+
 --!	Serialize a table
 --!	@param	t		The table
 --!	@return	table	The serialized table
 function P.serialize(t)
+
+	local json = dumpJson(t)
+	local file_serializer = io.open("serializer_test.json", "w")
+	file_serializer:write(json)
+	file_serializer:close()
+	
+
 	local refs = {}
 	refs[t] = 0
 	P.findRefs(refs, t)
@@ -122,7 +142,10 @@ function P.serialize(t)
 		unlinked[i] = P.unlinkref(refs, v)
 	end
 	
-	return { P.unlink(refs, t), unpack(unlinked) }
+	local returnable = { P.unlink(refs, t), unpack(unlinked) }
+	
+	
+	return returnable
 end
 
 --!	Link a value given a table of refs mapping string keys to their deserialized values

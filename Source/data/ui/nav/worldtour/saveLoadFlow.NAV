@@ -1,0 +1,68 @@
+{
+	"name":"SaveLoadFlow"
+	,"states":
+	[
+		{
+			"name":"SaveFlow"
+			,"initial":{ "targets":["ShouldSkipSave"] }
+			,"states":
+			[
+				{
+					"name":"ShouldSkipSave"
+					,"onEnter":
+					[
+						["sendAction", ["conditionAardvark", "WORLD_TOUR/SKIP_SAVELOAD"]]
+					]
+					,"transitions":
+					[
+						{"event":"true", "targets":["out_success"]}
+						,{"event":"false", "targets":["DoSaveOperation"]}
+					]
+				}
+				,{
+					"name":"DoSaveOperation"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "worldTourSaveGame"]]
+					]
+					,"transitions":
+					[
+						{ "event":"worldTourSaveLoadOpComplete", "targets":["out_success"] }
+						,{ "event":"fail", "targets":["out_fail"] }
+					]
+				}
+			]
+		}
+		,{
+			"name":"LoadFlow"
+			,"initial":{ "targets":["ShouldSkipLoad"] }
+			,"states":
+			[
+				{
+					"name":"ShouldSkipLoad"
+					,"onEnter":
+					[
+						["sendAction", ["conditionAardvark", "WORLD_TOUR/SKIP_SAVELOAD"]]
+					]
+					,"transitions":
+					[
+						{"event":"true", "targets":["out_success"]}
+						,{"event":"false", "targets":["DoLoadOperation"]}
+					]
+				}
+				,{
+					"name":"DoLoadOperation"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "worldTourLoadGame"]]
+					]
+					,"transitions":
+					[
+						{ "event":"worldTourSaveLoadOpComplete", "targets":["out_success"] }
+						,{ "event":"fail", "targets":["out_fail"] }
+					]
+				}
+			]
+		}
+	]
+}

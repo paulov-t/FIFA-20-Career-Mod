@@ -1,0 +1,363 @@
+{
+	"name":"mapFlow"
+	, "initial":
+	{
+		"targets":["in_locationHub"]
+	}
+	,"states":
+	[
+		{
+			"name":"in_locationHub"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["WorldMapScreen"]
+					,"let":{ "WorldTourMapViewModelParam":"locationHub" }
+				}
+			]
+		}
+		,{
+			"name":"in_modeEntry"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["WorldMapScreen"]
+					,"let":{ "WorldTourMapViewModelParam":"modeEntry" }
+				}
+			]
+		}
+		,{
+			"name":"in_storyUILocation"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["WorldMapScreen"]
+					,"let":{ "WorldTourMapViewModelParam":"storyUILocation" }
+				}
+			]
+		}
+		,{
+			"name":"in_seasons"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["WorldMapScreen"]
+					,"let":{ "WorldTourMapViewModelParam":"seasons" }
+				}
+			]
+		}
+		,{
+			"name":"WorldMapScreen"
+			,"onEnter":
+			[
+				["loadViewModel",["WorldTourMapViewModel", ".WorldTourMapViewModelParam"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["WorldTourMapViewModel"]]
+			]
+			,"states":
+			[
+				{
+					"onEnter":
+					[
+						["loadViewModel",["FluxViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+					]
+					,"states":
+					[
+						/* This state handles the case where the user activated a TMT link from an external nav file. */
+						/* The external nav file backed out to let its parent (us) handle the transition, so in turn we're going to */
+						/* tell our parent to advance which we know will take us to the SSF home hub where TMT transitions are handled */
+						{
+							"let":{"CheckLiveMessagesParam":"ssfworldmap"}
+							,"name":"MapCheckTakeMeThereFlow"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"takeMeThereFlow.nav"
+									,"outputs":
+									{
+										"out_activatedTakeMeThereLink":"out_advance_activatedTakeMeThereLink"
+										,"out_skip":"Idle"
+									}
+								}
+							]
+						}			
+						,{
+							"name":"Idle"
+							,"transitions":
+							[
+								{"event":"advance", "targets":["TravelAirlockSceneConditionCheck"]}
+								,{"event":"back", "targets":["ShouldBackQuitConditionCheck"]}
+								,{"event":"seasons", "targets":["TravelAirlockSeasons"]}
+								,{"event":"story", "targets":["out_story"], "actions":[["sendAction", ["evt_hub_hide_event"]]]}
+								,{"event":"mapOnboardWorldTour", "targets":["MapOnboardingWorldTour"]}
+								,{"event":"mapOnboardSeason", "targets":["MapOnboardingSeason"]}
+							]
+						}
+						,{
+							"let":{"ConditionStateParam":"shouldBackQuit"}
+							,"name":"ShouldBackQuitConditionCheck"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"BackoutPopup"
+										,"out_false":"out_advance"
+									}
+								}
+							]
+						}
+						,{
+							"name":"BackoutPopup"
+							,"onEnter":
+							[						
+								["loadView", ["popup", "BACKOUT_CONFIRM_POPUP", "SSF_MODE_QUIT_CONFIRM|TXT_NO|back|TXT_YES|quit"]]																								
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "BACKOUT_CONFIRM_POPUP"]]
+							]
+							,"transitions":
+							[
+								{ "event":"quit", "targets":["out_back"] }
+								,{ "event":"back", "targets":["Idle"] }
+							]
+						}
+						,{
+							"let":{"OnboardingInfoStateViewModelParam":"onboardVoltaWorldTour"}
+							,"name":"MapOnboardingWorldTour"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldTour/onboardingFlow.nav"
+									,"outputs":
+									{
+										"out_bypass":"Idle"
+										,"out_trigger":"Idle"
+									}
+								}
+							]
+						}
+						,{
+							"let":{"OnboardingInfoStateViewModelParam":"onboardVoltaSeason"}
+							,"name":"MapOnboardingSeason"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldTour/onboardingFlow.nav"
+									,"outputs":
+									{
+										"out_bypass":"Idle"
+										,"out_trigger":"ChangeLocationForOnboardScene"
+									}
+								}
+							]
+						}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldShowTravelAirlockScene"}
+					,"name":"TravelAirlockSceneConditionCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"TravelAirlock"
+								,"out_false":"TravelAirlockNoScene"
+							}
+						}
+					]
+				}
+				,{
+					"name":"ChangeLocationForOnboardScene"
+					,"onEnter":
+					[
+						["sendAction", ["ssfChangeLocation", "1"]] /* Load warehouse because that's where scene is played */
+						,["sendScreenEvent", ["ShowBusyIndicator",""]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideBusyIndicator",""]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/feStadiumFlow.nav"
+							,"outputs":
+							{
+								"out_advance":"OnboardingScene"
+							}
+						}
+					]
+				}
+				,{
+					"name":"OnboardingScene"
+					,"onEnter":
+					[
+						["loadViewModel", ["WorldTourCinematicViewModel"]]
+						,["sendAction", ["smForcePlayScene", "20_VC_0100"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel", ["WorldTourCinematicViewModel"]]
+					]
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["Idle"] }
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/cinematicState.nav"
+						}
+					]
+				}
+			]
+		}
+		,{
+			"onEnter":
+			[
+				["loadViewModel", ["WorldTourCinematicViewModel"]]
+				,["sendAction", ["evt_hub_hide_event"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel", ["WorldTourCinematicViewModel"]]
+			]
+			,"states":
+			[										
+				{
+					"onEnter":
+					[
+						["sendAction", ["notify", "evt_disconnect_flow_not_ready"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["notify", "evt_disconnect_flow_ready"]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"airlockFlow.nav"
+							,"inputs":
+							{
+								"TravelAirlock":"in_travel_airlock"
+								,"TravelAirlockNoScene":"in_travel_airlock_noscene"
+							}
+							,"outputs":
+							{
+								"out_advance":"ShowtimeSceneLocation"
+							
+								/* NOTE: Outputs for pre match airlock flow only, will not be hit */
+								,"out_aborted":"ShowtimeSceneLocation"																,"out_error":"ShowtimeSceneLocation"
+								,"out_error":"ShowtimeSceneLocation"
+							}
+						}
+					]
+				}
+				,{
+					"onEnter":
+					[
+						["sendAction", ["notify", "evt_disconnect_flow_not_ready"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["notify", "evt_disconnect_flow_ready"]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"airlockFlow.nav"
+							,"inputs":
+							{
+								"TravelAirlockSeasons":"in_travel_airlock_noscene"
+							}
+							,"outputs":
+							{
+								"out_advance":"out_seasons"
+								
+								/* NOTE: Outputs for pre match airlock flow only, will not be hit */
+								,"out_aborted":"out_seasons"	
+								,"out_error":"out_seasons"
+							}
+						}
+					]
+				}
+				,{
+					"name":"ShowtimeSceneLocation"
+					,"onEnter":
+					[
+						["sendAction", ["smMoment", "worldMapToHub"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["smExitMomentState"]]
+					]
+					,"transitions":
+					[
+						{"event":"advance", "targets":["MapTransitionEndQuery"]}
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/cinematicState.nav"
+						}
+					]
+				}
+				,{
+					"name":"MapTransitionEndQuery"
+					,"onEnter":
+					[
+						["sendAction", ["query", "mapToHubTransition"]]
+					]
+					,"transitions":
+					[
+						{"event":"advance", "targets":["out_advance"]}
+						,{"event":"storyFlow", "targets":["out_story"]}
+					]
+				}
+			]
+		}
+	]
+}

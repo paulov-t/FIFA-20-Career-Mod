@@ -1,15 +1,6 @@
 v2k4Patch = {}
 v2k4debugfile = io.open("v2k4debugfile.txt", "w")
-v2k4debugfile:write('initialisation\n')
-
-
-
-v2k4debugfileUFM = io.open("v2k4debugfile_UFM.txt", "w")
-
-v2k4debugfileOther = io.open("v2k4debugfile_Other.txt", "w")
-
-v2k4debugfileEA = io.open("v2k4debugfile_EA.txt", "w")
-
+--v2k4debugfile:write('initialisation\n')
 
 PLAYER_FLUSHNESS_COLOR_LIST = { 0x00, 0xFFDE64AE, 0xFFDE64AE, 0xE5DE64AE, 0xD8DE64AE, 0xCCDE64AE, 0x99DE64AE, 0x8CDE64AE, 0x7FDE64AE, 0x66DE64AE, 0x4CDE64AE }
 
@@ -25,6 +16,34 @@ use_mpr_tattoo_system = 0
 use_ufm_face_system = 0
 
 use_other_face_system = 0
+
+-------------------------
+----- PAULS HELPERS -----
+
+function dumpJson(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. ''..k..' : ' .. dumpJson(v) .. ',\n'
+      end
+      return s .. '}\n '
+   else
+      return tostring(o)
+   end
+end
+
+function dumpKeyValue(o) 
+	local s = ''
+	for k, v in pairs(o) do
+		s = s .. k
+		s = s .. '='
+		s = s .. v
+		s = s .. "\n"
+		
+	end
+	return s
+end
 
 function dir_exists(directory)
   local ok, err, code = os.rename(directory, directory)
@@ -245,12 +264,27 @@ function doPlayerInjection(dir, player)
 		if(file_exists(dir .. player.PlayerId .. '.txt')) then
 		
 			v2k4debugfile:write('->>>>> ' .. dir .. player.PlayerId .. '.txt file exists\n')
-			local lastEditedHour = getVariableFromFile(dir .. player.PlayerId .. '.txt', "v2k4LastEditedHour")
-			if(lastEditedHour ~= nil) then
-				v2k4debugfile:write('->>>>> check file last edited hour ' .. lastEditedHour .. '\n')
+			
+			local lastEditedHour = nil
+
+			if(string.find(dir, "overwrite") == false) then
+			
+				lastEditedHour = getVariableFromFile(dir .. player.PlayerId .. '.txt', "v2k4LastEditedHour")
+				if(lastEditedHour ~= nil) then
+					v2k4debugfile:write('->>>>> check file last edited hour ' .. lastEditedHour .. '\n')
+				end
 			end
 			
+			
+			
 			if(lastEditedHour == nil or (tonumber(lastEditedHour) ~= tonumber(os.date("%H")))) then
+			
+				local head = getVariableFromFile(dir .. player.PlayerId .. '.txt', "Head")
+				if(head ~= 0) then
+					player.Head = tonumber(head)
+					v2k4debugfile:write('->>>>> ->>>>> Attempting to set field head to ' .. head .. '\n')
+				end
+			
 			
 				local lines = lines_from(dir .. player.PlayerId .. '.txt')
 				
@@ -530,16 +564,21 @@ function doPlayerRandomTattoo(player, use, growthchance)
 end
 
 
-function doPlayerUFMFace(player) 
 
-	if(file_exists('UFMFaces.txt')) then
-		v2k4debugfileUFM:write('Using UFMFaces.txt\n')
+
+function doPlayerFaceMod(player, fileLoc, debugFileLoc) 
+
+	local debuggingfile = io.open(debugFileLoc, "w")
+
+	if(file_exists(fileLoc)) then
+		debuggingfile:write('Using ' .. fileLoc .. '\n')
 		
-		for k,v in pairs(lines_from("UFMFaces.txt")) do
+		for k,v in pairs(lines_from(fileLoc)) do
 			local r = split(v, '=')
 			local varName = ""
 			local varValue = ""
 			for key, value in pairs(r) do
+				
 				
 				if (varName == "") then
 					varName = value
@@ -547,6 +586,7 @@ function doPlayerUFMFace(player)
 				else
 					varValue = value
 					
+						
 					if(tonumber(player.PlayerId) == tonumber(varName)) then 
 						
 						player.HeadClass = 0
@@ -556,54 +596,32 @@ function doPlayerUFMFace(player)
 						player.Hair = tonumber(varValue)						
 						player.FaceType = tonumber(varValue)
 												
-						v2k4debugfileUFM:write('UFM Face ' .. varName .. ' has been set to ' .. varValue .. '\n')
+						debuggingfile:write('Face ' .. varName .. ' has been set to ' .. varValue .. '\n')
 						
 					end
 					
-				end
-				
-			end
-		end
-		
-	end
-
-end
-
-
-function doPlayerMPRFace(player) 
-
-	local v2k4debugfileMPR = io.open("v2k4debugfile_MPR.txt", "w")
-
-	if(file_exists('MPRFaces.txt')) then
-		v2k4debugfileMPR:write('Using MPRFaces.txt\n')
-		
-		for k,v in pairs(lines_from("MPRFaces.txt")) do
-			local r = split(v, '=')
-			local varName = ""
-			local varValue = ""
-			for key, value in pairs(r) do
-				--v2k4debugfileMPR:write(key .. '\n')
-				--v2k4debugfileMPR:write(value .. '\n')
-				
-				if (varName == "") then
-					varName = value
-				
-				else
-					varValue = value
-					
-					--v2k4debugfileMPR:write('MPR Face ' .. varName .. '=' .. varValue .. '? \n')
-					--v2k4debugfileMPR:write('PlayerId:: ' .. tostring(player.PlayerId) .. ' \n')
+					-- Set Old Player Id
+					if(tonumber(player.PlayerId) == tonumber(varValue)) then 
 						
-					if(tonumber(player.PlayerId) == tonumber(varName)) then 
-						
-						player.HeadClass = 0
-						player.Head = tonumber(varValue)
-						player.HeadAssetId = tonumber(varValue)
-						player.PlayerAssetId = tonumber(varValue)
-						player.Hair = tonumber(varValue)						
-						player.FaceType = tonumber(varValue)
+						player.HeadClass = 1
+						player.Head = 0
+						player.HeadAssetId = 0
+						player.PlayerAssetId = 0
+						player.Hair = 65		
+
+						local hairColor = player.HairColor
+						hairColorPri = PLAYER_COLOR_PRI_LIST[1]
+						hairColorSec = PLAYER_COLOR_SEC_LIST[1]
+						hairColorTer = PLAYER_COLOR_TER_LIST[1]
+
+						player.HairColor = 1
+						player.HairColorPri = hairColorPri
+						player.HairColorSec = hairColorSec
+						player.HairColorTer = hairColorTer
+		
+						player.FaceType = 1
 												
-						v2k4debugfileMPR:write('MPR Face ' .. varName .. ' has been set to ' .. varValue .. '\n')
+						debuggingfile:write('Face ' .. varValue .. ' has been set to basic model\n')
 						
 					end
 					
@@ -614,7 +632,26 @@ function doPlayerMPRFace(player)
 		
 	end
 	
-	v2k4debugfileMPR:close()
+	debuggingfile:close()
+
+end
+
+function doPlayerUFMFace(player) 
+
+	doPlayerFaceMod(player,'UFMFaces.txt', 'v2k4debugfile_UFM.txt')
+
+end
+
+
+function doPlayerMPRFace(player) 
+
+	doPlayerFaceMod(player,'MPRFaces.txt', 'v2k4debugfile_MPR.txt')
+
+end
+
+function doOtherFaceSystem(player)
+
+	doPlayerFaceMod(player,'OtherFaces.txt', 'v2k4debugfile_Other.txt')
 
 end
 
@@ -635,15 +672,18 @@ function doUFMSystem(player)
 
 end
 
+
+
 function doEAFaceSystem(player) 
 
+	local v2k4debugfileEA = io.open("v2k4debugfile_EA.txt", "w")
 	if(file_exists('EAFaces.txt')) then
-		v2k4debugfile:write('Using EA Faces\n')
+		v2k4debugfileEA:write('Using EA Faces\n')
 		
-		for k,v in lines_from("EAFaces.txt") do
+		for k,v in pairs(lines_from("EAFaces.txt")) do
 			
 			local id = v
-			--v2k4debugfile:write('EA Face ' .. id .. ' has been set to ' .. id .. '\n')
+			v2k4debugfileEA:write('EA Face ' .. id .. '?\n')
 			
 			if(tonumber(player.PlayerId) == tonumber(id)) then 
 				
@@ -654,7 +694,7 @@ function doEAFaceSystem(player)
 				player.Hair = tonumber(id)						
 				player.FaceType = tonumber(id)
 										
-				v2k4debugfile:write('EA Face ' .. id .. ' has been set to ' .. id .. '\n')
+				v2k4debugfileEA:write('EA Face ' .. id .. ' has been set to ' .. id .. '\n')
 				
 			end
 					
@@ -662,64 +702,25 @@ function doEAFaceSystem(player)
 		end
 		
 	end
+	v2k4debugfileEA:close()
 end
 
-function doOtherFaceSystem(player)
 
-	if(file_exists('OtherFaces.txt')) then
-		v2k4debugfile:write('Using Other Faces\n')
-		
-		for k,v in pairs(lines_from('OtherFaces.txt')) do
-			local r = split(v, '=')
-			local varName = ""
-			local varValue = ""
-			for key, value in pairs(r) do
-				
-				if (varName == "") then
-					varName = value
-				
-				else
-					varValue = value
-					
-					--v2k4debugfile:write('Other Face ' .. varName .. ' attempting set to ' .. varValue .. '\n')
-					
-					if(tonumber(player.PlayerId) == tonumber(varName)) then 
-						
-						player.HeadClass = 0
-						player.Head = tonumber(varValue)
-						player.HeadAssetId = tonumber(varValue)
-						player.PlayerAssetId = tonumber(varValue)
-						player.Hair = tonumber(varValue)						
-						player.FaceType = tonumber(varValue)
-												
-						v2k4debugfile:write('Other Face ' .. varName .. ' has been set to ' .. varValue .. '\n')
-						
-					end
-					
-				end
-				
-			end
-		end
-		
-	end
 
-end
+
 
 function PlayerUpdate()
 		
 	local player = db.player
 	
-	
-	
-	local file = io.open("currently_editing.txt", "w")
-	for k, v in pairs(player) do
-		file:write(k)
-		file:write('=')
-		file:write(v)
-		file:write("\n")
-	end
-	file:close()
-	
+	local file_dump_db = io.open("dump_db.json", "w")
+	file_dump_db:write(dumpJson(db))
+	file_dump_db:close()
+
+	local file_currently_editing = io.open("currently_editing.json", "w")
+	file_currently_editing:write(dumpJson(player))
+	file_currently_editing:close()
+		
 	local kitNumber = player.KitNumber
 	player.KitNumberTens = math.floor ( kitNumber / 10 )
 	player.KitNumberUnits = math.floor ( math.fmod(kitNumber, 10) )
@@ -898,12 +899,7 @@ function PlayerUpdate()
 	
 	
 	local file_out2 = io.open("currently_editing_postEA.txt", "w")
-	for k, v in pairs(player) do
-		file_out2:write(k)
-		file_out2:write('=')
-		file_out2:write(v)
-		file_out2:write("\n")
-	end
+	file_out2:write(dumpKeyValue(player))
 	file_out2:close()
 	
 	local use_system = 0
@@ -919,175 +915,197 @@ function PlayerUpdate()
 	
 	
 	v2k4debugfile = io.open("v2k4debugfile.txt", "w")
-	v2k4debugfile:write('loading settings\n')
-	if(file_exists('v2k4settings.txt')) then
 	
+	
+	--if(player.IsVirtualPro == 0 and player.IsCreatedPlayer == 0) then
+	
+		v2k4debugfile:write('loading settings\n')
+		if(file_exists('v2k4settings.txt')) then
+		
 
-	-- do settings stuff
-		for k,v in pairs(lines_from("v2k4settings.txt")) do
-			local r = split(v, '=')
-			local varName = ""
-			local varValue = ""
-			for key, value in pairs(r) do
-				
-				if (varName == "") then
-					varName = value
-				
-				else
-					varValue = value
+		-- do settings stuff
+			for k,v in pairs(lines_from("v2k4settings.txt")) do
+				local r = split(v, '=')
+				local varName = ""
+				local varValue = ""
+				for key, value in pairs(r) do
 					
-					if varName == "use_system" then 
-						use_system = tonumber(varValue)
-					elseif varName == "use_hairgrowth_system" then
-						use_hairgrowth_system = tonumber(varValue)
-					elseif varName == "use_facialhairgrowth_system" then
-						use_facialhairgrowth_system = tonumber(varValue)
-					elseif varName == "use_bodyweight_system" then
-						use_bodyweight_system = tonumber(varValue)
-					elseif varName == "hairgrowth_system_randomgrowth_chance" then
-						hairgrowth_system_randomgrowth_chance = tonumber(varValue)
-					elseif varName == "facialhairgrowth_system_randomgrowth_chance" then
-						facialhairgrowth_system_randomgrowth_chance = tonumber(varValue)
-					elseif varName == "bodyweight_system_randomgrowth_chance" then
-						bodyweight_system_randomgrowth_chance = tonumber(varValue)
-					elseif varName == "use_shoe_system" then
-						use_shoe_system = tonumber(varValue)
-					elseif varName == "shoe_system_randomchange_chance" then
-						shoe_system_randomchange_chance = tonumber(varValue)
-					elseif varName == "use_tattoo_system" then	
-						use_tattoo_system = tonumber(varValue)
-					elseif varName == "use_mpr_face_system" then
-						use_mpr_face_system = tonumber(varValue)
-					elseif varName == "use_mpr_boot_system" then
-						use_mpr_boot_system = tonumber(varValue)
-					elseif varName == "use_ufm_face_system" then
-						use_ufm_face_system = tonumber(varValue)
-					elseif varName == "use_other_face_system" then
-						use_other_face_system = tonumber(varValue)
-						
-						
+					if (varName == "") then
+						varName = value
 					
+					else
+						varValue = value
+						
+						if varName == "use_system" then 
+							use_system = tonumber(varValue)
+						elseif varName == "use_hairgrowth_system" then
+							use_hairgrowth_system = tonumber(varValue)
+						elseif varName == "use_facialhairgrowth_system" then
+							use_facialhairgrowth_system = tonumber(varValue)
+						elseif varName == "use_bodyweight_system" then
+							use_bodyweight_system = tonumber(varValue)
+						elseif varName == "hairgrowth_system_randomgrowth_chance" then
+							hairgrowth_system_randomgrowth_chance = tonumber(varValue)
+						elseif varName == "facialhairgrowth_system_randomgrowth_chance" then
+							facialhairgrowth_system_randomgrowth_chance = tonumber(varValue)
+						elseif varName == "bodyweight_system_randomgrowth_chance" then
+							bodyweight_system_randomgrowth_chance = tonumber(varValue)
+						elseif varName == "use_shoe_system" then
+							use_shoe_system = tonumber(varValue)
+						elseif varName == "shoe_system_randomchange_chance" then
+							shoe_system_randomchange_chance = tonumber(varValue)
+						elseif varName == "use_tattoo_system" then	
+							use_tattoo_system = tonumber(varValue)
+						elseif varName == "use_mpr_face_system" then
+							use_mpr_face_system = tonumber(varValue)
+						elseif varName == "use_mpr_boot_system" then
+							use_mpr_boot_system = tonumber(varValue)
+						elseif varName == "use_ufm_face_system" then
+							use_ufm_face_system = tonumber(varValue)
+						elseif varName == "use_other_face_system" then
+							use_other_face_system = tonumber(varValue)
+							
+							
+						
+						end
 					end
 				end
 			end
+		
+		
+		
 		end
-	
-	
-	
-	end
-		-- end of do settings stuff
-		
-	if use_system >= 1 then 
-		
-		-- Use Dynamic System
-		if(player.IsAvatar ~= 1 and use_system == 1) then 
-		
-			local v2k4LastEditedHour = getVariableFromFile("paulv2k4/saved/" .. player.PlayerId .. '.txt', "v2k4LastEditedHour")
-		
-			local bOkToUseFile = true
+			-- end of do settings stuff
 			
-			local viewStateFilePath = "paulv2k4/saved/__viewState.txt"
-			local currentEditedPlayerId = getVariableFromFile(viewStateFilePath, "PlayerId")
-			v2k4debugfile:write('PlayerId View State: ' .. currentEditedPlayerId .. ' vs ' .. player.PlayerId .. '\n')
-			if(currentEditedPlayerId ~= nil and tonumber(currentEditedPlayerId) == tonumber(player.PlayerId)) then
-				bOkToUseFile = false
-			end
+		if use_system >= 1 then 
 			
-			if(v2k4LastEditedHour ~= nil) then
-				v2k4debugfile:write('->>>>> check file last edited hour ' .. tostring(v2k4LastEditedHour) .. ' vs ' .. tostring(os.date("%H")) .. '\n')
-			end
+			-- Use Dynamic System
+			if(player.IsAvatar ~= 1 and use_system == 1) then 
 			
-			if(v2k4LastEditedHour ~= nil and (tonumber(v2k4LastEditedHour) == tonumber(os.date("%H")))) then
+				local v2k4LastEditedHour = getVariableFromFile("paulv2k4/saved/" .. player.PlayerId .. '.txt', "v2k4LastEditedHour")
+			
+				local bOkToUseFile = true
 				
-				bOkToUseFile = false
-			end
-			
-			local viewStateFile = io.open(viewStateFilePath, "w")
-			viewStateFile:write('PlayerId=' .. player.PlayerId .. '\n')
-			viewStateFile:write("v2k4LastLoaded=" .. os.date() .. "\n")
-			viewStateFile:close()
-			
-			--v2k4debugfile:write('Ok to use Save file??: ' .. bOkToUseFile .. '\n')
-			if(bOkToUseFile == true) then
-			
-			
-				-- Player Dynamic Changing System - Load in
-				doPlayerInjection('paulv2k4/saved/', player) 
-			
-				-- make change
-				doPlayerRandomFacialHair(player, use_facialhairgrowth_system, facialhairgrowth_system_randomgrowth_chance)
-				
-				-- make change
-				doPlayerRandomHair(player, use_hairgrowth_system, hairgrowth_system_randomgrowth_chance)
-				
-				-- make change
-				--doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
-				
-				-- make change to tattoo
-				--doPlayerRandomTattoo(player, use_tattoo_system, 100)
-			
-			end
-			
-			-- save change
-			if(dir_exists('paulv2k4/saved')) then
-				local fileSaveChanges = io.open('paulv2k4/saved/' .. player.PlayerId .. '.txt', "w")
-				for k, v in pairs(player) do
-					fileSaveChanges:write(k)
-					fileSaveChanges:write('=')
-					fileSaveChanges:write(v)
-					fileSaveChanges:write("\n")
+				local viewStateFilePath = "paulv2k4/saved/__viewState.txt"
+				local currentEditedPlayerId = getVariableFromFile(viewStateFilePath, "PlayerId")
+				v2k4debugfile:write('PlayerId View State: ' .. currentEditedPlayerId .. ' vs ' .. player.PlayerId .. '\n')
+				if(currentEditedPlayerId ~= nil and tonumber(currentEditedPlayerId) == tonumber(player.PlayerId)) then
+					bOkToUseFile = false
 				end
-				fileSaveChanges:write("v2k4LastLoaded=" .. os.date() .. "\n")
-				if(bOkToUseFile == false or v2k4LastEditedHour ~= nil) then 
-					fileSaveChanges:write("v2k4LastEditedHour=" .. os.date("%H") .. "\n")
-				else 
-					fileSaveChanges:write("v2k4LastDynamicSystemHour=" .. os.date("%H") .. "\n")
+				
+				if(v2k4LastEditedHour ~= nil) then
+					v2k4debugfile:write('->>>>> check file last edited hour ' .. tostring(v2k4LastEditedHour) .. ' vs ' .. tostring(os.date("%H")) .. '\n')
 				end
-				fileSaveChanges:close()
+				
+				if(v2k4LastEditedHour ~= nil and (tonumber(v2k4LastEditedHour) == tonumber(os.date("%H")))) then
+					
+					bOkToUseFile = false
+				end
+				
+				local viewStateFile = io.open(viewStateFilePath, "w")
+				viewStateFile:write('PlayerId=' .. player.PlayerId .. '\n')
+				viewStateFile:write("v2k4LastLoaded=" .. os.date() .. "\n")
+				viewStateFile:close()
+				
+				--v2k4debugfile:write('Ok to use Save file??: ' .. bOkToUseFile .. '\n')
+				if(bOkToUseFile == true) then
 				
 				
+					-- Player Dynamic Changing System - Load in
+					doPlayerInjection('paulv2k4/saved/', player) 
+				
+					-- make change
+					doPlayerRandomFacialHair(player, use_facialhairgrowth_system, facialhairgrowth_system_randomgrowth_chance)
+					
+					-- make change
+					doPlayerRandomHair(player, use_hairgrowth_system, hairgrowth_system_randomgrowth_chance)
+					
+					-- make change
+					--doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
+					
+					-- make change to tattoo
+					--doPlayerRandomTattoo(player, use_tattoo_system, 100)
+				
+				end
+				
+				-- save change
+				if(dir_exists('paulv2k4/saved')) then
+					local fileSaveChanges = io.open('paulv2k4/saved/' .. player.PlayerId .. '.txt', "w")
+					for k, v in pairs(player) do
+						fileSaveChanges:write(k)
+						fileSaveChanges:write('=')
+						fileSaveChanges:write(v)
+						fileSaveChanges:write("\n")
+					end
+					fileSaveChanges:write("v2k4LastLoaded=" .. os.date() .. "\n")
+					if(bOkToUseFile == false or v2k4LastEditedHour ~= nil) then 
+						fileSaveChanges:write("v2k4LastEditedHour=" .. os.date("%H") .. "\n")
+					else 
+						fileSaveChanges:write("v2k4LastDynamicSystemHour=" .. os.date("%H") .. "\n")
+					end
+					fileSaveChanges:close()
+					
+					
+				
+				end
 			
 			end
+			
+			-- EA Starheads first, then let the rest do their thing
+			v2k4debugfile:write("-- EA -- \n")
+			doEAFaceSystem(player)
+			
+			-- MPR System
+			v2k4debugfile:write("-- MPR -- \n")
+			doMPRSystem(player)
+			
+			v2k4debugfile:write("-- UFM -- \n")
+			if(use_ufm_face_system >= 1) then
+				-- UFM System
+				doUFMSystem(player)
+			end
+			
+			v2k4debugfile:write("-- Other -- \n")
+			-- Other Faces System
+			if(use_other_face_system >= 1) then
+			
+				doOtherFaceSystem(player)
+			end
+			
+			-- Overwrite System
+			v2k4debugfile:write("-- Overwrite -- \n")
+			doPlayerInjection('paulv2k4/overwrite/', player) 
 		
 		end
 		
-		-- Overwrite System
-		doPlayerInjection('paulv2k4/overwrite/', player) 
-
-		-- MPR System
-		doMPRSystem(player)
-		
-		if(use_ufm_face_system >= 1) then
-			-- UFM System
-			doUFMSystem(player)
-		end
-		
-		-- Other Faces System
-		if(use_other_face_system >= 1) then
-		
-			doOtherFaceSystem(player)
-		end
-		
-		-- EA Starheads
-		-- doEAFaceSystem(player)
-	
-	end
-	
+	--end
 	
 	-- if createplayer female disable facial hair stamping
-	if (player.IsCreatedPlayer == 1 and player.Gender == 1) then
+	--if (player.IsCreatedPlayer == 1 and player.Gender == 1) then
+	if(player.Gender == 1) then
 		player.FacialHairType = 0
 	end
 	
-	v2k4debugfile:close()
 	
 
-
-	v2k4debugfileUFM:close()
-
-	v2k4debugfileOther:close()
-
-	v2k4debugfileEA:close()
+	---------------------------
+	-- User Request Settings --
+	v2k4debugfile:write("-- User Request Settings -- \n")
+	if(file_exists('v2k4settings.txt')) then
+		
+		-- Force JerseyFit (request from @hugodm7)
+		local ForceTightFitJersey = getVariableFromFile('v2k4settings.txt', "ForceTightFitJersey")
+		v2k4debugfile:write("-- ForceTightFitJersey: " .. tostring(ForceTightFitJersey) .. "\n")
+		if(ForceTightFitJersey ~= nil and tonumber(ForceTightFitJersey) == 1) then
+			player.JerseyFit = 1
+		end
+	end
+	
+	
+	
+	
+	
+	v2k4debugfile:close()
 	
 	
 end

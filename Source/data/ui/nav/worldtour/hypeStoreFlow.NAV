@@ -1,0 +1,521 @@
+{
+	"name":"hypeStoreFlow"
+	, "initial":
+	{
+		"targets":["WaitForCatalog"]
+	}
+	,"states":
+	[
+		{
+			"name":"WaitForCatalog"
+			,"onEnter":
+			[
+				["loadView", ["popup", "HYPE_ENTER_SERVER_SYNC_POPUP", "TXT_HYPE_STORE_UPDATE"]]
+				,["sendAction", ["notify", "getStoreCatalogFromServer"]]
+				,["set", ["hypeEnterParam", ".hypeEnterParam"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "HYPE_ENTER_SERVER_SYNC_POPUP"]]
+			]
+			,"transitions":
+			[
+				{ 
+					"event":"success"
+					,"cond":["==", ".hasSwapAvatarEntry", "true"]
+					,"targets":["SwapAvatarFlowHypeHub"]
+					,"let":{ "hypeEnterParam":".hypeEnterParam" }
+				}
+				,{
+					"event":"success"
+					,"targets":["HypeHub"]
+					,"let":{ "hypeEnterParam":".hypeEnterParam" }
+				}
+				,{ 
+					"event":"fail"
+					,"targets":["DataLoadFailedPopup"]
+				}
+			]
+		}
+		,{
+			"name":"DataLoadFailedPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","HYPE_DATA_SOURCING_FAILED_POPUP", "SSF_WT_HYPE_DATA_FAILED|txt_back|popupBack"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "HYPE_DATA_SOURCING_FAILED_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"popupBack"
+					,"targets":["out_back"]
+				}
+			]
+		}
+		,{
+			"name":"in_hypeSeason"
+			,"states":
+			[
+				{
+					"let":{"OnboardingInfoStateViewModelParam":"onboardHypeSeason"}
+					,"name":"HypeSeasonOnboarding"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldTour/onboardingFlow.nav"
+							,"outputs":
+							{
+								"out_bypass":"hypeSeasonScreen"
+								,"out_trigger":"hypeSeasonScreen"
+							}
+						}
+						,{
+							"name":"hypeSeasonScreen"
+							,"onEnter":
+							[
+								["invoke", ["advance"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["WaitForCatalog"]
+									,"let":{ "hypeEnterParam":"season" }
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"in_hypeEssentials"
+			,"states":
+			[
+				{
+					"let":{"OnboardingInfoStateViewModelParam":"onboardHypeEssential"}
+					,"name":"HypeEssentialOnboarding"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldTour/onboardingFlow.nav"
+							,"outputs":
+							{
+								"out_bypass":"hypeEssentialScreen"
+								,"out_trigger":"hypeEssentialScreen"
+							}
+						}
+						,{
+							"name":"hypeEssentialScreen"
+							,"onEnter":
+							[
+								["invoke", ["advance"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance"
+									,"targets":["WaitForCatalog"]
+									,"let":{ "hypeEnterParam":"essentials" }
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"in_hypeExpress"
+			,"onEnter":
+			[
+				["invoke", ["advance"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"advance"
+					,"targets":["WaitForCatalog"]
+					,"let":{ "hypeEnterParam":"express" }
+				}
+			]
+		}
+		,{
+			"name":"SwapAvatarFlowHypeHub"
+			,"onEnter":
+			[
+				["set", ["hypeEnterParam", ".hypeEnterParam"]]
+			]
+			,"states":
+			[
+				{
+					"let":{"WaitStateParam":"fadeOut"}
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"InitSwapAvatarFlow"
+							}
+						}
+					]
+				}
+				,{
+					"name":"InitSwapAvatarFlow"
+					,"type":"external"
+					,"file":"/worldTour/worldTourSwapAvatarFlow.nav"
+					,"outputs":
+					{
+						"out_advance":"toHypeHub"
+						,"out_back":"SwapAvatarFlow_out_back"
+					}
+				}
+				,{
+					"name":"SwapAvatarFlow_out_back"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "hypeStoreSwapAvatarFlow_out_back"]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["out_back"]
+						}
+					]
+				}
+				,{
+					"name":"toHypeHub"
+					,"onEnter":
+					[
+						["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["HypeHub"]
+							,"let":{ "hypeEnterParam":".hypeEnterParam" }
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"HypeHub"
+			,"onEnter":
+			[
+				["sendAction", ["fbStartFlowEvent", "EnterAvatarCustomization"]]
+				,["loadViewModel", ["FluxViewModel"]]
+				,["loadViewModel", ["WorldTourHypeHubViewModel", ".hypeEnterParam"]]
+				,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+				,["sendAction", ["notify", "enterHypeHub"]]
+				,["sendAction", ["loadAvatar"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["notify", "perform2dCaptures"]]
+				,["unloadView", ["screen", "game/screens/fluxHub/FluxHub"]]
+				,["sendAction", ["unloadAvatar"]]
+				,["unloadViewModel", ["WorldTourHypeHubViewModel"]]
+				,["unloadViewModel", ["FluxViewModel"]]
+				,["sendAction", ["fbStartFlowEvent", "ExitAvatarCustomization"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["WaitCaptureThen_out_back"]  
+				}
+				,{
+					"event":"goToInventory"
+					,"targets":["WaitCaptureThen_out_avatarCustomization"]
+				}
+				,{
+					"event":"goToSwapAvatar"
+					,"targets":["SwapAvatar"]
+				}
+			]
+			,"states":
+			[
+				{
+					"let":{"CheckLiveMessagesParam":"ssfhypelivemsg"}
+					,"name":"HypeStoreCheckTakeMeThereFlow"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"takeMeThereFlow.nav"
+							,"outputs":
+							{
+								"out_activatedTakeMeThereLink":"HypeStoreCheckTakeMeThereLink"
+								,"out_skip":"IdleScreen"
+							}
+						}
+					]
+				}			
+				,{
+					"name":"HypeStoreCheckTakeMeThereLink"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "hypeStore_checkTakeMeThereLink"]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["IdleScreen"]
+						}
+					]
+				}
+				,{
+					"name":"IdleScreen"
+					,"transitions":
+					[
+						{
+							"event":"showPurchaseConsent"
+							,"targets":["PurchaseConsent"]
+						}
+						,{
+							"event":"killSwitchCatalog"
+							,"targets":["CatalogKillSwitchPopup"]
+						}
+					]
+				}
+				,{
+					"name":"PurchaseConsent"
+					,"transitions":
+					[
+						{
+							"event":"purchaseItem"
+							,"targets":["PurchaseWait"]
+						}
+						,{
+							"event":"purchaseCancel"
+							,"targets":["IdleScreen"]
+						}
+					]
+				}
+				,{
+					"name":"PurchaseWait"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "evt_disconnect_flow_not_ready"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["notify", "evt_disconnect_flow_ready"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"success"
+							,"targets":["IdleScreen"]
+						}
+						,{
+							"event":"fail"
+							,"targets":["PurchaseFailedPopup"]
+						}
+						,{
+							"event":"disconnected"
+							,"targets":["PurchaseDisconnectedPopup"]
+						}
+						,{
+							"event":"killPurchaseSwitch"
+							,"targets":["PurchaseKillSwitchPopup"]
+						}
+					]
+				}
+				,{
+					"name":"PurchaseFailedPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup","HYPE_PURCHASE_FAILED_POPUP", "TXT_PURCHASE_FAILED_MESSAGE|txt_back|popupBack"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "HYPE_PURCHASE_FAILED_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupBack"
+							,"targets":["IdleScreen"]
+						}
+					]
+				}
+				,{
+					"name":"PurchaseDisconnectedPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup","HYPE_PURCHASE_DISCONNECTED_POPUP", "TXT_PURCHASE_DISCONNECTED_MESSAGE|txt_back|popupBack"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "HYPE_PURCHASE_DISCONNECTED_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupBack"
+							,"targets":["IdleScreen"]
+						}
+					]
+				}
+				,{
+					"name":"PurchaseKillSwitchPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup","SSF_KILLSWITCH_POPUP", "SSF_KILLSWITCH_DESC|txt_back|popupBack"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "SSF_KILLSWITCH_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupBack"
+							,"targets":["IdleScreen"]
+						}
+					]
+				}
+				,{
+					"name":"CatalogKillSwitchPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup","SSF_KILLSWITCH_POPUP", "SSF_KILLSWITCH_DESC|txt_back|popupBack"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "SSF_KILLSWITCH_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"popupBack"
+							,"targets":["out_back"]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"WaitCaptureThen_out_back"
+			,"states":
+			[
+				{
+					"let":{"WaitStateParam":"waitForCaptureToComplete"}
+					,"onEnter":
+					[
+						["sendScreenEvent", ["ShowBusyIndicator",""]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideBusyIndicator",""]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"out_back"
+							}
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"WaitCaptureThen_out_avatarCustomization"
+			,"states":
+			[
+				{
+					"let":{"WaitStateParam":"waitForCaptureToComplete"}
+					,"onEnter":
+					[
+						["sendScreenEvent", ["ShowBusyIndicator",""]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideBusyIndicator",""]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"out_avatarCustomization"
+							}
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"SwapAvatar"
+			,"states":
+			[
+				{
+					"let":{"WaitStateParam":"waitForCaptureToComplete"}
+					,"onEnter":
+					[
+						["sendScreenEvent", ["ShowBusyIndicator",""]]
+					]
+					,"onExit":
+					[
+						["sendScreenEvent", ["HideBusyIndicator",""]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"SwapAvatar_fadeout"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"WaitStateParam":"fadeOut"}
+					,"name":"SwapAvatar_fadeout"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"SwapAvatarFlow"
+							}
+						}
+					]
+				}
+				,{
+					"name":"SwapAvatarFlow"
+					,"type":"external"
+					,"file":"/worldTour/worldTourSwapAvatarFlow.nav"
+					,"outputs":
+					{
+						"out_advance":"IdleScreen"
+						,"out_back":"IdleScreen"
+					}
+				}
+			]
+		}
+	]
+}

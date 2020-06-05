@@ -1,0 +1,187 @@
+{
+	"name":"WorldTourMatchLoadFlow"
+	,"states":
+	[
+		{
+			"name":"in_LoadGameMode"
+			,"states":
+			[
+				{
+					"let":{"ConditionStateParam":"isGameModeLoaded"}
+					,"name":"MatchFlowTryLoadGameMode"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"out_GameModeLoaded"
+								,"out_false":"MatchFlowLoadGameMode"
+							}
+						}
+						,{
+							"name":"MatchFlowLoadGameMode"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "matchflowStart"]]
+							]
+							,"transitions":
+							[
+								{ "event":"SkipSquadCapture", "targets":["out_GameModeLoaded"] }
+								,{ "event":"CaptureUserSquad", "targets":["Capture2dSquad"] }
+							]
+						}
+						,{
+							"let":{"WaitStateParam":"ssfCapture2dSquad"}
+							,"name":"Capture2dSquad"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["ShowBusyIndicator",""]]
+							]
+							,"onExit":
+							[
+								["sendScreenEvent", ["HideBusyIndicator",""]]
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/waitState.nav"
+									,"outputs":
+									{
+										"out_advance":"out_GameModeLoaded"
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"in_LoadMatchAssets"
+			,"onEnter":
+			[
+				["invoke", ["evt_invite_flow_not_ready"]]
+			]
+			,"onExit":
+			[
+				["invoke", ["evt_invite_flow_ready"]]
+			]
+			,"states":
+			[
+				{
+					"let":{"ConditionStateParam":"isMatchLoadStarted"}
+					,"name":"MatchFlowAreAssetsLoaded"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"out_MatchAssetsLoaded"
+								,"out_false":"ServerRequestFlow"
+							}
+						}
+					]
+				}
+				,{
+					"name":"ServerRequestFlow"
+					,"states":
+					[
+						{
+							"name":"RequestCreateMatch"
+							, "onEnter":
+							[
+								["sendAction", ["notify", "requestMatchCreate"]]
+							]
+							, "transitions":
+							[
+								{ "event":"fail", "targets":["RequestFailure"] }
+								,{ "event":"success", "targets":["NotifyMatchReady"] }
+								,{ "event":"disabled", "targets":["MatchesDisabledPopup"] }
+							]
+						}
+						,{
+							"name":"NotifyMatchReady"
+							, "onEnter":
+							[
+								["sendAction", ["notify", "notifyMatchReady"]]
+							]
+							, "transitions":
+							[
+								{ "event":"fail", "targets":["RequestFailure"] }
+								,{ "event":"success", "targets":["UnloadFeStadium"] }
+								,{ "event":"disabled", "targets":["MatchesDisabledPopup"] }
+							]
+						}
+						,{
+							"name":"RequestFailure"
+							,"onEnter":
+							[						
+								["loadView", ["popup", "FAILED_TO_CREATE_MATCH_POPUP", "SSF_WT_FAILED_TO_CREATE_MATCH|ok|advance"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "FAILED_TO_CREATE_MATCH_POPUP"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["out_error"] }
+							]
+						}
+						,{
+							"name":"MatchesDisabledPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SSF_KILLSWITCH_POPUP", "SSF_KILLSWITCH_DESC|ok|advance"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "SSF_KILLSWITCH_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"advance", "targets":["out_aborted"]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"let":{"WaitStateParam":"unloadFeStadium"}
+					,"name":"UnloadFeStadium"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"MatchFlowLoadMatchAssets"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"WaitStateParam":"loadMatchAssets"}
+					,"name":"MatchFlowLoadMatchAssets"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"out_MatchAssetsLoaded"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,243 @@
+{
+	"name":"squadManagementFlow"
+	, "initial":
+	{
+		"targets":["SquadHub"]
+	}
+	,"states":
+	[
+		{
+			"name":"SquadServerSyncPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup", "SQUAD_SERVER_SYNC_POPUP", "TXT_UPLOAD_SQUAD_DATA|Cancel (debug only)|popupCancel"]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+				,["unloadView", ["popup", "SQUAD_SERVER_SYNC_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"popupCancel"
+					,"targets":["out_back"]
+				}
+				,{
+					"event":"server_sync_complete"
+					,"targets":["SquadHub"]
+				}
+			]
+		}
+		,{
+			"name":"SquadHub"
+			, "initial":
+			{
+				"targets":["SquadScreen"]
+			}
+			,"onExit":
+			[
+			]
+			,"states":
+			[
+				{
+					"name":"SquadScreen"
+					,"onEnter":
+					[
+						["loadViewModel", ["FluxViewModel"]]
+						,["loadViewModel", ["WorldTourSquadBuildViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel", ["WorldTourSquadBuildViewModel"]]
+						,["unloadViewModel", ["FluxViewModel"]]
+					]
+					,"transitions":
+					[
+						{ "event":"PlayerDetailsHub", "targets":["PlayerDetailsHub"] },
+						{ "event":"PlayerGrowth", "targets":["PlayerDevelopment"] },
+						{ "event":"ChangeApparel", "targets":["WorldTourAvatar_withoutSwapAvatarEntry"] }
+					]
+					,"states":
+					[
+						{
+							"name":"Screen"
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["SquadServerSyncPopup"] }
+								,{ "event":"back", "targets":["SaveSquadOnExit"] }
+								,{ "event":"PlayerActions", "targets":["PlayerActions"] }
+								,{ 
+									"event":"InvalidSwap", 
+									"targets":["InvalidSwapPopup"],
+									"let":{"popupText":"WT_Invalid_Swap|OK|popupOk"}
+								}
+								,{ 
+									"event":"InvalidSwapWithAvatar", 
+									"targets":["InvalidSwapPopup"],
+									"let":{"popupText":"WT_Invalid_Swap_Avatar|OK|popupOk"}
+								}
+								,{ 
+									"event":"InvalidSwapWithAvatarGK", 
+									"targets":["InvalidSwapPopup"],
+									"let":{"popupText":"WT_Invalid_Swap_Avatar_GK|OK|popupOk"}
+								}
+								,{ 
+									"event":"InvalidSwapBench", 
+									"targets":["InvalidSwapPopup"],
+									"let":{"popupText":"WT_SWAP_BENCH_INVALID|OK|popupOk"}
+								}
+							]
+						}
+						,{
+							"name":"PlayerActions"
+							,"onEnter":
+							[
+								["loadView", ["overlay", "game/screens/worldtour/PlayerActions"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["overlay", "game/screens/worldtour/PlayerActions"]]
+							]
+							,"transitions":
+							[
+								{ "event":"back", "targets":["Screen"] }
+							]
+						}
+						,{
+							"name":"InvalidSwapPopup"
+							,"onEnter":
+							[								
+								["loadView", ["popup", "SSF_SQUAD_INVALID_SWAP_POPUP", ".popupText"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "SSF_SQUAD_INVALID_SWAP_POPUP"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"popupOk"
+									,"targets":["Screen"]
+								}								
+							]
+						}
+					]
+				}
+				,{
+					"let":{"FluxScreenStateViewModelName":"WorldTourPlayerDetailsViewModel", "FluxScreenStateViewModelParam":""}
+					,"name":"PlayerDetailsHub"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/fluxScreenState.nav"
+							,"outputs":
+							{
+								"out_advance":"SquadScreen"
+								,"out_back":"SquadScreen"
+							}
+						}
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/worldtour/playerDevelopment.nav"
+					,"inputs":
+					{
+						"PlayerDevelopment":"PlayerDevelopmentFlow"
+					}
+					,"outputs":
+					{
+						"out_back":"SquadScreen",
+						"out_fail":"SquadScreen"
+					}
+				}
+				,{
+					"name":"Avatar_withoutSwapAvatarEntry"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/worldTourAvatarFlow.nav"
+							,"inputs":
+							{
+								"WorldTourAvatar_withoutSwapAvatarEntry":"AvatarOnboarding"
+							}
+							,"outputs":
+							{
+								"out_HypeStore":"HypeStore_withoutSwapAvatarEntry"
+								,"out_ConnectionLost":"out_ConnectionLost"
+								,"out_exit":"SquadScreen"
+							}
+						}
+					]
+				}
+				,{
+					"name":"HypeHub_withoutSwapAvatarEntry"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/hypeStoreFlow.nav"
+							,"inputs":
+							{
+								"HypeStore_withoutSwapAvatarEntry":"in_hypeSeason"
+							}
+							,"outputs":
+							{
+								"out_back":"WorldTourAvatar_withoutSwapAvatarEntry"
+								,"out_avatarCustomization":"WorldTourAvatar_withoutSwapAvatarEntry"
+							}
+						}
+					]
+				}
+			]
+		}
+		,{
+			"name":"SaveSquadOnExit"
+			,"onEnter":
+			[
+				["sendAction", ["notify", "uploadSquadChanges"]]
+			]
+			,"onExit":
+			[
+			]
+			,"transitions":
+			[
+				{
+					"event":"squad_check_success"
+					,"targets":["out_back"]
+				}
+				,{
+					"event":"squad_check_no_changes"
+					,"targets":["out_back"]
+				}
+				,{
+					"event":"squad_check_fail"
+					,"targets":["SquadUpdateFailure"]
+				}
+			]
+		}
+		,{
+			"name": "SquadUpdateFailure",
+			"onEnter":
+			[
+				["loadView", ["popup", "SQUAD_UPDATE_REQUEST_FAIL_POPUP", "OSDK_CANNOT_UPDATE_SQUAD|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "SQUAD_UPDATE_REQUEST_FAIL_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back","targets":["out_error"]
+				}
+			]
+		}
+	]
+}

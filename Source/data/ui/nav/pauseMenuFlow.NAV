@@ -728,6 +728,10 @@
 										,{"event":"TrainerSettings", "targets":["TrainerSettings"]}
 										,{"event":"StoryObjectives", "targets":["StoryObjectives"]}
 										,{
+											"event":"AdvancePAMLockToPlayer"
+											,"targets":["ProSelectScreen"] 
+										}
+										,{
 											"event":"CareerQuitMatch"
 											,"targets":["QuitMatchCareerDecision"]
 										}
@@ -1433,6 +1437,35 @@
 											"event":"back"
 											,"targets":["PauseMenuIdle"]
 										}
+									]
+								}
+								,{
+									"name":"ProSelectScreen"
+									,"onEnter":
+									[
+										["loadScreenController", ["ProSelectScreen"]]
+										,["loadView", ["screen", "game/screens/career/ProSelect"]]
+									]
+									,"onExit": 
+									[
+										["unloadView", ["screen", "game/screens/career/ProSelect"]]
+										,["unloadScreenController", ["ProSelectScreen"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"Back"
+											,"targets":["PauseMenuIdle"] 
+										}
+										,{
+											"event":"Advance"
+											,"targets":["PauseMenuIdle"] 
+										}
+										,{
+											"event":"BackToSideSelect"
+											,"targets":["PauseMenuIdle"] 
+										}
+										,{ "event":"evt_notify_controller_disconnect", "targets":["PauseMenuIdle"] }
 									]
 								}
 								,{

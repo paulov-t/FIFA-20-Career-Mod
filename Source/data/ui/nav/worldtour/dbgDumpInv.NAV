@@ -1,0 +1,48 @@
+{
+	"name":"DebugDumpInventory"
+    , "initial":
+    {
+        "targets":["DumpAndRefreshInventory"]
+    }
+	,"states":
+	[
+		{
+			"name":"DumpAndRefreshInventory"
+			,"onEnter":
+			[
+				["sendAction", ["notify", "dumpAndRefreshInventory"]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"success"
+					,"targets":["PostDumpPopup"]
+				}
+				,{
+					"event":"fail"
+					,"targets":["PostDumpPopup"]
+				}
+			]
+		}
+		,{
+			"name":"PostDumpPopup"
+			,"onEnter":
+			[
+				["loadView", ["popup","PostDumpPopup", "Session may be unstable now. Please collect TTY and restart build.|OK|advance"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "PostDumpPopup"]]
+			]
+			,"transitions":
+			[
+				{ "event":"advance" ,"targets":["out"] }
+			]
+		}
+	]
+}

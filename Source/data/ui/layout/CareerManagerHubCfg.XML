@@ -345,6 +345,11 @@
 		<data ID="MARKET_DIFF_COLOR" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/training/tileStateIcons/Market_Trend_Background.dds" TRANSLATE="FALSE" WIDTH="92" HEIGHT="28" X="20" Y="145" />
 		<data ID="MARKET_DIFF_VALUE" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||middle" TRANSLATE="FALSE" WIDTH="92" HEIGHT="28" X="20" Y="143" />
 	  </subtile>
+	  
+	  <subtile NAME="PAM_SQUAD_HUB" SUBTILE_TYPE="TILE" DESTINATION="EnterSquadHub" BG_ICON="SquadHub_Small" DATAPROVIDERID="CM_HUB_SQUAD_HUB_DP">
+		  <data ID="TITLE" TYPE="title" PARAM="MM_SQUAD_HUB" FORMAT="HS" />
+	  </subtile>
+    
     </tile>
 	<tile NAME="PAM_NEW_FEATURES_TILE_NO_NOTIFICATIONS" TYPE="TILE" DESTINATION="EnterPlayerConversation">
 	 <properties WIDTH="418" HEIGHT="418" X="109" Y="492"/>
@@ -636,9 +641,12 @@
       <data ID="TEAMLOGO" TYPE="asset" PATH="crest" WIDTH="110" HEIGHT="110" X="264" Y="15"  />
       <data ID="TEAMNAME" TYPE="text" FORMAT="TSM||center" TRANSLATE="FALSE" WIDTH="210" HEIGHT="75" REL_TARGET="TEAMLOGO" REL_X="-160" REL_Y="2" />
     </tile>
-    <tile NAME="PAM_SQUAD_HUB" TYPE="TILE" DESTINATION="EnterSquadHub" BG_ICON="SquadHub_Small" DATAPROVIDERID="CM_HUB_SQUAD_HUB_DP">
+   
+	<tile NAME="PAM_SQUAD_HUB_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="204" X="965" Y="492" />
-      <data ID="TITLE" TYPE="title" PARAM="MM_SQUAD_HUB" FORMAT="HS" />
+	  <subtile NAME="PAM_SQUAD_HUB" SUBTILE_TYPE="TILE" DESTINATION="EnterSquadHub" BG_ICON="SquadHub_Small" DATAPROVIDERID="CM_HUB_SQUAD_HUB_DP">
+		  <data ID="TITLE" TYPE="title" PARAM="MM_SQUAD_HUB" FORMAT="HS" />
+	  </subtile>
     </tile>
     <tile NAME="PAM_FORMATIONS" TYPE="TILE" DESTINATION="EnterTeamSheetSelect" BG_ICON="TeamSheets_Small">
       <properties WIDTH="418" HEIGHT="204" X="965" Y="706" />
@@ -668,7 +676,6 @@
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_KITS_INJURY" DESTINATION="EnterInjuryList" BG_ICON="InjuryList_Small" PARAM="">
         <data ID="TITLE" TYPE="title" PARAM="CM_HUB_Injury_List" FORMAT="HS" />
       </subtile>
-	 
     </tile>
   </panel>
   <panel NAME="PAM_HUB_TRANSFERS_PANEL">

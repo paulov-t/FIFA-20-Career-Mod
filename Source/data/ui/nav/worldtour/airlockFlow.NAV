@@ -1,0 +1,302 @@
+/* NOTE: assumption is that worldtourcinematicviewmodel is already loaded by the time we enter the AirlockFlow */
+{
+	"name":"AirlockFlow"
+	,"onEnter":
+	[
+		["invoke", ["evt_controller_disconnect_flow_not_ready"]]
+		,["invoke", ["evt_invite_flow_not_ready"]]
+		,["loadViewModel",["WorldTourAirlockViewModel"]]
+		,["loadViewModel",["FluxViewModel"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel",["FluxViewModel"]]
+		,["unloadViewModel",["WorldTourAirlockViewModel"]]
+		,["invoke", ["evt_invite_flow_ready"]]
+		,["invoke", ["evt_controller_disconnect_flow_ready"]]
+	]
+	,"transitions":
+	[
+		/* Requested a FE stadium update */
+		{
+			"event":"freeRoamReady"
+			,"actions":
+			[ 
+				["sendAction", ["notify", "feStadiumLoaded"]]
+			]
+		}
+	]
+	,"states":
+	[
+		{			
+			"name":"in_travel_airlock"
+			,"states":
+			[
+				{
+					"name":"TravelAirlockSceneLoad"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "playAirlock", "20_Airlock_Travel"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"AirlockContentLoaded"
+							,"actions":
+							[
+								["sendAction", ["notify", "airlockFlowStart"]]
+							]
+							,"targets":["UpdateFeStadium"]
+						}
+					]
+				}	
+				/* Travel Airlock (map -> hub transition) */
+				,{
+					"name":"UpdateFeStadium"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/feStadiumFlow.nav"
+							,"outputs":
+							{
+								"out_advance":"TravelAirlockSceneUnload"
+							}
+						}
+					]
+				}
+				,{
+					"name":"TravelAirlockSceneUnload"
+					,"onEnter":
+					[					
+						["sendAction", ["notify", "airlockFlowDataReady"]]			
+						,["sendAction", ["fbStartFlowEvent", "AirlockStopScene"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"AirlockSceneEnded" 
+							,"actions":[["sendAction", ["notify", "airlockFlowStop"]]]
+							,"targets":["out_advance"]
+						}
+					]
+				}
+			]
+		}
+		,{		
+			"name":"in_travel_airlock_noscene"
+			,"onEnter":
+			[		
+				["sendAction", ["notify", "airlockFlowStart"]]
+			]
+			,"onExit":
+			[		
+				["sendAction", ["notify", "airlockFlowDataReady"]]
+				,["sendAction", ["notify", "airlockFlowStop"]]
+			]
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/worldtour/feStadiumFlow.nav"
+					,"outputs":
+					{
+						"out_advance":"out_advance"
+					}
+				}
+			]
+		}
+		,{
+			"name":"in_prematch_airlock"
+			,"states":
+			[
+				{
+					"let":{"ConditionStateParam":"shouldShowAirlockScene"}
+					,"name":"AirlockSceneLoadCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"MatchAirlockSceneLoad"
+								,"out_false":"MatchAirlockStartSpinner"
+							}
+						}
+					]
+				}
+				,{
+					"name":"MatchAirlockSceneLoad"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "playAirlock", "20_Airlock_Prematch"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"AirlockContentLoaded"
+							,"actions":
+							[
+								["sendAction", ["notify", "airlockFlowStart"]]
+								,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"targets":["BeginMatchLoad"]
+						}
+					]
+				}
+				,{
+					"name":"MatchAirlockStartSpinner"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["ShowBusyIndicator",""]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["BeginMatchLoad"] 
+						}
+					]
+				}
+				/* Prematch Airlock (hub -> match transition) */
+				,{
+					"type":"external"
+					,"file":"/worldTour/worldTourMatchLoadFlow.nav"
+					,"inputs":
+					{
+						"BeginMatchLoad":"in_LoadGameMode"
+						,"ContinueLoadAssets":"in_LoadMatchAssets"
+					}
+					,"outputs":
+					{
+						"out_GameModeLoaded":"ContinueLoadAssets"
+						,"out_MatchAssetsLoaded":"AutoAdvanceCheck"
+						,"out_aborted":"MatchLoadAborted"
+						,"out_error":"MatchLoadFailure"
+					}
+				}
+				,{
+					"name":"MatchLoadAborted"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "airlockAborted"]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance", "targets":["AirlockSceneUnloadCheck"] 
+						}
+					]
+				}
+				,{
+					"name":"MatchLoadFailure"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "airlockFailed"]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance", "targets":["AirlockSceneUnloadCheck"] 
+						}
+					]
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldAutoAdvance"}
+					,"name":"AutoAdvanceCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"AirlockSceneUnloadCheck"
+								,"out_false":"AirlockIdle"
+							}
+						}
+					]
+				}
+				,{
+					"name":"AirlockIdle"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "airlockFlowDataReady"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance","targets":["AirlockSceneUnloadCheck"]
+						}
+					]
+					
+				}
+				,{
+					"let":{"ConditionStateParam":"shouldShowAirlockScene"}
+					,"name":"AirlockSceneUnloadCheck"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"UnloadAirlock"
+								,"out_false":"MatchAirlockStopSpinner"
+							}
+						}
+					]
+				}
+				,{
+					"name":"UnloadAirlock"
+					,"onEnter":
+					[						
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]		
+						,["sendAction", ["fbStartFlowEvent", "AirlockStopScene"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"AirlockSceneEnded"
+							,"targets":["ExitAirlock"]
+						}
+					]
+				}
+				,{
+					"name":"MatchAirlockStopSpinner"
+					,"onEnter":
+					[
+						["sendScreenEvent", ["HideBusyIndicator",""]]
+						,["invoke", ["advance"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"advance"
+							,"targets":["ExitAirlock"] 
+						}
+					]
+				}
+				,{
+					"name":"ExitAirlock"
+					,"onEnter":
+					[
+						["sendAction", ["notify", "airlockFlowStop"]]
+						,["sendAction", ["query", "airlockStateAsNavEvent"]]
+					]
+					,"transitions":
+					[
+						{ "event":"success", "targets":["out_advance"] }
+						,{"event":"abort", "targets":["out_aborted"] }
+						,{"event":"fail", "targets":["out_error"] }
+						
+					]
+				}
+			]
+		}
+	]
+}

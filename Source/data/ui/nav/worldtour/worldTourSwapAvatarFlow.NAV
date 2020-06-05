@@ -1,0 +1,84 @@
+{
+	"name":"SwapAvatar"
+	,"onEnter":
+	[
+		["sendAction", ["fbStartFlowEvent", "EnterAvatarCustomization"]]
+		,["loadViewModel", ["WorldTourSwapAvatarViewModel", ""]]
+	]
+	,"onExit":
+	[
+		["sendAction", ["fbStartFlowEvent", "ExitAvatarCustomization"]]
+		,["unloadViewModel", ["WorldTourSwapAvatarViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"let":{"ScreenStateScreenPath":"game/screens/fluxHub/FluxHub", "ScreenStateViewModelName":"FluxViewModel"}
+			,"name":"SwapAvatarScreenState"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/screenState.nav"
+					,"outputs":
+					{
+						"out_advance":"fadeAdvance"
+						,"out_back":"fadeBack"
+					}
+				}
+				,{
+					"let":{"WaitStateParam":"fadeOut"}
+					,"name":"fadeAdvance"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"destroyVisualizationAdvance"
+							}
+						}
+						,{
+							"name":"destroyVisualizationAdvance"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "destroyVisualization"]]
+							]
+							,"transitions":
+							[
+								{ "event":"character_visualization_streamed_out", "targets":["out_advance"] }
+							]
+						}
+					]
+				}
+				,{
+					"let":{"WaitStateParam":"fadeOut"}
+					,"name":"fadeBack"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"destroyVisualizationBack"
+							}
+						}
+						,{
+							"name":"destroyVisualizationBack"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "destroyVisualization"]]
+							]
+							,"transitions":
+							[
+								{ "event":"character_visualization_streamed_out", "targets":["out_back"] }
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

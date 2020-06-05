@@ -1,0 +1,157 @@
+{
+	"name":"PlayerDevelopmentFlow"
+	, "initial":
+	{
+		"targets":["Idle"]
+	}
+	,"onEnter":
+	[
+		["loadViewModel",["FluxViewModel"]]
+		,["loadViewModel",["WorldTourGrowthViewModel"]]
+		,["loadView",["screen", "game/screens/fluxHub/FluxHub", "", "dimmer"]]
+	]
+	,"onExit":
+	[
+		["unloadView",["screen", "game/screens/fluxHub/FluxHub", "", "dimmer"]]
+		,["unloadViewModel",["WorldTourGrowthViewModel"]]
+		,["unloadViewModel",["FluxViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"name":"Idle"
+			,"transitions":
+			[
+				{ "event":"btnX", "targets":["ResetSkillTreePopup"] }
+				,{ "event":"back", "targets":["SaveSkillTree"] }
+				,{ "event":"syncPosition", "targets":["SyncPosition"] }
+			]
+		}
+		,{
+			"name":"SyncPosition"
+			,"onEnter":
+			[
+				["loadView", ["popup", "POS_SERVER_SYNC_POPUP", "updating_position"]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+				,["unloadView", ["popup", "POS_SERVER_SYNC_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"pos_sync_success"
+					,"targets":["Idle"]
+					,"actions":[["sendAction", ["notify", "pos_sync_success"]]]
+
+				}
+				,{
+					"event":"pos_sync_fail"
+					,"targets":["Idle"]
+					,"actions":[["sendAction", ["notify", "pos_sync_fail"]]]
+				}
+			]
+		}
+		,{
+			"name":"Refresh"
+			,"onEnter":
+			[
+				["sendAction", ["notify", "refreshSkillTreeData"]]
+				,["invoke", ["refreshed"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"refreshed"
+					,"targets":["Idle"]
+				}
+			]
+		}
+		,{
+			"name":"ResetSkillTreePopup"
+			,"onEnter":
+			[						
+				["loadView", ["popup", "PG_RESET_SKILLS", "SSF_PG_RESET_SKILLS|OK|advance|CANCEL|cancel"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "PG_RESET_SKILLS"]]
+			]
+			,"transitions":
+			[
+				{ "event":"advance", "targets":["ResetSkillTree"] }
+				,{ "event":"cancel", "targets":["Idle"] }
+			]
+		}
+		,{
+			"name":"ResetSkillTree"
+			,"onEnter":
+			[
+				["loadView", ["popup", "SKILL_SERVER_SYNC_POPUP", "Reset"]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]
+				,["sendAction", ["notify", "deleteSkillTreeData"]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+				,["unloadView", ["popup", "SKILL_SERVER_SYNC_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"reset_skilltree_success"
+					,"targets":["Refresh"]
+				}
+				,{
+					"event":"reset_skilltree_fail"
+					,"targets":["UpdateSkillTreeFailPopup"]
+				}
+			]
+		}
+		,{
+			"name":"SaveSkillTree"
+			,"onEnter":
+			[
+				["loadView", ["popup", "SKILL_SERVER_SYNC_POPUP", "Saving"]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]
+				,["sendAction", ["notify", "uploadSkillTreeData"]]
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+				,["unloadView", ["popup", "SKILL_SERVER_SYNC_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"write_skilltree_success"
+					,"targets":["out_back"]
+				}
+				,{
+					"event":"write_skilltree_fail"
+					,"targets":["UpdateSkillTreeFailPopup"]
+				}
+			]
+		}
+		,{
+			"name": "UpdateSkillTreeFailPopup",
+			"onEnter":
+			[
+				["loadView", ["popup", "SKILL_TREE_UPDATE_REQUEST_FAIL_POPUP", "OSDK_CANNOT_UPDATE_SKILL_TREE|OK|back"]]
+			]
+			,"onExit":
+			[
+				["unloadView", ["popup", "SKILL_TREE_UPDATE_REQUEST_FAIL_POPUP"]]
+			]
+			,"transitions":
+			[
+				{
+					"event":"back"
+					,"targets":["out_fail"]
+				}
+			]
+		}
+	]
+}

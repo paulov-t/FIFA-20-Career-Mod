@@ -1,0 +1,75 @@
+{
+    "name":"WorldTourExitFlow"
+    ,"initial":
+    {
+        "targets":["WaitForFeStadiumLoaded"]
+    }
+    ,"states":
+    [
+        {
+            "let":{"WaitStateParam":"waitForFeStadiumLoaded"}
+            ,"name":"WaitForFeStadiumLoaded"
+            ,"states":
+            [
+                {
+                    "type":"external"
+                    ,"file":"/utility/waitState.nav"
+                    ,"outputs":
+                    {
+                        "out_advance":"UnloadLocationHub"
+                    }
+                }
+            ]
+        }
+        ,{
+            "type":"external"
+            ,"file":"/worldtour/cinematicHubFlow.nav"
+            ,"inputs":
+            {
+                "UnloadLocationHub":"UnloadLocationHub"
+            }
+            ,"outputs":
+            {
+                "out_advance":"StreamOutWorldTour"
+            }
+        }
+        ,{
+            "name":"StreamOutWorldTour"
+            ,"onEnter": 
+            [
+                ["sendAction", ["notify", "destroyAllVisualizations"]]
+                ,["sendAction", ["fbStartFlowEvent", "streamOutWorldTour"]]
+            ]
+            ,"transitions":
+            [
+                {
+                    "event":"onWorldTourStreamOut"
+                    ,"targets":["OnlineLogout"] 
+                }
+            ]
+        }
+        ,{
+            "name":"OnlineLogout"
+            ,"onEnter": 
+            [
+                ["sendAction", ["condition", "ssfOnlineLogout"]]
+				,["sendScreenEvent", ["ShowBusyIndicator",""]]			
+			]
+			,"onExit":
+			[
+				["sendScreenEvent", ["HideBusyIndicator",""]]
+			]
+            ,"transitions":
+            [
+                {
+                    "event":"success"
+                    ,"targets":["out_ExitComplete"] 
+                }
+                ,{
+                    "event":"fail"
+                    ,"targets":["out_ExitComplete"] 
+                }
+            ]
+        }
+    ]
+}

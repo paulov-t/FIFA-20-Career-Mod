@@ -1,0 +1,1932 @@
+{
+	"name":"worldTourFlow"
+	, "initial":
+	{
+		"targets":["ShouldSkipLogin"]
+	}
+	,"states":
+	[
+		{
+			"let":{"GameMode":"worldTour"}
+			,"name":"mainWorldTourFlow"
+			,"initial":{ "targets":["startBlazeLogin"] }
+			,"onEnter":
+			[
+				["sendScreenEvent", ["UxEnterGameFlow", "WorldTourInProgress"]]
+				,["sendScreenEvent", ["UxSetFlowState", ".eState.WORLD_TOUR"]]
+				,["sendScreenEvent", ["UxSetFlowSubState", ".eSubState.SETUP"]]
+				,["sendAction", ["suppressPOWWidget"]]
+				,["loadViewModel", ["TakeMeThereViewModel"]]
+				,["loadViewModel", ["WorldTourFlowViewModel"]]
+				,["loadViewModel",["UserValidationViewModel", "ugc=false"]]
+				,["loadViewModel",["SsfOnlineViewModel"]]
+				,["loadViewModel",["SsfLiveMessagingViewModel"]]
+				,["loadViewModel",["WorldTourDisconnectHandlerViewModel"]]
+				,["sendAction", ["notify", "activateFadeGroup"]]
+				,["sendAction", ["notify", "telemetryNewGameMode", ".GameMode"]]
+				,["sendAction", ["notify", "checkUserOnlineRestrictions"]]
+				,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.SSF_BACKGROUND"]]
+				,["invoke", ["evt_sign_out_flow_not_ready"]]
+			]
+			,"onExit":
+			[
+				["sendAction", ["notify", "telemetryExitGameMode", ".GameMode"]]
+				,["sendAction", ["notify", "deactivateFadeGroup"]]
+				,["unloadViewModel",["WorldTourDisconnectHandlerViewModel"]]
+				,["sendAction", ["notify", "clearTakeMeThereLink"]]
+				,["unloadViewModel", ["TakeMeThereViewModel"]]
+				,["unloadViewModel", ["WorldTourFlowViewModel"]]
+				,["unloadViewModel",["UserValidationViewModel"]]
+				,["unloadViewModel",["SsfOnlineViewModel"]]
+				,["unloadViewModel",["SsfLiveMessagingViewModel"]]
+				,["unloadViewModel",["SsfLoadingScreenViewModel"]]
+				,["unloadViewModel",["FluxViewModel"]]
+				,["sendAction", ["unsuppressPOWWidget"]]
+				,["sendScreenEvent", ["UxExitGameFlow"]]
+				,["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+			]
+			,"transitions":
+			[
+				{"event":"freeRoamReady", "actions":[ ["sendAction", ["notify", "freeRoamReady"]]]}
+				,{"event":"worldTourForceExit", "targets":["out_back"] }
+			]
+			,"states":
+			[
+				/* SSFTODO: Provide more verbose error popups in the future. Similar to how ["condition", "showSsfOnlineAuthFailurePopup"]] works */
+				{
+					"name":"PreStreamInValidation"
+					,"states":
+					[
+						{
+							"name":"ShouldSkipLogin"
+							,"onEnter":
+							[
+								["sendAction", ["conditionAardvark", "WORLD_TOUR/SKIP_LOGIN"]]
+							]
+							,"transitions":
+							[
+								{"event":"true", "targets":["PerformSsfAuth"]}
+								,{"event":"false", "targets":["startBlazeLogin"]}
+							]
+						}
+						,{
+							"name":"in_saveCreator"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "saveCreatorFlowEntered"]]
+								,["invoke", ["startBlazeLoginEvent"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"startBlazeLoginEvent"
+									,"targets":["startBlazeLogin"]
+								}
+							]
+						}
+						,{
+							"name":"WorldTourBlazeLogin"
+							,"onEnter":
+							[
+								["set", ["CurrentGMRecordID", ".GameModeRecordID.GM_WORLD_TOUR"]]
+								,["loadViewModel",["SsfLoadingScreenViewModel", ".DynamicContentType.SSF_LOADING_SCREEN"]]
+								,["loadViewModel",["FluxViewModel"]]
+								,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"states":
+							[
+								{
+									"name":"WorldTourBlazeLoginstartLoginWithoutMultiplayerCheck"
+									,"type":"external"
+									,"file":"/online/onlineLoginFlow.nav"
+									,"inputs":
+									{
+										"startBlazeLogin":"startLoginWithoutMultiplayerCheck"
+									}
+									,"outputs":
+									{
+										"loginSuccess":"PerformSsfAuth"
+										,"loginFail":"PreStreamInValidationFailure"
+									}
+								}
+							]
+						}
+						,{
+							"name":"PerformSsfAuth"
+							,"onEnter":
+							[
+								["sendAction", ["condition", "ssfOnlineAuth"]]
+							]
+							,"onExit":
+							[
+							]
+							,"transitions":
+							[
+								{ "event":"success" ,"targets":["PerformSsfGetServerConfigs"] }
+								,{ "event":"fail","targets":["SsfAuthFailure"] }
+							]
+						}
+						,{
+							"name":"PerformSsfGetServerConfigs"
+							,"onEnter":
+							[
+								["sendAction", ["condition", "ssfOnlineGetServerConfigs"]]
+							]
+							,"onExit":
+							[
+							]
+							,"transitions":
+							[
+								{ "event":"success" ,"targets":["GetGrowthMetadata"] }
+								,{ "event":"fail","targets":["PreStreamInValidationFailure"] }
+							]
+						}
+						,{
+							"name":"GetGrowthMetadata"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["ShowBusyIndicator",""]]
+								,["sendAction", ["notify", "getGrowthMetadata"]]
+							]
+							,"onExit":
+							[
+								["sendScreenEvent", ["HideBusyIndicator",""]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"growth_get_success"
+									,"targets":["PerformSsfGetUser"]
+								}
+								,{
+									"event":"growth_get_fail" 
+									,"targets":["PreStreamInValidationFailure"]
+								}
+							]
+						}
+						,{
+							"name":"PerformSsfGetUser"
+							,"onEnter":
+							[
+								["sendAction", ["condition", "ssfOnlineGetUser"]]
+							]
+							,"onExit":
+							[
+							]
+							,"transitions":
+							[
+								{ "event":"success" ,"targets":["ExistingUserFlowCheck"] }
+								,{ "event":"false","targets":["NewUserFlowCheck"] }
+								,{ "event":"fail","targets":["AvatarRequestFailPopoup"] }
+							]
+						}
+						,{
+							"name":"NewUserFlowCheck"
+							,"onEnter":
+							[
+								["sendAction", ["query", "enterFlowType"]]
+								/* this is the end of the loading screen for the successful new user flow */
+								,["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["unloadViewModel",["FluxViewModel"]]
+								,["unloadViewModel",["SsfLoadingScreenViewModel"]]
+							]
+							,"transitions":
+							[
+								{ "event":"saveCreator" ,"targets":["NoUserPopup"] }
+								,{ "event":"mainFlow","targets":["CreateAvatarFlow"] }
+							]
+						}
+						,{
+							"type":"external"
+							,"file":"/worldtour/newUserFlow.nav"
+							,"inputs":
+							{
+								"CreateAvatarFlow":"NewUserFlow"
+							}
+							,"outputs":
+							{
+								"out_done":"Main"
+								,"out_quit":"PreStreamInOnlineLogout"
+								,"out_ConnectionLost":"PreStreamInOnlineLogout"
+							}
+						}
+						,{
+							"name":"ExistingUserFlowCheck"
+							,"onEnter":
+							[
+								["sendAction", ["query", "enterFlowType"]]
+							]
+							,"transitions":
+							[
+								{ "event":"saveCreator" ,"targets":["SaveCreatorState"] }
+								,{ "event":"mainFlow","targets":["ExistingUserFlow"] }
+							]
+						}
+						,{
+							"name":"SaveCreatorState"
+							,"type":"external"
+							,"file":"/worldtour/saveCreatorFlow.nav"
+							,"outputs":
+							{
+								/* Online Logout is handled internal to save creator flow. Exit directly */
+								"out_advance":"out_saveCreatorAdvance"
+								,"out_quit":"out_back"
+							}
+						}
+						,{
+							"name":"ExistingUserFlow"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "existingUserFlowEntered"]]
+							]
+							,"states":
+							[
+								{
+									"name":"PerformSsfResetMatch"
+									,"onEnter":
+									[
+										["sendScreenEvent", ["ShowBusyIndicator",""]]
+										,["sendAction", ["condition", "ssfOnlineResetMatchRecovery"]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{ "event":"success" ,"targets":["PerformSsfStoreRecovery"] }
+										,{ "event":"fail","targets":["PreStreamInValidationFailure"] }
+									]
+								},
+								{
+									"name":"PerformSsfStoreRecovery"
+									,"onEnter":
+									[
+										["sendAction", ["condition", "ssfOnlineStoreTransactionRecovery"]]
+										,["sendScreenEvent", ["ShowBusyIndicator",""]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{ "event":"success" ,"targets":["Main"] }
+										,{ "event":"fail","targets":["PreStreamInValidationFailure"] }
+									]
+								}
+							]
+						}
+						,{
+							"name":"PreStreamInValidationFailure"
+							,"onEnter":
+							[
+								/* hide live messages before showing validation error popups */
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["unloadViewModel",["FluxViewModel"]]
+								,["unloadViewModel",["SsfLoadingScreenViewModel"]]
+							]
+							,"states":
+							[
+								{
+									"onEnter":
+									[
+										["loadView", ["popup","GENERIC_INITIALIZATION_FAILURE_POPUP", "SSF_SERVER_ERROR|OkayButton|advance"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "GENERIC_INITIALIZATION_FAILURE_POPUP"]]
+									]
+									,"transitions":
+									[
+										{ "event":"advance" ,"targets":["PreStreamInOnlineLogout"] }
+									]
+								}		
+								,{
+									"name":"SsfAuthFailure"
+									,"onEnter":
+									[
+										["sendAction", ["condition", "showSsfOnlineAuthFailurePopup"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "SsfOnlineAuthFailurePopup"]]
+									]
+									,"transitions":
+									[
+										{ "event":"back","targets":["PreStreamInOnlineLogout"] }
+									]
+								}
+								,{
+									"name":"NoUserPopup"
+									,"onEnter":
+									[
+										["loadView", ["popup","NO_SAVE_CREATOR_USER_POPUP", "NO_SAVE_CREATOR_USER|Back|back"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "NO_SAVE_CREATOR_USER_POPUP"]]
+									]
+									,"transitions":
+									[
+										{ "event":"back" ,"targets":["PreStreamInOnlineLogout"] }
+									]
+								}
+								,{
+									"name":"AvatarRequestFailPopoup"
+									,"onEnter":
+									[
+										["loadView", ["popup","ONLINE_AVATAR_REQUEST_FAIL_POPUP", "OSDK_ONLINE_AVATAR_REQUEST_FAIL|Back|back"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "ONLINE_AVATAR_REQUEST_FAIL_POPUP"]]
+									]
+									,"transitions":
+									[
+										{ "event":"back" ,"targets":["PreStreamInOnlineLogout"] }
+									]
+								}
+								,{
+									"type":"external"
+									,"file":"/worldtour/worldTourExitFlow.nav"
+									,"inputs":
+									{
+										/* Any validation failures that occur prior to streaming in just require an online logout call and can skip stadium/camera cleanup */
+										"PreStreamInOnlineLogout":"OnlineLogout"
+									}
+									,"outputs":
+									{
+										"out_ExitComplete":"out_back"
+									}
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"Main"
+					, "initial":
+					{
+						"targets":["LoadSublevel"]
+					}
+					,"transitions":
+					[
+						{ "event":"exitFlow", "targets":["out_back"] }
+						,{ "event":"profileSignOut", "targets":["SignOutWait"] }
+						,{ "event":"goToInviteFlow", "targets":["InviteAccepted"] }
+						,{ "event":"evt_fe_disconnect_occured", "targets":["ConnectionLost"] }
+					]
+					,"states":
+					[
+						{
+							"name":"LoadSublevel"
+							,"onEnter": 
+							[
+								["sendAction", ["fbStartFlowEvent", "streamInWorldTour"]]
+							]
+							,"transitions":
+							[
+								{
+									"event":"onWorldTourStreamIn"
+									,"targets":["ModeInitialization"] 
+								}
+							]
+						}
+						/* SSFTODO: Provide more verbose error popups in the future. Similar to how ["condition", "showSsfOnlineAuthFailurePopup"]] works */
+						,{
+							"name":"ModeInitialization"
+							,"states":
+							[
+								{
+									"name":"InitialDataSourcing"
+									,"onEnter":
+									[
+										["sendAction", ["notify", "triggerInitialDataSourcing"]]
+										,["sendScreenEvent", ["ShowBusyIndicator",""]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"success"
+											,"targets":["GetPredefinedAvatars"]
+										}
+										,{
+											"event":"fail"
+											,"targets":["ModeInitializationFailure"]
+										}
+									]
+								}
+								,{
+									"name":"GetPredefinedAvatars"
+									,"onEnter":
+									[
+										["sendScreenEvent", ["ShowBusyIndicator",""]]
+										,["sendAction", ["notify", "getPredefinedAvatars"]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"success"
+											,"targets":["GetAvatarsFromServer"]
+										}
+										,{
+											"event":"fail"
+											,"targets":["GetAvatarsFromServer"]
+										}
+									]
+								}
+								,{
+									"name":"GetAvatarsFromServer"
+									,"onEnter":
+									[
+										["sendScreenEvent", ["ShowBusyIndicator",""]]
+										,["sendAction", ["notify", "getAvatarsFromServer"]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"success"
+											,"targets":["PostDataInitialization"]
+										}
+										,{
+											"event":"fail"
+											,"targets":["ModeInitializationFailure"]
+										}
+									]
+								}
+								,{
+									"name":"PostDataInitialization"
+									,"onEnter":
+									[
+										["sendAction", ["notify", "triggerPostDataInitialization"]]
+										,["sendScreenEvent", ["ShowBusyIndicator",""]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"success"
+											,"targets":["SyncLocalWithServerData"]
+										}
+										,{
+											"event":"fail"
+											,"targets":["ModeInitializationFailure"]
+										}
+									]
+								}
+								,{
+									"let":{"WaitStateParam":"syncLocalWithServerData"}
+									,"name":"SyncLocalWithServerData"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/waitState.nav"
+											,"outputs":
+											{
+												"out_advance":"CheckLocalDataSyncSuccess"
+											}
+										}
+									]
+								}
+								,{
+									"let":{"ConditionStateParam":"localDataSyncSucceeded"}
+									,"name":"CheckLocalDataSyncSuccess"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/conditionState.nav"
+											,"outputs":
+											{
+												"out_true":"SaveGMTrackerInfo"
+												,"out_false":"ModeInitializationFailure"
+											}
+										}
+									]
+								}
+								,{
+									"name":"SaveGMTrackerInfo"
+									,"onEnter":
+									[
+										["sendScreenEvent", ["UXSaveGMTrackerInfo", ".GameModeRecordID.GM_WORLD_TOUR"]]
+									]
+									,"transitions":
+									[
+										{ "event":"advance", "targets":["GetSquadListFromServer"] }
+									]
+								}
+								,{
+									"name":"GetSquadListFromServer"
+									,"onEnter":
+									[
+										["sendScreenEvent", ["ShowBusyIndicator",""]]
+										,["sendAction", ["notify", "getSquadListFromServer"]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"squad_get_success"
+											,"targets":["GetAllFinalPlayersFromServer"]
+										}
+										,{
+											"event":"squad_get_fail"
+											,"targets":["ModeInitializationFailure"]
+										}
+									]
+								}
+								,{
+									"name":"GetAllFinalPlayersFromServer"
+									,"onEnter":
+									[
+										["sendScreenEvent", ["ShowBusyIndicator",""]]
+										,["sendAction", ["notify", "getAllFinalPlayersFromServer"]]
+									]
+									,"onExit":
+									[
+										["sendScreenEvent", ["HideBusyIndicator",""]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"squad_player_get_success"
+											,"targets":["Capture2dPlayers"]
+										}
+										,{
+											"event":"squad_player_get_fail" 
+											,"targets":["ModeInitializationFailure"]
+										}
+									]
+								}
+								,{
+									"let":{"WaitStateParam":"ssfCapture2dPlayers"}
+									,"name":"Capture2dPlayers"
+									,"onEnter":
+									[
+									]
+									,"onExit":
+									[
+										["sendAction", ["suppressPOWWidget"]]
+									]
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/waitState.nav"
+											,"outputs":
+											{
+												"out_advance":"ModeEntryFadeOut"
+											}
+										}
+									]
+								}
+								/* Any validation failures that occur prior to streaming in just require an online logout call and can skip stadium/camera cleanup */
+								,{
+									"name":"ModeInitializationFailure"
+									,"states":
+									[
+										{
+											"onEnter":
+											[
+												/* hide live messages before showing initialization error popups */
+												["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+												,["unloadViewModel",["FluxViewModel"]]
+												,["unloadViewModel",["SsfLoadingScreenViewModel"]]
+												,["loadView", ["popup","GENERIC_INITIALIZATION_FAILURE_POPUP", "SSF_SERVER_ERROR|OkayButton|advance"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["popup", "GENERIC_INITIALIZATION_FAILURE_POPUP"]]
+											]
+											,"transitions":
+											[
+												{ "event":"advance" ,"targets":["ModeInitializationCleanup"] }
+											]
+										}		
+										,{
+											"name":"ModeInitializationCleanup"
+											,"type":"external"
+											,"file":"/worldtour/worldTourExitFlow.nav"
+											,"outputs":
+											{
+												"out_ExitComplete":"out_back"
+											}
+										}
+									]
+								}
+							]
+						}
+						,{
+							"let":{"WaitStateParam":"fadeOut"}
+							,"name":"ModeEntryFadeOut"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/waitState.nav"
+									,"outputs":
+									{
+										"out_advance":"ModeEntryPressCheck"
+									}
+								}
+							]
+						}
+						,{
+							"let":{"ConditionStateParam":"isPressMode"}
+							,"name":"ModeEntryPressCheck"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"UnloadLoadingScreenViewModel"
+										,"out_false":"WorldTourCheckTakeMeThereLink"
+									}
+								}
+							]
+						}
+						,{
+							"name":"UnloadLoadingScreenViewModel"
+							,"onEnter":
+							[
+								/* this is the end of the loading screen for the successful existing user flow */
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["unloadViewModel",["SsfLoadingScreenViewModel"]]
+								,["unloadViewModel",["FluxViewModel"]]
+								,["invoke", ["advance"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["ContinueStoryFromHomeHub"] }
+							]
+						}
+						,{
+							"name":"WorldTourCheckTakeMeThereLink"
+							,"onEnter":
+							[
+								["sendAction", ["condition", "activatedTakeMeThereLink"]]
+							]
+							,"onExit":
+							[
+								/* this is the end of the loading screen for the successful existing user flow */
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["unloadViewModel",["SsfLoadingScreenViewModel"]]
+								,["unloadViewModel",["FluxViewModel"]]
+							]
+							,"transitions":
+							[
+								{"event":"true", "targets":["UpdateFeStadium"] }
+								,{"event":"false", "targets":["ModeEntryWorldMap"] }
+							]
+						}
+						,{
+							"name":"UpdateFeStadium"
+							,"onEnter":
+							[
+								["sendAction", ["evt_hub_hide_event"]]
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/worldtour/feStadiumFlow.nav"
+									,"outputs":
+									{
+										"out_advance":"LoadLocationHub"
+									}
+								}
+							]
+						}
+						,{
+							"type":"external"
+							,"file":"/worldtour/mapFlow.nav"
+							,"inputs":
+							{
+								"ModeEntryWorldMap":"in_modeEntry"
+							}
+							,"outputs":
+							{
+								"out_back":"Quit"
+								,"out_advance":"LoadLocationHub"
+								,"out_advance_activatedTakeMeThereLink":"UpdateFeStadium"
+								,"out_seasons":"LoadLocationHubSeasons"
+								,"out_story":"ContinueStoryFromHomeHub"
+							}
+						}
+						,{
+							"name":"Home"
+							, "initial":
+							{
+								"targets":["HomeHubSaveLocalInfo"]
+							}
+							,"onEnter":
+							[
+								["sendAction", ["notify", "resetFocusedPlayer"]]	/* Reset the focused player since we're leaving to the location hub */
+								,["sendAction", ["notify", "enterInteractiveHubFlow"]]
+							]
+							,"onExit":
+							[
+								["sendAction", ["notify", "exitInteractiveHubFlow"]]
+							]
+							,"states":
+							[
+								{
+									"name":"HomeHubSaveFlow"
+									,"type":"external"
+									,"file":"/saveload/saveLoadFlow.nav"
+									,"inputs":
+									{
+										"HomeHubSaveLocalInfo":"SaveFlow"
+									}
+									,"outputs":
+									{
+										"out_success":"WorldTourHomeHubCheckTakeMeThereFlow"
+										,"out_fail":"WorldTourHomeHubCheckTakeMeThereFlow"
+									}
+								}
+								,{
+									"let":{"CheckLiveMessagesParam":"ssflivemsg"}
+									,"name":"WorldTourHomeHubCheckTakeMeThereFlow"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"takeMeThereFlow.nav"
+											,"outputs":
+											{
+												"out_activatedTakeMeThereLink":"HomeHub"
+												,"out_skip":"HomeHub"
+											}
+										}
+									]
+								}									
+								,{
+									"name":"HomeHub"
+									, "initial":
+									{
+										"targets":["HomeHubScreen"]
+									}
+									,"onEnter":
+									[
+										["sendAction", ["notify", "enterHomeHub"]]
+										,["sendAction", ["notify", "checkTakeMeThereLink"]]
+										,["sendScreenEvent", ["UxSetFlowSubState", ".eSubState.SETUP"]]
+									]
+									,"transitions":
+									[
+										{ "event":"hypeSeason", "targets":["HypeStore"] }
+										,{ "event":"hypeEssentials", "targets":["HypeEssentials"] }
+										,{ "event":"hypeExpress", "targets":["HypeExpress"] }
+										,{ "event":"training", "targets":["TrainingHub"] }
+										,{ "event":"squad", "targets":["SquadHub"] }
+										,{ "event":"gameSettings", "actions":[ ["sendScreenEvent", ["SetSettingsFromSSF"]] ], "targets":["SettingsGame"] }
+										,{ "event":"controllerSettings", "targets":["SettingsController"] }
+										,{ "event":"basicControls", "targets":["HelpBasic"] }
+										,{ "event":"accessibility", "targets":["SettingsAccessibility"] }
+										,{ "event":"skillMoves", "targets":["HelpSkillMoves"] }
+										,{ "event":"teamInfo", "targets":["WorldTourTeamInfo"] }
+										,{ "event":"WorldMap", "targets":["UnloadHubPreMap"] }
+										,{ "event":"avatar", "targets":["WorldTourAvatar"] }
+										,{ "event":"AvatarGenderSelect" ,"targets":["avatarGenderSelect"] }
+										,{ "event":"playEvent", "targets":["CanStartEvent"]}
+										,{ "event":"playSingleMatch", "let":{"WorldTourEventFlowParam":"SingleMatch"}, "targets":["WorldTourEventFlow"]}
+										,{ "event":"postMatchEvent", "let":{"WorldTourEventFlowParam":"PostMatchEvent"}, "targets":["WorldTourEventFlow"]}
+										,{ "event":"playLegendMatch", "let":{"WorldTourEventFlowParam":"LegendMatch"}, "targets":["WorldTourEventFlow"]}
+										,{ "event":"seasonsMatchSetup", "targets":["SeasonsMatchSetup"] }
+										,{ "event":"playerDevelopment", "targets":["PlayerDevelopmentFlow"] }
+										
+										,{"event":"gotoHypeEssentialsItem", "targets":["HypeEssentials"] }
+										,{"event":"gotoHypeExpressItem", "targets":["HypeExpress"] }
+										,{"event":"gotoHypeSeasonItem", "targets":["HypeStore"] }
+										,{"event":"gotoHypeSeasonLadder", "targets":["HypeStore"] }
+										
+										,{ "event":"debugPlayerRecruit", "targets":["DebugPlayerRecruit"] }
+										,{ "event":"debugPlayerCaptures","targets":["DebugPlayerCaptures"] }
+										,{ "event":"debugStoryEnd","targets":["DebugStoryEnd"] }
+										,{ "event":"debugForfeitCompetitions" ,"targets":["DebugForfeitCompetitions"] }
+									]
+									,"states":
+									[
+										{
+											"name":"directToEventScreen"
+											,"onEnter":
+											[
+												["invoke", ["postMatchEvent"]]
+											]
+										}
+										,{
+											"name":"directToAvatar"
+											,"onEnter":
+											[
+												["invoke", ["avatar"]]
+											]
+										}
+										,{
+											"name":"directToHype"
+											,"onEnter":
+											[
+												["invoke", ["hypeSeason"]]
+											]
+										}
+										,{
+											"name":"directToGrowth"
+											,"onEnter":
+											[
+												["invoke", ["playerDevelopment"]]
+											]
+										}
+										,{
+											"name":"directToSquadManagement"
+											,"onEnter":
+											[
+												["invoke", ["squad"]]
+											]
+										}
+										,{
+											"onEnter":
+											[
+												["loadViewModel",["FluxViewModel"]]
+												,["loadViewModel",["WorldTourHomeHubViewModel"]]
+												,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+												,["loadViewModel",["WorldTourUserInfoWidgetViewModel"]]
+												,["loadView",["widget", "game/components/WorldTourUserInfoWidget.swf", "WorldTourUserInfoWidgetDP"]]
+												,["loadViewModel", ["ScreenTimeoutViewModel", "FADE_MAIN_MENU"]]
+											]
+											,"onExit":
+											[
+												["unloadViewModel", ["ScreenTimeoutViewModel"]]
+												,["unloadView",["widget", "game/components/WorldTourUserInfoWidget.swf"]]
+												,["unloadViewModel", ["WorldTourUserInfoWidgetViewModel"]]
+												,["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+												,["unloadViewModel",["WorldTourHomeHubViewModel"]]
+												,["unloadViewModel",["FluxViewModel"]]
+											]
+											,"states":
+											[
+												{
+													"name":"HomeHubScreen"
+													,"onEnter":
+													[
+														["sendAction", ["condition", "hasReachedMaxAvatarGrowth"]]
+													]
+													,"transitions":
+													[
+														{ "event":"showMaxOvrPopup" ,"targets":["MaxOvrPopup"] }
+														,{ "event":"advance" ,"targets":["HomeHubIdle"] }
+													]
+												}
+												,{
+													"name":"HomeHubIdle"
+													,"transitions":
+													[
+														{ "event":"advance", "targets":["UnloadHubPreStory"] }
+														,{ "event":"back", "targets":["UnloadHubPreMap"] }
+														
+														,{ "event":"resetStory" ,"targets":["ResetStoryProgressPopup"] }
+													]
+												}
+												,{
+													"name":"MaxOvrPopup"
+													,"onExit":
+													[
+														["unloadView", ["popup", "AvatarMaxGrowthPopup"]]
+													]
+													,"transitions":
+													[
+														{
+															"event":"back"
+															,"targets":["HomeHubIdle"]
+														}	
+													]
+												}
+												,{
+													"name":"CanStartEvent"
+													,"onEnter":
+													[
+														["sendAction", ["condition", "shouldNavigateToEvent"]]
+													]
+													,"transitions":
+													[
+														{ "event":"true", "let":{"WorldTourEventFlowParam":"Tournament"}, "targets":["WorldTourEventFlow"] }
+														,{ "event":"false", "targets":["CompetitionAlreadyStartedPopup"] }
+													]
+												}
+												,{
+													"name":"CompetitionAlreadyStartedPopup"
+													,"onEnter":
+													[						
+														["loadView", ["popup", "COMPETITION_ALREADY_STARTED", "WT_COMPETITION_ALREADY_STARTED|Okay_abbr2|popupYes"]]
+													]
+													,"onExit":
+													[
+														["unloadView", ["popup", "COMPETITION_ALREADY_STARTED"]]
+													]
+													,"transitions":
+													[
+														{ "event":"popupYes", "targets":["HomeHubIdle"] }
+													]
+												}					
+											]
+											,"transitions":
+											[
+												{ "event":"evt_countdown_done", "targets":["HomeHubStadiumPan"] }
+											]
+										}
+										,{
+											"name":"ResetStoryProgressPopup"
+											,"onEnter":
+											[						
+												["loadView", ["popup", "RESET_STORY_POPUP", "SSF_RESET_STORY_DESCRIPTION|cancel_upper|back|SSF_RESET_STORY_CONFIRM|advance"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["popup", "RESET_STORY_POPUP"]]
+											]
+											,"transitions":
+											[
+												{ "event":"back", "targets":["HomeHubIdle"] }
+												,{ "event":"advance", "targets":["ResetStoryProgressWait"] }
+											]
+										}
+										,{
+											"name":"ResetStoryProgressWait"
+											,"onEnter":
+											[
+												["sendScreenEvent", ["ShowBusyIndicator",""]]	
+												,["sendAction",["attempt", "resetUserStoryProgress"]]
+											]
+											,"onExit":
+											[
+												["sendScreenEvent", ["HideBusyIndicator",""]]
+											]
+											,"transitions":
+											[
+												{"event":"success","targets":["ResetStorySaveFlow"]}
+												,{"event":"fail","targets":["ResetStoryFailPopup"]}
+											]
+										}
+										,{
+											"type":"external"
+											,"file":"/saveload/saveLoadFlow.nav"
+											,"inputs":
+											{
+												"ResetStorySaveFlow":"SaveFlow"
+											}
+											,"outputs":
+											{
+												"out_success":"UnloadHubStoryReset"
+												,"out_fail":"UnloadHubStoryReset"
+											}
+										}
+										,{
+											"type":"external"
+											,"file":"/worldtour/cinematicHubFlow.nav"
+											,"inputs":
+											{
+												"UnloadHubStoryReset":"UnloadLocationHub"
+											}
+											,"outputs":
+											{
+												"out_advance":"ModeEntryWorldMap"
+											}
+										}
+										,{
+											"name":"ResetStoryFailPopup"
+											,"onEnter":
+											[						
+												["loadView", ["popup", "RESET_STORY_FAIL_POPUP", "SSF_RESET_STORY_FAIL_DESCRIPTION|SSF_RESET_STORY_TRY_AGAIN|advance|cancel_upper|back"]]
+											]
+											,"onExit":
+											[
+												["unloadView", ["popup", "RESET_STORY_FAIL_POPUP"]]
+											]
+											,"transitions":
+											[
+												{ "event":"back", "targets":["HomeHubIdle"] }
+												,{ "event":"advance", "targets":["ResetStoryProgressWait"] }
+											]
+										}
+										,{
+											"name":"HomeHubStadiumPan"
+											,"type":"external"
+											,"file":"/stadiumPanFlow.nav"
+											,"outputs":
+											{
+												"out_back":"HomeHubScreen"
+											}
+										}
+										,{
+											"type":"external"
+											,"file":"/worldtour/cinematicHubFlow.nav"
+											,"inputs":
+											{
+												"UnloadHubPreMap":"UnloadLocationHub"
+											}
+											,"outputs":
+											{
+												"out_advance":"WorldMap"
+											}
+										}
+									]
+								}
+								,{
+									"name":"PlayerDevelopmentFlow"
+									,"states":
+									[
+										{
+											"let":{"OnboardingInfoStateViewModelParam":"onboardPlayerGrowth"}
+											,"name":"PlayerGrowthOnboarding"
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/worldTour/onboardingFlow.nav"
+													,"outputs":
+													{
+														"out_bypass":"PlayerDevelopment"
+														,"out_trigger":"PlayerDevelopment"
+													}
+												}
+											]
+										}
+										,{
+											"type":"external"
+											,"file":"/worldtour/playerDevelopment.nav"
+											,"inputs":
+											{
+												"PlayerDevelopment":"PlayerDevelopmentFlow"
+											}
+											,"outputs":
+											{
+												"out_back":"Home",
+												"out_fail":"Home"
+											}
+										}
+									]
+								}
+								,{
+									"type":"external"
+									,"file":"/worldtour/mapFlow.nav"
+									,"inputs":
+									{
+										"WorldMap":"in_locationHub"
+										,"StoryWorldMap":"in_storyUILocation"
+										,"SeasonsWorldMap":"in_seasons"
+									}
+									,"outputs":
+									{
+										"out_back":"Quit"
+										,"out_advance":"LoadLocationHub"
+										,"out_advance_activatedTakeMeThereLink":"UpdateFeStadium"
+										,"out_seasons":"LoadLocationHubSeasons"
+										,"out_story":"ContinueStoryFromHomeHub"
+									}
+								}
+								,{
+									"type":"external"
+									,"file":"/worldtour/cinematicHubFlow.nav"
+									,"inputs":
+									{
+										"LoadLocationHub":"LoadLocationHub"
+									}
+									,"outputs":
+									{
+										"out_advance":"FadeInHomeHub"
+									}
+								}
+								,{
+									"let":{"WaitStateParam":"fadeIn"}
+									,"name":"FadeInHomeHub"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/waitState.nav"
+											,"outputs":
+											{
+												"out_advance":"Home"
+											}
+										}
+									]
+								}
+								,{
+									"type":"external"
+									,"file":"/worldtour/cinematicHubFlow.nav"
+									,"inputs":
+									{
+										"LoadLocationHubSeasons":"LoadLocationHub"
+									}
+									,"outputs":
+									{
+										"out_advance":"FadeInSeasonsHub"
+									}
+								}
+								,{
+									"let":{"WaitStateParam":"fadeIn"}
+									,"name":"FadeInSeasonsHub"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/waitState.nav"
+											,"outputs":
+											{
+												"out_advance":"SeasonsMatchSetup"
+											}
+										}
+									]
+								}
+								,{
+									"name":"SeasonsMatchSetup"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/worldtour/onlineMatchFlow.nav"
+											,"outputs":
+											{
+												"out_back":"UnloadHubPreMapSeasons"
+												,"out_profileSignOut":"SignOutWait"
+												,"out_error":"QuitFromError" /* if error has made it to top level back out of the mode to attempt a refresh */
+												,"out_disconnect":"ConnectionLost"
+											}
+										}
+									]
+								}
+								,{
+									"type":"external"
+									,"file":"/worldtour/cinematicHubFlow.nav"
+									,"inputs":
+									{
+										"UnloadHubPreMapSeasons":"UnloadLocationHub"
+									}
+									,"outputs":
+									{
+										"out_advance":"SeasonsWorldMap"
+									}
+								}
+								,{
+									"name":"HypeHub"
+									,"let": { "hasSwapAvatarEntry":"true" }
+									,"onExit": 
+									[
+										["sendAction", ["notify", "fadeIn"]]
+									]
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/worldtour/hypeStoreFlow.nav"
+											,"inputs":
+											{
+												"HypeStore":"in_hypeSeason"
+												,"HypeEssentials":"in_hypeEssentials"
+												,"HypeExpress":"in_hypeExpress"
+											}
+											,"outputs":
+											{
+												"out_back":"Home"
+												,"out_ConnectionLost":"ConnectionLost"
+												,"out_avatarCustomization":"WorldTourAvatar_withoutSwapAvatarEntry"
+											}
+										}
+									]
+								}
+								,{
+									"name":"HypeHub_withoutSwapAvatarEntry"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/worldtour/hypeStoreFlow.nav"
+											,"inputs":
+											{
+												"HypeStore_withoutSwapAvatarEntry":"in_hypeSeason"
+											}
+											,"outputs":
+											{
+												"out_back":"Home"
+												,"out_ConnectionLost":"ConnectionLost"
+												,"out_avatarCustomization":"WorldTourAvatar_withoutSwapAvatarEntry"
+											}
+										}
+									]
+								}
+								,{
+									"name":"TrainingHub"
+									,"type":"external"
+									,"file":"/worldtour/trainingFlow.nav"
+									,"outputs":
+									{
+										"out_advance":"Home"
+										,"out_back":"Home"
+									}
+								}
+								,{
+									"name":"SquadHub"
+									,"states":
+									[
+										{
+											"let":{"OnboardingInfoStateViewModelParam":"onboardSquadManagement"}
+											,"name":"SquadManagementOnboarding"
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/worldTour/onboardingFlow.nav"
+													,"outputs":
+													{
+														"out_bypass":"SquadManagementScreen"
+														,"out_trigger":"SquadManagementScreen"
+													}
+												}
+											]
+										}
+										,{
+											"type":"external"
+											,"file":"/worldTour/squadManagementFlow.nav"
+											,"name":"SquadManagementScreen"
+											,"outputs":
+											{
+												"out_back":"Home"
+												,"out_error":"QuitFromError"
+												,"out_ConnectionLost":"ConnectionLost"
+											}
+										}
+									]
+								}
+								,{
+									"name":"WorldTourTeamInfo"
+									,"let":{"WorldTourTeamInfoFlowParam":"edit"}
+									,"states":
+									[
+										{
+											"let":{"OnboardingInfoStateViewModelParam":"onboardTeamInfo"}
+											,"name":"TeamInfoOnboarding"
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/worldTour/onboardingFlow.nav"
+													,"outputs":
+													{
+														"out_bypass":"WorldTourTeamInfoScreen"
+														,"out_trigger":"WorldTourTeamInfoScreen"
+													}
+												}
+											]
+										}
+										,{
+											"name":"WorldTourTeamInfoScreen"
+											,"type":"external"
+											,"file":"/worldtour/teamInfoFlow.nav"
+											,"outputs":
+											{
+												"out_advance":"HomeHub"
+												,"out_back":"Home"
+											}
+										}
+									]
+								}
+								,{
+									"let":{"FluxScreenStateViewModelName":"AvatarGenderSelectViewModel", "FluxScreenStateViewModelParam":""}
+									,"name":"avatarGenderSelect"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/fluxScreenState.nav"
+											,"outputs":
+											{
+												"out_advance":"Home"
+												,"out_back":"Home"
+											}
+										}
+									]
+								}								
+								,{
+									"name":"WorldTourEventFlow"
+									,"type":"external"
+									,"file":"/worldtour/worldTourEventFlow.nav"
+									,"outputs":
+									{
+										"out_back":"HomeHub"
+										,"out_fail":"showServerErrorPopupForWorldTourEvent"
+										,"out_profileSignOut":"SignOutWait"
+										,"out_disconnect":"ConnectionLost"
+										,"out_postMatch":"CheckForPostMatchDestination"
+										,"out_story":"HomeHub"
+										,"out_error":"QuitFromError" /* if error has made it to top level back out of the mode to attempt a refresh */
+									}
+								}
+								,{
+									"let":{"ConditionStateParam":"queryHasPostMatchDestination"}
+									,"name":"CheckForPostMatchDestination"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/conditionState.nav"
+											,"outputs":
+											{
+												"out_true":"PostMatchNavigation"
+												,"out_false":"Home"
+											}
+										}
+									]
+								}
+								,{
+									"name":"PostMatchNavigation"
+									,"onEnter":
+									[
+										["sendAction", ["notify", "triggerPostMatchNavigation"]]
+									]
+									,"transitions":
+									[
+										  { "event":"home", "targets":["Home"] }	
+										, { "event":"event", "targets":["directToEventScreen"] }	
+										, { "event":"avatar", "targets":["directToAvatar"] }
+										, { "event":"hypeTotal", "targets":["directToHype"] }
+										, { "event":"playerGrowth", "targets":["directToGrowth"] }
+										, { "event":"squadManagement", "targets":["directToSquadManagement"] }
+									]
+								}
+								,{
+									"name":"showServerErrorPopupForWorldTourEvent"
+									,"onEnter":
+									[
+										["loadView", ["popup","SERVER_ERROR_POPUP", "SSF_SERVER_ERROR|OK|back"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "SERVER_ERROR_POPUP"]]
+									]
+									,"transitions":
+									[
+										{ "event":"back", "targets":["HomeHub"] }	
+									]
+								}
+								,{
+									"name":"SettingsFlow"
+									,"type":"external"
+									,"file":"/settingsFlow.nav"
+									,"inputs":
+									{
+										"SettingsGame":"SettingsGame"
+										,"SettingsController":"SettingsController"
+										,"SettingsVideoBrightness":"SettingsVideoBrightness"
+										,"SettingsArenaPlayer":"SettingsArenaPlayer"
+										,"SettingsArenaGoalkeeper":"SettingsArenaGoalkeeper"
+										,"SettingsAccessibility":"AccessibilityMainMenu"
+									}
+									,"outputs":
+									{
+										"back":"HomeHub"
+										,"out_notify_controller_disconnect":"HomeHub"
+									}
+								}
+								,{
+									"name":"HelpFlow"
+									,"type":"external"
+									,"file":"/helpFlow.nav"
+									,"inputs":
+									{
+										"HelpBasic":"HelpBasic"
+										,"HelpSkillMoves":"HelpSkillMoves"
+										,"HelpCelebrations":"HelpCelebrations"
+									}
+									,"outputs":
+									{
+										"back":"HomeHub"
+									}
+								}
+								,{
+									"name":"Avatar"
+									,"let": { "hasSwapAvatarEntry":"true" }
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/worldtour/worldTourAvatarFlow.nav"
+											,"inputs":
+											{
+												"WorldTourAvatar":"AvatarOnboarding"
+											}
+											,"outputs":
+											{
+												"out_HypeStore":"HypeStore_withoutSwapAvatarEntry"
+												,"out_ConnectionLost":"ConnectionLost"
+												,"out_exit":"Home"
+											}
+										}
+									]
+								}
+								,{
+									"name":"Avatar_withoutSwapAvatarEntry"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/worldtour/worldTourAvatarFlow.nav"
+											,"inputs":
+											{
+												"WorldTourAvatar_withoutSwapAvatarEntry":"AvatarOnboarding"
+											}
+											,"outputs":
+											{
+												"out_HypeStore":"HypeStore_withoutSwapAvatarEntry"
+												,"out_ConnectionLost":"ConnectionLost"
+												,"out_exit":"Home"
+											}
+										}
+									]
+								}
+								,{
+									"name":"DebugFlows"
+									,"states":
+									[
+										{
+											"name":"PlayerRecruitDebugFlow"
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/worldtour/worldTourPlayerRecruitFlow.nav"
+													,"inputs":
+													{
+														"DebugPlayerRecruit":"PlayerRecruitDebugFlow"
+													}
+													,"outputs":
+													{
+														"out_back":"HomeHub"
+														,"out_success":"HomeHub"
+														,"out_fail":"Quit"
+													}
+												}
+											]
+										}
+										,{
+											"let":{"FluxScreenStateViewModelName":"Debug3DPlayerViewModel", "FluxScreenStateViewModelParam":""}
+											,"name":"DebugPlayerCaptures"
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/utility/fluxScreenState.nav"
+													,"outputs":
+													{
+														"out_advance":"Home"
+														,"out_back":"Home"
+													}
+												}
+											]
+										}	
+										,{
+											"let":{"FluxScreenStateViewModelName":"WorldTourStoryEndViewModel", "FluxScreenStateViewModelParam":""}
+											,"name":"DebugStoryEnd"
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/utility/fluxScreenState.nav"
+													,"outputs":
+													{
+														"out_advance":"Home"
+														,"out_back":"Home"
+													}
+												}
+											]
+										}
+										,{
+											"let":{"WaitStateParam":"forfeitStartedCompetitions"}
+											,"name":"DebugForfeitCompetitions"
+											,"onEnter":
+											[
+												["sendScreenEvent", ["ShowBusyIndicator",""]]													
+											]
+											,"onExit":
+											[
+												["sendScreenEvent", ["HideBusyIndicator",""]]
+											]
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/utility/waitState.nav"
+													,"outputs":
+													{
+														"out_advance":"Home"
+													}
+												}	
+											]
+										}
+									]
+								}
+							]
+						}
+						,{
+							"type":"external"
+							,"file":"/worldtour/cinematicHubFlow.nav"
+							,"inputs":
+							{
+								"UnloadHubPreStory":"UnloadLocationHub"
+							}
+							,"outputs":
+							{
+								"out_advance":"ContinueStoryFromHomeHub"
+							}
+						}
+						,{
+							"name":"StoryFlow"
+							,"type":"external"
+							,"file":"/worldtour/storyFlow.nav"		
+							,"inputs":
+							{
+								"ContinueStoryFromHomeHub":"in_fromHomeHubLocationComplete"
+							}
+							,"outputs":
+							{
+								"out_back":"Home"
+								,"out_map":"StoryWorldMap"
+								,"out_profileSignOut":"SignOutWait"
+								,"out_quit":"Quit"
+								,"out_error":"QuitFromError" /* if error has made it to top level back out of the mode to attempt a refresh */
+								,"out_disconnect":"ConnectionLost"
+								,"out_Avatar":"directToAvatar"
+								,"out_Hype":"directToHype"
+								,"out_PlayerGrowth":"directToGrowth"
+								,"out_SquadManagement":"directToSquadManagement"
+							}
+						}
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/worldTour/trainingFlow.nav"
+					,"inputs":
+					{
+						"DebugWorldTourDrillFlow":"SkillGameFlow"
+					}
+					,"outputs":
+					{
+						"out_advance":"DebugWorldTourDrillSelectionReloadStadium"
+						,"out_back":"DebugWorldTourDrillSelectionReloadStadium"
+						,"out_profileSignOut":"SignOutWait"
+					}
+				}
+				,{
+					"name":"QuitFromError"
+					, "initial":
+					{
+						"targets":["CheckAcceptedInvite"]
+					}
+					,"transitions":
+					[
+						{ "event":"goToInviteFlow", "targets":["InviteAccepted"] }
+					]
+					,"states":
+					[
+						{
+							"let":{"ConditionStateParam":"hasAcceptedInviteFromMatch"}
+							,"name":"CheckAcceptedInvite" /* an error after a match which ended from accepting an invite can result in this, so make sure we exit gracefully */
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"InviteAccepted"
+										,"out_false":"UnloadHubPreQuitError"
+									}
+								}
+							]
+						}
+						,{
+							"type":"external"
+							,"file":"/worldtour/worldTourExitFlow.nav"
+							,"inputs":
+							{
+								"UnloadHubPreQuitError":"WorldTourExitFlow"
+							}
+							,"outputs":
+							{
+								"out_ExitComplete":"out_back"
+							}
+						}
+					]
+				}
+				,{
+					"name":"Quit"
+					, "initial":
+					{
+						"targets":["UnloadHubPreQuit"]
+					}
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/worldTourExitFlow.nav"
+							,"inputs":
+							{
+								"UnloadHubPreQuit":"WorldTourExitFlow"
+								,"LogoutPreQuit":"OnlineLogout"
+							}
+							,"outputs":
+							{
+								"out_ExitComplete":"out_back"
+							}
+						}
+					]
+				}
+				,{
+					"name":"SignOutWait"
+					,"transitions":
+					[
+						{
+							"event":"profileSignOutComplete"
+							,"targets":["WaitForcedExit"]
+						}
+					]
+				}
+				,{
+					"name":"WaitForcedExit"
+					,"initial":
+					{
+						"targets":["UnloadHubPreForcedExit"]
+					}
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/worldTourExitFlow.nav"
+							,"inputs":
+							{
+								"UnloadHubPreForcedExit":"WorldTourExitFlow"
+							}
+							,"outputs":
+							{
+								"out_ExitComplete":"out_profileSignOut"
+							}
+						}
+					]
+				}
+				,{
+					"name":"InviteAccepted"
+					,"initial":
+					{
+						"targets":["UnloadHubPreInviteAccepted"]
+					}
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/worldTourExitFlow.nav"
+							,"inputs":
+							{
+								"UnloadHubPreInviteAccepted":"WorldTourExitFlow"
+							}
+							,"outputs":
+							{
+								"out_ExitComplete":"out_goToInviteFlow"
+							}
+						}
+					]
+				}
+				,{
+					"name":"ConnectionLost"
+					,"initial":
+					{
+						"targets":["UnloadHubPreConnectionLost"]
+					}
+					,"onEnter":
+					[
+						/* hide live messages before showing any connection error popups */
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+						,["unloadViewModel",["SsfLoadingScreenViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldtour/worldTourExitFlow.nav"
+							,"inputs":
+							{
+								"UnloadHubPreConnectionLost":"WorldTourExitFlow"
+							}
+							,"outputs":
+							{
+								"out_ExitComplete":"DisconnectPopup"
+							}
+						}
+					]
+				}
+				,{
+					"name": "DisconnectPopup",
+					"onEnter":
+					[
+						["loadView", ["popup", "DISCONNECT_POPUP", "OSDK_LOST_CON_TO_EA|OK|back"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "DISCONNECT_POPUP"]]
+					]
+					,"transitions":
+					[
+						{
+							"event":"back"
+							,"targets":["out_back"]
+						}
+					]
+				}
+				,{
+					"name":"DebugModeFlows"
+					,"onEnter":
+					[
+						["loadViewModel",["DebugMatchSelectViewModel"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["DebugMatchSelectViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"name":"in_debug_MatchSelect"
+							,"onEnter":
+							[
+								["loadViewModel",["DebugMatchSelectViewModel"]]
+							]
+							,"onExit":
+							[
+								["unloadViewModel",["DebugMatchSelectViewModel"]]
+							]
+							,"states":
+							[
+								{
+									"name":"DebugMatchSelectLoadSublevel"
+									,"onEnter": 
+									[
+										["sendAction", ["fbStartFlowEvent", "streamInWorldTour"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"onWorldTourStreamIn"
+											,"targets":["DebugMatchReloadStadium"] 
+										}
+									]	
+								}
+								,{
+									"type":"external"
+									,"file":"/reloadfestadiumflow.nav"		
+									,"inputs":
+									{
+										"DebugMatchReloadStadium":"WaitForLoad"
+									}
+									,"outputs":
+									{
+										"ReloadReady":"debugMatchFlowSetup"
+										,"LoadStarted":"debugMatchFlowSetup"
+									}
+								}
+								,{
+									"let":{"FluxScreenStateViewModelName":"", "FluxScreenStateViewModelParam":""}
+									,"name":"debugMatchFlowSetup"
+									,"onEnter":
+									[
+										["sendAction", ["evt_hub_hide_event"]]
+										,["sendAction",["notify","enterDebugMatchSelectScreen"]]
+									]
+									,"onExit":
+									[
+										["sendAction",["notify","exitDebugMatchSelectScreen"]]
+									]
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/fluxScreenState.nav"
+											,"outputs":
+											{
+												"out_advance":"debugMatchFlow"
+												,"out_back":"Quit"
+											}
+										}
+									]
+								}
+								,{
+									"name":"debugMatchFlow"
+									, "initial":
+									{
+										"targets":["matchFlow"]
+									}
+									,"states":
+									[
+										{
+											"onExit": 
+											[
+												["sendAction", ["notify", "fadeIn"]]
+											]
+											,"states":
+											[
+												{
+													"name":"matchFlow"
+													,"type":"external"
+													,"file":"/worldTour/matchFlow.nav"
+													,"outputs":
+													{
+														"out_advance":"debugMatchFlowSetup"
+														,"out_profileSignOut":"SignOutWait"
+														,"out_error":"debugMatchFlowSetup"
+														,"out_aborted":"debugMatchFlowSetup"
+														,"out_disconnect":"debugMatchFlowSetup"
+													}
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+						,{
+							"let":{"FluxScreenStateViewModelName":"DebugWorldTourDrillSelectViewModel", "FluxScreenStateViewModelParam":"debug"}
+							,"name":"in_debug_DrillSelect"
+							,"states":
+							[
+								{
+									"name":"DebugWorldTourDrillSelectLoadSublevel"
+									,"onEnter": 
+									[
+										["sendAction", ["fbStartFlowEvent", "streamInWorldTour"]]
+										,["sendAction", ["evt_hub_hide_event"]]
+									]
+									,"transitions":
+									[
+										{
+											"event":"onWorldTourStreamIn"
+											,"targets":["DebugWorldTourDrillSelectionReloadStadium"] 
+										}
+									]	
+								}
+								,{
+									"name":"DebugWorldTourDrillSelectionReloadStadium"
+									,"type":"external"
+									,"file":"/reloadfestadiumflow.nav"		
+									,"outputs":
+									{
+										"ReloadReady":"DebugWorldTourDrillFlowSetup"
+										,"LoadStarted":"DebugWorldTourDrillFlowSetup"
+									}
+								}
+								,{
+									"name":"DebugWorldTourDrillFlowSetup"
+									,"type":"external"
+									,"file":"/utility/fluxScreenState.nav"
+									,"outputs":
+									{
+										"out_advance":"DebugWorldTourDrillFlowReloadStadium"
+										,"out_back":"Quit"
+									}
+								}
+								,{
+									"name":"DebugWorldTourDrillFlowReloadStadium"
+									,"type":"external"
+									,"file":"/reloadfestadiumflow.nav"		
+									,"outputs":
+									{
+										"ReloadReady":"DebugWorldTourDrillFlow"
+										,"LoadStarted":"DebugWorldTourDrillFlow"
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

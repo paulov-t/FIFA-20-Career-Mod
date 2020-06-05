@@ -1,0 +1,67 @@
+{
+	"name":"CinematicHubFlow"
+	,"onEnter":
+	[
+		["loadViewModel",["WorldTourCinematicHubViewModel"]]
+		,["sendAction", ["notify", "evt_disconnect_flow_not_ready"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel", ["WorldTourCinematicHubViewModel"]]
+		,["sendAction", ["notify", "evt_disconnect_flow_ready"]]
+	]
+	,"states":
+	[
+		{
+			"let":{"WaitStateParam":"loadLocationHub"}
+			,"name":"LoadLocationHub"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/utility/waitState.nav"
+					,"outputs":
+					{
+						"out_advance":"out_advance"
+					}
+				}
+			]
+		}
+		,{
+			"name":"UnloadLocationHub"
+			,"states":
+			[
+				{
+					"let":{"WaitStateParam":"fadeOut"}
+					,"name":"UnloadHubFadeOut"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"UnloadHubWait"
+							}
+						}
+					]
+				}
+				,{
+					"let":{"WaitStateParam":"unloadLocationHub"}
+					,"name":"UnloadHubWait"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/utility/waitState.nav"
+							,"outputs":
+							{
+								"out_advance":"out_advance"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

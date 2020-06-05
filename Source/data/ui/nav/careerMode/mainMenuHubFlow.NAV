@@ -1,6 +1,6 @@
 {
 	"name":"MainMenuHubFlow"
-	,"initial": { "targets":["PreSeasonTourFlow"] }
+	,"initial": { "targets":["MainMenuHub"] }
 	,"onEnter":
 	[
 		["sendAction", ["notify", "telemetryEnterGameModeHub", ".GameMode"] ]

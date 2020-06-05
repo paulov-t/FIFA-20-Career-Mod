@@ -1,0 +1,461 @@
+{
+	"name":"TrainingHubFlow"
+	,"onEnter":
+	[
+		["loadViewModel", ["WorldTourTrainingFlowViewModel"]]
+	]
+	,"onExit":
+	[
+		["unloadViewModel", ["WorldTourTrainingFlowViewModel"]]
+	]
+	,"states":
+	[
+		{
+			"let":{"ConditionStateParam":"areDrillsAvailable"}
+			,"states":
+			[
+				{
+					"name":"DrillsAvalibleCheck"
+					,"type":"external"
+					,"file":"/utility/conditionState.nav"
+					,"outputs":
+					{
+						"out_true":"EnterTrainingHub"
+						,"out_false":"ShowNoTrainingSlotsPopupEvent"
+					}
+				}
+				,{
+					"name":"ShowNoTrainingSlotsPopupEvent"
+					,"onEnter":
+					[
+						["loadView", ["popup","INVALID_TRAINING_SLOTS_POPUP", "SSF_NO_TRAINING_SLOTS_ERROR|OK|back"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup", "INVALID_TRAINING_SLOTS_POPUP"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["out_back"] }	
+					]
+				}
+			]
+		}
+		,{
+			"name":"EnterTrainingHub"
+			,"initial":
+			{
+				"targets":["LoadHubCamera"]
+			}
+			,"states":
+			[
+				{
+					"let":{"ConditionStateParam":"canShowSlotScreen"}
+					,"name":"CanShowSlotScreen"
+					,"states":
+					[
+						{
+							"type":"external"
+							,"file":"/worldTour/cinematicHubFlow.nav"
+							,"inputs":
+							{
+								"LoadHubCamera":"LoadLocationHub"
+							}
+							,"outputs":
+							{
+								"out_advance":"Shouldshowslots"
+							}
+						}
+						,{
+							"type":"external"
+							,"name":"Shouldshowslots"
+							,"file":"/utility/conditionState.nav"
+							,"outputs":
+							{
+								"out_true":"ShowSlots"
+								,"out_false":"out_back"
+							}
+						}
+						,{
+							"let":
+							{
+								"FluxScreenStateViewModelName":"WorldTourTrainingEventsViewModel", "FluxScreenStateViewModelParam":""
+								,"ConditionStateParam": "areDrillsAvailable"
+							}
+							,"name":"ShowSlots"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/fluxScreenState.nav"
+									,"outputs":
+									{
+										"out_advance":"UnloadHubCamera"
+										,"out_back":"out_back"
+									}
+								}
+							]
+						}
+					]
+				}
+				,{
+					"type":"external"
+					,"file":"/worldTour/cinematicHubFlow.nav"
+					,"inputs":
+					{
+						"UnloadHubCamera":"UnloadLocationHub"
+					}
+					,"outputs":
+					{
+						"out_advance":"SkillGameFlow"
+					}
+				}
+				,{
+					"name":"SkillGameFlow"
+					,"initial":
+					{
+						"targets":["LoadSkillGame"]
+					}
+					,"onEnter":
+					[
+						["sendAction", ["notify", "flowEnterTraining"]]
+					]
+					,"onExit":
+					[
+						["sendAction", ["notify", "flowExitTraining"]]
+					]
+					,"states":
+					[
+						{
+							"let":{"ConditionStateParam":"isSkillGameLoaded"}
+							,"name":"LoadSkillGame"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "fadeOut"]]
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"ShouldShowInstructions"
+										,"out_false":"LoadingSkillGame"
+									}
+								}
+								,{
+									"let":{"WaitStateParam":"loadSkillGameAssets"}
+									,"name":"LoadingSkillGame"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/waitState.nav"
+											,"outputs":
+											{
+												"out_advance":"ShouldShowInstructions"
+											}
+										}
+									]
+								}
+							]
+						}
+						,{
+							"let":{"ConditionStateParam":"shouldShowInstructions"}
+							,"name":"ShouldShowInstructions"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "fadeIn"]]
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"ShowInstructions"
+										,"out_false":"EnterSkillGame"
+									}
+								}
+								,{
+									"let":{"FluxScreenStateViewModelName":"WorldTourSkillGameInstructionsViewModel", "FluxScreenStateViewModelParam":""}
+									,"name":"ShowInstructions"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/fluxScreenState.nav"
+											,"outputs":
+											{
+												"out_advance":"EnterSkillGame"
+												,"out_back":"EnterSkillGame"
+											}
+										}
+									]
+								}
+							]
+						}
+						,{
+							"name":"EnterSkillGame"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "flowStartSkillGame"]]
+								,["sendAction", ["transitionManager", ".NavTransitionManager.TO_GAME"]]
+							]
+							,"onExit":
+							[
+								["sendAction", ["transitionManager", ".NavTransitionManager.TO_FE"]]
+							]
+							,"transitions":
+							[
+								{ "event":"cmTrainingLoadPause", "targets":["ShowPause"] }
+								,{ "event":"cmTrainingLoadResults", "targets":["ShowResults"] }
+							]
+						}
+						,{
+							"name":"RestartSkillGame"
+							,"onEnter":
+							[
+								["sendAction", ["notify", "flowRestartSkillGame"]]
+								,["invoke", ["advance"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["EnterSkillGame"] }
+							]
+						}
+						,{
+							"let":{"WaitStateParam":"flowEndSkillGame"}
+							,"name":"NextSkillGame"
+							,"transitions":
+							[
+								{ "event":"resultConnectionFailed", "targets":["ShowNextGameConnectionFailPopupEvent"] }
+							]
+							,"onEnter":
+							[
+								["sendAction", ["notify", "fadeOut"]]
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/waitState.nav"
+									,"outputs":
+									{
+										"out_advance":"UnloadSkillGameForNextDrill"
+									}
+								}
+								,{
+									"name":"ShowNextGameConnectionFailPopupEvent"
+									,"onEnter":
+									[
+										["loadView", ["popup","TRAINING_RESULT_CONNECTION_FAIL_POPUP", "SSF_TRAINING_CONNECTION_ERROR|OK|back"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "TRAINING_RESULT_CONNECTION_FAIL_POPUP"]]
+									]
+									,"transitions":
+									[
+										{ "event":"back", "targets":["UnloadSkillGameForExitGame"] }	
+									]
+								}
+								,{
+									"let":{"WaitStateParam":"unloadSkillGameAssets"}
+									,"name":"UnloadSkillGameForNextDrill"
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/waitState.nav"
+											,"outputs":
+											{
+												"out_advance":"CheckCompletedStoryDrills"
+											}
+										}
+									]
+								}
+								,{
+									"let":{"ConditionStateParam":"checkCompletedStoryDrills"}
+									,"name":"CheckCompletedStoryDrills"
+									,"onExit":
+									[
+										["sendAction", ["notify", "flowNextSkillGame"]]
+									]
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/utility/conditionState.nav"
+											,"outputs":
+											{
+												"out_true":"out_advance"
+												,"out_false":"SkillGameFlow"
+											}
+										}
+									]
+								}
+							]
+						}
+						,{
+							"let":{"WaitStateParam":"flowEndSkillGame"}
+							,"name":"EndSkillGame"
+							,"transitions":
+							[
+								{ "event":"resultConnectionFailed", "targets":["ShowEndGameConnectionFailPopupEvent"] }
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/waitState.nav"
+									,"outputs":
+									{
+										"out_advance":"ExitFlow"
+									}
+								}
+								,{
+									"name":"ShowEndGameConnectionFailPopupEvent"
+									,"onEnter":
+									[
+										["loadView", ["popup","TRAINING_RESULT_CONNECTION_FAIL_POPUP", "SSF_TRAINING_CONNECTION_ERROR|OK|back"]]
+									]
+									,"onExit":
+									[
+										["unloadView", ["popup", "TRAINING_RESULT_CONNECTION_FAIL_POPUP"]]
+									]
+									,"transitions":
+									[
+										{ "event":"back", "targets":["ExitFlow"] }	
+									]
+								}
+								,{
+									"name":"ExitFlow"
+									,"states":
+									[
+										{
+											"let":{"WaitStateParam":"fadeOut"}
+											,"name":"FadeOutExit"
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/utility/waitState.nav"
+													,"outputs":
+													{
+														"out_advance":"UnloadSkillGameForExitGame"
+													}
+												}
+											]
+										}
+										,{
+											"let":{"WaitStateParam":"unloadSkillGameAssets"}
+											,"name":"UnloadSkillGameForExitGame"
+											,"states":
+											[
+												{
+													"type":"external"
+													,"file":"/utility/waitState.nav"
+													,"outputs":
+													{
+														"out_advance":"ShouldEnterNarrativeScene"
+													}
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+						,{
+							"let":{"ConditionStateParam":"shouldEnterNarrativeScene"}
+							,"name":"ShouldEnterNarrativeScene"
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/conditionState.nav"
+									,"outputs":
+									{
+										"out_true":"NarativeTrainingScene"
+										,"out_false":"CanShowSlotScreen"
+									}
+								}
+								,{
+									"name":"NarativeTrainingScene"
+									,"onEnter":
+									[
+										["loadViewModel", ["WorldTourCinematicViewModel"]]
+										,["sendAction", ["smMoment", "postTrainingFlow"]]
+									]
+									,"onExit":
+									[
+										["sendAction", ["smExitMomentState"]]
+										,["unloadViewModel", ["WorldTourCinematicViewModel"]]
+									]
+									,"transitions":
+									[
+										{"event":"advance", "targets":["CanShowSlotScreen"]}
+									]
+									,"states":
+									[
+										{
+											"type":"external"
+											,"file":"/cinematicState.nav"
+										}
+									]
+								}
+							]
+						}
+						,{
+							"let":{"FluxScreenStateViewModelName":"WorldTourSkillGameResultsViewModel", "FluxScreenStateViewModelParam":""}
+							,"name":"ShowResults"
+							,"transitions":
+							[
+								{ "event":"nextDrill", "targets":["NextSkillGame"] }
+								,{ "event":"retryDrill", "targets":["RestartSkillGame"] }
+								, { "event":"endDrill", "targets":["EndSkillGame"] }
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/fluxScreenState.nav"
+									,"outputs":
+									{
+										"out_advance":"EndSkillGame"
+										,"out_back":"EndSkillGame"
+									}
+								}
+							]
+						}
+						,{
+							"let":{"FluxScreenStateViewModelName":"WorldTourSkillGameInstructionsViewModel", "FluxScreenStateViewModelParam":"showPauseMenu"}
+							,"name":"ShowPause"
+							,"transitions":
+							[
+								{ "event":"skillGameResults", "targets":["ShowResults"] }
+								,{ "event":"retryDrill", "targets":["RestartSkillGame"] }
+							]
+							,"states":
+							[
+								{
+									"type":"external"
+									,"file":"/utility/fluxScreenState.nav"
+									,"outputs":
+									{
+										"out_advance":"EnterSkillGame"
+										,"out_back":"EnterSkillGame"
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+
+	]
+}

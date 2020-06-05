@@ -1,0 +1,71 @@
+{
+	"name":"TakeMeThereFlow"
+	,"states":
+	[
+		{
+			"name":"CheckIfActivatedTakeMeThereLink"
+			,"onEnter":
+			[
+				["sendAction", ["condition", "activatedTakeMeThereLink"]]
+			]
+			,"transitions":
+			[
+				{"event":"true", "targets":["out_activatedTakeMeThereLink"] }
+				,{"event":"false", "targets":["CheckIfBeingNavigatedByTakeMeThereLink"] }
+			]
+		}
+		,{
+			"name":"CheckIfBeingNavigatedByTakeMeThereLink"
+			,"onEnter":
+			[
+				["sendAction", ["condition", "navigatedByTakeMeThereLink"]]
+			]
+			,"transitions":
+			[
+				{"event":"true", "targets":["out_skip"] }
+				,{"event":"false", "targets":["CheckIfReachedTakeMeThereLinkDestination"] }
+			]
+		}
+		,{
+			"name":"CheckIfReachedTakeMeThereLinkDestination"
+			,"onEnter":
+			[
+				["sendAction", ["condition", "reachedTakeMeThereLinkDestination"]]
+			]
+			,"transitions":
+			[
+				{"event":"true", "targets":["out_skip"] }
+				,{"event":"false", "targets":["CheckLiveMessages"] }
+			]
+		}
+		,{
+			"name":"CheckLiveMessages"
+			,"onEnter":
+			[
+				["sendAction", ["condition", "getLiveMessages", ".CheckLiveMessagesParam"]]
+			]
+			,"transitions":
+			[
+				{ "event":"success" ,"targets":["out_skip"] }
+				,{ "event":"fail","targets":["out_skip"] }
+				,{ "event":"evt_show_live_msgs","targets":["ShowLiveMessages"] }
+			]
+		}
+		,{
+			"name":"ShowLiveMessages"
+			,"onEnter":
+			[
+				["loadView", ["overlay", "game/screens/online/OnlineLiveMessaging"]]
+			]
+			,"onExit":
+			[
+				["unloadView",["overlay", "game/screens/online/OnlineLiveMessaging"]]
+			]
+			,"transitions":
+			[
+				{"event":"success","targets":["out_skip"] }
+				,{"event":"activatedTakeMeThereLink", "targets":["out_activatedTakeMeThereLink"]}
+			]
+		}
+	]
+}
