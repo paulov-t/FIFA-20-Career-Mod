@@ -1,7 +1,7 @@
 {
   "presetType": "CP_PRESET_11_V_11",
   "attributeCategories": [
-    {
+	{
       "name": "HEAD_AND_FACE",
       "filters": {
         "areFiltersAttributes": true,
@@ -71,17 +71,17 @@
               "areFiltersAttributes": true,
               "data": [
                 {
-                  "name": "HEIGHT",
+									"name": "HEIGHT",
                   "componentType": "SLIDER",
-                  "minValue": 150,
-                  "maxValue": 188
-                },
-                {
-                  "name": "WEIGHT",
+                  "minValue": 160,
+									"maxValue": 205
+								},
+								{
+									"name": "WEIGHT",
                   "componentType": "SLIDER",
                   "minValue": 45,
-                  "maxValue": 115
-                },
+									"maxValue": 115
+								},
                 {
                   "name": "ACCELERATION",
                   "minValue": 1,
@@ -201,19 +201,7 @@
                   "minValue": 1,
                   "maxValue": 99,
                   "componentType": "BAR"
-                },
-                {
-									"name": "MARKING",
-									"minValue": 1,
-									"maxValue": 99,
-									"isVisible": false
-                },
-                {
-									"name": "COMPOSURE",
-									"minValue": 1,
-									"maxValue": 99
-									"componentType": "BAR"
-								}
+                }
               ]
             }
           },
@@ -256,6 +244,13 @@
                         "isEditable": true
                       },
                       {
+                        "name": "COMPOSURE",
+                        "minValue": 1,
+                        "maxValue": 99,
+                        "componentType": "BAR",
+                        "isEditable": true
+                      },
+                      {
                         "name": "VOLLEYS",
                         "minValue": 1,
                         "maxValue": 99,
@@ -286,6 +281,20 @@
                       },
                       {
                         "name": "SLIDING_TACKLE",
+                        "minValue": 1,
+                        "maxValue": 99,
+                        "componentType": "BAR",
+                        "isEditable": true
+                      },
+                      {
+                        "name": "MARKING",
+                        "minValue": 1,
+                        "maxValue": 99,
+                        "componentType": "BAR",
+                        "isEditable": true
+                      },
+                      {
+                        "name": "INTERCEPTIONS",
                         "minValue": 1,
                         "maxValue": 99,
                         "componentType": "BAR",
@@ -527,30 +536,27 @@
               "data": [
                 {
                   "name": "FIRST_NAME",
-                  "minLength": 1,
-                  "maxLength": 12,
+                  "isEditable": true,
                   "componentType": "INPUT_TEXT"
                 },
                 {
                   "name": "SURNAME",
-                  "minLength": 1,
-                  "maxLength": 12,
+                  "isEditable": true,
                   "componentType": "INPUT_TEXT"
                 },
                 {
                   "name": "KNOWN_AS",
-                  "minLength": 1,
-                  "maxLength": 12,
+                  "isEditable": true,
                   "componentType": "INPUT_TEXT"
                 },
                 {
                   "name": "COMMENTARY_NAME",
+                  "isEditable": true,
                   "componentType": "LIST"
                 },
                 {
                   "name": "KIT_NAME",
-                  "minLength": 1,
-                  "maxLength": 12,
+                  "isEditable": true,
                   "componentType": "INPUT_TEXT"
                 },
                 {
@@ -561,13 +567,36 @@
                 },
                 {
                   "name": "NATIONALITY",
+                  "isEditable": true,
                   "componentType": "LIST"
                 },
                 {
                   "name": "TEAM",
-                  "componentType": "LIST",
+                  "isEditable": false,
+                  "componentType": "TOGGLE",
                   "dataType": "INT",
                   "dataPolicyType": "OPTIONS"
+                },
+                {
+                  "name": "BIRTH_YEAR",
+                  "isEditable": true,
+                  "minValue": 1970,
+                  "maxValue": 2002,
+                  "componentType": "TOGGLE"
+                },
+                {
+                  "name": "BIRTH_MONTH",
+                  "isEditable": true,
+                  "minValue": 1,
+                  "maxValue": 12,
+                  "componentType": "TOGGLE"
+                },
+                {
+                  "name": "BIRTH_DAY",
+                  "isEditable": true,
+                  "minValue": 1,
+                  "maxValue": 31,
+                  "componentType": "TOGGLE"
                 }
               ]
             }
@@ -580,7 +609,7 @@
       "filters": {
         "areFiltersAttributes": false,
         "data": [
-          {
+            {
             "name": "KIT_FIT",
             "filters": {
               "areFiltersAttributes": true,
@@ -626,7 +655,8 @@
                   "name": "GLOVES"
                 },
                 {
-                  "name": "GK_GLOVES"
+                  "name": "GK_GLOVES",
+                  "disabledOptions": [103, 104, 95, 96, 117, 118]
                 },
                 {
                   "name": "LEFT_WRIST"
@@ -652,6 +682,7 @@
               "data": [
                 {
                   "name": "GOALCELEBRATION",
+                  "disabledOptions": [3610, 3612, 3616, 3617, 3620, 3623, 3624, 3628, 3609, 3611, 3615, 3618, 3619, 3621, 3622, 3625, 3626, 3627]
                 },
                 {
                   "name": "RUNNINGCELEBRATION"
@@ -673,19 +704,57 @@
               ]
             }
           },
-          {
-            "name": "RUNNINGSTYLE",
-            "filters": {
-              "areFiltersAttributes": true,
-              "data": [
-                {
-                  "name": "RUNNINGSTYLE"
-                }
-              ]
+            {
+              "name": "RUNNINGSTYLE",
+              "filters": {
+                "areFiltersAttributes": true,
+                "data": [
+                  {
+                    "name": "RUNNINGSTYLE"
+                  }
+                ]
+              }
             }
-          }
         ]
       }
+    }
+  ],
+  "attributeDependencyTree": [
+    {
+      "parents": [
+        "POSITION"
+      ],
+      "children": [
+        "GK_GLOVES",
+        "GK_PANTS",
+        "GLOVES",
+        "ROLE"
+      ]
+    },
+    {
+      "parents": [
+        "GK_PANTS"
+      ],
+      "children": [
+        "ANKLE_TAPE"
+      ]
+    },
+    {
+      "parents": [
+        "BIRTH_MONTH",
+        "BIRTH_YEAR"
+      ],
+      "children": [
+        "BIRTH_DAY"
+      ]
+    },
+    {
+      "parents": [
+        "ROLE"
+      ],
+      "children": [
+        "PREFERRED_POSITION"
+      ]
     }
   ]
 }

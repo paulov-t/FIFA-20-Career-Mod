@@ -158,13 +158,72 @@
                 },
                 {
                   "name": "PREFERRED_POSITION",
-                  "isVisible": false,
-				     "componentType": "TOGGLE"
+                  "isVisible": false
                 },
                 {
                   "name": "PREFERRED_FOOT",
                   "componentType": "TOGGLE"
-                }
+                },
+                {
+                  "name": "ACCELERATION",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                },
+                {
+                  "name": "AGILITY",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                },
+                {
+                  "name": "BALANCE",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                },
+                {
+                  "name": "JUMPING",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                },
+                {
+                  "name": "REACTIONS",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                },
+                {
+                  "name": "SPRINT_SPEED",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                },
+                {
+                  "name": "STAMINA",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                },
+                {
+                  "name": "STRENGTH",
+                  "minValue": 1,
+                  "maxValue": 99,
+                  "componentType": "BAR"
+                },
+                {
+									"name": "MARKING",
+									"minValue": 1,
+									"maxValue": 99,
+									"isVisible": false
+                },
+                {
+									"name": "COMPOSURE",
+									"minValue": 1,
+									"maxValue": 99,
+									"isVisible": false
+								}
               ]
             }
           },
@@ -217,6 +276,13 @@
                         "name": "COMPOSURE",
                         "minValue": 1,
                         "maxValue": 99,
+                        "componentType": "BAR",
+                        "isEditable": true
+                      },
+                      {
+                        "name": "WEAK_FOOT_ABILITY",
+                        "minValue": 1,
+                        "maxValue": 5,
                         "componentType": "BAR",
                         "isEditable": true
                       }
@@ -296,13 +362,6 @@
                         "name": "BALL_CONTROL",
                         "minValue": 1,
                         "maxValue": 99,
-                        "componentType": "BAR",
-                        "isEditable": true
-                      },
-                      {
-                        "name": "WEAK_FOOT_ABILITY",
-                        "minValue": 1,
-                        "maxValue": 5,
                         "componentType": "BAR",
                         "isEditable": true
                       }
@@ -484,21 +543,8 @@
               ]
             }
           }
-		  ,
-			{
-				"name": "TRAITS",
-				"filters": {
-					"areFiltersAttributes":true,
-					"data":	[
-					{
-						"name": "TRAITS"
-					}
-					]
-				}
-			}
         ]
       }
-	  
     },
     {
       "name": "INFO",
@@ -556,8 +602,8 @@
                 },
                 {
                   "name": "BIRTH_YEAR",
-                  "minValue": 1970,
-                  "maxValue": 2002,
+                  "minValue": 1960,
+                  "maxValue": 2004,
                   "componentType": "TOGGLE"
                 },
                 {
@@ -630,6 +676,7 @@
                 },
                 {
                   "name": "GK_GLOVES"
+                  
                 },
                 {
                   "name": "LEFT_WRIST"
@@ -655,6 +702,7 @@
 						"data": [
 							{
                 						"name": "GOALCELEBRATION"
+                						
 							},
 							{
 								"name": "RUNNINGCELEBRATION"
@@ -700,6 +748,15 @@
 		"KIT_NAME"
 	  ]
 	},
+	{
+      "parents": [
+        "HEIGHT",
+        "WEIGHT"
+      ],
+      "children": [
+        "BODY_TYPE"
+      ]
+    },
     {
       "parents": [
         "GENDER",
@@ -719,6 +776,14 @@
         "GK_PANTS",
         "GLOVES",
         "ROLE"
+      ]
+    },
+    {
+      "parents": [
+        "ROLE"
+      ],
+      "children": [
+		"PREFERRED_POSITION"
       ]
     },
     {

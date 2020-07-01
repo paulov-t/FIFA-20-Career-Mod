@@ -110,8 +110,8 @@
 			]
 			,"transitions":
 			[
-				{"event":"advance","cond":["==",".FIFA_PRESS",true],"actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["pressSkipIntroVideo"]}
-				,{"event":"advance","actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["introVideo"]}
+				{"event":"advance","cond":["==",".FIFA_PRESS",true],"actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["pressStart"]}
+				,{"event":"advance","actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["pressStart"]}
 			]
 		}
 		,{
