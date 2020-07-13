@@ -28,8 +28,8 @@
 			]
 			,"transitions":
 			[
-				{"event":"true","targets":["esrb"]}
-				,{"event":"false","targets":["ceroCheck"]}
+				{"event":"true","targets":["legal"]}
+				,{"event":"false","targets":["legal"]}
 			]
 		}		
 		,{
@@ -44,7 +44,7 @@
 			]
 			,"transitions":
 			[
-				{"event":"advance","targets":["DisclaimerCheck"]}
+				{"event":"advance","targets":["legal"]}
 			]
 		}
 		,{
@@ -55,8 +55,8 @@
 			]
 			,"transitions":
 			[
-				{"event":"true","targets":["cero"]}
-				,{"event":"false","targets":["DisclaimerCheck"]}
+				{"event":"true","targets":["legal"]}
+				,{"event":"false","targets":["legal"]}
 			]
 		}
 		,{
@@ -71,7 +71,7 @@
 			]
 			,"transitions":
 			[
-				{"event":"advance","targets":["DisclaimerCheck"]}
+				{"event":"advance","targets":["legal"]}
 			]
 		}
 		,{
@@ -82,7 +82,7 @@
 			]
 			,"transitions":
 			[
-				{"event":"true","targets":["Disclaimer"]}
+				{"event":"true","targets":["legal"]}
 				,{"event":"false","targets":["legal"]}
 			]
 		}		
@@ -110,8 +110,8 @@
 			]
 			,"transitions":
 			[
-				{"event":"advance","cond":["==",".FIFA_PRESS",true],"actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["pressStart"]}
-				,{"event":"advance","actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["pressStart"]}
+				{"event":"advance","cond":["==",".FIFA_PRESS",true],"actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["pressSkipIntroVideo"]}
+				,{"event":"advance","actions":[["sendScreenEvent", ["HideLoadingIcon", ""]]],"targets":["introVideo"]}
 			]
 		}
 		,{
@@ -128,10 +128,13 @@
 			[
 				{
 					"name":"videoLoading"
+					,"onEnter":
+					[
+						["loadView",["screen", "game/screens/bootflow/PressStart"]]
+					]
 					,"transitions":
 					[
-						{"event":"videoStarted","targets":["videoPlaying"]}
-						,{"event":"videoStopped","targets":["pressStart"]}
+						{"event":"videoStopped","targets":["pressStart"]}
 					]
 				}
 				,{
@@ -394,76 +397,6 @@
 											,"targets":["silentSignIn"]
 										}
 									]
-								}
-							]
-						}
-						,{
-							"type":"external"
-							,"file":"/online/onlineLoginFlow.nav"
-							,"inputs":
-							{
-								"silentSignIn":"in_startSilentSignIn"
-							}
-							,"outputs":
-							{
-								"loginSuccess":"pranUpload"
-								,"loginFail":"assetUpdate"
-							}
-						}
-						,{
-							"type":"external"
-							,"file":"/online/onlineLoginFlow.nav"
-							,"inputs":
-							{
-								"silentSignInNewLead":"in_startSilentSignIn"
-							}
-							,"outputs":
-							{
-								"loginSuccess":"trialCheck"
-								,"loginFail":"welcomeEulaFail"
-							}
-						}
-						,{
-							"name":"trialCheck"
-							,"onEnter":
-							[
-								["sendAction", ["condition", "isTrial"]]
-							]
-							,"transitions":
-							[
-								{
-									"event":"true"
-									,"targets":["TrialWelcomeScreen"]
-								}
-								,{
-									"event":"false"
-									,"cond":["==", ".FIFA_PRESS", true]
-									,"targets":["assetUpdate"]
-								}
-								,{
-									"event":"false"
-									,"targets":["pranDownload"]
-								}
-							]
-						}
-						,{
-							"name":"TrialWelcomeScreen"
-							,"onEnter":
-							[
-								/*Had to change this to overlay when integrating from FIFA 17 into FIFA 18, this screen will be broken*/
-								/*["loadView",["overlay", "game/screens/Upsell/TrialWelcomeScreen"] ]*/
-								/* Skipping this screen */
-								["sendAction", ["advance"]]
-							]
-							,"onExit":
-							[
-								/*["unloadView",["overlay", "game/screens/Upsell/TrialWelcomeScreen"] ]*/
-							]
-							,"transitions":
-							[
-								{
-									"event":"advance"
-									,"targets":["pranDownload"]
 								}
 							]
 						}

@@ -216,37 +216,6 @@
 			]
 		}
 		,{
-			"name":"ProSelectScreen"
-			,"onEnter":
-			[
-				["unloadScreenController", ["PreMatchFlow"]]
-				,["loadScreenController", ["ProSelectScreen"]]
-				,["loadView", ["screen", "game/screens/career/ProSelect"]]
-			]
-			,"onExit": 
-			[
-				["unloadView", ["screen", "game/screens/career/ProSelect"]]
-				,["unloadScreenController", ["ProSelectScreen"]]
-				,["loadScreenController", ["PreMatchFlow"]]
-			]
-			,"transitions":
-			[
-				{
-					"event":"Back"
-					,"targets":["KickOffHub"] 
-				}
-				,{
-					"event":"Advance"
-					,"targets":["KickOffHub"] 
-				}
-				,{
-					"event":"BackToSideSelect"
-					,"targets":["PreMatchFlow"] 
-				}
-				,{ "event":"evt_notify_controller_disconnect", "targets":["PreMatchFlow"] }
-			]
-		}
-		,{
 			"name":"KickOffLeaderboard"
 			,"onEnter":
 			[

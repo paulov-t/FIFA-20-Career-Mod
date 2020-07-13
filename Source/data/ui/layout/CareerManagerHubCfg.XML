@@ -345,22 +345,66 @@
 		<data ID="MARKET_DIFF_COLOR" TYPE="image" VISIBLE="FALSE" PATH="imgAssets/training/tileStateIcons/Market_Trend_Background.dds" TRANSLATE="FALSE" WIDTH="92" HEIGHT="28" X="20" Y="145" />
 		<data ID="MARKET_DIFF_VALUE" TYPE="text" VISIBLE="FALSE" FORMAT="IXS|COLOR_TEXT_HIGHLIGHT_FLUX|center|COLOR_TEXT_HIGHLIGHT_FLUX|||middle" TRANSLATE="FALSE" WIDTH="92" HEIGHT="28" X="20" Y="143" />
 	  </subtile>
-	  
-	  <subtile NAME="PAM_SQUAD_HUB" SUBTILE_TYPE="TILE" DESTINATION="EnterSquadHub" BG_ICON="SquadHub_Small" DATAPROVIDERID="CM_HUB_SQUAD_HUB_DP">
-		  <data ID="TITLE" TYPE="title" PARAM="MM_SQUAD_HUB" FORMAT="HS" />
-	  </subtile>
-    
     </tile>
-	<tile NAME="PAM_NEW_FEATURES_TILE_NO_NOTIFICATIONS" TYPE="TILE" DESTINATION="EnterPlayerConversation">
-	 <properties WIDTH="418" HEIGHT="418" X="109" Y="492"/>
-	 <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="TXT_TAB_ALERTS"/>
-	 <data ID="NONOTIF" TYPE="text" PARAM="CM_Inbox_No_Emails_upper" FORMAT="FONT_TILE_HS|COLOR_TEXT_PREVIEW|center|COLOR_FILL_UNHIGHLIGHT_CONTRAST" >
-		 <align TARGET="TITLE" ELEMENT_ATTRIBUTE="TOP" TARGET_ATTRIBUTE="BOTTOM" OFFSET="100" />
-		 <align TARGET="PARENT" ELEMENT_ATTRIBUTE="CENTER" TARGET_ATTRIBUTE="CENTER" />
-	 </data>
+	<tile NAME="PAM_NEW_FEATURES_TILE_NO_NOTIFICATIONS"  TYPE="TILE_NESTED">
+	 <properties WIDTH="418" HEIGHT="418" X="109" Y="492" ENABLE_CYCLING="TRUE"/>
+	  <subtile SUBTILE_TYPE="TILE" NAME="PAM_YOUTH_ACADEMY_SCOUT" DESTINATION="EnterScoutNetwork" BG_ICON="YouthStaff_Med" >
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="txt_cmhub_office_youthscout_title" FORMAT="HS" />
+        <data TYPE="text" PARAM="txt_cmhub_office_youthscout_desc" FORMAT="I" WIDTH="210" X="18" REL_TARGET="TITLE" REL_Y="10" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="PAM_YOUTH_ACADEMY_SQUAD" DESTINATION="EnterYouthSquad" BG_ICON="YouthAcademy_Med" TILE_STATE="DISABLED" PARAM="" DATAPROVIDERID="CM_YOUTH_ACADEMY_DP">
+        <data ID="HEADER" TYPE="title" ALIGN="leading" PARAM="CMYS_YouthScout" FORMAT="HS" />
+        <data ID="Highlight" TYPE="panel" VISIBLE="FALSE" PARAM="STYLE_ELEVEN" WIDTH="374" HEIGHT="111" X="22" Y="74" />
+        <data ID="PlayerHead" TYPE="asset" PATH="heads" VISIBLE="FALSE" FORMAT="I" TRANSLATE="FALSE" WIDTH="110" HEIGHT="110" X="22" Y="75" />
+        <data ID="PlayerName" TYPE="text" VISIBLE="FALSE" FORMAT="I" TRANSLATE="FALSE" WIDTH="843" X="140" Y="80" />
+        <data ID="PlayerAge" TYPE="text" VISIBLE="FALSE" FORMAT="IXS" TRANSLATE="FALSE" WIDTH="100" X="140" Y="144" />
+        <data ID="PlayerPosIndicator" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="144" Y="116" />
+        <data ID="PlayerPos" TYPE="text" VISIBLE="FALSE" FORMAT="I" TRANSLATE="FALSE" WIDTH="89" X="162" Y="106" />
+		<data ID="playerOvrRefTarget" TYPE="null" X="242" WIDTH="173" HEIGHT="29" Y="137"/>
+		<data ID="playerStatRefTarget" TYPE="null" X="257" WIDTH="125" HEIGHT="29" Y="92"/>
+		<data ID="PlayerOvr" TYPE="text" VISIBLE="FALSE" FORMAT="IXS" TRANSLATE="FALSE" WIDTH="55" Y="142">
+			<align TARGET="playerOvrRefTarget" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="2"/>
+		</data>
+        <data ID="PlayerMinBox" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/PlayerRatingBox.swf" TRANSLATE="FALSE" WIDTH="38" HEIGHT="29" Y="138">
+			<align TARGET="playerStatRefTarget" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="30"/>
+		</data>
+        <data ID="PlayerMaxBox" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/PlayerRatingBox.swf" TRANSLATE="FALSE" WIDTH="38" HEIGHT="29" Y="138">
+			<align TARGET="playerStatRefTarget" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="85"/>
+		</data>
+		<data ID="PlayerDash" TYPE="text" VISIBLE="FALSE" FORMAT="I||center" TRANSLATE="FALSE" WIDTH="14" Y="136">
+			<align TARGET="playerStatRefTarget" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="70"/>
+		</data>
+      </subtile>
 	</tile>
     <tile NAME="PAM_NEW_FEATURES_TILE_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="418" X="109" Y="492" ENABLE_CYCLING="TRUE"/>
+	  <subtile SUBTILE_TYPE="TILE" NAME="PAM_YOUTH_ACADEMY_SCOUT" DESTINATION="EnterScoutNetwork" BG_ICON="YouthStaff_Med" >
+        <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="txt_cmhub_office_youthscout_title" FORMAT="HS" />
+        <data TYPE="text" PARAM="txt_cmhub_office_youthscout_desc" FORMAT="I" WIDTH="210" X="18" REL_TARGET="TITLE" REL_Y="10" />
+      </subtile>
+      <subtile SUBTILE_TYPE="TILE" NAME="PAM_YOUTH_ACADEMY_SQUAD" DESTINATION="EnterYouthSquad" BG_ICON="YouthAcademy_Med" TILE_STATE="DISABLED" PARAM="" DATAPROVIDERID="CM_YOUTH_ACADEMY_DP">
+        <data ID="HEADER" TYPE="title" ALIGN="leading" PARAM="CMYS_YouthScout" FORMAT="HS" />
+        <data ID="Highlight" TYPE="panel" VISIBLE="FALSE" PARAM="STYLE_ELEVEN" WIDTH="374" HEIGHT="111" X="22" Y="74" />
+        <data ID="PlayerHead" TYPE="asset" PATH="heads" VISIBLE="FALSE" FORMAT="I" TRANSLATE="FALSE" WIDTH="110" HEIGHT="110" X="22" Y="75" />
+        <data ID="PlayerName" TYPE="text" VISIBLE="FALSE" FORMAT="I" TRANSLATE="FALSE" WIDTH="843" X="140" Y="80" />
+        <data ID="PlayerAge" TYPE="text" VISIBLE="FALSE" FORMAT="IXS" TRANSLATE="FALSE" WIDTH="100" X="140" Y="144" />
+        <data ID="PlayerPosIndicator" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/PlayerPositionIndicator.swf" TRANSLATE="FALSE" WIDTH="12" HEIGHT="12" X="144" Y="116" />
+        <data ID="PlayerPos" TYPE="text" VISIBLE="FALSE" FORMAT="I" TRANSLATE="FALSE" WIDTH="89" X="162" Y="106" />
+		<data ID="playerOvrRefTarget" TYPE="null" X="242" WIDTH="173" HEIGHT="29" Y="137"/>
+		<data ID="playerStatRefTarget" TYPE="null" X="257" WIDTH="125" HEIGHT="29" Y="92"/>
+		<data ID="PlayerOvr" TYPE="text" VISIBLE="FALSE" FORMAT="IXS" TRANSLATE="FALSE" WIDTH="55" Y="142">
+			<align TARGET="playerOvrRefTarget" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="2"/>
+		</data>
+        <data ID="PlayerMinBox" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/PlayerRatingBox.swf" TRANSLATE="FALSE" WIDTH="38" HEIGHT="29" Y="138">
+			<align TARGET="playerStatRefTarget" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="30"/>
+		</data>
+        <data ID="PlayerMaxBox" TYPE="component" VISIBLE="FALSE" PATH="game/components/FluxComponents/PlayerRatingBox.swf" TRANSLATE="FALSE" WIDTH="38" HEIGHT="29" Y="138">
+			<align TARGET="playerStatRefTarget" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="85"/>
+		</data>
+		<data ID="PlayerDash" TYPE="text" VISIBLE="FALSE" FORMAT="I||center" TRANSLATE="FALSE" WIDTH="14" Y="136">
+			<align TARGET="playerStatRefTarget" ELEMENT_ATTRIBUTE="LEADING" TARGET_ATTRIBUTE="LEADING" OFFSET="70"/>
+		</data>
+      </subtile>
 	  <subtile SUBTILE_TYPE="TILE" NAME="PAM_NEW_FEATURES_SUBTILE_0" DESTINATION="">
 		<data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="TXT_TAB_ALERTS"/>
 	    <data ID="playerHead" TYPE="asset" PATH="heads" PARAM="@assetId[0]" VISIBLE="@playerConversation[0]" WIDTH="120" HEIGHT="120">
@@ -641,12 +685,9 @@
       <data ID="TEAMLOGO" TYPE="asset" PATH="crest" WIDTH="110" HEIGHT="110" X="264" Y="15"  />
       <data ID="TEAMNAME" TYPE="text" FORMAT="TSM||center" TRANSLATE="FALSE" WIDTH="210" HEIGHT="75" REL_TARGET="TEAMLOGO" REL_X="-160" REL_Y="2" />
     </tile>
-   
-	<tile NAME="PAM_SQUAD_HUB_NESTED" TYPE="TILE_NESTED">
+    <tile NAME="PAM_SQUAD_HUB" TYPE="TILE" DESTINATION="EnterSquadHub" BG_ICON="SquadHub_Small" DATAPROVIDERID="CM_HUB_SQUAD_HUB_DP">
       <properties WIDTH="418" HEIGHT="204" X="965" Y="492" />
-	  <subtile NAME="PAM_SQUAD_HUB" SUBTILE_TYPE="TILE" DESTINATION="EnterSquadHub" BG_ICON="SquadHub_Small" DATAPROVIDERID="CM_HUB_SQUAD_HUB_DP">
-		  <data ID="TITLE" TYPE="title" PARAM="MM_SQUAD_HUB" FORMAT="HS" />
-	  </subtile>
+      <data ID="TITLE" TYPE="title" PARAM="MM_SQUAD_HUB" FORMAT="HS" />
     </tile>
     <tile NAME="PAM_FORMATIONS" TYPE="TILE" DESTINATION="EnterTeamSheetSelect" BG_ICON="TeamSheets_Small">
       <properties WIDTH="418" HEIGHT="204" X="965" Y="706" />
@@ -1268,14 +1309,7 @@
       <data ID="TITLE" TYPE="title" PARAM="PlayerStats" FORMAT="HS" />
       <data TYPE="text" PARAM="Txt_cmhub_season_playerstats_desc" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
     </tile>
-	<!--
     <tile NAME="PAM_OTHER_LEAGUES" TYPE="TILE" DESTINATION="ViewOtherCompetitions" BACKGROUND="OtherLeagues_Med">
-      <properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
-      <data ID="TITLE" TYPE="title" PARAM="CM_Other_Leagues_Caps" FORMAT="HS" />
-      <data TYPE="text" PARAM="Txt_cmhub_season_otherleagues_desc" FORMAT="I" WIDTH="340" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-    </tile>
-	-->
-	<tile NAME="PAM_OTHER_LEAGUES" TYPE="TILE" DESTINATION="EnterOtherCompsOld" BACKGROUND="OtherLeagues_Med">
       <properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
       <data ID="TITLE" TYPE="title" PARAM="CM_Other_Leagues_Caps" FORMAT="HS" />
       <data TYPE="text" PARAM="Txt_cmhub_season_otherleagues_desc" FORMAT="I" WIDTH="340" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
@@ -1359,24 +1393,11 @@
 		<data ID="KO_STAGE_SCORE_PEN" TYPE="text" FORMAT="IS||center" TRANSLATE="FALSE" WIDTH="382" HEIGHT="35" X="18" REL_TARGET="KO_STAGE_SCORE_AGG" REL_Y="-5"/>
       </subtile>
     </tile>
-	<tile NAME="PAM_NESTED_SETTINGS_AND_TWEAKS" TYPE="TILE_NESTED">
-		<properties WIDTH="418" HEIGHT="418" X="1393" Y="492" />
-		<subtile SUBTILE_TYPE="TILE" NAME="PAM_OTHER_TEAM_SHEETS" DESTINATION="OtherTeamSheets" BG_ICON="TeamSheets_Small" >
-			<data ID="TITLE" TYPE="title" PARAM="View Other Teams" FORMAT="HS" TRANSLATE="FALSE" />
-			<data TYPE="text" PARAM="DO NOT EDIT!" TRANSLATE="FALSE" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-		</subtile>
-		
-		<subtile NAME="PAM_SETTINGS" SUBTILE_TYPE="TILE" DESTINATION="EnterGameSettings" BG_ICON="Settings_Small" >
-		  
-		  <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CM_HUB_Settings" FORMAT="HS" />
-		  <data TYPE="text" ALIGN="leading" PARAM="txt_cmhub_desc_settings_customize" FORMAT="I" WIDTH="382" HEIGHT="75" X="18" REL_TARGET="TITLE" REL_Y="10" />
-		</subtile>
-		
-		<subtile NAME="PAM_EDIT_TRANSFERS" SUBTILE_TYPE="TILE" DESTINATION="ClubTransfers" BG_ICON="Transfers_Small" >
-			<data ID="TITLE" TYPE="title" PARAM="Make Manual Transfers" TRANSLATE="FALSE" FORMAT="HS" />
-			<data TYPE="text" PARAM="DO NOT USE UNLESS YOU KNOW HOW TO FIX BUGS!" TRANSLATE="FALSE" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-		</subtile>
-	</tile>
+    <tile NAME="PAM_SETTINGS" TYPE="TILE" DESTINATION="EnterGameSettings" BG_ICON="Settings_Small" >
+      <properties WIDTH="418" HEIGHT="418" X="1393" Y="492" />
+      <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CM_HUB_Settings" FORMAT="HS" />
+      <data TYPE="text" ALIGN="leading" PARAM="txt_cmhub_desc_settings_customize" FORMAT="I" WIDTH="382" HEIGHT="75" X="18" REL_TARGET="TITLE" REL_Y="10" />
+    </tile>
   </panel>
   <panel NAME="PAM_HUB_DEBUG_PANEL">
     <tile NAME="PRESS_CONF_TEST_NESTED" TYPE="TILE_NESTED">
@@ -1399,10 +1420,6 @@
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_KITS_INJURY" DESTINATION="EnterInjuryList" BG_ICON="InjuryList_Small" PARAM="">
         <data ID="TITLE" TYPE="title" PARAM="CM_HUB_Injury_List" FORMAT="HS" />
       </subtile>
-	  <subtile NAME="PAM_EDIT_TRANSFERS" SUBTILE_TYPE="TILE" DESTINATION="ClubTransfers" BG_ICON="Transfers_Small" >
-			<data ID="TITLE" TYPE="title" PARAM="Make Manual Transfers" TRANSLATE="FALSE" FORMAT="HS" />
-			<data TYPE="text" PARAM="Transfer to Free Agents first then to the Team of your choice" TRANSLATE="FALSE" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-		</subtile>
     </tile>
     <tile NAME="CM_OVERLAY_TEST" TYPE="TILE" DESTINATION="overlayTest" BG_ICON="Contract_Small">
       <properties WIDTH="418" HEIGHT="204" X="965" Y="492" />
