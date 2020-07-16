@@ -4,25 +4,25 @@ Another Club Pending,0,,,,,,,,,,
 Free Agent Points,85,,,,,,,,,,
 Is Transfer Listed,145,,,,,,,,,,
 Is Loan Listed,135,,,,,,,,,,
-Stay In Country Points,60,,,,,,,,,,
-minLOBscore for Transfer,95,,,,,,,,,,
-minLOBscore for Loan,90,,,,,,,,,,
+Stay In Country Points,30,,,,,,,,,,
+minLOBscore for Transfer,100,,,,,,,,,,
+minLOBscore for Loan,95,,,,,,,,,,
 ,,,,,,,,,,,
 Team Level Star Rank(0 based index),,,,,,,,,,,
-0,-100,,,,,,,,,,
-1,-50,,,,,,,,,,
-2,-40,,,,,,,,,,
+0,-40,,,,,,,,,,
+1,-35,,,,,,,,,,
 2,-30,,,,,,,,,,
+2,-25,,,,,,,,,,
 3,-20,,,,,,,,,,
-4,-10,,,,,,,,,,
-5,0,,,,,,,,,,
+4,-15,,,,,,,,,,
+5,-10,,,,,,,,,,
 6,0,,,,,,,,,,
-7,10,,,,,,,,,,
-8,20,,,,,,,,,,
-9,30,,,,,,,,,,
-10,40,,,,,,,,,,
-11,50,,,,,,,,,,
-12,100,,,,,,,,,,
+7,5,,,,,,,,,,
+8,15,,,,,,,,,,
+9,25,,,,,,,,,,
+10,37,,,,,,,,,,
+11,55,,,,,,,,,,
+12,95,,,,,,,,,,
 ,,,,,,,,,,,
 Group Name(same order as in the table above),"//Comments(non empty content !! & do not use ',' !)",Nation Ids,,,,,,,,,
 British Isles,//England;Scotland;Ireland;Northern;Ireland;Wales,14,42,25,35,50,,,,,
@@ -38,25 +38,25 @@ Africa,//Cameroon;Ivory;Coast;Egypt,103,108,111,,,,,,,
 Oceania,//Australia;New;Zealand,195,198,,,,,,,,
 ,,,,,,,,,,,
 Nationality FromGroup\ToGroup,British Isles,Latin Europe,Western Europe,Nothern Europe,Southern Europe,Eastern Europe,North America,South America,Asia,Africa,Oceania
-British Isles,70,-170,-185,-185,-185,-185,-185,-185,-185,-185,-185
-Latin Europe,0,75,-100,-400,-131,-400,-400,-500,-500,-500,-500
-Western Europe,-55,-90,15,-100,-131,75,-300,-500,-250,-500,-500
-Nothern Europe,-55,-95,-100,55,-131,25,-300,-500,-250,-500,-500
-Southern Europe,-65,-95,-100,-100,55,150,-300,-500,-250,-500,-500
-Eastern Europe,-65,-95,-100,-100,-131,190,-300,-500,-250,-500,-500
-North America,-55,-95,-100,-100,-131,25,75,65,-250,-500,65
-South America,-5,-85,-100,-100,-131,-50,75,65,-50,-500,-250
-Asia,-55,-95,-100,-100,-131,0,-300,-500,65,-500,-250
-Africa,-55,-95,-100,-100,-131,75,0,-500,0,65,-250
-Oceania,-55,-95,-100,-100,-131,0,175,-500,0,-500,65
+British Isles,50,-185,-195,-195,-195,-195,-195,-195,-195,-195,-195
+Latin Europe,-5,45,-95,-400,-95,-95,-185,-185,-185,-185,-185
+Western Europe,-55,-90,50,-95,-95,-95,-185,-185,-185,-185,-185
+Nothern Europe,-55,-95,-95,50,-95,-95,-185,-185,-185,-185,-185
+Southern Europe,-65,-95,-95,-95,50,50,-185,-185,-185,-185,-185
+Eastern Europe,-60,-95,-95,-95,50,50,-185,-185,-185,-185,-185
+North America,-55,-95,-95,-95,-95,-95,50,65,-250,-500,65
+South America,-10,-85,-95,-95,-95,-95,50,65,-50,-500,-250
+Asia,-55,-95,-95,-95,-95,-95,-185,-185,-185,-185,-185
+Africa,-40,-95,-95,-95,-95,-95,-185,-185,-185,-185,-185
+Oceania,-50,-95,-95,-95,-95,-95,-185,-185,50,-185,75
 ,,,,,,,,,,,
 Team Overall >=,Score,,,,,,,,,,
-85,900,,,,,,,,,,
-78,66,,,,,,,,,,
-69,64,,,,,,,,,,
-65,60,,,,,,,,,,
-60,60,,,,,,,,,,
-1,60,,,,,,,,,,
+85,700,,,,,,,,,,
+78,51,,,,,,,,,,
+69,46,,,,,,,,,,
+65,45,,,,,,,,,,
+60,45,,,,,,,,,,
+1,45,,,,,,,,,,
 ,,,,,,,,,,,
 League Rank,Score,,,,,,,,,,
 0,30,,,,,,,,,,
@@ -87,7 +87,7 @@ Time At Club,Score,,,,,,,,,,
 24,10,,,,,,,,,,
 36,30,,,,,,,,,,
 60,5,,,,,,,,,,
-84,-200,,,,,,,,,,
+84,-250,,,,,,,,,,
 ,,,,,,,,,,,
 Role Difference(Buyer-Seller),Score,"Do not leave gaps, i.e. you can not enter only ""+2"" and ""0"" diff(s), you must add for the ""+1"" diff a value too",,,,,,,,,
 2,-36,"The leftoutside diff(s) will use the edge values, i.e. a +3 or +4 will use the same value as for the +2 diff",,,,,,,,,
@@ -98,7 +98,7 @@ Role Difference(Buyer-Seller),Score,"Do not leave gaps, i.e. you can not enter o
 ,,,,,,,,,,,
 Preferred Position Available,Score,Comment,,,,,,,,,
 0,-150,Fallback Case,,,,,,,,,
-1,45,Player first preferred position found,,,,,,,,,
+1,40,Player first preferred position found,,,,,,,,,
 2,-75,,,,,,,,,,
 3,-75,,,,,,,,,,
-4,-7,,,,,,,,,,
+4,-75,,,,,,,,,,

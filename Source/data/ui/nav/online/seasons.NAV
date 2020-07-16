@@ -1,0 +1,1444 @@
+{
+	"name":"seasonsGameMode"
+	,"onEnter":
+	[
+		["loadViewModel",["OnlineSquadViewModel"]]
+		,["loadViewModel",["UserValidationViewModel", "ugc=false"]]
+		,["loadViewModel",["KitSelectViewModel"]]
+		,["loadViewModel",["OnlineGameplayViewModel"]]
+		,["sendAction", ["notify", "telemetryEnterGameMode", "onlineSeasons"] ]
+		,["sendAction", ["notify", "checkUserOnlineRestrictions"]]
+		,["sendAction", ["notify", "startMonitorUserOnlineRestrictions"]]
+		,["sendScreenEvent", ["CacheAccessibilityChatWindowOverlayComponent"]]
+	]
+	,"onExit":
+	[
+		["sendAction", ["notify", "telemetryExitGameMode", "onlineSeasons"] ]
+		,["sendScreenEvent", ["RemoveAccessibilityChatWindowOverlayComponent"]]
+		,["unloadViewModel", ["OnlineGameplayViewModel"]]
+		,["unloadViewModel",["UserValidationViewModel"]]
+		,["unloadViewModel",["OnlineSquadViewModel"]]
+		,["unloadViewModel",["KitSelectViewModel"]]
+		,["sendScreenEvent", ["UxSetFlowState",".eState.ARENA"]]
+		,["sendScreenEvent", ["UxSetFlowSubState",".eSubState.SUBSTATE_NONE"]]
+	]
+	,"transitions":
+	[
+		{ "event":"goToInviteFlow", "targets":["out_goToInviteFlow"] }
+		,{ "event":"preScreenFailed", "targets":["quit"] }
+	]	
+	,"states":
+	[
+		{
+			"name":"fePreCheckFlowSeasons"
+			,"onEnter":
+			[
+				["set", ["CurrentGMRecordID", ".GameModeRecordID.GM_SEASONS"]]
+			]
+			,"states":
+			[
+				{
+					"name":"preCheckSeasonsAdvance"
+					,"type":"external"
+					,"file":"/online/standardPreCheckFlow.nav"
+					,"outputs":
+					{
+						"preCheckSuccess":"startSeasonsToHub"
+						,"preCheckFail":"quit"
+					}
+				}
+				,{
+					"name":"preCheckFlowPostGame"
+					,"type":"external"
+					,"file":"/online/standardPreCheckFlow.nav"
+					,"outputs":
+					{
+						"preCheckSuccess":"startSeasonsPostGame"
+						,"preCheckFail":"quit"
+					}
+				}
+				,{
+					"name":"preCheckFlowContinueGame"
+					,"type":"external"
+					,"file":"/online/standardPreCheckFlow.nav"
+					,"outputs":
+					{
+						"preCheckSuccess":"startSeasonsContinueGame"
+						,"preCheckFail":"quit"
+					}
+				}
+			]
+		}		
+		,{
+			"name":"fePreCheckFlowCoopSeasons"
+			,"onEnter":
+			[
+				["set", ["CurrentGMRecordID", ".GameModeRecordID.GM_COOP_SEASONS"]]
+			]			
+			,"states":
+			[
+				{
+					"name":"preCheckFlowInviteAccepted"
+					,"type":"external"
+					,"file":"/online/standardPreCheckFlow.nav"
+					,"outputs":
+					{
+						"preCheckSuccess":"startSeasonsInviteAccepted"
+						,"preCheckFail":"quit"
+					}
+				}
+				,{
+					"name":"preCheckCoopSeasonsTeamSelect"
+					,"type":"external"
+					,"file":"/online/standardPreCheckFlow.nav"
+					,"outputs":
+					{
+						"preCheckSuccess":"startSeasonsCoopLobby"
+						,"preCheckFail":"quit"
+					}
+				}
+				,{
+					"name":"preCheckCoopSeasonsAdvance"
+					,"type":"external"
+					,"file":"/online/standardPreCheckFlow.nav"
+					,"outputs":
+					{
+						"preCheckSuccess":"OriginCheck"
+						,"preCheckFail":"quit"
+					}
+				}
+				,{
+					"name":"OriginCheck"
+					,"type":"external"
+					,"file":"/online/origin.nav"	
+					,"outputs":
+					{
+						"OriginIsOnlineTrue":"startSeasonsMenuSubitem"
+						,"quit":"quit"
+					}
+				}
+			]
+		}
+		,{
+			"name":"fePreCheckFlowLiveComp"
+			,"onEnter":
+			[
+				["set", ["CurrentGMRecordID", ".GameModeRecordID.GM_SEASONS"]]
+			]
+			,"states":
+			[
+				{
+					"name":"preCheckLiveCompAdvance"
+					,"type":"external"
+					,"file":"/online/standardPreCheckFlow.nav"
+					,"outputs":
+					{
+						"preCheckSuccess":"startLiveCompToHub"
+						,"preCheckFail":"quit"
+					}
+				}
+			]
+		}
+		,{
+			"name":"frontEnd"
+			,"onEnter":
+			[
+				["sendScreenEvent", ["UxSetFlowState",".eState.ONLINE_H2H_SEASON"]]
+				,["sendAction", ["evt_sign_out_flow_not_ready"]]
+				,["sendAction", ["evt_hub_update_event", ".NavFIFAHubBackgroundType.MODE_HUB_BACKGROUND"]]
+				,["sendAction", ["setStadiumPosition", ".StadiumFECameras.STADIUM_FE_CAMERA_STEP_3"] ]
+			]
+			,"transitions":
+			[
+				{ "event":"quit", "targets":["quit"] }
+			]
+			,"states":
+			[
+				{
+					"name":"BlankScreen"
+					,"transitions":
+					[
+						{ "event":"advance", "targets":["BlankScreenAdvanceCondition"] }
+					]
+					,"states":
+					[
+						{
+							"name":"startSeasonsToHub"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["GotoSeasons", "0"]]
+							]
+						}
+						,{
+							"name":"startSeasonsMenuSubitem"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["GotoSeasons", "1"]]
+							]
+						}
+						,{
+							"name":"startSeasonsPostGame"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["GotoSeasons", "2"]]
+							]
+						}
+						,{
+							"name":"startSeasonsInviteAccepted"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["GotoSeasons", "3"]]
+							]
+						}
+						,{
+							"name":"startSeasonsCoopLobby"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["GotoSeasons", "6"]]
+							]
+						}
+						,{
+							"name":"startSeasonsContinueGame"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["GotoSeasons", "9"]]
+							]
+						}						
+						,{
+							"name":"startLiveCompToHub"
+							,"onEnter":
+							[
+								["sendScreenEvent", ["GotoSeasons", "10"]]
+							]
+						}						
+						,{
+							"name":"BlankScreenAdvanceCondition"
+							,"onEnter":
+							[
+								["sendAction", ["condition","AdvanceActionResult"]]
+							]
+							,"transitions":
+							[
+								{ "event":"condition0", "targets":["SeasonsHub"] }
+								,{ "event":"condition1", "targets":["Brackets"] }
+								,{ "event":"condition2", "targets":["CoopTeamSelect"] }
+								,{ "event":"condition3","targets":["CoopBrackets"] }
+								,{ "event":"condition4", "targets":["TeamSelect"] }
+								,{ "event":"condition5", "let":{"fromLiveComp":true}, "targets":["SeasonsHub"] }
+							]
+						}
+					]
+				}
+				,{
+					"name":"SeasonsHub"
+					,"onEnter":
+					[	
+						["sendAction",["updateLocGender", "resetGender"]]
+						,["loadViewModel",["FluxViewModel"]]
+						,["loadViewModel",["HubScreenSeasons"]]
+						,["set", ["gotoLiveCompPanel", ".fromLiveComp"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["HubScreenSeasons"]]
+						,["unloadViewModel",["FluxViewModel"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["quit"] }
+					]
+					,"states":
+					[
+						{
+							"name": "SeasonsHubPreScreen"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "Loading"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["SeasonsHubScreen"] }
+								,{ "event":"preScreenFailed", "targets":["SeasonsHubPreScreenFailed"] }
+							]
+						}
+						,{
+							"name": "SeasonsHubScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+								,["if", [["==", ".gotoLiveCompPanel", true]
+								,[
+									["sendAction", ["selectTab", "2"] ]
+								]
+								,[ 
+								]]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"states":
+							[
+								{
+									"name":"SeasonsHubIdle"
+									,"transitions":
+									[
+										{ "event":"optionSelected","targets":["SeasonsHubAdvanceCondition"] }
+										,{ "event":"back", "targets":["SeasonsHubBackCondition"] }
+										,{"event":"evt_pow_open_widget", "targets":["SeasonsHubEASFCWidgetOpened"]}
+									]
+								}
+								,{
+									"name":"SeasonsHubEASFCWidgetOpened"
+									,"transitions":
+									[
+										{ "event":"evt_pow_close_widget", "targets":["SeasonsHubIdle"] }
+									]
+								}
+								,{
+									"name":"SeasonsHubBackCondition"
+									,"onEnter":
+									[
+										["sendAction", ["condition","AdvanceActionResult"]]
+									]
+									,"transitions":
+									[
+										{ "event":"condition-2", "targets":["quit"] }
+										,{ "event":"condition-1", "targets":["SeasonsHubIdle"] }
+									]
+								}
+								,{
+									"name":"SeasonsHubAdvanceCondition"
+									,"onEnter":
+									[
+										["sendAction", ["condition","AdvanceActionResult"]]
+									]
+									,"transitions":
+									[
+										{ "event":"condition-1", "targets":["SeasonsHubIdle"] }
+										,{ "event":"condition0", "targets":["TeamSelect"] }
+										,{ "event":"condition4", "targets":["CoopTeamSelect"] }
+										,{ "event":"condition1", "targets":["Brackets"] }
+										,{ "event":"condition5", "targets":["CoopBrackets"] }
+										,{ "event":"condition8", "targets":["WorldTable"] }
+										,{ "event":"condition9", "targets":["CoopWorldTable"] }
+										,{ "event":"condition3", "targets":["Trophy"] }
+										,{ "event":"condition7", "targets":["CoopTrophy"] }
+										,{ "event":"condition10", "targets":["Leaderboard"] }
+										,{ "event":"condition11", "targets":["CoopLeaderboard"] }
+										,{ "event":"condition2", "targets":["GameHistory"] }
+										,{ "event":"condition6", "targets":["CoopGameHistory"] }
+										,{ "event":"condition13", "targets":["preCheckLiveCompetition1"] }
+										,{ "event":"condition14", "targets":["preCheckLiveCompetition2"] }
+										,{ "event":"condition15", "targets":["preCheckLiveCompetition3"] }
+									]
+								}
+							]
+						}
+						,{
+							"name":"SeasonsHubPreScreenFailed"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"TeamSelect"
+					,"let":{"teamSelectMode":"TeamSelectScreen"}
+					,"states":
+					[
+						{
+							"name":"TeamSelectExternal"
+							,"type":"external"
+							,"file":"/online/seasonsTeamSelectFlow.nav"
+							,"outputs":
+							{
+								"out_back":"SeasonsHub"
+								,"out_quitToHub":"SeasonsHub"
+								,"out_quit":"quit"
+								,"out_gotoGameplay":"gotoGameplay"
+							}
+						}
+					]
+				}
+				,{
+					"name":"CupTeamSelect"
+					,"let":{"teamSelectMode":"TeamSelectScreen"}
+					,"states":
+					[
+						{
+							"name":"CupTeamSelectExternal"
+							,"type":"external"
+							,"file":"/online/seasonsTeamSelectFlow.nav"
+							,"outputs":
+							{
+								"out_back":"Brackets"
+								,"out_quitToHub":"SeasonsHub"
+								,"out_quit":"quit"
+								,"out_gotoGameplay":"gotoGameplay"
+							}
+						}
+					]
+				}
+				,{
+					"name":"CoopTeamSelect"
+					,"let":{"teamSelectMode":"CoopTeamSelectScreen"}
+					,"states":
+					[
+						{
+							"name":"CoopTeamSelectExternal"
+							,"type":"external"
+							,"file":"/online/seasonsTeamSelectFlow.nav"
+							,"outputs":
+							{
+								"out_back":"SeasonsHub"
+								,"out_quitToHub":"SeasonsHub"
+								,"out_quit":"quit"
+								,"out_gotoGameplay":"gotoCoopGameplay"
+							}
+						}
+					]
+				}
+				,{
+					"name":"CoopCupTeamSelect"
+					,"let":{"teamSelectMode":"CoopTeamSelectScreen"}
+					,"states":
+					[
+						{
+							"name":"CoopCupTeamSelectExternal"
+							,"type":"external"
+							,"file":"/online/seasonsTeamSelectFlow.nav"
+							,"outputs":
+							{
+								"out_back":"CoopBrackets"
+								,"out_quitToHub":"SeasonsHub"
+								,"out_quit":"quit"
+								,"out_gotoGameplay":"gotoCoopGameplay"
+							}
+						}
+					]
+				}
+				,{
+					"name":"Brackets"
+					,"onEnter":
+					[				
+						["loadViewModel",["BracketScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["BracketScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name": "BracketPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["BracketScreen"] }
+								,{ "event":"preScreenFailed", "targets":["BracketScreenPreScreenFailedCondition"] }
+							]
+						}
+						,{
+							"name": "BracketScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/online/h2h/seasonalplay/H2HSeasonalPlayBrackets"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/h2h/seasonalplay/H2HSeasonalPlayBrackets"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["CupTeamSelect"] }
+							]
+						}
+						,{
+							"name":"BracketScreenPreScreenFailedCondition"
+							,"onEnter":
+							[
+								["sendAction", ["condition","AdvanceActionResult"]]
+							]
+							,"transitions":
+							[
+								{ "event":"condition0", "targets":["BracketScreenCupWindowClosedPopup"] }
+								,{ "event":"condition1", "targets":["BracketScreenPreScreenFailPopup"] }
+							]
+						}
+						,{
+							"name":"BracketScreenCupWindowClosedPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_POPUP_CUP_WINDOW_CLOSED|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+						,{
+							"name":"BracketScreenPreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}						
+					]
+				}
+				,{
+					"name":"CoopBrackets"
+					,"onEnter":
+					[				
+						["loadViewModel",["CoopBracketScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["CoopBracketScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name": "CoopBracketPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["CoopBracketScreen"] }
+								,{ "event":"preScreenFailed", "targets":["CoopBracketScreenPreScreenFailedCondition"] }
+							]
+						}
+						,{
+							"name": "CoopBracketScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/online/h2h/seasonalplay/H2HSeasonalPlayBrackets"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/h2h/seasonalplay/H2HSeasonalPlayBrackets"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["CoopCupTeamSelect"] }
+							]
+						}
+						,{
+							"name":"CoopBracketScreenPreScreenFailedCondition"
+							,"onEnter":
+							[
+								["sendAction", ["condition","AdvanceActionResult"]]
+							]
+							,"transitions":
+							[
+								{ "event":"condition0", "targets":["CoopBracketScreenCupWindowClosedPopup"] }
+								,{ "event":"condition1", "targets":["CoopBracketScreenPreScreenFailPopup"] }
+							]
+						}
+						,{
+							"name":"CoopBracketScreenCupWindowClosedPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_POPUP_CUP_WINDOW_CLOSED|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+						,{
+							"name":"CoopBracketScreenPreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}						
+					]
+				}
+				,{
+					"name":"WorldTable"
+					,"onEnter":
+					[				
+						["loadViewModel",["DivCountScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["DivCountScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name": "WorldTablePreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["WorldTableScreen"] }
+								,{ "event":"preScreenFailed", "targets":["WorldTablePreScreenFailPopup"] }
+							]
+						}
+						,{
+							"name": "WorldTableScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/online/h2h/seasonalplay/H2HSeasonalPlayDivisions"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/h2h/seasonalplay/H2HSeasonalPlayDivisions"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["Leaderboard"] }
+							]
+						}
+						,{
+							"name":"WorldTablePreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"CoopWorldTable"
+					,"onEnter":
+					[				
+						["loadViewModel",["CoopDivCountScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["CoopDivCountScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name": "CoopWorldTablePreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["CoopWorldTableScreen"] }
+								,{ "event":"preScreenFailed", "targets":["CoopWorldTablePreScreenFailPopup"] }
+							]
+						}
+						,{
+							"name": "CoopWorldTableScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/online/h2h/seasonalplay/H2HSeasonalPlayDivisions"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/h2h/seasonalplay/H2HSeasonalPlayDivisions"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["CoopLeaderboard"] }
+							]
+						}
+						,{
+							"name":"CoopWorldTablePreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"Trophy"
+					,"onEnter":
+					[				
+						["loadViewModel",["TrophyScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["TrophyScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name": "TrophyPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["TrophyScreen"] }
+								,{ "event":"preScreenFailed", "targets":["TrophyPreScreenFailPopup"] }
+							]
+						}
+						,{
+							"name": "TrophyScreen"
+							,"onEnter":
+							[
+								["loadView",["background", "TROPHY_ONLINE"]]
+								,["loadView",["screen", "game/screens/online/Trophy"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/Trophy"]]
+								,["unloadView",["background"]]
+							]
+						}
+						,{
+							"name":"TrophyPreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"CoopTrophy"
+					,"onEnter":
+					[				
+						["loadViewModel",["CoopTrophyScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["CoopTrophyScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name": "CoopTrophyPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["CoopTrophyScreen"] }
+								,{ "event":"preScreenFailed", "targets":["CoopTrophyPreScreenFailPopup"] }
+							]
+						}
+						,{
+							"name": "CoopTrophyScreen"
+							,"onEnter":
+							[
+								["loadView",["background", "TROPHY_ONLINE"]]
+								,["loadView",["screen", "game/screens/online/Trophy"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/Trophy"]]
+								,["unloadView",["background"]]
+							]
+						}
+						,{
+							"name":"CoopTrophyPreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"OpponentTrophy"
+					,"onEnter":
+					[
+						["loadViewModel",["OpponentTrophyScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["OpponentTrophyScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["OpponentHub"] }
+					]
+					,"states":
+					[
+						{
+							"name": "OpponentTrophyPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["OpponentTrophyScreen"] }
+								,{ "event":"preScreenFailed", "targets":["OpponentTrophyPreScreenFailPopup"] }
+							]
+						}
+						,{
+							"name": "OpponentTrophyScreen"
+							,"onEnter":
+							[
+								["loadView",["background", "TROPHY_ONLINE"]]
+								,["loadView",["screen", "game/screens/online/Trophy"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/Trophy"]]
+								,["unloadView",["background"]]
+							]
+						}
+						,{
+							"name":"OpponentTrophyPreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"CoopOpponentTrophy"
+					,"onEnter":
+					[
+						["loadViewModel",["CoopOpponentTrophyScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["CoopOpponentTrophyScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["CoopOpponentHub"] }
+					]
+					,"states":
+					[
+						{
+							"name": "CoopOpponentTrophyPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["CoopOpponentTrophyScreen"] }
+								,{ "event":"preScreenFailed", "targets":["CoopOpponentTrophyPreScreenFailPopup"] }
+							]
+						}
+						,{
+							"name": "CoopOpponentTrophyScreen"
+							,"onEnter":
+							[
+								["loadView",["background", "TROPHY_ONLINE"]]
+								,["loadView",["screen", "game/screens/online/Trophy"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/Trophy"]]
+								,["unloadView",["background"]]
+							]
+						}
+						,{
+							"name":"CoopOpponentTrophyPreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}		
+				,{
+					"name":"Leaderboard"
+					,"onEnter":
+					[
+						["loadViewModel",["LeaderboardScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["LeaderboardScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name":"LeaderboardPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["LeaderboardScreen"] }
+								,{ "event":"preScreenFailed", "targets":["LeaderboardScreenFailed"] }
+							]
+						}
+						,{
+							"name":"LeaderboardScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "online/screens/stats/LeaderboardScreen"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "online/screens/stats/LeaderboardScreen"]]
+							]
+						}
+						,{
+							"name":"LeaderboardScreenFailed"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"CoopLeaderboard"
+					,"onEnter":
+					[				
+						["loadViewModel",["CoopLeaderboardScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["CoopLeaderboardScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name":"CoopLeaderboardPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["CoopLeaderboardScreen"] }
+								,{ "event":"preScreenFailed",  "targets":["CoopLeaderboardScreenFailed"]}
+							]
+						}
+						,{
+							"name":"CoopLeaderboardScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "online/screens/stats/LeaderboardScreen"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "online/screens/stats/LeaderboardScreen"]]
+							]
+						}
+						,{
+							"name":"CoopLeaderboardScreenFailed"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup", "SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"GameHistory"
+					,"onEnter":
+					[
+						["loadViewModel",["SeasonHistoryScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["SeasonHistoryScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name":"GameHistoryPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["GameHistoryScreen"] }
+								,{ "event":"preScreenFailed",  "targets":["GameHistoryFailPopup"]}
+							]
+						}
+						,{
+							"name":"GameHistoryScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/online/friendlies/RecentGames"]]	
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/friendlies/RecentGames"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["OpponentHub"] }
+							]
+						}
+						,{
+							"name":"GameHistoryFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"CoopGameHistory"
+					,"onEnter":
+					[
+						["loadViewModel",["CoopSeasonHistoryScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["CoopSeasonHistoryScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["SeasonsHub"] }
+					]
+					,"states":
+					[
+						{
+							"name":"CoopGameHistoryPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["CoopGameHistoryScreen"] }
+								,{ "event":"preScreenFailed",  "targets":["CoopGameHistoryFailPopup"]}
+							]
+						}
+						,{
+							"name":"CoopGameHistoryScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/online/friendlies/RecentGames"]]	
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/friendlies/RecentGames"]]
+							]
+							,"transitions":
+							[
+								{ "event":"advance", "targets":["CoopOpponentHub"] }
+							]
+						}
+						,{
+							"name":"CoopGameHistoryFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"OpponentGameHistory"
+					,"onEnter":
+					[
+						["loadViewModel",["OpponentSeasonHistoryScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["OpponentSeasonHistoryScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["OpponentHub"] }
+					]
+					,"states":
+					[
+						{
+							"name":"OpponentGameHistoryPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["OpponentGameHistoryScreen"] }
+								,{ "event":"preScreenFailed",  "targets":["OpponentGameHistoryFailPopup"]}
+							]
+						}
+						,{
+							"name":"OpponentGameHistoryScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/online/friendlies/RecentGames"]]	
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/friendlies/RecentGames"]]
+							]
+						}
+						,{
+							"name":"OpponentGameHistoryFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"CoopOpponentGameHistory"
+					,"onEnter":
+					[
+						["loadViewModel",["OpponentCoopSeasonHistoryScreen"]]
+					]
+					,"onExit":
+					[
+						["unloadViewModel",["OpponentCoopSeasonHistoryScreen"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["CoopOpponentHub"] }
+					]
+					,"states":
+					[
+						{
+							"name":"CoopOpponentGameHistoryPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["CoopOpponentGameHistoryScreen"] }
+								,{ "event":"preScreenFailed",  "targets":["CoopOpponentGameHistoryFailPopup"]}
+							]
+						}
+						,{
+							"name":"CoopOpponentGameHistoryScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/online/friendlies/RecentGames"]]	
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/online/friendlies/RecentGames"]]
+							]
+						}
+						,{
+							"name":"CoopOpponentGameHistoryFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]					
+				}
+				,{
+					"name":"OpponentHub"
+					,"onEnter":
+					[				
+						["loadViewModel",["FluxViewModel"]]
+						,["loadViewModel",["OpponentHubScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["OpponentHubScreen"]]
+						,["unloadViewModel",["FluxViewModel"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["GameHistory"] }
+					]
+					,"states":
+					[
+						{
+							"name":"OpponentHubPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["OpponentHubScreen"] }
+								,{ "event":"preScreenFailed",  "targets":["OpponentHubPreScreenFailPopup"]}
+							]
+						}
+						,{
+							"name":"OpponentHubScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"states":
+							[
+								{
+									"transitions":
+									[
+										{ "event":"optionSelected", "targets":["OpponentHubAdvanceCondition"] }
+										,{ "event":"condition2", "targets":["OpponentGameHistory"] }
+										,{ "event":"condition3", "targets":["OpponentTrophy"] }
+									]
+									,"states":
+									[
+										{
+											"name":"OpponentHubIdle"
+										}
+										,{
+											"name":"OpponentHubAdvanceCondition"
+											,"onEnter":
+											[
+												["sendAction", ["condition","AdvanceActionResult"]]
+											]
+										}
+									]
+								}
+							]
+						}
+						,{
+							"name":"OpponentHubPreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}
+					]
+				}
+				,{
+					"name":"CoopOpponentHub"
+					,"onEnter":
+					[
+						["loadViewModel",["FluxViewModel"]]
+						,["loadViewModel",["CoopOpponentHubScreen"]]
+					]
+					,"onExit":
+					[				
+						["unloadViewModel",["CoopOpponentHubScreen"]]
+						,["unloadViewModel",["FluxViewModel"]]
+					]
+					,"transitions":
+					[
+						{ "event":"back", "targets":["CoopGameHistory"] }
+					]
+					,"states":
+					[
+						{
+							"name":"CoopOpponentHubPreScreen"
+							,"transitions":
+							[
+								{ "event":"preScreenSucceeded", "targets":["CoopOpponentHubScreen"] }
+								,{ "event":"preScreenFailed",  "targets":["CoopOpponentHubPreScreenFailPopup"]}
+							]
+						}
+						,{
+							"name":"CoopOpponentHubScreen"
+							,"onEnter":
+							[
+								["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"onExit":
+							[
+								["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+							]
+							,"states":
+							[
+								{
+									"transitions":
+									[
+										{ "event":"optionSelected", "targets":["CoopOpponentHubAdvanceCondition"] }
+										,{ "event":"condition6", "targets":["CoopOpponentGameHistory"] }
+										,{ "event":"condition7", "targets":["CoopOpponentTrophy"] }
+									]
+									,"states":
+									[
+										{
+											"name":"CoopOpponentHubIdle"
+										}
+										,{
+											"name":"CoopOpponentHubAdvanceCondition"
+											,"onEnter":
+											[
+												["sendAction", ["condition","AdvanceActionResult"]]
+											]
+										}
+									]
+								}
+							]
+						}
+						,{
+							"name":"CoopOpponentHubPreScreenFailPopup"
+							,"onEnter":
+							[
+								["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+							]
+							,"onExit":
+							[
+								["unloadView", ["popup","SeasonsPopup"]]
+							]
+						}								
+					]
+				}
+			]
+		}
+		,{
+			"name":"gamePlay"
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/online/onlineInGame.nav"
+					,"inputs":
+					{
+						"gotoGameplay":"onlineMode"
+					}
+					,"outputs":
+					{
+						"quit":"preCheckFlowPostGame"
+						,"continue":"preCheckFlowContinueGame"
+						,"profileSignOut":"profileSignOut"
+					}
+				}
+				,{
+					"type":"external"
+					,"file":"/online/onlineInGame.nav"
+					,"inputs":
+					{
+						"gotoCoopGameplay":"onlineMode"
+					}
+					,"outputs":
+					{
+						"quit":"preCheckCoopSeasonsAdvance"
+						,"continue":"preCheckCoopSeasonsTeamSelect"
+						,"profileSignOut":"profileSignOut"
+					}
+				}			
+			]
+		}
+		,{
+			"name":"LiveComp1"
+			,"let":
+			{
+				"liveCompTile":"1"
+				,"fromSeasonsEntryHub":true
+			}
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/online/spEventFlow.nav"
+					,"inputs":
+					{
+						"preCheckLiveCompetition1":"checkEventsListDownload"
+					}
+					,"outputs":
+					{
+						"back":"fePreCheckFlowLiveComp"
+						,"out_goToInviteFlow":"out_goToInviteFlow"
+						,"profileSignOut":"profileSignOut"
+						,"out_goToMainMenu":"quit"
+					}
+				}
+			]
+		}
+		,{
+			"name":"LiveComp2"
+			,"let":
+			{
+				"liveCompTile":"2"
+				,"fromSeasonsEntryHub":true
+			}
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/online/spEventFlow.nav"
+					,"inputs":
+					{
+						"preCheckLiveCompetition2":"checkEventsListDownload"
+					}
+					,"outputs":
+					{
+						"back":"fePreCheckFlowLiveComp"
+						,"out_goToInviteFlow":"out_goToInviteFlow"
+						,"profileSignOut":"profileSignOut"
+						,"out_goToMainMenu":"quit"
+					}
+				}
+			]
+		}
+		,{
+			"name":"LiveComp3"
+			,"let":
+			{
+				"liveCompTile":"3"
+				,"fromSeasonsEntryHub":true
+			}
+			,"states":
+			[
+				{
+					"type":"external"
+					,"file":"/online/spEventFlow.nav"
+					,"inputs":
+					{
+						"preCheckLiveCompetition3":"checkEventsListDownload"
+					}
+					,"outputs":
+					{
+						"back":"fePreCheckFlowLiveComp"
+						,"out_goToInviteFlow":"out_goToInviteFlow"
+						,"profileSignOut":"profileSignOut"
+						,"out_goToMainMenu":"quit"
+					}
+				}
+			]
+		}
+	]
+}

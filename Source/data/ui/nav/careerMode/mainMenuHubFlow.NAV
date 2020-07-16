@@ -6,10 +6,18 @@
 		["sendAction", ["notify", "telemetryEnterGameModeHub", ".GameMode"] ]
 		,["executeCMAction",["UpdateManagerGender"]]
 		,["loadViewModel",["CMThemeManagerViewModel"]]
+		,["loadViewModel",["OnlineSquadViewModel"]]
+		,["loadViewModel",["UserValidationViewModel", "ugc=false"]]
+		,["loadViewModel",["KitSelectViewModel"]]
+		,["loadViewModel",["OnlineGameplayViewModel"]]
 	]	
 	,"onExit":
 	[
 		["unloadViewModel",["CMThemeManagerViewModel"]]
+		,["unloadViewModel", ["OnlineGameplayViewModel"]]
+		,["unloadViewModel",["UserValidationViewModel"]]
+		,["unloadViewModel",["OnlineSquadViewModel"]]
+		,["unloadViewModel",["KitSelectViewModel"]]
 	]
 	,"states":
 	[

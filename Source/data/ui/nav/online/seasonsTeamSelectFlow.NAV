@@ -1,0 +1,142 @@
+{
+	"name":"SeasonsTeamSelectFlow"
+	,"onEnter":
+	[
+	]
+	,"onExit":
+	[
+		["sendAction",["clearTeamSheets"]]
+	]
+	,"transitions":
+	[
+		{ "event":"startGame"
+			,"actions": [ [ "sendScreenEvent", ["UxSetFlowSubState", ".eSubState.LOADING"] ]
+						,[ "sendScreenEvent", ["EASODisableDisconnect"] ] ]
+			,"targets":["out_gotoGameplay"] }
+		,{ "event":"quit", "targets":["out_quit"] }
+		,{ "event":"quitToHub", "targets":["out_quitToHub"] }
+	]
+	,"states":
+	[
+		{
+			"name":"TeamSelect"
+			,"onEnter":
+			[					
+				["loadViewModel",[".teamSelectMode"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",[".teamSelectMode"]]				
+			]
+			,"transitions":
+			[
+				{ "event":"back", "targets":["out_back"], "actions":[ ["sendAction", ["leaveGameGroup", "ACTION_LEAVE_GAMEGROUP"]]] }
+			]
+			,"states":
+			[
+				{
+					"name": "TeamSelectPreScreen"
+					,"transitions":
+					[
+						{ "event":"preScreenSucceeded", "targets":["TeamSelectScreen"] }
+						,{ "event":"preScreenFailed", "targets":["TeamSelectPreScreenFailPopup"] }
+					]
+				}
+				,{
+					"name": "TeamSelectScreen"
+					,"onEnter":
+					[
+						["loadViewModel",["FluxViewModel"]]
+						,["loadView",["screen", "game/screens/fluxHub/FluxHub"]]
+					]
+					,"onExit":
+					[
+						["unloadView",["screen", "game/screens/fluxHub/FluxHub"]]
+						,["unloadViewModel",["FluxViewModel"]]
+					]
+					,"states":
+					[
+						{
+							"transitions":
+							[
+								{ "event":"ControllerSettings", "targets":["ControllerSetup"] }
+								,{ "event":"optionSelected", "targets":["TeamSelectAdvanceCondition"] }
+							]
+							,"states":
+							[
+								{
+									"name":"TeamSelectIdle"
+								}
+								,{
+									"name":"TeamSelectAdvanceCondition"
+									,"onEnter":
+									[
+										["sendAction", ["condition","AdvanceActionResult"]]
+									]
+									,"transitions":
+									[
+										{ "event":"condition-1", "targets":["TeamSelectIdle"] }
+										,{ "event":"condition4", "targets":["TeamSelectTeamManagement"] }
+									]
+								}
+							]
+						}
+					]
+				}
+				,{
+					"name":"TeamSelectPreScreenFailPopup"
+					,"onEnter":
+					[
+						["loadView", ["popup","SeasonsPopup", "TXT_HUB_SCREEN_FAILED_TO_LOAD|ok|back"]]
+					]
+					,"onExit":
+					[
+						["unloadView", ["popup","SeasonsPopup"]]
+					]
+				}
+			]
+		}
+		,{
+			"name":"TeamSelectTeamManagement"
+			,"let":{"tmMode":"onlinePreMatchSeasons"}
+			,"onEnter":
+			[
+				["loadViewModel",["TeamManagementScreen"]]
+			]
+			,"onExit":
+			[
+				["unloadViewModel",["TeamManagementScreen"]]
+			]
+			,"states":
+			[
+				{
+					"name":"teamSheetEditorExternal"
+					,"type":"external"
+					,"file":"/editTeamSheetFlow.nav"
+					,"outputs":
+					{
+						"back":"TeamSelect"
+					}
+				}
+			]
+		}
+		,{
+			"name":"ControllerSetup"
+			,"onEnter":
+			[
+				["loadViewModel",["ControllerSetupScreen"]]
+				,["loadView",["screen", "game/screens/settings/controllerAndGameSetup"]]
+				,[ "sendScreenEvent", ["HideBusyIndicator"] ]  			/* this screen doesnt have prescreen (offline screen), need to turn it off manually */
+			]
+			,"onExit":
+			[
+				["unloadView",["screen", "game/screens/settings/controllerAndGameSetup"]]
+				,["unloadViewModel",["ControllerSetupScreen"]]
+			]
+			,"transitions":
+			[
+				{ "event":"back", "targets":["TeamSelect"] }
+			]
+		}
+	]
+}

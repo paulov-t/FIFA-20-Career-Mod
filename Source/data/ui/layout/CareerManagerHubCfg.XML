@@ -39,6 +39,7 @@
     <tile NAME="PAM_TABLES_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="418" X="537" Y="492" ENABLE_CYCLING="TRUE"/>
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_TABLES_STANDINGS" NEEDS_PUBLISH="1" DESTINATION="EnterStandingsHub" DATAPROVIDERID="CM_STANDINGS_DP">
+
         <data ID="TITLE" TYPE="title" PARAM="CM_Tables" FORMAT="HS" WIDTH="400" HEIGHT="67" />
         <data ID="LEAGUELOGO" TYPE="asset" PATH="leagueLogos_tiny" WIDTH="200" HEIGHT="64" X="207" Y="12"  />
         <data ID="PLAYEDLABEL" TYPE="text" PARAM="GamesPlayed_abbr2" FORMAT="SM||center" WIDTH="60" HEIGHT="34" X="288" Y="80" />
@@ -113,6 +114,9 @@
 		<data ID="KO_STAGE_SCORE" TYPE="text" FORMAT="HXS||center" TRANSLATE="FALSE" WIDTH="382" HEIGHT="35" X="18" Y="190" />
 		<data ID="KO_STAGE_SCORE_AGG" TYPE="text" FORMAT="TSMU||center" TRANSLATE="FALSE" WIDTH="382" HEIGHT="35" X="18" Y="230" />
 		<data ID="KO_STAGE_SCORE_PEN" TYPE="text" FORMAT="IS||center" TRANSLATE="FALSE" WIDTH="382" HEIGHT="35" X="18" REL_TARGET="KO_STAGE_SCORE_AGG" REL_Y="-5"/>
+      </subtile>
+	  <subtile SUBTILE_TYPE="TILE" NAME="PAM_OLD_FIXTURES" DESTINATION="EnterFixtures">
+        <data ID="TITLE" TYPE="title" TRANSLATE="FALSE" PARAM="FIXTURES" FORMAT="HS" />
       </subtile>
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_TABLES_STATS" DESTINATION="SelectStat" NEEDS_PUBLISH="1" PARAM="" DATAPROVIDERID="CM_STATISTICS_DP">
         <data ID="BACKGROUND_HL" TYPE="asset" PATH="careerHub" PARAM="TopScorers_MedTall_Active" WIDTH="420" HEIGHT="420" X="0" Y="0" HLALPHA="100" UHLALPHA="0"/>
@@ -1299,21 +1303,36 @@
       <data ID="TITLE" TYPE="title" PARAM="CM_HUB_Calendar" FORMAT="HS" />
       <data TYPE="text" PARAM="txt_cmhub_season_calendar_desc" FORMAT="I" WIDTH="400" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
     </tile>
-    <tile NAME="PAM_TEAM_STATS" TYPE="TILE" DESTINATION="EnterTeamStats" BG_ICON="TeamStats_Small">
-      <properties WIDTH="846" HEIGHT="204" X="109" Y="492" />
-      <data ID="TITLE" TYPE="title" PARAM="TeamStats_n" FORMAT="HS" />
-      <data TYPE="text" PARAM="Txt_cmhub_season_teamstats_desc" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-    </tile>
-    <tile NAME="PAM_PLAYER_STATS" TYPE="TILE" DESTINATION="SelectStat" BACKGROUND="PlayerStats_Med" >
-      <properties WIDTH="846" HEIGHT="204" X="109" Y="706" />
-      <data ID="TITLE" TYPE="title" PARAM="PlayerStats" FORMAT="HS" />
-      <data TYPE="text" PARAM="Txt_cmhub_season_playerstats_desc" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-    </tile>
-    <tile NAME="PAM_OTHER_LEAGUES" TYPE="TILE" DESTINATION="ViewOtherCompetitions" BACKGROUND="OtherLeagues_Med">
-      <properties WIDTH="846" HEIGHT="204" X="965" Y="278" />
-      <data ID="TITLE" TYPE="title" PARAM="CM_Other_Leagues_Caps" FORMAT="HS" />
-      <data TYPE="text" PARAM="Txt_cmhub_season_otherleagues_desc" FORMAT="I" WIDTH="340" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
-    </tile>
+	<tile NAME="PAM_SEASON_STATS_NESTED" TYPE="TILE_NESTED">
+		<properties WIDTH="846" HEIGHT="204" X="109" Y="492" ENABLE_CYCLING="TRUE" />
+		
+		<subtile SUBTILE_TYPE="TILE" NAME="PAM_TEAM_STATS" DESTINATION="EnterTeamStats" BG_ICON="TeamStats_Small">
+		  <properties WIDTH="846" HEIGHT="204" X="109" Y="492" />
+		  <data ID="TITLE" TYPE="title" PARAM="TeamStats_n" FORMAT="HS" />
+		  <data TYPE="text" TRANSLATE="FALSE" PARAM="Shitty EA statistics" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
+		</subtile>
+		<subtile SUBTILE_TYPE="TILE" NAME="PAM_PLAYER_STATS" DESTINATION="SelectStat" BACKGROUND="PlayerStats_Med" >
+		  <properties WIDTH="846" HEIGHT="204" X="109" Y="706" />
+		  <data ID="TITLE" TYPE="title" PARAM="PlayerStats" FORMAT="HS" />
+		  <data TYPE="text" TRANSLATE="FALSE" PARAM="Shitty EA Player Statistics" FORMAT="I" WIDTH="290" HEIGHT="45" X="18" REL_TARGET="TITLE" REL_Y="5" />
+		</subtile>
+		<subtile SUBTILE_TYPE="TILE" NAME="CLUB_TRANSFERS_TEST" DESTINATION="ClubTransfers" >
+		  <properties WIDTH="846" HEIGHT="204" X="109" Y="706" />
+		  <data ID="TITLE" TYPE="title" TRANSLATE="FALSE" PARAM="MANUAL TRANSFER"  FORMAT="HS" />
+		  
+		</subtile>
+	</tile>
+	
+	<tile NAME="PAM_SEASON_SQUADS_NESTED" TYPE="TILE" DESTINATION="OtherTeamSheets">
+		<properties WIDTH="846" HEIGHT="204" X="109" Y="706" />
+		<data ID="TITLE" TYPE="title" TRANSLATE="FALSE" PARAM="VIEW OTHER TEAM SHEETS - DO NOT EDIT!" FORMAT="HS" />
+	</tile>
+	
+    
+    <tile NAME="PAM_SEASON_OTHER_LEAGUES_NESTED" DESTINATION="EnterOtherCompsOld" TYPE="TILE">
+		<properties WIDTH="846" HEIGHT="204" X="965" Y="278" ENABLE_CYCLING="TRUE" />
+		<data ID="TITLE" TYPE="title" PARAM="CM_Other_Leagues_Caps" FORMAT="HS" />
+	</tile>
     <tile NAME="PAM_SEASON_TABLES_NESTED" TYPE="TILE_NESTED">
       <properties WIDTH="418" HEIGHT="418" X="965" Y="492" ENABLE_CYCLING="TRUE" />
       <subtile SUBTILE_TYPE="TILE" NAME="PAM_SEASON_TABLES_STANDINGS" NEEDS_PUBLISH="1" DESTINATION="EnterStandingsHub" DATAPROVIDERID="CM_STANDINGS_DP">
@@ -1392,7 +1411,10 @@
 		<data ID="KO_STAGE_SCORE_AGG" TYPE="text" FORMAT="TSMU||center" TRANSLATE="FALSE" WIDTH="382" HEIGHT="35" X="18" Y="230" />
 		<data ID="KO_STAGE_SCORE_PEN" TYPE="text" FORMAT="IS||center" TRANSLATE="FALSE" WIDTH="382" HEIGHT="35" X="18" REL_TARGET="KO_STAGE_SCORE_AGG" REL_Y="-5"/>
       </subtile>
-    </tile>
+	  <subtile SUBTILE_TYPE="TILE" NAME="PAM_OLD_FIXTURES" DESTINATION="EnterFixtures">
+        <data ID="TITLE" TYPE="title" TRANSLATE="FALSE" PARAM="FIXTURES" FORMAT="HS" />
+      </subtile>
+	</tile>
     <tile NAME="PAM_SETTINGS" TYPE="TILE" DESTINATION="EnterGameSettings" BG_ICON="Settings_Small" >
       <properties WIDTH="418" HEIGHT="418" X="1393" Y="492" />
       <data ID="TITLE" TYPE="title" ALIGN="leading" PARAM="CM_HUB_Settings" FORMAT="HS" />
