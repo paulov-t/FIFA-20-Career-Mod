@@ -3,7 +3,7 @@ Description,Value,,,,,
 // Role constants,,,,,,
 "// The lower the tier value is, the better it is",,,,,,
 ROLE ACCEPTED MIN,-2,,,,,
-ROLE ACCEPTED MAX,0,,,,,
+ROLE ACCEPTED MAX,1,,,,,
 ,,,,,,
 ROLE TOO HIGH THRESHOLD,-3,,,,,
 ,,,,,,
@@ -46,25 +46,25 @@ Goals Scored,0,0,0,1,1.1,1.2
 ,,,,,,
 BONUS ROLE ACCEPTANCE PERCENT,,,,,,
 Number of matches by appearance,Tier None,Tier 1,Tier 2,Tier 3,Tier 4,Tier 5
-NUM_MATCHES[APPEARANCE][0],0,30,0,0,0,0
-NUM_MATCHES[APPEARANCE][1],0,50,30,0,0,0
-NUM_MATCHES[APPEARANCE][2],0,70,50,30,0,0
-NUM_MATCHES[APPEARANCE][3],0,85,70,50,30,0
-NUM_MATCHES[APPEARANCE][4],0,100,85,70,50,0
+NUM_MATCHES[APPEARANCE][0],0,100,100,70,25,0
+NUM_MATCHES[APPEARANCE][1],0,100,100,70,25,0
+NUM_MATCHES[APPEARANCE][2],0,100,100,70,25,0
+NUM_MATCHES[APPEARANCE][3],0,100,100,70,25,0
+NUM_MATCHES[APPEARANCE][4],0,100,100,70,25,0
 ,,,,,,
 Number of matches by Clean Sheet,Tier None,Tier 1,Tier 2,Tier 3,Tier 4,Tier 5
-NUM_MATCHES[Clean Sheet][0],0,15,0,0,0,0
-NUM_MATCHES[Clean Sheet][1],0,25,15,0,0,0
-NUM_MATCHES[Clean Sheet][2],0,35,25,0,0,0
-NUM_MATCHES[Clean Sheet][3],0,50,35,15,0,0
-NUM_MATCHES[Clean Sheet][4],0,60,50,25,0,0
+NUM_MATCHES[Clean Sheet][0],0,100,100,70,25,0
+NUM_MATCHES[Clean Sheet][1],0,100,100,70,25,0
+NUM_MATCHES[Clean Sheet][2],0,100,100,70,25,0
+NUM_MATCHES[Clean Sheet][3],0,100,100,70,25,0
+NUM_MATCHES[Clean Sheet][4],0,100,100,70,25,0
 ,,,,,,
 Number of Matches by Goals Scored,Tier None,Tier 1,Tier 2,Tier 3,Tier 4,Tier 5
-NUM_MATCHES[Goals Scored][0],0,15,0,0,0,0
-NUM_MATCHES[Goals Scored][1],0,25,15,0,0,0
-NUM_MATCHES[Goals Scored][2],0,35,25,0,0,0
-NUM_MATCHES[Goals Scored][3],0,50,35,15,0,0
-NUM_MATCHES[Goals Scored][4],0,60,50,25,0,0
+NUM_MATCHES[Goals Scored][0],0,100,100,70,25,0
+NUM_MATCHES[Goals Scored][1],0,100,100,70,25,0
+NUM_MATCHES[Goals Scored][2],0,100,100,70,25,0
+NUM_MATCHES[Goals Scored][3],0,100,100,70,25,0
+NUM_MATCHES[Goals Scored][4],0,100,100,70,25,0
 ,,,,,,
 BONUS MATCHES DEMANDED PERCENT,Match 1,Match 2,Match 3,Match 4,Match 5,
 NUM_MATCHES[APPEARANCE][0ﾅN],40,32,24,16,8,
@@ -76,14 +76,14 @@ FeesAnalyzer for SELLER THRESHOLDS,,,,,,
 FutureFeeFlags ,0.15,,,,,
 FeeFlags,0.15,,,,,
 OverallFlags,0.15,,,,,
-FeesAnalyzer for BUYER THRESHOLDS,,,,,,
+FeesAnalyzer for BUYER THRESHOLDS,0.15,,,,,
 FutureFeeFlags ,0.15,,,,,
 FeeFlags,0.15,,,,,
 OverallFlags,0.15,,,,,
-PlayerNegotiationAnalyzer THRESHOLDS,,,,,,
+PlayerNegotiationAnalyzer THRESHOLDS,0.15,,,,,
 RoleAnalyzer::SetFlags,2,,,,,
 ContractAnalyzer::SetFlags,24,,,,,
 ReleaseClause::SetFlags,0.15,,,,,
-WageAndBonusAnalyzer::SetBonusFlags,0.16,,,,,
-WageAndBonusAnalyzer::SetWageFlags,0.16,,,,,
-WageAndBonusAnalyzer::SetOverallFlags,0.16,,,,,
+WageAndBonusAnalyzer::SetBonusFlags,1,,,,,
+WageAndBonusAnalyzer::SetWageFlags,1,,,,,
+WageAndBonusAnalyzer::SetOverallFlags,1,,,,,

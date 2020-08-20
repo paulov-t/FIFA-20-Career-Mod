@@ -165,7 +165,8 @@ local hair_veryshort = {
 	1, -- Crew
 	16, -- Crew thick
 	25, -- thin
-	28 -- Crew thick
+	28, -- Crew thick
+	60 -- Crew thick
 }
 
 local hair_short_wavy = {
@@ -174,13 +175,16 @@ local hair_short_wavy = {
 	57, -- Wavy Styled parting
 	114, -- Wavy Styled parting
 	115, -- Wavy Styled parting
-	118 -- Wavy Styled parting
+	118, -- Wavy Styled parting
+	104, -- thick sides scruffy
+	93
 }
 
 local hair_short_curly = {
 	21, -- Curly slight spiked
 	22, -- Curly Thick spiked
-	65 -- short and slick
+	65, -- short and slick
+	93
 }
 
 local hair_short_straight = {
@@ -194,7 +198,8 @@ local hair_short_straight = {
 local hair_medium_straight = {
 	126, -- straight spiked parted hair
 	128, -- straight spiked parted hair
-	130 -- straight spiked parted hair
+	130, -- straight spiked parted hair
+	284 -- straight spiked parted hair
 }
 
 local hair_medium_wavy = {
@@ -205,14 +210,16 @@ local hair_medium_wavy = {
 
 local hair_afro = {
 	2, -- Small Afro
-	3 -- Big Afro
+	3, -- Big Afro
+	97 -- Medium Afro
 }
 
 local hair_cornrows = {
 	4, -- Short Cornrows
 	5, -- Side Parted Long Cornrows
 	6, -- Ponytail Cornrows
-	7 -- Ponytail Cornrows 2
+	7, -- Ponytail Cornrows 2
+	549 -- medium length cornrows, bouncy
 }
 
 local hair_wavyShoulderLength = {
@@ -457,12 +464,17 @@ function doPlayerRandomHair(player, use, growthchance)
 	if(use == 1) then
 		v2k4debugfile:write('Using Hair Growth System\n')
 		
+		local currentHair = player.Hair
+		v2k4debugfile:write('Hair Growth System : Current Hair : ' .. tostring(currentHair) .. '\n')
+		
 		local hairRandom = 100 - math.random(growthchance)
 		local hairRandomOther = math.random(100)
 		v2k4debugfile:write('Hair Growth System : ' .. hairRandom .. ' < ' .. hairRandomOther .. '?\n')
 		if(hairRandom < hairRandomOther) then
 			v2k4debugfile:write('Hair Growth System : Make a change \n')
 					
+			
+			
 			if(player.Hair == 0 or player.Hair == 26) then
 				v2k4debugfile:write('Hair Growth System : is bald, staying bald \n')
 				if(math.random(100) < math.random(100)) then
@@ -541,6 +553,15 @@ function doPlayerRandomShoe(player, use, growthchance)
 	if(use == 1) then
 		v2k4debugfile:write('Using Dynamic Boot System\n')
 		
+		v2k4debugfile:write('Shoe/Boot System : Make a change \n')
+		local currentBoot = player.ShoeType
+		v2k4debugfile:write('Current Boot Type : ' .. tostring(currentBoot) .. '\n')
+		local rFigure = math.random(growthchance)
+		if(100 - rFigure < 50) then
+			player.ShoeType = math.random(75)
+			v2k4debugfile:write('New Boot Type : ' .. tostring(player.ShoeType) .. '\n')
+		end
+		
 	end
 end
 
@@ -548,18 +569,20 @@ function doPlayerRandomTattoo(player, use, growthchance)
 	if(use == 1) then
 		v2k4debugfile:write('Using Dynamic Tattoo System\n')
 		
-		if(player.HasTattooUpperBody == 0) then
-			local tattooRandom = 100 - math.random(growthchance)
-			local tattooRandomOther = math.random(100)
-			v2k4debugfile:write('Random Tattoo System : ' .. tattooRandom .. ' < ' .. tattooRandomOther .. '?\n')
-			if(tattooRandom < tattooRandomOther) then
-				v2k4debugfile:write('Tattoo System : Make a change \n')
-				
-				player.HasTattooUpperBody = 1
-				player.TattooLeftArm = 100 - math.random(99)
-			
-			end
-		end
+		v2k4debugfile:write('Dynamic Tattoo System is Unavailable at this time\n')
+		
+		--if(player.HasTattooUpperBody == 0) then
+		--	local tattooRandom = 100 - math.random(growthchance)
+		--	local tattooRandomOther = math.random(100)
+		--	v2k4debugfile:write('Random Tattoo System : ' .. tattooRandom .. ' < ' .. tattooRandomOther .. '?\n')
+		--	if(tattooRandom < tattooRandomOther) then
+		--		v2k4debugfile:write('Tattoo System : Make a change \n')
+		--		
+		--		player.HasTattooUpperBody = 1
+		--		player.TattooLeftArm = 100 - math.random(99)
+		--	
+		--	end
+		--end
 	end
 end
 
@@ -608,16 +631,23 @@ function doPlayerFaceMod(player, fileLoc, debugFileLoc)
 						player.HeadAssetId = 0
 						player.PlayerAssetId = 0
 						player.Hair = 65		
+						--player.Hair = math.random(65)
 
-						local hairColor = player.HairColor
-						hairColorPri = PLAYER_COLOR_PRI_LIST[1]
-						hairColorSec = PLAYER_COLOR_SEC_LIST[1]
-						hairColorTer = PLAYER_COLOR_TER_LIST[1]
+						--local hairColor = player.HairColor
+						--hairColorPri = PLAYER_COLOR_PRI_LIST[1]
+						--hairColorSec = PLAYER_COLOR_SEC_LIST[1]
+						--hairColorTer = PLAYER_COLOR_TER_LIST[1]
 
-						player.HairColor = 1
-						player.HairColorPri = hairColorPri
-						player.HairColorSec = hairColorSec
-						player.HairColorTer = hairColorTer
+						--player.HairColor = 1
+						--player.HairColorPri = hairColorPri
+						--player.HairColorSec = hairColorSec
+						--player.HairColorTer = hairColorTer
+						player.HairColor = 0x00000000;
+						player.HairColorPri = 0x00000000;
+						player.HairColorSec = 0x00000000;
+						player.HairColorTer = 0x00000000;
+						player.FacialHairColor=0x00000000;
+		
 		
 						player.FaceType = 1
 												
@@ -633,25 +663,29 @@ function doPlayerFaceMod(player, fileLoc, debugFileLoc)
 	end
 	
 	debuggingfile:close()
-
+	return true;
 end
 
 function doPlayerUFMFace(player) 
 
-	doPlayerFaceMod(player,'UFMFaces.txt', 'v2k4debugfile_UFM.txt')
+	local status, retval = pcall(doPlayerFaceMod,player,'UFMFaces.txt','v2k4debugfile_UFM.txt');
+	--doPlayerFaceMod(player,'UFMFaces.txt', 'v2k4debugfile_UFM.txt')
 
 end
 
 
 function doPlayerMPRFace(player) 
 
-	doPlayerFaceMod(player,'MPRFaces.txt', 'v2k4debugfile_MPR.txt')
+local status, retval = pcall(doPlayerFaceMod,player,'MPRFaces.txt','v2k4debugfile_MPR.txt');
+	--doPlayerFaceMod(player,'MPRFaces.txt', 'v2k4debugfile_MPR.txt')
+	
 
 end
 
 function doOtherFaceSystem(player)
 
-	doPlayerFaceMod(player,'OtherFaces.txt', 'v2k4debugfile_Other.txt')
+local status, retval = pcall(doPlayerFaceMod,player,'OtherFaces.txt','v2k4debugfile_Other.txt');
+	--doPlayerFaceMod(player,'OtherFaces.txt', 'v2k4debugfile_Other.txt')
 
 end
 
@@ -1021,10 +1055,10 @@ function PlayerUpdate()
 					doPlayerRandomHair(player, use_hairgrowth_system, hairgrowth_system_randomgrowth_chance)
 					
 					-- make change
-					--doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
+					doPlayerRandomShoe(player, use_shoe_system, shoe_system_randomchange_chance)
 					
 					-- make change to tattoo
-					--doPlayerRandomTattoo(player, use_tattoo_system, 100)
+					doPlayerRandomTattoo(player, use_tattoo_system, shoe_system_randomchange_chance)
 				
 				end
 				

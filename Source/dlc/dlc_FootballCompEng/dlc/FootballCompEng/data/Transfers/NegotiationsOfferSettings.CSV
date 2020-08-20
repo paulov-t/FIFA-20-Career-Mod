@@ -7,9 +7,9 @@ Max Score,5000,"These 4 settings are used to cap player score to min and max, th
 Min Score,3000,,
 MinOffer Min Percent,102,,
 MinOffer Max Percent,116,,
-MaxOffer Min Percent,7,,
+MaxOffer Min Percent,8,,
 MaxOffer Max Percent,28,,
 ,,,
-Wage Increase Percent,130,,
-Wage Decrease Percent,97,,
-Offer Rank Modifiers,115,105,101
+Wage Increase Percent,135,,
+Wage Decrease Percent,95,,
+Offer Rank Modifiers,105,100,100

@@ -3,3 +3,6 @@ NegotiationsDemandsSettings
 	- the contract length each role asks for.
 NegotiationsOfferSettings 
 	- is the amount to put on the transfer hub screen for a fair offer
+
+- BuyerAcceptanceForPlay
+	- Affects offer amount and AI acceptance amount
